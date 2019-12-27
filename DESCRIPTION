@@ -1,0 +1,40 @@
+Package: RTL
+Type: Package
+Title: Helper functions for Bookdown 
+Version: 0.1.0
+Date: Sys.Date()
+Authors@R: person("Philippe", "Cote", email = "pcote@ualberta.ca",
+                  role = c("aut", "cre"))
+Maintainer: <pcote@ualberta.ca>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+Depends: R (>= 3.6)
+License: GPL (>= 3) + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    testthat (>= 2.1.0)
+RoxygenNote: 7.0.2
+Imports: 
+    zoo,
+    xts,
+    stats,
+    magrittr,
+    tibble,
+    dplyr,
+    tidyr,
+    ggplot2,
+    httr,
+    stringr,
+    purrr,
+    lubridate,
+    EIAdata,
+    timetk,
+    PerformanceAnalytics,
+    tibbletime,
+    quantmod,
+    forecast,
+    tidyquant,
+    readr,
+    Quandl,
+    fGarch

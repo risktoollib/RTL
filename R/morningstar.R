@@ -1,10 +1,24 @@
 #' \code{getPrice}
-#' @description Returns data from Morningstat API
-#' @param feed Morningstar Feed Table
-#' @param contract Morningstar key. When multiples keys are required under a data feed, separate them by a space. For exaample the CFTC_CommitmentsOfTradersCombined feed requires four keys and would written as "N10 06765A NYME 01".
+#' @description
+#' Returns data from Morningstat API. See below for current feeds supported.
+#' You need your own credentials with Morningstar. In examples sourced locally.
+#'
+#' @section Current Feeds Supported:
+#' \itemize{
+#'   \item CME_CbotFuturesEOD and CME_CbotFuturesEOD_continuous
+#'   \item CME_NymexFutures_EOD and CME_NymexFutures_EOD_continuous
+#'   \item CME_CmeFutures_EOD and CME_CmeFutures_EOD_continuous
+#'   \item ICE_EuroFutures and ICE_EuroFutures_continuous
+#'   \item ICE_NybotCoffeeSugarCocoaFutures and ICE_NybotCoffeeSugarCocoaFutures_continuous
+#'   \item CME_STLCPC_Futures
+#'   \item CFTC_CommitmentsOfTradersCombined. Requires multiple keys. Separate them by a space e.g. "N10 06765A NYME 01".
+#' }
+#'
+#' @param feed Morningstar Feed Table.
+#' @param contract Morningstar key.
 #' @param from From date as character string
-#' @param iuser Morningstar user name
-#' @param ipassword Morningstar user password
+#' @param iuser Morningstar user name as character - sourced locally in examples.
+#' @param ipassword Morningstar user password as character - sourced locally in examples.
 #' @return wide data frame
 #' @export getPrice
 #' @author Philippe Cote
@@ -76,4 +90,32 @@ getPrice <- function(feed="CME_NymexFutures_EOD",contract="CL9Z",from="2019-01-0
             out=dplyr::tibble(date=character(),value=numeric(),fwdmnt=numeric(),fwdyr=numeric())}
   if (length(colnames(out))==2) {colnames(out)[2] <- contract}
   return(out)
+}
+
+
+#' \code{getPrices}
+#' @description
+#' Multiple Morningstat API calls using getPrice functions.
+#' Refer to `getPrices()` for list of currently supported data feeds.
+#' @param feed Morningstar Feed Table
+#' @param contracts Symbols vector
+#' @param from From date as character string
+#' @param iuser Morningstar user name as character - sourced locally in examples.
+#' @param ipassword Morningstar user password as character - sourced locally in examples.
+#' @return wide data frame
+#' @export getPrices
+#' @author Philippe Cote
+#' @examples
+#' source("~/keys.R")
+#' getPrices(feed="CME_NymexFutures_EOD",contracts=c("CL9Z","CL0F","CL0M"),
+#' from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
+
+getPrices <- function(feed="CME_NymexFutures_EOD",contracts=c("CL9Z","CL0F","CL0M"),from="2019-01-01",iuser = "x@xyz.com", ipassword = "pass") {
+
+  x <- getPrice(feed=feed,contract=contracts[1],from=from,iuser = iuser, ipassword = ipassword)
+  for (c in contracts[-1]) {
+    x <- merge(x,getPrice(feed=feed,contract=c,from=from,iuser = iuser, ipassword = ipassword))
+  }
+  x <- dplyr::as_tibble(x)
+  return(x)
 }

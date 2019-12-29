@@ -12,6 +12,7 @@
 #'   \item ICE_NybotCoffeeSugarCocoaFutures and ICE_NybotCoffeeSugarCocoaFutures_continuous
 #'   \item CME_STLCPC_Futures
 #'   \item CFTC_CommitmentsOfTradersCombined. Requires multiple keys. Separate them by a space e.g. "N10 06765A NYME 01".
+#'   \item Morningstar_FX_Forwards. Requires multiple keys. Separate them by a space e.g. "USDCAD 2M".
 #' }
 #'
 #' @param feed Morningstar Feed Table.
@@ -34,7 +35,7 @@
 #' from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
 #' getPrice(feed="CME_CmeFutures_EOD_continuous",contract="HE_006_Month",
 #' from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
-#' getPrice(feed="Morningstar_FX_Forwards",contract="USDCAD, 2M",
+#' getPrice(feed="Morningstar_FX_Forwards",contract="USDCAD 2M",
 #' from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
 #' getPrice(feed="CME_CmeFutures_EOD",contract="LH0N",
 #' from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
@@ -58,6 +59,7 @@ getPrice <- function(feed="CME_NymexFutures_EOD",contract="CL9Z",from="2019-01-0
     URL = httr::modify_url(url = "https://mp.morningstarcommodity.com",path = paste0("/lds/feeds/",feed, "/ts?","Contract=",contract,"&fromDateTime=",from))}
   if (feed %in% c("CME_STLCPC_Futures")) {URL = httr::modify_url(url = "https://mp.morningstarcommodity.com",path = paste0("/lds/feeds/",feed, "/ts?","product=",contract,"&fromDateTime=",from))}
   if (feed %in% c("CFTC_CommitmentsOfTradersCombined")) {
+    if(grepl(",",contract)) stop(paste("Use a space instead of a comma to separate contract components e.g.",gsub(","," ",contract)))
     URL = httr::modify_url(url = "https://mp.morningstarcommodity.com",
                            path = paste0("/lds/feeds/",feed, "/ts?",
                                          "cftc_subgroup_code=",stringr::word(contract,1,1),
@@ -68,10 +70,12 @@ getPrice <- function(feed="CME_NymexFutures_EOD",contract="CL9Z",from="2019-01-0
                                          "&fromDateTime=",from))}
 
   if (feed=="Morningstar_FX_Forwards") {
-    x = strsplit(gsub(" ","",contract),",")
-    x1 = x[[1]][1]
-    x2 = x[[1]][2]
-    URL = httr::modify_url(url = "https://mp.morningstarcommodity.com",path = paste0("/lds/feeds/",feed, "/ts?","cross_currencies=",x1,"&period=",x2,"&fromDateTime=",from))
+    if(grepl(",",contract)) stop(paste("Use a space instead of a comma to separate contract components e.g.",gsub(","," ",contract)))
+    x1 = stringr::word(contract,1,1)
+    x2 = stringr::word(contract,2,2)
+    URL = httr::modify_url(url = "https://mp.morningstarcommodity.com",
+                           path = paste0("/lds/feeds/",feed, "/ts?","cross_currencies=",x1,
+                                         "&period=",x2,"&fromDateTime=",from))
     }
   httr::handle_reset(URL)
   es <- httr::GET(url = URL,httr::authenticate(user = iuser,password = ipassword,type = "basic")) #,httr::progress())

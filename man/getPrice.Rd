@@ -40,6 +40,7 @@ You need your own credentials with Morningstar. In examples sourced locally.
   \item ICE_NybotCoffeeSugarCocoaFutures and ICE_NybotCoffeeSugarCocoaFutures_continuous
   \item CME_STLCPC_Futures
   \item CFTC_CommitmentsOfTradersCombined. Requires multiple keys. Separate them by a space e.g. "N10 06765A NYME 01".
+  \item Morningstar_FX_Forwards. Requires multiple keys. Separate them by a space e.g. "USDCAD 2M".
 }
 }
 
@@ -55,7 +56,7 @@ getPrice(feed="CME_CbotFuturesEOD_continuous",contract="ZB_001_Month",
 from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
 getPrice(feed="CME_CmeFutures_EOD_continuous",contract="HE_006_Month",
 from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
-getPrice(feed="Morningstar_FX_Forwards",contract="USDCAD, 2M",
+getPrice(feed="Morningstar_FX_Forwards",contract="USDCAD 2M",
 from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
 getPrice(feed="CME_CmeFutures_EOD",contract="LH0N",
 from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])

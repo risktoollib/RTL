@@ -1,0 +1,27 @@
+#' \code{bond}
+#' @description Compute bond price, cash flow table and duration
+#' @param ytm Yield to Maturity
+#' @param C Coupon rate per annum
+#' @param T Time to maturity in years
+#' @param m Periods per year for coupon payments e.g semi-annual = 2.
+#' @param output "price", "df" or "duration"
+#' @return Price, cash flows data frame and/or duration
+#' @export bond
+#' @author Philippe Cote
+#' @examples
+#' bond(ytm=0.05,C=0.05,T=1,m=2,output="price")
+#' bond(ytm=0.05,C=0.05,T=1,m=2,output="df")
+#' bond(ytm=0.05,C=0.05,T=1,m=2,output="duration")
+bond <- function(ytm=0.05,C=0.05,T=1,m=2,output="price") {
+  df <- dplyr::tibble(t.years=seq(from=1/m,to=T,by=1/m), cf=rep(x=C*100/m,times=T*m)) %>%
+    dplyr::mutate(t.periods=m*t.years,
+                  cf=replace(cf,t.years==T,C*100/m+100)) %>% dplyr::as_tibble() %>%
+    dplyr::mutate(disc.factor=1/((1+ytm/m)^t.periods),pv=cf*disc.factor)
+  # same as previous function above this line
+  price <- sum(df$pv)
+  df <- df %>% dplyr::mutate(duration=(pv*t.years)/price)
+  if (output == "price") {return(sum(df$pv))}
+  if (output == "df") {return(df)}
+  if (output == "duration") {return(sum(df$duration))}
+  if (!output %in% c("price","df","duration")) {return("error in output variable definition")}
+}

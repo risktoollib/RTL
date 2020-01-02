@@ -37,4 +37,5 @@ Imports:
     tidyquant,
     readr,
     Quandl,
-    fGarch
+    fGarch,
+    fitdistrplus

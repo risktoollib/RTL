@@ -8,7 +8,7 @@ Professionals** for 2020 publication by [Risk Books](https://riskbooks.com/).
 ## Features
 
 + Historical forward curves charting.
-+ Calendars and expiry dates for a wide range of commodity futures contracts.
++ Calendars and expiry dates data objectsfor a wide range of commodity futures contracts.
 + Function to adjust continuous contracts returns for roll adjustments using expiries above.
 + [Morningstar Marketplace API](https://mp.morningstarcommodity.com/marketplace/) functions `getPrice()` and `getPrices()` using your own Morningstar credentials. Current feeds included:
 
@@ -19,12 +19,18 @@ Professionals** for 2020 publication by [Risk Books](https://riskbooks.com/).
   + CME_STLCPC_Futures.
   + ICE_NybotCoffeeSugarCocoaFutures and ICE_NybotCoffeeSugarCocoaFutures_continuous.
   + Morningstar_FX_Forwards.
+  + ... see `?getPrice` for up to date selection and examples.
   
-
 ## Data Sets
 
-+ `expiry_table` contains historical and forward futures contract metadata.
-+ `tickers_eia` contains a mapping of EIA tickers to crude and refined products markets for building supply demand balances.
+Accessible via `data(datsetname)`
+
++ `expiry_table`: Historical and forward futures contract metadata.
++ `holidaysOil`: Holiday calendars for ICE and NYMEX.
++ `tickers_eia`: Mapping of EIA tickers to crude and refined products markets for building supply demand balances.
++ `usSwapIRDef`: Data frame of definitions for instruments to build a curve for use with `RQuantlib`. Use `getIRswapCurve()` to extract the latest data from `FRED` and `Morningstar`.
++ `usSwapIR`: Toy data set output of `getIRswapCurve`.
++ `usSwapCurves`: Toy data set output of `RQuantlib::DiscountCurve()`.
 + `twtrump` and `twoott` are historical tweets toy data sets from @realDonaldTrump and #OOTT for learning NLP.
 + `cancrudeassays` contains historical Canadian crude assays from [Crudemonitor](https://crudemonitor.ca/home.php) as a learning and testing data set.
 

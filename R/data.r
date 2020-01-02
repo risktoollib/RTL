@@ -54,3 +54,26 @@
 #' @format data frame
 #' #' @source \url{http://www.morningstarcommodity.com}
 "dfwide"
+
+#' usSwapIR
+#' @description USD Interest Rate Swap Curve for RQuantlib bootstrapping. See usSwapIRdef for sources and tickers.
+#' @format data frame
+#' #' @source Morningstar and FRED
+"usSwapIR"
+
+#' usSwapIRdef
+#' @description USD Interest Rate Swap Curve definitions with sources and tickers
+#' @format data frame
+#' #' @source Morningstar and FRED
+"usSwapIRdef"
+
+#' usSwapCurves
+#' @description USD IR Discount, Forward and Zero curves from RQuantlib::DiscountCurve
+#' @format List
+#' #' @source Morningstar and FRED
+"usSwapCurves"
+
+#' usSwapCurvesPar
+#' @description USD IR Discount, Forward and Zero curves from RQuantlib::DiscountCurve - Parallel toy data set
+#' @format data frame
+"usSwapCurvesPar"

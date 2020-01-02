@@ -27,7 +27,7 @@ getPrice(
 wide data frame
 }
 \description{
-Returns data from Morningstat API. See below for current feeds supported.
+Returns data from Morningstar API. See below for current feeds supported.
 You need your own credentials with Morningstar. In examples sourced locally.
 }
 \section{Current Feeds Supported}{

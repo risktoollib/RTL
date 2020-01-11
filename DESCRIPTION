@@ -1,17 +1,19 @@
 Package: RTL
 Type: Package
-Title: Helper functions for Bookdown 
+Title: Risk Tool Library 
 Version: 0.1.0
-Date: Sys.Date()
+Date: "2020-01-11"
 Authors@R: person("Philippe", "Cote", email = "pcote@ualberta.ca",
                   role = c("aut", "cre"))
-Maintainer: <pcote@ualberta.ca>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Maintainer: Philippe Cote <pcote@ualberta.ca>
+Description: Collection of functions and metadata to complement core packages
+    in Finance and Commodities, including futures expiry tables and Morningstar
+    API functions. See webpage for details.
 Depends: R (>= 3.6)
 License: GPL (>= 3) + file LICENSE
 Encoding: UTF-8
 LazyData: true
+URL: https://github.com/risktoollib/RTL
 Suggests: 
     testthat (>= 2.1.0)
 RoxygenNote: 7.0.2

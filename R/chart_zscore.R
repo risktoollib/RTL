@@ -2,23 +2,54 @@
 #' @description
 #' Supports analytics and display of seasonal data. Z-Score is
 #' computed on residuals conditional on their seasonal period.
+#' Beware that most seasonal charts in industry e.g. (NG Storage)
+#' is not detrended so results once you apply an STL decompostion
+#' will vary from the unajusted seasonal plot.
 #' @param df Long data frame with columns series, date and value
 #' @param title Your chart title
 #' @param per Frequency of seasonality "weekly" (DEFAULT) or "monthly"
-#' @param output "zscore" for residuals Z-score,
-#' "seasonal" for standard seasonal chart, or
-#' "stats" for seasonality statistical test results.
+#' @param output
+#' "stl" for STL decomposition chart,
+#' "stats" for STL statistical test results.
+#' "zscore" for residuals Z-score,
+#' "seasonal" for standard seasonal chart.
+#' @param chart
+#' "seasons" for feasts::gg_season() (DEFAULT)
+#' "series" for feasts::gg_subseries()
 #' @return Time series of STL decomposition residuals Z-Scores, or
 #' standard seasonal chart with feast package.
 #' @export chart_zscore
 #' @author Philippe Cote
 #' @examples
-#' chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "weekly", output = "stats")
-#' chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "weekly", output = "zscore")
-#' chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "weekly", output = "seasonal")
+#' chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "weekly", output = "stl", chart = "seasons")
+#' chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "weekly", output = "stats", chart = "seasons")
+#' chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "weekly", output = "zscore", chart = "seasons")
+#' chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "weekly", output = "seasonal", chart = "seasons")
 
-chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "weekly", output = "zscore") {
-  if (!output %in% c("zscore","seasonal","stats")) {stop(print("Incorrect output parameter"))}
+chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "weekly", output = "zscore", chart = "seasons") {
+  if (!output %in% c("zscore","seasonal","stats","stl")) {stop(print("Incorrect output parameter"))}
+
+  if (output == "stl") {
+    if (per == "weekly") {
+      x <- rbind(df,df %>% dplyr::mutate(series = title)) %>%
+        tsibble::as_tsibble(key=series, index = date) %>%
+        tsibble::group_by_key() %>%
+        tsibble::index_by(freq = ~yearweek(.)) %>%
+        dplyr::summarise(value = mean(value)) %>%
+        feasts::STL(value ~ season(window = Inf)) %>%
+        ggplot2::autoplot()
+      return(x)
+    } else if (per == "monthly") {
+      x <- rbind(df,df %>% dplyr::mutate(series = title)) %>%
+        tsibble::as_tsibble(key=series, index = date) %>%
+        tsibble::group_by_key() %>%
+        tsibble::index_by(freq = ~yearmonth(.)) %>%
+        dplyr::summarise(value = mean(value)) %>%
+        feasts::STL(value ~ season(window = Inf)) %>%
+        ggplot2::autoplot()
+      return(x)
+    } else {stop(print("Incorrect seasonality period input"))}
+  }
 
   if (output == "stats") {
     if (per == "weekly") {
@@ -82,7 +113,10 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "weekly", 
       dplyr::mutate(z.score = (remainder - u) / sigma)
   } else {stop(print("Incorrect seasonality period input"))}
 
-  if (output == "seasonal") {x <- df %>% feasts::gg_subseries(value)}
+  if (output == "seasonal") {
+    if (chart == "seasons") {x <- df %>% feasts::gg_season(value)}
+    if (chart == "series") {x <- df %>% feasts::gg_subseries(value)}
+    }
 
   if (output == "zscore") {
 

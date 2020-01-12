@@ -31,7 +31,7 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "weekly", 
 
   if (output == "stl") {
     if (per == "weekly") {
-      x <- rbind(df,df %>% dplyr::mutate(series = title)) %>%
+      x <- df %>%
         tsibble::as_tsibble(key=series, index = date) %>%
         tsibble::group_by_key() %>%
         tsibble::index_by(freq = ~yearweek(.)) %>%
@@ -40,7 +40,7 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "weekly", 
         ggplot2::autoplot()
       return(x)
     } else if (per == "monthly") {
-      x <- rbind(df,df %>% dplyr::mutate(series = title)) %>%
+      x <- df %>%
         tsibble::as_tsibble(key=series, index = date) %>%
         tsibble::group_by_key() %>%
         tsibble::index_by(freq = ~yearmonth(.)) %>%

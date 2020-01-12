@@ -8,7 +8,7 @@ Professionals** for 2020 publication by [Risk Books](https://riskbooks.com/).
 ## Features
 
 + Historical forward curves charting.
-+ Calendars and expiry dates data objectsfor a wide range of commodity futures contracts.
++ Calendars and expiry dates data objects for a wide range of commodity futures contracts.
 + Function to adjust continuous contracts returns for roll adjustments using expiries above.
 + [Morningstar Marketplace API](https://mp.morningstarcommodity.com/marketplace/) functions `getPrice()` and `getPrices()` using your own Morningstar credentials. Current feeds included:
 
@@ -20,7 +20,8 @@ Professionals** for 2020 publication by [Risk Books](https://riskbooks.com/).
   + ICE_NybotCoffeeSugarCocoaFutures and ICE_NybotCoffeeSugarCocoaFutures_continuous.
   + Morningstar_FX_Forwards.
   + ... see `?getPrice` for up to date selection and examples.
-  
++ `chart_zscore()` supports seasonality adjusted analysis of residuals, particularly useful when dealing with commodity stocks and/or days demand time series with trends as well as non-constant variance across seasonal periods.
+
 ## Data Sets
 
 Accessible via `data(datsetname)`

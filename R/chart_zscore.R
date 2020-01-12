@@ -1,19 +1,46 @@
 #' \code{chart_zscore}
-#' @description Provides a summary of returns distribution
+#' @description
+#' Supports analytics and display of seasonal data. Z-Score is
+#' computed on residuals conditional on their seasonal period.
 #' @param df Long data frame with columns series, date and value
 #' @param title Your chart title
 #' @param per Frequency of seasonality "weekly" (DEFAULT) or "monthly"
-#' @param output "zscore" or "seasonal" chart.
+#' @param output "zscore" for residuals Z-score,
+#' "seasonal" for standard seasonal chart, or
+#' "stats" for seasonality statistical test results.
 #' @return Time series of STL decomposition residuals Z-Scores, or
 #' standard seasonal chart with feast package.
 #' @export chart_zscore
 #' @author Philippe Cote
 #' @examples
+#' chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "weekly", output = "stats")
 #' chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "weekly", output = "zscore")
 #' chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "weekly", output = "seasonal")
-#' chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "montlhy", output = "zscore")
 
 chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "weekly", output = "zscore") {
+  if (!output %in% c("zscore","seasonal","stats")) {stop(print("Incorrect output parameter"))}
+
+  if (output == "stats") {
+    if (per == "weekly") {
+      x <- rbind(df,df %>% dplyr::mutate(series = title)) %>%
+        tsibble::as_tsibble(key=series, index = date) %>%
+        tsibble::group_by_key() %>%
+        tsibble::index_by(freq = ~yearweek(.)) %>%
+        dplyr::summarise(value = mean(value)) %>%
+        fabletools::features(value, feasts::feat_stl) %>%
+        dplyr::slice(1)
+      return(x)
+    } else if (per == "monthly") {
+      x <- rbind(df,df %>% dplyr::mutate(series = title)) %>%
+        tsibble::as_tsibble(key=series, index = date) %>%
+        tsibble::group_by_key() %>%
+        tsibble::index_by(freq = ~yearmonth(.)) %>%
+        dplyr::summarise(value = mean(value)) %>%
+        fabletools::features(value, feasts::feat_stl) %>%
+        dplyr::slice(1)
+      return(x)
+    } else {stop(print("Incorrect seasonality period input"))}
+  }
 
   if (per == "weekly") {
     df <- df %>%
@@ -34,7 +61,7 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "weekly", 
       dplyr::mutate(per = as.numeric(stringr::str_sub(freq,start=7,end=8))) %>%
       dplyr::left_join(z, by = c("per")) %>%
       dplyr::mutate(z.score = (remainder - u) / sigma)
-  } else {
+  } else if (per == "monthly") {
     df <- df %>%
       tsibble::as_tsibble(key=series, index = date) %>%
       tsibble::group_by_key() %>%
@@ -53,14 +80,9 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "weekly", 
       dplyr::mutate(per = stringr::str_sub(freq,start=6,end=8)) %>%
       dplyr::left_join(z, by = c("per")) %>%
       dplyr::mutate(z.score = (remainder - u) / sigma)
-  }
+  } else {stop(print("Incorrect seasonality period input"))}
 
-   #%>%
-    #dplyr::mutate(change = value - dplyr::lag(value))
-
-  if (output == "seasonal") {
-    x <- df %>% feasts::gg_subseries(value)
-  }
+  if (output == "seasonal") {x <- df %>% feasts::gg_subseries(value)}
 
   if (output == "zscore") {
 
@@ -71,7 +93,7 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "weekly", 
     x <-  x %>%
       dplyr::filter(freq >= min(freq)) %>%
       plotly::plot_ly(x = ~freq, y = ~z.score, color = ~z.score, colors = pal) %>%
-      plotly::add_markers() %>%
+      plotly::add_bars() %>%
       plotly::layout(title = list(text= title, x = 0),
                      xaxis = list(title = "", range = c(min.d,max.d)),
                      yaxis = list(title = "Z Score of Seasonally-Adjusted Residuals", range = c(3,-3) ,separators = '.,',tickformat = ".2f"))

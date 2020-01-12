@@ -43,4 +43,5 @@ Imports:
     fitdistrplus,
     tsibble,
     feasts,
-    plotly
+    plotly,
+    fabletools

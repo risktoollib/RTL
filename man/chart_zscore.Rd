@@ -18,19 +18,22 @@ chart_zscore(
 
 \item{per}{Frequency of seasonality "weekly" (DEFAULT) or "monthly"}
 
-\item{output}{"zscore" or "seasonal" chart.}
+\item{output}{"zscore" for residuals Z-score,
+"seasonal" for standard seasonal chart, or
+"stats" for seasonality statistical test results.}
 }
 \value{
 Time series of STL decomposition residuals Z-Scores, or
 standard seasonal chart with feast package.
 }
 \description{
-Provides a summary of returns distribution
+Supports analytics and display of seasonal data. Z-Score is
+computed on residuals conditional on their seasonal period.
 }
 \examples{
+chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "weekly", output = "stats")
 chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "weekly", output = "zscore")
 chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "weekly", output = "seasonal")
-chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "montlhy", output = "zscore")
 }
 \author{
 Philippe Cote

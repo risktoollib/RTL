@@ -77,3 +77,8 @@
 #' @description USD IR Discount, Forward and Zero curves from RQuantlib::DiscountCurve - Parallel toy data set
 #' @format data frame
 "usSwapCurvesPar"
+
+#' ng_storage
+#' @description EIA NG Storage Data
+#' @format data frame
+"ng_storage"

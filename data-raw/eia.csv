@@ -31,6 +31,7 @@ PET.WCESTP31.W,eia.crude.stocks.P3,crude,stocks
 PET.WCESTP41.W,eia.crude.stocks.P4,crude,stocks
 PET.WCESTP51.W,eia.crude.stocks.P5,crude,stocks
 PET.WCESTUS1.W,eia.crude.stocks.us,crude,stocks
+PET.W_EPC0_VSD_NUS_DAYS.W,eia.crude.stocks.us.dayssupply,crude,stocks
 PET.EMD_EPD2D_PTE_R10_DPG.W,eia.doediesel.prices.P1,doediesel,prices
 PET.EMD_EPD2D_PTE_R20_DPG.W,eia.doediesel.prices.P2,doediesel,prices
 PET.EMD_EPD2D_PTE_R30_DPG.W,eia.doediesel.prices.P3,doediesel,prices
@@ -76,6 +77,7 @@ PET.WDISTP31.W,eia.mdist.stocks.P3,mdist,stocks
 PET.WDISTP41.W,eia.mdist.stocks.P4,mdist,stocks
 PET.WDISTP51.W,eia.mdist.stocks.P5,mdist,stocks
 PET.WDISTUS1.W,eia.mdist.stocks.us,mdist,stocks
+PET.W_EPD0_VSD_NUS_DAYS.W,eia.mdist.stocks.us.dayssupply,mdist,stocks
 PET.WD0ST_R10_1.W,eia.mdist.ulsd.stocks.P1,mdist.ulsd,stocks
 PET.WD0ST_R1X_1.W,eia.mdist.ulsd.stocks.P1a,mdist.ulsd,stocks
 PET.WD0ST_R1Y_1.W,eia.mdist.ulsd.stocks.P1b,mdist.ulsd,stocks
@@ -94,6 +96,7 @@ PET.WGTSTP31.W,eia.mogas.all.stocks.P3,mogas.all,stocks
 PET.WGTSTP41.W,eia.mogas.all.stocks.P4,mogas.all,stocks
 PET.WGTSTP51.W,eia.mogas.all.stocks.P5,mogas.all,stocks
 PET.WGTSTUS1.W,eia.mogas.all.stocks.us,mogas.all,stocks
+PET.W_EPM0_VSD_NUS_DAYS.W,eia.mogas.all.stocks.us.dayssupply,mogas.all,stocks
 PET.WO6ST_R10_1.W,eia.mogas.cbob.stocks.P1,mogas.cbob,stocks
 PET.WO6ST_R20_1.W,eia.mogas.cbob.stocks.P2,mogas.cbob,stocks
 PET.WO6ST_R30_1.W,eia.mogas.cbob.stocks.P3,mogas.cbob,stocks

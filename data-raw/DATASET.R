@@ -1,12 +1,11 @@
 # usethis::use_readme_md()
 # usethis::use_package("tibble")
 # usethis::use_pipe()
-# devtools::document()
 library(tidyverse)
 library(lubridate)
 library(jsonlite)
 source("~/keys.R")
-
+setwd("~/RTL/data-raw")
 ## Prices Data (to migrate later)
   # library(RTL)
   # saveRDS(df_fut,"df_fut",compress = F)
@@ -14,9 +13,16 @@ source("~/keys.R")
   # saveRDS(dfwide,"dfwide",compress = F)
 
 
-df_fut <- readRDS("~/spd/data-raw/df_fut") ; usethis::use_data(df_fut, overwrite = T)
-dflong <- readRDS("~/spd/data-raw/dflong") ; usethis::use_data(dflong, overwrite = T)
-dfwide <- readRDS("~/spd/data-raw/dfwide") ; usethis::use_data(dfwide, overwrite = T)
+df_fut <- readRDS("df_fut") ; usethis::use_data(df_fut, overwrite = T)
+dflong <- readRDS("dflong") ; usethis::use_data(dflong, overwrite = T)
+dfwide <- readRDS("dfwide") ; usethis::use_data(dfwide, overwrite = T)
+
+ng_storage <- tibble::tribble(~ticker, ~series,"NG.NW2_EPG0_SWO_R48_BCF.W","NG Storage - Lower 48") %>%
+  dplyr::mutate(key=EIAkey) %>%
+  dplyr::mutate(df = purrr::pmap(list(ticker,key),.f=RTL::eia2tidy)) %>%
+  dplyr::select(series, df) %>% tidyr::unnest()
+usethis::use_data(ng_storage, overwrite = T)
+
 
 # EIA Mapping
 tickers_eia <- read.csv('eia.csv',sep=",",header=TRUE,na.strings="NA",stringsAsFactors=FALSE)
@@ -66,13 +72,13 @@ twtrump <- twtrump %>%
   as_tibble()
 usethis::use_data(twtrump, overwrite = T)
 
-library(twitteR)
-source(here::here("../dscf/packages.R"))
-setup_twitter_oauth(consumer_key = tw$cons.key, consumer_secret = tw$cons.secret,
-                    access_token = tw$access.token, access_secret = tw$access.secret)
-twoott <- twitteR::searchTwitter('#OOTT', n = 1e4, since = '2016-11-06', retryOnRateLimit = 1e4)
-twoott <- twitteR::twListToDF(twoott) %>% as_tibble()
-usethis::use_data(twoott, overwrite = T)
+# library(twitteR)
+# source(here::here("../dscf/packages.R"))
+# setup_twitter_oauth(consumer_key = tw$cons.key, consumer_secret = tw$cons.secret,
+#                     access_token = tw$access.token, access_secret = tw$access.secret)
+# twoott <- twitteR::searchTwitter('#OOTT', n = 1e4, since = '2016-11-06', retryOnRateLimit = 1e4)
+# twoott <- twitteR::twListToDF(twoott) %>% as_tibble()
+# usethis::use_data(twoott, overwrite = T)
 
 ## Canadain Crude Data
 cancrudeprices <- readRDS("~/dscf/data/crude_prices.RDS") ; usethis::use_data(cancrudeprices, overwrite = T)
@@ -126,4 +132,4 @@ usethis::use_data(usSwapIRdef, overwrite = T)
 usethis::use_data(usSwapCurves, overwrite = T)
 usethis::use_data(usSwapCurvesPar, overwrite = T)
 
-
+devtools::document()

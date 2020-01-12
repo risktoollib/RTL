@@ -40,4 +40,7 @@ Imports:
     readr,
     Quandl,
     fGarch,
-    fitdistrplus
+    fitdistrplus,
+    tsibble,
+    feasts,
+    plotly

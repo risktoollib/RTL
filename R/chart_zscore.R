@@ -7,7 +7,8 @@
 #' will vary from the unajusted seasonal plot.
 #' @param df Long data frame with columns series, date and value
 #' @param title Your chart title
-#' @param per Frequency of seasonality "weekly" (DEFAULT) or "monthly"
+#' @param per
+#' Frequency of seasonality "yearweek" (DEFAULT). "yearmonth", "yearquarter"
 #' @param output
 #' "stl" for STL decomposition chart,
 #' "stats" for STL statistical test results.
@@ -21,99 +22,64 @@
 #' @export chart_zscore
 #' @author Philippe Cote
 #' @examples
-#' chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "weekly", output = "stl", chart = "seasons")
-#' chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "weekly", output = "stats", chart = "seasons")
-#' chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "weekly", output = "zscore", chart = "seasons")
-#' chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "weekly", output = "seasonal", chart = "seasons")
+#' chart_zscore(df = ng_storage, title = "NG Storage Z Score",
+#' per = "yearweek", output = "stl", chart = "seasons")
+#' chart_zscore(df = ng_storage, title = "NG Storage Z Score",
+#' per = "yearweek", output = "stats", chart = "seasons")
+#' chart_zscore(df = ng_storage, title = "NG Storage Z Score",
+#' per = "yearweek", output = "zscore", chart = "seasons")
+#' chart_zscore(df = ng_storage, title = "NG Storage Z Score",
+#' per = "yearweek", output = "seasonal", chart = "seasons")
 
-chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "weekly", output = "zscore", chart = "seasons") {
+chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek", output = "zscore", chart = "seasons") {
   if (!output %in% c("zscore","seasonal","stats","stl")) {stop(print("Incorrect output parameter"))}
+  if (!per %in% c("yearweek","yearmonth","yearquarter")) {stop(print("Incorrect period parameter"))}
+  if (per %in% c("yearweek","yearquarter")) {s = 7 ; e = 8}
+  if (per == "yearmonth") {s = 6 ; e = 8}
 
   if (output == "stl") {
-    if (per == "weekly") {
       x <- df %>%
         tsibble::as_tsibble(key=series, index = date) %>%
         tsibble::group_by_key() %>%
-        tsibble::index_by(freq = ~yearweek(.)) %>%
+        tsibble::index_by(freq = ~do.call(per,args=list(.))) %>%
         dplyr::summarise(value = mean(value)) %>%
         feasts::STL(value ~ season(window = Inf)) %>%
         ggplot2::autoplot()
       return(x)
-    } else if (per == "monthly") {
-      x <- df %>%
-        tsibble::as_tsibble(key=series, index = date) %>%
-        tsibble::group_by_key() %>%
-        tsibble::index_by(freq = ~yearmonth(.)) %>%
-        dplyr::summarise(value = mean(value)) %>%
-        feasts::STL(value ~ season(window = Inf)) %>%
-        ggplot2::autoplot()
-      return(x)
-    } else {stop(print("Incorrect seasonality period input"))}
-  }
+    }
 
   if (output == "stats") {
-    if (per == "weekly") {
       x <- rbind(df,df %>% dplyr::mutate(series = title)) %>%
         tsibble::as_tsibble(key=series, index = date) %>%
         tsibble::group_by_key() %>%
-        tsibble::index_by(freq = ~yearweek(.)) %>%
+        tsibble::index_by(freq = ~do.call(per,args=list(.))) %>%
         dplyr::summarise(value = mean(value)) %>%
         fabletools::features(value, feasts::feat_stl) %>%
         dplyr::slice(1)
       return(x)
-    } else if (per == "monthly") {
-      x <- rbind(df,df %>% dplyr::mutate(series = title)) %>%
-        tsibble::as_tsibble(key=series, index = date) %>%
-        tsibble::group_by_key() %>%
-        tsibble::index_by(freq = ~yearmonth(.)) %>%
-        dplyr::summarise(value = mean(value)) %>%
-        fabletools::features(value, feasts::feat_stl) %>%
-        dplyr::slice(1)
-      return(x)
-    } else {stop(print("Incorrect seasonality period input"))}
-  }
+    }
 
-  if (per == "weekly") {
-    df <- df %>%
+  df <- df %>%
       tsibble::as_tsibble(key=series, index = date) %>%
       tsibble::group_by_key() %>%
-      tsibble::index_by(freq = ~yearweek(.)) %>%
+      tsibble::index_by(freq = ~do.call(per,args=list(.))) %>%
       dplyr::summarise(value = mean(value))
-    z <- df %>%
+  z <- df %>%
       feasts::STL(value ~ season(window = Inf)) %>%
-      dplyr::transmute(per = as.numeric(stringr::str_sub(freq,start=7,end=8)),
+      dplyr::transmute(per = as.numeric(do.call(stringr::str_sub,args=list(freq, start = s, end = e))),
                        year = lubridate::year(freq),
                        value=remainder) %>%
       dplyr::as_tibble() %>%
       dplyr::group_by(per) %>%
       dplyr::summarise(u = mean(value), sigma = stats::sd(value))
-    x <- df %>%
+  x <- df %>%
       feasts::STL(value ~ season(window = Inf)) %>%
-      dplyr::mutate(per = as.numeric(stringr::str_sub(freq,start=7,end=8))) %>%
+      dplyr::mutate(per = as.numeric(do.call(stringr::str_sub,args=list(freq, start = s, end = e)))) %>%
       dplyr::left_join(z, by = c("per")) %>%
       dplyr::mutate(z.score = (remainder - u) / sigma)
-  } else if (per == "monthly") {
-    df <- df %>%
-      tsibble::as_tsibble(key=series, index = date) %>%
-      tsibble::group_by_key() %>%
-      tsibble::index_by(freq = ~yearmonth(.)) %>%
-      dplyr::summarise(value = mean(value))
-    z <- df %>%
-      feasts::STL(value ~ season(window = Inf)) %>%
-      dplyr::transmute(per = stringr::str_sub(freq,start=6,end=8),
-                       year = lubridate::year(freq),
-                       value=remainder) %>%
-      dplyr::as_tibble() %>%
-      dplyr::group_by(per) %>%
-      dplyr::summarise(u = mean(value), sigma = stats::sd(value))
-    x <- df %>%
-      feasts::STL(value ~ season(window = Inf)) %>%
-      dplyr::mutate(per = stringr::str_sub(freq,start=6,end=8)) %>%
-      dplyr::left_join(z, by = c("per")) %>%
-      dplyr::mutate(z.score = (remainder - u) / sigma)
-  } else {stop(print("Incorrect seasonality period input"))}
 
   if (output == "seasonal") {
+
     if (chart == "seasons") {x <- df %>% feasts::gg_season(value)}
     if (chart == "series") {x <- df %>% feasts::gg_subseries(value)}
     }

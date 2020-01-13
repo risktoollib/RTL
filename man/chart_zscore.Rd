@@ -7,7 +7,7 @@
 chart_zscore(
   df = df,
   title = "NG Storage Z Score",
-  per = "weekly",
+  per = "yearweek",
   output = "zscore",
   chart = "seasons"
 )
@@ -17,7 +17,7 @@ chart_zscore(
 
 \item{title}{Your chart title}
 
-\item{per}{Frequency of seasonality "weekly" (DEFAULT) or "monthly"}
+\item{per}{Frequency of seasonality "yearweek" (DEFAULT). "yearmonth", "yearquarter"}
 
 \item{output}{"stl" for STL decomposition chart,
 "stats" for STL statistical test results.
@@ -39,10 +39,14 @@ is not detrended so results once you apply an STL decompostion
 will vary from the unajusted seasonal plot.
 }
 \examples{
-chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "weekly", output = "stl", chart = "seasons")
-chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "weekly", output = "stats", chart = "seasons")
-chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "weekly", output = "zscore", chart = "seasons")
-chart_zscore(df = ng_storage, title = "NG Storage Z Score", per = "weekly", output = "seasonal", chart = "seasons")
+chart_zscore(df = ng_storage, title = "NG Storage Z Score",
+per = "yearweek", output = "stl", chart = "seasons")
+chart_zscore(df = ng_storage, title = "NG Storage Z Score",
+per = "yearweek", output = "stats", chart = "seasons")
+chart_zscore(df = ng_storage, title = "NG Storage Z Score",
+per = "yearweek", output = "zscore", chart = "seasons")
+chart_zscore(df = ng_storage, title = "NG Storage Z Score",
+per = "yearweek", output = "seasonal", chart = "seasons")
 }
 \author{
 Philippe Cote

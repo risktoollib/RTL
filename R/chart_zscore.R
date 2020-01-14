@@ -37,12 +37,17 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek"
   if (per %in% c("yearweek","yearquarter")) {s = 7 ; e = 8}
   if (per == "yearmonth") {s = 6 ; e = 8}
 
+  #s <- list(freq = ~yearweek(.))
+
   if (output == "stl") {
       x <- df %>%
         tsibble::as_tsibble(key=series, index = date) %>%
-        tsibble::group_by_key() %>%
-        tsibble::index_by(freq = ~do.call(per,args=list(.))) %>%
-        dplyr::summarise(value = mean(value)) %>%
+        tsibble::group_by_key()
+      if (per %in% c("yearweek")) {x <- x %>% tsibble::index_by(freq = ~yearweek(.))}
+      if (per %in% c("yearmonth")) {x <- x %>% tsibble::index_by(freq = ~yearmonth(.))}
+      if (per %in% c("yearquarter")) {x <- x %>% tsibble::index_by(freq = ~yearquarter(.))}
+      #tsibble::index_by(freq = ~do.call(per,args=list(.))) %>%
+      x <- x %>% dplyr::summarise(value = mean(value)) %>%
         feasts::STL(value ~ season(window = Inf)) %>%
         ggplot2::autoplot()
       return(x)
@@ -51,9 +56,11 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek"
   if (output == "stats") {
       x <- rbind(df,df %>% dplyr::mutate(series = title)) %>%
         tsibble::as_tsibble(key=series, index = date) %>%
-        tsibble::group_by_key() %>%
-        tsibble::index_by(freq = ~do.call(per,args=list(.))) %>%
-        dplyr::summarise(value = mean(value)) %>%
+        tsibble::group_by_key() #%>%
+      if (per %in% c("yearweek")) {x <- x %>% tsibble::index_by(freq = ~yearweek(.))}
+      if (per %in% c("yearmonth")) {x <- x %>% tsibble::index_by(freq = ~yearmonth(.))}
+      if (per %in% c("yearquarter")) {x <- x %>% tsibble::index_by(freq = ~yearquarter(.))}
+      x <- x %>%  dplyr::summarise(value = mean(value)) %>%
         fabletools::features(value, feasts::feat_stl) %>%
         dplyr::slice(1)
       return(x)
@@ -61,8 +68,12 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek"
 
   df <- df %>%
       tsibble::as_tsibble(key=series, index = date) %>%
-      tsibble::group_by_key() %>%
-      tsibble::index_by(freq = ~do.call(per,args=list(.))) %>%
+      tsibble::group_by_key() #%>%
+  if (per %in% c("yearweek")) {df <- df %>% tsibble::index_by(freq = ~yearweek(.))}
+  if (per %in% c("yearmonth")) {df <- df %>% tsibble::index_by(freq = ~yearmonth(.))}
+  if (per %in% c("yearquarter")) {df <- df %>% tsibble::index_by(freq = ~yearquarter(.))}
+  df <- df %>%
+      #tsibble::index_by(freq = ~do.call(per,args=list(.))) %>%
       dplyr::summarise(value = mean(value))
   z <- df %>%
       feasts::STL(value ~ season(window = Inf)) %>%

@@ -13,7 +13,7 @@
 #' @description Supports automated upload of EIA data through its API by categories.
 #' Data frame organized by Supply Demand caterogies and products.
 #' @format data frame
-#' @source \url{www.eia.gov}
+#' @source \url{https://www.eia.gov/}
 "tickers_eia"
 
 #' cancrudeassays

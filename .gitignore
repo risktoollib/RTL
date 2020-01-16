@@ -39,3 +39,6 @@
 
 # Shiny token, see https://shiny.rstudio.com/articles/shinyapps.html
 rsconnect/
+RTL.Rcheck/
+RTL*.tar.gz
+RTL*.tgz

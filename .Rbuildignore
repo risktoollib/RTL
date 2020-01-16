@@ -1,3 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^data-raw$
+^RTL\.Rcheck$
+^RTL.*\.tar\.gz$
+^RTL.*\.tgz$

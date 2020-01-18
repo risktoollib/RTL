@@ -48,7 +48,8 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek"
       if (per %in% c("yearquarter")) {x <- x %>% tsibble::index_by(freq = ~yearquarter(.))}
       #tsibble::index_by(freq = ~do.call(per,args=list(.))) %>%
       x <- x %>% dplyr::summarise(value = mean(value)) %>%
-        feasts::STL(value ~ season(window = Inf)) %>%
+        fabletools::model(feasts::STL(value ~ season(window = Inf))) %>%
+        fabletools::components() %>%
         ggplot2::autoplot()
       return(x)
     }
@@ -61,7 +62,8 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek"
       if (per %in% c("yearmonth")) {x <- x %>% tsibble::index_by(freq = ~yearmonth(.))}
       if (per %in% c("yearquarter")) {x <- x %>% tsibble::index_by(freq = ~yearquarter(.))}
       x <- x %>%  dplyr::summarise(value = mean(value)) %>%
-        fabletools::features(value, feasts::feat_stl) %>%
+        fabletools::model(feasts::STL(value ~ season(window = Inf))) %>%
+        fabletools::components() %>%
         dplyr::slice(1)
       return(x)
     }
@@ -76,7 +78,8 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek"
       #tsibble::index_by(freq = ~do.call(per,args=list(.))) %>%
       dplyr::summarise(value = mean(value))
   z <- df %>%
-      feasts::STL(value ~ season(window = Inf)) %>%
+    fabletools::model(feasts::STL(value ~ season(window = Inf))) %>%
+    fabletools::components() %>%
       dplyr::transmute(per = as.numeric(do.call(stringr::str_sub,args=list(freq, start = s, end = e))),
                        year = lubridate::year(freq),
                        value=remainder) %>%
@@ -84,7 +87,8 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek"
       dplyr::group_by(per) %>%
       dplyr::summarise(u = mean(value), sigma = stats::sd(value))
   x <- df %>%
-      feasts::STL(value ~ season(window = Inf)) %>%
+    fabletools::model(feasts::STL(value ~ season(window = Inf))) %>%
+    fabletools::components() %>%
       dplyr::mutate(per = as.numeric(do.call(stringr::str_sub,args=list(freq, start = s, end = e)))) %>%
       dplyr::left_join(z, by = c("per")) %>%
       dplyr::mutate(z.score = (remainder - u) / sigma)

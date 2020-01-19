@@ -82,3 +82,8 @@
 #' @description EIA NG Storage Data
 #' @format data frame
 "ng_storage"
+
+#' tradeCycle
+#' @description Crude Trading Trade Cycles
+#' @format data frame
+"tradeCycle"

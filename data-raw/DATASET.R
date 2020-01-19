@@ -63,6 +63,10 @@ holidaysOil<-read.csv('holidays.csv',sep=",",header=TRUE,na.strings="NA",strings
 holidaysOil <- holidaysOil[complete.cases(holidaysOil),]
 usethis::use_data(holidaysOil, overwrite = T)
 
+## tradeCycle
+tradeCycle <- read.csv('tradeCycle.csv',sep=",",header=TRUE,na.strings="NA",stringsAsFactors=FALSE)
+usethis::use_data(tradeCycle, overwrite = T)
+
 ## tweets
   # http://www.trumptwitterarchive.com/archive
 twtrump <- fromJSON("twtrump.json")

@@ -12,10 +12,11 @@
 #' @export npv
 #' @author Philippe Cote
 #' @examples
-#' source("~/keys.R")
+#' \dontrun{
 #' us.df <- ir_df_us(quandlkey = quandlkey,ir.sens=0.01)
 #' npv(init.cost=-375,C=50,cf.freq=.5,F=250,T=2,disc.factors=us.df,BreakEven=TRUE,BE.yield=.0399)$npv
 #' npv(init.cost=-375,C=50,cf.freq=.5,F=250,T=2,disc.factors=us.df,BreakEven=TRUE,BE.yield=.0399)$df
+#' }
 npv <- function(init.cost=-375,C=50,cf.freq=.25,F=250,T=2,disc.factors=us.df,BreakEven=FALSE,BE.yield=.01) {
   if (BreakEven==TRUE) {
     disc.factors$yield <- BE.yield

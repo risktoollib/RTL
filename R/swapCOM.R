@@ -9,12 +9,13 @@
 #' @export swapCOM
 #' @author Philippe Cote
 #' @examples
-#' source("~/keys.R")
+#' \dontrun{
 #' c <- paste0("CL0",c("M","N","Q"))
 #' futs <-getPrices(feed="CME_NymexFutures_EOD",contracts = c,from="2019-08-26",
-#' iuser = mstar[[1]], ipassword = mstar[[2]])
+#' iuser = username, ipassword = password)
 #' swapCOM(futures = futs, futuresNames=c("CL0M","CL0N"),
 #' pricingDates = c("2020-05-01","2020-05-30"), contract = "cmewti", exchange = "nymex")
+#' }
 
 swapCOM <- function(futures = futs,
                      futuresNames=c("CL0M","CL0N"),

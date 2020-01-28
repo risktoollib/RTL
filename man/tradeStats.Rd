@@ -19,7 +19,7 @@ Compute list of risk reward metrics
 }
 \examples{
 library(quantmod)
-getSymbols("SPY")
+getSymbols("SPY", return.class = "zoo")
 SPY$retClCl <- na.omit(quantmod::Delt(Cl(SPY),k=1,type='arithmetic'))
 tradeStats(x=SPY$retClCl,Rf=0)
 }

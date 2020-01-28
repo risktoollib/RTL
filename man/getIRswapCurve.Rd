@@ -28,8 +28,9 @@ Extract historical data for tsQuotes in RQuantlib to bootstrap swap curve
 using Morningstar and FRED as data source.
 }
 \examples{
-source("~/keys.R")
-getIRswapCurve(currency="USD", from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
+\dontrun{
+getIRswapCurve(currency="USD", from="2019-08-26",iuser = username, ipassword = password)
+}
 }
 \author{
 Philippe Cote

@@ -20,13 +20,14 @@ A tibble object
 Converts output of getEAI() in a tidy tibble with names("date","value"). Makes a clean wrapper for use with purrr.
 }
 \examples{
-source("~/keys.R")
+\dontrun{
 eia_df <-tibble::tribble(~ticker, ~series,
 "PET.W_EPC0_SAX_YCUOK_MBBL.W", "Cushing Crude Stocks",
 "NG.NW2_EPG0_SWO_R48_BCF.W","NG Storage - Lower 48") \%>\%
- dplyr::mutate(key=EIAkey) \%>\%
+ dplyr::mutate(key = EIAkey) \%>\%
  dplyr::mutate(df = purrr::pmap(list(ticker,key),.f=eia2tidy)) \%>\%
  dplyr::select(series, df) \%>\% tidyr::unnest()
+ }
 }
 \author{
 Philippe Cote

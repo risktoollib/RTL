@@ -7,11 +7,11 @@
 #' @author Philippe Cote <pcote@@ualberta.com>
 #' @examples
 #' library(quantmod)
-#' getSymbols("SPY")
+#' getSymbols("SPY", return.class = "zoo")
 #' SPY$retClCl <- na.omit(quantmod::Delt(Cl(SPY),k=1,type='arithmetic'))
 #' tradeStats(x=SPY$retClCl,Rf=0)
 tradeStats <- function(x,Rf=0) {
-  x=stats::na.omit(x)
+  x = stats::na.omit(x)
   cumret = as.numeric(PerformanceAnalytics::Return.cumulative(x,geometric = TRUE))
   ret.ann = as.numeric(PerformanceAnalytics::Return.annualized(x, scale=252))
   sd.ann = as.numeric(PerformanceAnalytics::sd.annualized(x, scale=252))

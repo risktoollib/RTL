@@ -24,31 +24,32 @@
 #' @export getPrice
 #' @author Philippe Cote
 #' @examples
-#' source("~/keys.R")
+#' \dontrun{
 #' getPrice(feed="CME_NymexFutures_EOD",contract="CL9Z",
-#' from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
+#' from="2019-08-26",iuser = usernam, ipassword = password)
 #' getPrice(feed="CME_NymexFutures_EOD_continuous",contract="CL_006_Month",
-#' from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
+#' from="2019-08-26",iuser = username, ipassword = password)
 #' getPrice(feed="CME_CbotFuturesEOD",contract="C9Z",
-#' from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
+#' from="2019-08-26",iuser = username, ipassword = password)
 #' getPrice(feed="CME_CbotFuturesEOD_continuous",contract="ZB_001_Month",
-#' from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
+#' from="2019-08-26",iuser = username, ipassword = password)
 #' getPrice(feed="CME_CmeFutures_EOD_continuous",contract="HE_006_Month",
-#' from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
+#' from="2019-08-26",iuser = username, ipassword = password)
 #' getPrice(feed="Morningstar_FX_Forwards",contract="USDCAD 2M",
-#' from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
+#' from="2019-08-26",iuser = username, ipassword = password)
 #' getPrice(feed="CME_CmeFutures_EOD",contract="LH0N",
-#' from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
+#' from="2019-08-26",iuser = username, ipassword = password)
 #' getPrice(feed="CME_CmeFutures_EOD_continuous",contract="HE_006_Month",
-#' from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
+#' from="2019-08-26",iuser = username, ipassword = password)
 #' getPrice(feed="ICE_EuroFutures",contract="BRN0Z",
-#' from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
+#' from="2019-08-26",iuser = username, ipassword = password)
 #' getPrice(feed="ICE_EuroFutures_continuous",contract="BRN_001_Month",
-#' from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
+#' from="2019-08-26",iuser = username, ipassword = password)
 #' getPrice(feed="ICE_NybotCoffeeSugarCocoaFutures",contract="SB0H",
-#' from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
+#' from="2019-08-26",iuser = username, ipassword = password)
 #' getPrice(feed="ICE_NybotCoffeeSugarCocoaFutures_continuous",contract="SF_001_Month",
-#' from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
+#' from="2019-08-26",iuser = username, ipassword = password)
+#' }
 
 getPrice <- function(feed="CME_NymexFutures_EOD",contract="CL9Z",from="2019-01-01",iuser = "x@xyz.com", ipassword = "pass") {
   #mpurl <- "https://mp.morningstarcommodity.com/lds/feeds/CME_NymexFutures_EOD/ts?Symbol=CL9Z"
@@ -110,9 +111,10 @@ getPrice <- function(feed="CME_NymexFutures_EOD",contract="CL9Z",from="2019-01-0
 #' @export getPrices
 #' @author Philippe Cote
 #' @examples
-#' source("~/keys.R")
+#' \dontrun{
 #' getPrices(feed="CME_NymexFutures_EOD",contracts=c("CL9Z","CL0F","CL0M"),
-#' from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
+#' from="2019-08-26",iuser = username, ipassword = password)
+#' }
 
 getPrices <- function(feed="CME_NymexFutures_EOD",contracts=c("CL9Z","CL0F","CL0M"),from="2019-01-01",iuser = "x@xyz.com", ipassword = "pass") {
 
@@ -136,8 +138,9 @@ getPrices <- function(feed="CME_NymexFutures_EOD",contracts=c("CL9Z","CL0F","CL0
 #' @export getIRswapCurve
 #' @author Philippe Cote
 #' @examples
-#' source("~/keys.R")
-#' getIRswapCurve(currency="USD", from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
+#' \dontrun{
+#' getIRswapCurve(currency="USD", from="2019-08-26",iuser = username, ipassword = password)
+#' }
 
 getIRswapCurve <- function(currency="USD",from="2019-01-01",iuser = "x@xyz.com", ipassword = "pass") {
 

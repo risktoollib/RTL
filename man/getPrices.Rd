@@ -31,9 +31,10 @@ Multiple Morningstar API calls using getPrice functions.
 Refer to `getPrices()` for list of currently supported data feeds.
 }
 \examples{
-source("~/keys.R")
+\dontrun{
 getPrices(feed="CME_NymexFutures_EOD",contracts=c("CL9Z","CL0F","CL0M"),
-from="2019-08-26",iuser = mstar[[1]], ipassword = mstar[[2]])
+from="2019-08-26",iuser = username, ipassword = password)
+}
 }
 \author{
 Philippe Cote

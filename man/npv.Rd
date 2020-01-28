@@ -39,10 +39,11 @@ List of NPV and NPV Data frame
 Compute NPV
 }
 \examples{
-source("~/keys.R")
+\dontrun{
 us.df <- ir_df_us(quandlkey = quandlkey,ir.sens=0.01)
 npv(init.cost=-375,C=50,cf.freq=.5,F=250,T=2,disc.factors=us.df,BreakEven=TRUE,BE.yield=.0399)$npv
 npv(init.cost=-375,C=50,cf.freq=.5,F=250,T=2,disc.factors=us.df,BreakEven=TRUE,BE.yield=.0399)$df
+}
 }
 \author{
 Philippe Cote

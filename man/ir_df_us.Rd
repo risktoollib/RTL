@@ -7,7 +7,7 @@
 ir_df_us(quandlkey = quandlkey, ir.sens = 0.01)
 }
 \arguments{
-\item{quandlkey}{Your Quandl key "yourkey"}
+\item{quandlkey}{Your Quandl key "quandlkey"}
 
 \item{ir.sens}{Creates plus and minus IR sensitivity scenarios with specified shock value.}
 }
@@ -18,8 +18,9 @@ Data frame of zero rates
 Extracts US Tresury Zero Rates
 }
 \examples{
-source("~/keys.R")
+\dontrun{
 us.df <- ir_df_us(quandlkey = quandlkey,ir.sens=0.01)
+}
 }
 \author{
 Philippe Cote

@@ -1,13 +1,14 @@
 #' \code{ir_df_us}
 #' @description Extracts US Tresury Zero Rates
-#' @param quandlkey Your Quandl key "yourkey"
+#' @param quandlkey Your Quandl key "quandlkey"
 #' @param ir.sens Creates plus and minus IR sensitivity scenarios with specified shock value.
 #' @return Data frame of zero rates
 #' @export ir_df_us
 #' @author Philippe Cote
 #' @examples
-#' source("~/keys.R")
+#' \dontrun{
 #' us.df <- ir_df_us(quandlkey = quandlkey,ir.sens=0.01)
+#' }
 
 ir_df_us <- function(quandlkey = quandlkey,ir.sens=0.01) {
   Quandl::Quandl.api_key(quandlkey)

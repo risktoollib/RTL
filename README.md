@@ -49,7 +49,7 @@ library(RTL)
 
 ## Credentials
 
-Usernames and password for API services are hidden. For the purpose of examples the first line `source("~/keys.R")` needs to be replaced with your own.
+Usernames and password for API services are required. 
 
 
 

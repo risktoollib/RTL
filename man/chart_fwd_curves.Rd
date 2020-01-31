@@ -22,8 +22,10 @@ plot of forward curves through time
 Returns a plot of forward curves through time
 }
 \examples{
+\dontrun{
 chart_fwd_curves(df=dfwide,cmdty="cmewti",weekly=TRUE,
 main="WTI Forward Curves",ylab="$ per bbl",xlab="",cex=2)
+}
 }
 \author{
 Philippe Cote

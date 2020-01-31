@@ -7,10 +7,10 @@ Authors@R: person("Philippe", "Cote", email = "pcote@ualberta.ca",
                   role = c("aut", "cre"))
 Maintainer: Philippe Cote <pcote@ualberta.ca>
 Description: Collection of functions and metadata to complement core packages
-    in Finance and Commodities, including futures expiry tables and Morningstar
-    API functions. See https://github.com/risktoollib/RTL.
+    in Finance and Commodities, including futures expiry tables and <http://www.morningstarcommodity.com/>
+    API functions. See <https://github.com/risktoollib/RTL>.
 Depends: R (>= 3.6)
-License: GPL (>= 3) + file LICENSE
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/risktoollib/RTL

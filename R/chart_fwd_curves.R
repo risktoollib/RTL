@@ -8,8 +8,10 @@
 #' @export chart_fwd_curves
 #' @author Philippe Cote
 #' @examples
+#' \dontrun{
 #' chart_fwd_curves(df=dfwide,cmdty="cmewti",weekly=TRUE,
 #' main="WTI Forward Curves",ylab="$ per bbl",xlab="",cex=2)
+#' }
 
 chart_fwd_curves <- function(df=dfwide,cmdty="cmewti",weekly=FALSE,...) {
 

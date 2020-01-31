@@ -8,6 +8,7 @@
 #' @export promptBeta
 #' @author Philippe Cote, Nima Safaian
 #' @examples
+#' \dontrun{
 #' x <- dflong %>% dplyr::filter(grepl("CL",series))
 #' x <- x %>% dplyr::mutate(series=readr::parse_number(series)) %>% dplyr::group_by(series)
 #' x <- returns(df=x,retType="abs",period.return=1,spread=TRUE)
@@ -15,6 +16,7 @@
 #' promptBeta(x=x,period="all",betatype="all",output="chart")
 #' promptBeta(x=x,period="all",betatype="all",output="betas")
 #' promptBeta(x=x,period="all",betatype="all",output="stats")
+#' }
 
 
 promptBeta<-function(x=x,period="all",betatype="all",output="chart") {

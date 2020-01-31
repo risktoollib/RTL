@@ -22,6 +22,7 @@ ggplot chart, df of betas or stats
 Returns betas of multiple xts prices (by using relative returns).
 }
 \examples{
+\dontrun{
 x <- dflong \%>\% dplyr::filter(grepl("CL",series))
 x <- x \%>\% dplyr::mutate(series=readr::parse_number(series)) \%>\% dplyr::group_by(series)
 x <- returns(df=x,retType="abs",period.return=1,spread=TRUE)
@@ -29,6 +30,7 @@ x <- rolladjust(x=x,commodityname=c("cmewti"),rolltype=c("Last.Trade"))
 promptBeta(x=x,period="all",betatype="all",output="chart")
 promptBeta(x=x,period="all",betatype="all",output="betas")
 promptBeta(x=x,period="all",betatype="all",output="stats")
+}
 }
 \author{
 Philippe Cote, Nima Safaian

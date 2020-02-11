@@ -7,7 +7,7 @@
 #' @param ... Other parms
 #' @return a chart or list object of results
 #' @export stl_decomp
-#' @author fitdistrplus library stl function wrapper
+#' @author Philippe Cote
 #' @examples
 #' x <- dflong %>% dplyr::filter(series=="CL01")
 #' stl_decomp(x,output="chart",s.window=13,s.degree=1)

@@ -4,7 +4,7 @@
 #' @param Rf Risk-free rate
 #' @return List of risk/reward metrics.
 #' @export tradeStats
-#' @author Philippe Cote <pcote@@ualberta.com>
+#' @author Philippe Cote
 #' @examples
 #' library(quantmod)
 #' getSymbols("SPY", return.class = "zoo")

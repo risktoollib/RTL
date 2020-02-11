@@ -6,7 +6,7 @@
 #' @param output "betas", "chart","stats"
 #' @return ggplot chart, df of betas or stats
 #' @export promptBeta
-#' @author Philippe Cote, Nima Safaian
+#' @author Philippe Cote
 #' @examples
 #' \dontrun{
 #' x <- dflong %>% dplyr::filter(grepl("CL",series))

@@ -4,7 +4,7 @@
 \alias{CRReuro}
 \title{\code{CRReuro}}
 \usage{
-CRReuro(S, X, sigma, r, T, N, type)
+CRReuro(S, X, sigma, r, T2M, N, type)
 }
 \arguments{
 \item{S}{Stock price.}
@@ -15,9 +15,9 @@ CRReuro(S, X, sigma, r, T, N, type)
 
 \item{r}{Risk-free rate.}
 
-\item{T}{Time to maturity in years}
+\item{T2M}{Time to maturity in years}
 
-\item{N}{Number of time steps. Internally dt = T/N.}
+\item{N}{Number of time steps. Internally dt = T2M/N.}
 
 \item{type}{"call" or "put"}
 }
@@ -29,7 +29,7 @@ European option binomial model on a stock without dividends.For academic purpose
 Use fOptions::CRRBinomialTreeOptions for real-life usage.
 }
 \examples{
-CRReuro(S=100,X=100,sigma=0.2,r=0.1,T=1,N=5,type="call")
+CRReuro(S=100,X=100,sigma=0.2,r=0.1,T2M=1,N=5,type="call")
 }
 \author{
 Philippe Cote

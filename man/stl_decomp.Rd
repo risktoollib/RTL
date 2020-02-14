@@ -29,5 +29,5 @@ stl_decomp(x,output="chart",s.window=13,s.degree=1)
 stl_decomp(x,output="data",s.window=13,s.degree=1)
 }
 \author{
-fitdistrplus library stl function wrapper
+Philippe Cote
 }

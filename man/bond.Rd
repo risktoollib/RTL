@@ -4,14 +4,14 @@
 \alias{bond}
 \title{\code{bond}}
 \usage{
-bond(ytm = 0.05, C = 0.05, T = 1, m = 2, output = "price")
+bond(ytm = 0.05, C = 0.05, T2M = 1, m = 2, output = "price")
 }
 \arguments{
 \item{ytm}{Yield to Maturity}
 
 \item{C}{Coupon rate per annum}
 
-\item{T}{Time to maturity in years}
+\item{T2M}{Time to maturity in years}
 
 \item{m}{Periods per year for coupon payments e.g semi-annual = 2.}
 
@@ -24,9 +24,9 @@ Price, cash flows data frame and/or duration
 Compute bond price, cash flow table and duration
 }
 \examples{
-bond(ytm=0.05,C=0.05,T=1,m=2,output="price")
-bond(ytm=0.05,C=0.05,T=1,m=2,output="df")
-bond(ytm=0.05,C=0.05,T=1,m=2,output="duration")
+bond(ytm = 0.05, C = 0.05,T2M = 1,m = 2,output = "price")
+bond(ytm = 0.05,C = 0.05,T2M = 1,m = 2,output = "df")
+bond(ytm = 0.05,C = 0.05,T2M = 1,m = 2,output = "duration")
 }
 \author{
 Philippe Cote

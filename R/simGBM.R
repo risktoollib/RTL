@@ -3,16 +3,16 @@
 #' @param S0 Spot price at t=0
 #' @param drift Drift term in percentage
 #' @param sigma Standard deviation
-#' @param T Maturity in years
+#' @param T2M Maturity in years
 #' @param dt Time step in period e.g. 1/250 = 1 business day.
 #' @return A numeric vector of simulated values
 #' @export simGBM
 #' @author Philippe Cote
 #' @examples
-#' simGBM(S0=10,drift=0,sigma=0.2,T=1,dt=1/12)
+#' simGBM(S0=10,drift=0,sigma=0.2,T2M=1,dt=1/12)
 
-simGBM <- function(S0=10,drift=0,sigma=0.2,T=1,dt=1/12) {
-  periods = T/dt
+simGBM <- function(S0=10,drift=0,sigma=0.2,T2M=1,dt=1/12) {
+  periods = T2M/dt
   S = rep(S0,periods)
   for (i in 2:periods) {
     S[i] = S[i-1] * exp(

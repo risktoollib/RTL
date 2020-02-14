@@ -22,10 +22,10 @@ distdescplot <- function(x=x){
   voldata$CumulativeReturn <- cumsum(voldata$returns)
   voldata$Drawdowns <- PerformanceAnalytics::Drawdowns(voldata$returns)
   def.par <- par(no.readonly = TRUE)
+  on.exit(par(def.par))
   graphics::layout(matrix(c(1,2,3,2), 2, 2, byrow = TRUE))
   PerformanceAnalytics::chart.Histogram(as.numeric(zoo::coredata(x)), main = "Return Distribution",xlim = c(-max(abs(x)), max(abs(x))),
                                         methods = c("add.rug","add.normal", "add.centered", "add.density", "add.risk"))
   print(xts::plot.xts(voldata, multi.panel=4, type = "h", col=c("blueviolet", "blue", "deepskyblue2","cornflowerblue"), lty=1:4, yaxis.same = FALSE))
   fitdistrplus::descdist(as.numeric(zoo::coredata(x)), boot = nrow(x), discrete = FALSE)
-  par(def.par)
 }

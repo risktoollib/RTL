@@ -12,7 +12,7 @@ simOUJ(
   jump_prob = 0.05,
   jump_avesize = 2,
   jump_stdv = 0.05,
-  T = 1,
+  T2M = 1,
   dt = 1/250
 )
 }
@@ -31,7 +31,7 @@ simOUJ(
 
 \item{jump_stdv}{Standard deviation of jump average size}
 
-\item{T}{Maturity in years}
+\item{T2M}{Maturity in years}
 
 \item{dt}{Time step size e.g. 1/250 = 1 business day.}
 }
@@ -42,7 +42,7 @@ A numeric vector of simulated values
 Simulates a Ornstein–Uhlenbeck process with Jumps
 }
 \examples{
-simOUJ(S0=5,mu=5,theta=.5,sigma=0.2,jump_prob=0.05,jump_avesize = 3,jump_stdv = 0.05,T=1,dt=1/12)
+simOUJ(S0=5,mu=5,theta=.5,sigma=0.2,jump_prob=0.05,jump_avesize = 3,jump_stdv = 0.05,T2M=1,dt=1/12)
 }
 \author{
 Philippe Cote

@@ -24,5 +24,5 @@ SPY$retClCl <- na.omit(quantmod::Delt(Cl(SPY),k=1,type='arithmetic'))
 tradeStats(x=SPY$retClCl,Rf=0)
 }
 \author{
-Philippe Cote <pcote@ualberta.com>
+Philippe Cote
 }

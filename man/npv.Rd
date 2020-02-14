@@ -8,8 +8,8 @@ npv(
   init.cost = -375,
   C = 50,
   cf.freq = 0.25,
-  F = 250,
-  T = 2,
+  TV = 250,
+  T2M = 2,
   disc.factors = us.df,
   BreakEven = FALSE,
   BE.yield = 0.01
@@ -22,9 +22,9 @@ npv(
 
 \item{cf.freq}{Cash flow frequency in year fraction e.g. quarterly = 0.25}
 
-\item{F}{Final terminal value}
+\item{TV}{Terminal Value}
 
-\item{T}{Final maturity in years}
+\item{T2M}{Time to Maturity in years}
 
 \item{disc.factors}{Data frame of discount factors using ir.df.us() function.}
 
@@ -41,8 +41,10 @@ Compute NPV
 \examples{
 \dontrun{
 us.df <- ir_df_us(quandlkey = quandlkey,ir.sens=0.01)
-npv(init.cost=-375,C=50,cf.freq=.5,F=250,T=2,disc.factors=us.df,BreakEven=TRUE,BE.yield=.0399)$npv
-npv(init.cost=-375,C=50,cf.freq=.5,F=250,T=2,disc.factors=us.df,BreakEven=TRUE,BE.yield=.0399)$df
+npv(init.cost=-375,C=50,cf.freq=.5,TV=250,T2M=2,
+disc.factors=us.df,BreakEven=TRUE,BE.yield=.0399)$npv
+npv(init.cost=-375,C=50,cf.freq=.5,TV=250,T2M=2,
+disc.factors=us.df,BreakEven=TRUE,BE.yield=.0399)$df
 }
 }
 \author{

@@ -4,7 +4,7 @@
 \alias{simGBM}
 \title{\code{simGBM}}
 \usage{
-simGBM(S0 = 10, drift = 0, sigma = 0.2, T = 1, dt = 1/12)
+simGBM(S0 = 10, drift = 0, sigma = 0.2, T2M = 1, dt = 1/12)
 }
 \arguments{
 \item{S0}{Spot price at t=0}
@@ -13,7 +13,7 @@ simGBM(S0 = 10, drift = 0, sigma = 0.2, T = 1, dt = 1/12)
 
 \item{sigma}{Standard deviation}
 
-\item{T}{Maturity in years}
+\item{T2M}{Maturity in years}
 
 \item{dt}{Time step in period e.g. 1/250 = 1 business day.}
 }
@@ -24,7 +24,7 @@ A numeric vector of simulated values
 Simulates a Geometric Brownian Motion process
 }
 \examples{
-simGBM(S0=10,drift=0,sigma=0.2,T=1,dt=1/12)
+simGBM(S0=10,drift=0,sigma=0.2,T2M=1,dt=1/12)
 }
 \author{
 Philippe Cote

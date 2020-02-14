@@ -6,17 +6,17 @@
 #' @param X Strike price.
 #' @param sigma Implied volatility e.g. 0.20
 #' @param r Risk-free rate.
-#' @param T Time to maturity in years
-#' @param N Number of time steps. Internally dt = T/N.
+#' @param T2M Time to maturity in years
+#' @param N Number of time steps. Internally dt = T2M/N.
 #' @param type "call" or "put"
 #' @return List of asset price tree, option value tree and option price.
 #' @export CRReuro
 #' @author Philippe Cote
 #' @examples
-#' CRReuro(S=100,X=100,sigma=0.2,r=0.1,T=1,N=5,type="call")
+#' CRReuro(S=100,X=100,sigma=0.2,r=0.1,T2M=1,N=5,type="call")
 
-CRReuro = function(S,X,sigma,r,T,N,type) {
-  dt=T/N
+CRReuro = function(S,X,sigma,r,T2M,N,type) {
+  dt=T2M/N
   # Define u, d, and risk-neutral probability
   u = exp(sigma*sqrt(dt))
   d = exp(-sigma*sqrt(dt))

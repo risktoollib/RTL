@@ -13,7 +13,7 @@
 #' main="WTI Forward Curves",ylab="$ per bbl",xlab="",cex=2)
 #' }
 
-chart_fwd_curves <- function(df=dfwide,cmdty="cmewti",weekly=FALSE,...) {
+chart_fwd_curves <- function(df = dfwide,cmdty = "cmewti",weekly = FALSE,...) {
 
   term = stats::na.omit(as.numeric(gsub("[^0-9]","",colnames(df))))
   if (tibble::is_tibble(df)) {df=as.data.frame(df)}

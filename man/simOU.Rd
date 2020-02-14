@@ -4,7 +4,7 @@
 \alias{simOU}
 \title{\code{simOU}}
 \usage{
-simOU(S0 = 5, mu = 5, theta = 0.5, sigma = 0.2, T = 1, dt = 1/12)
+simOU(S0 = 5, mu = 5, theta = 0.5, sigma = 0.2, T2M = 1, dt = 1/12)
 }
 \arguments{
 \item{S0}{S at t=0}
@@ -15,7 +15,7 @@ simOU(S0 = 5, mu = 5, theta = 0.5, sigma = 0.2, T = 1, dt = 1/12)
 
 \item{sigma}{Standard deviation}
 
-\item{T}{Maturity in years}
+\item{T2M}{Maturity in years}
 
 \item{dt}{Time step size e.g. 1/250 = 1 business day.}
 }
@@ -26,7 +26,7 @@ A numeric vector of simulated values
 Simulates a Ornstein–Uhlenbeck process
 }
 \examples{
-simOU(S0=5,mu=5,theta=.5,sigma=0.2,T=1,dt=1/12)
+simOU(S0=5,mu=5,theta=.5,sigma=0.2,T2M=1,dt=1/12)
 }
 \author{
 Philippe Cote

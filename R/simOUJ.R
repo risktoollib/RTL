@@ -7,16 +7,16 @@
 #' @param jump_prob Probability of jumps
 #' @param jump_avesize Average size of jumps
 #' @param jump_stdv Standard deviation of jump average size
-#' @param T Maturity in years
+#' @param T2M Maturity in years
 #' @param dt Time step size e.g. 1/250 = 1 business day.
 #' @return A numeric vector of simulated values
 #' @export simOUJ
 #' @author Philippe Cote
 #' @examples
-#' simOUJ(S0=5,mu=5,theta=.5,sigma=0.2,jump_prob=0.05,jump_avesize = 3,jump_stdv = 0.05,T=1,dt=1/12)
+#' simOUJ(S0=5,mu=5,theta=.5,sigma=0.2,jump_prob=0.05,jump_avesize = 3,jump_stdv = 0.05,T2M=1,dt=1/12)
 
-simOUJ <- function(S0=5,mu=5,theta=10,sigma=0.2,jump_prob=0.05,jump_avesize = 2,jump_stdv = 0.05,T=1,dt=1/250) {
-  periods = T/dt
+simOUJ <- function(S0=5,mu=5,theta=10,sigma=0.2,jump_prob=0.05,jump_avesize = 2,jump_stdv = 0.05,T2M=1,dt=1/250) {
+  periods = T2M/dt
   #JperYear = jump_prob / dt
   S = rep(S0, periods)
   for (i in 2:periods) {
@@ -27,7 +27,7 @@ simOUJ <- function(S0=5,mu=5,theta=10,sigma=0.2,jump_prob=0.05,jump_avesize = 2,
       sigma * S[i-1] * stats::rnorm(n = 1, mean = 0, sd = sqrt(dt)) +
       stats::rpois(1, jump_prob * dt) * stats::rlnorm(n = 1, mean = log(jump_avesize), sd = jump_stdv)
   }
-  # periods = T/dt
+  # periods = T2M/dt
   # S0 = mu
   # S = rep(S0,periods)
   # for (i in 2:periods) {

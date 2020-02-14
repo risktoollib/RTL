@@ -33,5 +33,5 @@ promptBeta(x=x,period="all",betatype="all",output="stats")
 }
 }
 \author{
-Philippe Cote, Nima Safaian
+Philippe Cote
 }

@@ -2,9 +2,8 @@ Package: RTL
 Type: Package
 Title: Risk Tool Library 
 Version: 0.1.1
-Date: 2020-01-28
-Authors@R: c(person("Philippe", "Cote", email = "pcote@ualberta.ca",role = c("aut", "cre")),person("Nima", "Safaian", email = "nima.safaian@gmail.com",role = c("aut")))
-Maintainer: Philippe Cote <pcote@ualberta.ca>
+Date: 2020-02-16
+Authors@R: c(person("Philippe", "Cote", email = "pcote@ualberta.ca", role = c("aut", "cre")),person("Nima", "Safaian", email = "nima.safaian@gmail.com", role = c("aut")))
 Description: Collection of functions and metadata to complement core packages
     in Finance and Commodities, including futures expiry tables and <http://www.morningstarcommodity.com/>
     API functions. See <https://github.com/risktoollib/RTL>.

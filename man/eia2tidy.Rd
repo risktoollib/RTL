@@ -10,8 +10,6 @@ eia2tidy(ticker, key)
 \item{ticker}{EIA series name.}
 
 \item{key}{EIA API token.}
-
-\item{...}{Other parms}
 }
 \value{
 A tibble object

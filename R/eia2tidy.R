@@ -2,7 +2,6 @@
 #' @description Converts output of getEAI() in a tidy tibble with names("date","value"). Makes a clean wrapper for use with purrr.
 #' @param ticker EIA series name.
 #' @param key EIA API token.
-#' @param ... Other parms
 #' @return A tibble object
 #' @export eia2tidy
 #' @author Philippe Cote

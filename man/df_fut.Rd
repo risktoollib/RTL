@@ -4,8 +4,10 @@
 \name{df_fut}
 \alias{df_fut}
 \title{df_fut}
-\format{data frame
-#' @source \url{http://www.morningstarcommodity.com}}
+\format{
+data frame
+#' @source \url{http://www.morningstarcommodity.com}
+}
 \usage{
 df_fut
 }

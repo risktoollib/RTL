@@ -4,7 +4,9 @@
 \name{tickers_eia}
 \alias{tickers_eia}
 \title{tickers_eia}
-\format{data frame}
+\format{
+data frame
+}
 \source{
 \url{https://www.eia.gov/}
 }

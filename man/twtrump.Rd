@@ -4,7 +4,9 @@
 \name{twtrump}
 \alias{twtrump}
 \title{twtrump}
-\format{data frame}
+\format{
+data frame
+}
 \usage{
 twtrump
 }

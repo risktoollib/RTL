@@ -4,7 +4,9 @@
 \name{cancrudeprices}
 \alias{cancrudeprices}
 \title{cancrudeprices}
-\format{data frame}
+\format{
+data frame
+}
 \usage{
 cancrudeprices
 }

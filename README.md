@@ -14,6 +14,7 @@ Professionals** for 2020 publication by [Risk Books](https://riskbooks.com/).
 
   + ICE_EuroFutures and ICE_EuroFutures_continuous.
   + CME_NymexFutures_EOD and CME_NymexFutures_EOD_continuous.
+  + CME_NymexOptions_EOD.
   + CME_CbotFuturesEOD and CME_CbotFuturesEOD_continuous.
   + CME_CmeFutures_EOD and CME_CmeFutures_EOD_continuous.
   + CME_STLCPC_Futures.

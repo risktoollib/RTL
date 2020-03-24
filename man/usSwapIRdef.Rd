@@ -4,8 +4,10 @@
 \name{usSwapIRdef}
 \alias{usSwapIRdef}
 \title{usSwapIRdef}
-\format{data frame
-#' @source Morningstar and FRED}
+\format{
+data frame
+#' @source Morningstar and FRED
+}
 \usage{
 usSwapIRdef
 }

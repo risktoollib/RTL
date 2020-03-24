@@ -4,7 +4,9 @@
 \name{usSwapCurvesPar}
 \alias{usSwapCurvesPar}
 \title{usSwapCurvesPar}
-\format{data frame}
+\format{
+data frame
+}
 \usage{
 usSwapCurvesPar
 }

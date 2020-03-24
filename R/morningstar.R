@@ -29,6 +29,8 @@
 #' from="2019-08-26",iuser = usernam, ipassword = password)
 #' getPrice(feed="CME_NymexFutures_EOD_continuous",contract="CL_006_Month",
 #' from="2019-08-26",iuser = username, ipassword = password)
+#' getPrice(feed="CME_NymexOptions_EOD",contract="LO0M2500",
+#' from="2020-03-15",iuser = usernam, ipassword = password)
 #' getPrice(feed="CME_CbotFuturesEOD",contract="C9Z",
 #' from="2019-08-26",iuser = username, ipassword = password)
 #' getPrice(feed="CME_CbotFuturesEOD_continuous",contract="ZB_001_Month",
@@ -54,7 +56,7 @@
 getPrice <- function(feed="CME_NymexFutures_EOD",contract="CL9Z",from="2019-01-01",iuser = "x@xyz.com", ipassword = "pass") {
   #mpurl <- "https://mp.morningstarcommodity.com/lds/feeds/CME_NymexFutures_EOD/ts?Symbol=CL9Z"
   userpw <- paste0(iuser,":",ipassword)
-  if (feed %in% c("CME_NymexFutures_EOD","CME_CbotFuturesEOD","CME_CmeFutures_EOD","ICE_EuroFutures","ICE_NybotCoffeeSugarCocoaFutures")) {
+  if (feed %in% c("CME_NymexFutures_EOD","CME_NymexOptions_EOD","CME_CbotFuturesEOD","CME_CmeFutures_EOD","ICE_EuroFutures","ICE_NybotCoffeeSugarCocoaFutures")) {
     URL = httr::modify_url(url = "https://mp.morningstarcommodity.com",path = paste0("/lds/feeds/",feed, "/ts?","Symbol=",contract,"&fromDateTime=",from))}
   if (feed %in% c("CME_NymexFutures_EOD_continuous","CME_CbotFuturesEOD_continuous","CME_CmeFutures_EOD_continuous","ICE_EuroFutures_continuous","ICE_NybotCoffeeSugarCocoaFutures_continuous")) {
     URL = httr::modify_url(url = "https://mp.morningstarcommodity.com",path = paste0("/lds/feeds/",feed, "/ts?","Contract=",contract,"&fromDateTime=",from))}

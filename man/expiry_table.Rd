@@ -4,7 +4,9 @@
 \name{expiry_table}
 \alias{expiry_table}
 \title{expiry_table}
-\format{data frame}
+\format{
+data frame
+}
 \usage{
 expiry_table
 }

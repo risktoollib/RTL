@@ -50,6 +50,8 @@ getPrice(feed="CME_NymexFutures_EOD",contract="CL9Z",
 from="2019-08-26",iuser = usernam, ipassword = password)
 getPrice(feed="CME_NymexFutures_EOD_continuous",contract="CL_006_Month",
 from="2019-08-26",iuser = username, ipassword = password)
+getPrice(feed="CME_NymexOptions_EOD",contract="LO0M2500",
+from="2020-03-15",iuser = usernam, ipassword = password)
 getPrice(feed="CME_CbotFuturesEOD",contract="C9Z",
 from="2019-08-26",iuser = username, ipassword = password)
 getPrice(feed="CME_CbotFuturesEOD_continuous",contract="ZB_001_Month",

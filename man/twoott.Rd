@@ -4,7 +4,9 @@
 \name{twoott}
 \alias{twoott}
 \title{twoott}
-\format{data frame}
+\format{
+data frame
+}
 \usage{
 twoott
 }

@@ -4,7 +4,9 @@
 \name{cancrudeassays}
 \alias{cancrudeassays}
 \title{cancrudeassays}
-\format{data frame}
+\format{
+data frame
+}
 \source{
 \url{https://crudemonitor.ca/}
 }

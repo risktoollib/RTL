@@ -4,8 +4,10 @@
 \name{usSwapCurves}
 \alias{usSwapCurves}
 \title{usSwapCurves}
-\format{List
-#' @source Morningstar and FRED}
+\format{
+List
+#' @source Morningstar and FRED
+}
 \usage{
 usSwapCurves
 }

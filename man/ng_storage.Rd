@@ -4,7 +4,9 @@
 \name{ng_storage}
 \alias{ng_storage}
 \title{ng_storage}
-\format{data frame}
+\format{
+data frame
+}
 \usage{
 ng_storage
 }

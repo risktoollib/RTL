@@ -4,7 +4,9 @@
 \name{holidaysOil}
 \alias{holidaysOil}
 \title{holidaysOil}
-\format{data frame}
+\format{
+data frame
+}
 \usage{
 holidaysOil
 }

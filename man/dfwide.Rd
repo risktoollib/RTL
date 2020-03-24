@@ -4,8 +4,10 @@
 \name{dfwide}
 \alias{dfwide}
 \title{dfwide}
-\format{data frame
-#' @source \url{http://www.morningstarcommodity.com}}
+\format{
+data frame
+#' @source \url{http://www.morningstarcommodity.com}
+}
 \usage{
 dfwide
 }

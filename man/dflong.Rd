@@ -4,8 +4,10 @@
 \name{dflong}
 \alias{dflong}
 \title{dflong}
-\format{data frame
-#' @source \url{http://www.morningstarcommodity.com}}
+\format{
+data frame
+#' @source \url{http://www.morningstarcommodity.com}
+}
 \usage{
 dflong
 }

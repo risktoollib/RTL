@@ -4,7 +4,9 @@
 \name{tradeCycle}
 \alias{tradeCycle}
 \title{tradeCycle}
-\format{data frame}
+\format{
+data frame
+}
 \usage{
 tradeCycle
 }

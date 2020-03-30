@@ -7,6 +7,7 @@
 #' \itemize{
 #'   \item CME_CbotFuturesEOD and CME_CbotFuturesEOD_continuous
 #'   \item CME_NymexFutures_EOD and CME_NymexFutures_EOD_continuous
+#'   \item CME_NymexOptions_EOD
 #'   \item CME_CmeFutures_EOD and CME_CmeFutures_EOD_continuous
 #'   \item ICE_EuroFutures and ICE_EuroFutures_continuous
 #'   \item ICE_NybotCoffeeSugarCocoaFutures and ICE_NybotCoffeeSugarCocoaFutures_continuous

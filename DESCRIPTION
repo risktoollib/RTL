@@ -1,8 +1,8 @@
 Package: RTL
 Type: Package
 Title: Risk Tool Library 
-Version: 0.1.2
-Date: 2020-02-16
+Version: 0.1.3
+Date: 2020-05-07
 Authors@R: c(person("Philippe", "Cote", email = "pcote@ualberta.ca", role = c("aut", "cre")),person("Nima", "Safaian", email = "nima.safaian@gmail.com", role = c("aut")))
 Description: Collection of functions and metadata to complement core packages
     in Finance and Commodities, including futures expiry tables and <http://www.morningstarcommodity.com/>
@@ -28,7 +28,6 @@ Imports:
     stringr,
     purrr,
     lubridate,
-    EIAdata,
     timetk,
     PerformanceAnalytics,
     tibbletime,
@@ -42,4 +41,5 @@ Imports:
     tsibble,
     feasts,
     plotly,
-    fabletools
+    fabletools,
+    jsonlite

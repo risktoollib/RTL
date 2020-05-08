@@ -4,12 +4,14 @@
 \alias{eia2tidy}
 \title{\code{eia2tidy}}
 \usage{
-eia2tidy(ticker, key)
+eia2tidy(ticker, key, name = " ")
 }
 \arguments{
 \item{ticker}{EIA series name.}
 
 \item{key}{EIA API token.}
+
+\item{name}{Name you want to give the series. Defaults to ticker if set to " "}
 }
 \value{
 A tibble object
@@ -19,12 +21,12 @@ Converts output of getEAI() in a tidy tibble with names("date","value"). Makes a
 }
 \examples{
 \dontrun{
-eia_df <-tibble::tribble(~ticker, ~series,
-"PET.W_EPC0_SAX_YCUOK_MBBL.W", "Cushing Crude Stocks",
-"NG.NW2_EPG0_SWO_R48_BCF.W","NG Storage - Lower 48") \%>\%
+eia_df <-tibble::tribble(~ticker, ~name,
+"PET.W_EPC0_SAX_YCUOK_MBBL.W", "CushingCrudeStocks",
+"NG.NW2_EPG0_SWO_R48_BCF.W","NGStorageLower48") \%>\%
  dplyr::mutate(key = EIAkey) \%>\%
- dplyr::mutate(df = purrr::pmap(list(ticker,key),.f=eia2tidy)) \%>\%
- dplyr::select(series, df) \%>\% tidyr::unnest()
+ dplyr::mutate(df = purrr::pmap(list(ticker,key,name),.f=RTL::eia2tidy)) \%>\%
+ dplyr::select(df) \%>\% tidyr::unnest(df)
  }
 }
 \author{

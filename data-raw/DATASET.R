@@ -1,5 +1,5 @@
 # usethis::use_readme_md()
-# usethis::use_package("tibble")
+# usethis::use_package("jsonlite")
 # usethis::use_pipe()
 library(tidyverse)
 library(lubridate)

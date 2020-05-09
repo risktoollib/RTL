@@ -22,10 +22,32 @@
 #' @source \url{https://crudemonitor.ca/}
 "cancrudeassays"
 
+#' cancrudeassayssum
+#' @description Data set with historical Canadian Crude Assays Statistics.
+#' @format data frame
+#' @source \url{https://crudemonitor.ca/}
+"cancrudeassayssum"
+
+#' crudes
+#' @description Crude oil qualities.
+#' @format data frame
+#' @source Canadian Crude Monitor and BP Crude Assays
+"crudes"
+
 #' cancrudeprices
 #' @description Randomized dataset of Canadian Crude monthly prices versus WTi Calendar Month Average.
 #' @format data frame
 "cancrudeprices"
+
+#' crudepipelines
+#' @description Sample GIS data set for North American crude pipelines.
+#' @format data frame
+"crudepipelines"
+
+#' refineries
+#' @description Sample GIS data set for North American refineries.
+#' @format data frame
+"refineries"
 
 #' twtrump
 #' @description NLP toy data set of OOTT tweet.

@@ -42,4 +42,5 @@ Imports:
     feasts,
     plotly,
     fabletools,
-    jsonlite
+    jsonlite,
+    sp

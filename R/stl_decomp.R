@@ -13,7 +13,7 @@
 #' stl_decomp(x,output="chart",s.window=13,s.degree=1)
 #' stl_decomp(x,output="data",s.window=13,s.degree=1)
 
-stl_decomp <- function(x=x,output="chart",s.window=13,s.degree=1,...) {
+stl_decomp <- function(x = x,output = "chart",s.window = 13,s.degree = 1,...) {
 
   tmp.name<-unique(x$series)
   x.ts <- tibbletime::as_tbl_time(x, date) %>% dplyr::select(-series) %>% tibbletime::collapse_by("monthly") %>%

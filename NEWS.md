@@ -1,6 +1,11 @@
 # RTL 0.1.3
 
 + `eia2tidy` removed dependency to `EIAdata` package.
++ Summarised statistics dataset `cancrudeassayssum ` for Canadian Crude assays.
++ Crude oil qualities dataset `crudes ` from crudemonitor.ca and BP Assays.
++ Sample GIS data sets for North American `refineries` and `crudepipelines`.
++ Upgrade for `dplyr 1.0.0`.
++ Sample data sets `dflong` and `dfwide` updated.
 
 # RTL 0.1.2
 

@@ -1,21 +1,41 @@
 # usethis::use_readme_md()
-# usethis::use_package("jsonlite")
+# usethis::use_package("sp")
 # usethis::use_pipe()
 library(tidyverse)
 library(lubridate)
 library(jsonlite)
 source("~/keys.R")
 setwd("~/RTL/data-raw")
-## Prices Data (to migrate later)
-  # library(RTL)
-  # saveRDS(df_fut,"df_fut",compress = F)
-  # saveRDS(dflong,"dflong",compress = F)
-  # saveRDS(dfwide,"dfwide",compress = F)
 
-
+## Basic sample df
 df_fut <- readRDS("df_fut") ; usethis::use_data(df_fut, overwrite = T)
-dflong <- readRDS("dflong") ; usethis::use_data(dflong, overwrite = T)
-dfwide <- readRDS("dfwide") ; usethis::use_data(dfwide, overwrite = T)
+
+iuser = mstar[["iuser"]] ; ipassword = mstar[["ipassword"]]
+
+crude <- c(paste0("CL_",sprintf('%0.3d', 1:36),"_Month"), paste0("NG_",sprintf('%0.3d', 1:36),"_Month"))
+pdts <- c(paste0("HO_",sprintf('%0.3d', 1:18),"_Month"), paste0("RB_",sprintf('%0.3d', 1:18),"_Month"))
+crude <- RTL::getPrices(feed="CME_NymexFutures_EOD_continuous",
+               contracts = crude,from = "2015-01-01",
+               iuser = iuser, ipassword = ipassword) %>%
+  pivot_longer(-date,names_to = "series", values_to = "value") %>%
+  dplyr::mutate(series = stringr::str_replace_all(series,c("_0" = "","_Month" = ""))) %>% na.omit()
+pdts <- RTL::getPrices(feed="CME_NymexFutures_EOD_continuous",
+                         contracts = pdts,from = "2015-01-01",
+                         iuser = iuser, ipassword = ipassword) %>%
+  pivot_longer(-date,names_to = "series", values_to = "value") %>%
+  dplyr::mutate(series = stringr::str_replace_all(series,c("_0" = "","_Month" = ""))) %>% na.omit()
+
+dflong <-  rbind(crude, pdts)
+dfwide <- dflong %>% tidyr::pivot_wider(names_from = series, values_from = value) %>% na.omit()
+usethis::use_data(dflong, overwrite = T)
+usethis::use_data(dfwide, overwrite = T)
+rm(crude,pdts)
+###
+
+load("map.RData")
+crudepipelines <- crudepipes
+usethis::use_data(crudepipelines, overwrite = T)
+usethis::use_data(refineries, overwrite = T)
 
 ng_storage <- tibble::tribble(~ticker, ~series,"NG.NW2_EPG0_SWO_R48_BCF.W","NG Storage - Lower 48") %>%
   dplyr::mutate(key=EIAkey) %>%
@@ -82,6 +102,37 @@ usethis::use_data(twtrump, overwrite = T)
 ## Canadain Crude Data
 cancrudeprices <- readRDS("~/dscf/data/crude_prices.RDS") ; usethis::use_data(cancrudeprices, overwrite = T)
 cancrudeassays <- readRDS("~/dscf/data/crude_assays.RDS") ; usethis::use_data(cancrudeassays, overwrite = T)
+
+cancrudeassayssum <- cancrudeassays %>% dplyr::group_by(Ticker,Crude) %>%
+  dplyr::filter(YM > "2015-01-01", Ticker != "MSW(S)") %>%
+  dplyr::select(-Location,-Sediment,-Salt,-Olefins,-Viscosity) %>%
+  dplyr::mutate(TAN = case_when(Ticker == "MSW" ~ 0,TRUE ~ TAN)) %>%
+  na.omit() %>% summarise_all(list(mean))
+usethis::use_data(cancrudeassayssum, overwrite = T)
+
+library(rvest)
+url = "https://www.bp.com/en/global/bp-global-energy-trading/features-and-updates/technical-downloads/crudes-assays.html"
+html <- xml2::read_html(url)
+x <- html %>% rvest::html_nodes("table") %>%
+  rvest::html_table(fill=T) %>% .[[1]] %>%
+  dplyr::as_tibble() %>% dplyr::slice(-1) %>% dplyr::select(1:5) %>%
+  dplyr::transmute(Crude = X1, Country = X2, API = as.numeric(X3), Sulphur = as.numeric(X4), TAN = as.numeric(X5))
+
+y <- cancrudeassayssum %>% dplyr::transmute(Crude,
+                                       Country="Canada",
+                                       API = Gravity, Sulphur,TAN) %>%
+  dplyr::ungroup() %>% dplyr::select(-Ticker)
+
+crudes <- rbind(x,y) %>%
+  dplyr::mutate(SweetSour = case_when(Sulphur < 0.5 ~ "Sweet", TRUE ~ "Sour"),
+                LightMedHeavy = case_when(API < 22.3 ~ "Heavy",
+                                          API > 31.1 ~ "Light",
+                                          TRUE ~ "Medium"))
+crudes$LightMedHeavy <- factor(crudes$LightMedHeavy, levels=c("Light", "Medium", "Heavy"))
+crudes$SweetSour <- factor(crudes$SweetSour, levels=c("Sweet", "Sour"))
+
+usethis::use_data(crudes, overwrite = T)
+rm(x,y)
 
 ## IR Curves for RQuantlib
   # Curves and Def

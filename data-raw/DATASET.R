@@ -39,21 +39,21 @@ usethis::use_data(dfwide, overwrite = T)
 rm(crude,crudeICE,pdts)
 
 ## Sample EIA dataset
-
-CushingStocks <- RTL::eia2tidy(ticker = "PET.W_EPC0_SAX_YCUOK_MBBL.W", key = EIAkey, name = "CushingStocks")
-usethis::use_data(CushingStocks, overwrite = T)
+eiaStocks <-tibble::tribble(~ticker, ~name,
+                         "PET.W_EPC0_SAX_YCUOK_MBBL.W", "CrudeCushing",
+                         "PET.WGTSTUS1.W", "Gasoline",
+                         "PET.WD0ST_NUS_1.W", "ULSD",
+                         "NG.NW2_EPG0_SWO_R48_BCF.W","NGLower48") %>%
+  dplyr::mutate(key = EIAkey) %>%
+  dplyr::mutate(df = purrr::pmap(list(ticker,key,name),.f=RTL::eia2tidy)) %>%
+  dplyr::select(df) %>% tidyr::unnest(df)
+usethis::use_data(eiaStocks, overwrite = T)
 
 ## Sample GIS Mapping
 load("map.RData")
 crudepipelines <- crudepipes
 usethis::use_data(crudepipelines, overwrite = T)
 usethis::use_data(refineries, overwrite = T)
-
-ng_storage <- tibble::tribble(~ticker, ~series,"NG.NW2_EPG0_SWO_R48_BCF.W","NG Storage - Lower 48") %>%
-  dplyr::mutate(key=EIAkey) %>%
-  dplyr::mutate(df = purrr::pmap(list(ticker,key),.f=RTL::eia2tidy)) %>%
-  dplyr::select(series, df) %>% tidyr::unnest()
-usethis::use_data(ng_storage, overwrite = T)
 
 ## EIA Mapping
 tickers_eia <- read.csv('eia.csv',sep=",",header=TRUE,na.strings="NA",stringsAsFactors=FALSE)

@@ -6,7 +6,7 @@
 #' is not detrended so results once you apply an STL decompostion
 #' will vary from the unajusted seasonal plot.
 #' @param df Long data frame with columns series, date and value
-#' @param title Your chart title
+#' @param title Default is a blank space returning the unique value in df$series.
 #' @param per
 #' Frequency of seasonality "yearweek" (DEFAULT). "yearmonth", "yearquarter"
 #' @param output
@@ -22,16 +22,16 @@
 #' @export chart_zscore
 #' @author Philippe Cote
 #' @examples
-#' chart_zscore(df = ng_storage, title = "NG Storage Z Score",
-#' per = "yearweek", output = "stl", chart = "seasons")
-#' chart_zscore(df = ng_storage, title = "NG Storage Z Score",
-#' per = "yearweek", output = "stats", chart = "seasons")
-#' chart_zscore(df = ng_storage, title = "NG Storage Z Score",
-#' per = "yearweek", output = "zscore", chart = "seasons")
-#' chart_zscore(df = ng_storage, title = "NG Storage Z Score",
-#' per = "yearweek", output = "seasonal", chart = "seasons")
+#' df <- eiaStocks %>% dplyr::filter(series == "NGLower48")
+#' title <- "NGLower48"
+#' chart_zscore(df = df, title = " ",per = "yearweek", output = "stl", chart = "seasons")
+#' chart_zscore(df = df, title = " ",per = "yearweek", output = "stats", chart = "seasons")
+#' chart_zscore(df = df, title = " ",per = "yearweek", output = "zscore", chart = "seasons")
+#' chart_zscore(df = df, title = " ",per = "yearweek", output = "seasonal", chart = "seasons")
 
 chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek", output = "zscore", chart = "seasons") {
+
+  if (nchar(title) == 0) {title <- unique(df$series)}
   if (!output %in% c("zscore","seasonal","stats","stl")) {stop(print("Incorrect output parameter"))}
   if (!per %in% c("yearweek","yearmonth","yearquarter")) {stop(print("Incorrect period parameter"))}
   if (per %in% c("yearweek","yearquarter")) {s = 7 ; e = 8}
@@ -41,7 +41,7 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek"
 
   if (output == "stl") {
       x <- df %>%
-        tsibble::as_tsibble(key=series, index = date) %>%
+        tsibble::as_tsibble(key = series, index = date) %>%
         tsibble::group_by_key()
       if (per %in% c("yearweek")) {x <- x %>% tsibble::index_by(freq = ~yearweek(.))}
       if (per %in% c("yearmonth")) {x <- x %>% tsibble::index_by(freq = ~yearmonth(.))}

@@ -31,10 +31,10 @@ Accessible via `data(datsetname)`
 + `holidaysOil`: Holiday calendars for ICE and NYMEX.
 + `tickers_eia`: Mapping of EIA tickers to crude and refined products markets for building supply demand balances.
 + `usSwapIRDef`: Data frame of definitions for instruments to build a curve for use with `RQuantlib`. Use `getIRswapCurve()` to extract the latest data from `FRED` and `Morningstar`.
-+ `usSwapIR`: Toy data set output of `getIRswapCurve`.
-+ `usSwapCurves`: Toy data set output of `RQuantlib::DiscountCurve()`.
++ `usSwapIR`: Sample data set output of `getIRswapCurve`.
++ `usSwapCurves`: Sample data set output of `RQuantlib::DiscountCurve()`.
 + `cancrudeassays` contains historical Canadian crude assays by batch from [Crudemonitor](https://crudemonitor.ca/home.php). `cancrudeassayssum` is a summarised average assays version.
-+ `CushingStocks` contains EIA.gov crude oil stocks at Cushing.
++ `eiaStocks`: Sample data set of EIA.gov stocks for key commodiities.
 + `dflong` and `dfwide` contain continuous futures prices sample data sets for Nymex (CL, HO, RB and NG contracts) and ICE Brent.
 + `crudepipelines` and `refineries` contain GIS information in the North American crude space. 
 + `twtrump` and `twoott` are historical tweets toy data sets from @realDonaldTrump and #OOTT for learning NLP.

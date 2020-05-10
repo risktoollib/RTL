@@ -15,7 +15,7 @@ chart_zscore(
 \arguments{
 \item{df}{Long data frame with columns series, date and value}
 
-\item{title}{Your chart title}
+\item{title}{Default is a blank space returning the unique value in df$series.}
 
 \item{per}{Frequency of seasonality "yearweek" (DEFAULT). "yearmonth", "yearquarter"}
 
@@ -39,14 +39,12 @@ is not detrended so results once you apply an STL decompostion
 will vary from the unajusted seasonal plot.
 }
 \examples{
-chart_zscore(df = ng_storage, title = "NG Storage Z Score",
-per = "yearweek", output = "stl", chart = "seasons")
-chart_zscore(df = ng_storage, title = "NG Storage Z Score",
-per = "yearweek", output = "stats", chart = "seasons")
-chart_zscore(df = ng_storage, title = "NG Storage Z Score",
-per = "yearweek", output = "zscore", chart = "seasons")
-chart_zscore(df = ng_storage, title = "NG Storage Z Score",
-per = "yearweek", output = "seasonal", chart = "seasons")
+df <- eiaStocks \%>\% dplyr::filter(series == "NGLower48")
+title <- "NGLower48"
+chart_zscore(df = df, title = " ",per = "yearweek", output = "stl", chart = "seasons")
+chart_zscore(df = df, title = " ",per = "yearweek", output = "stats", chart = "seasons")
+chart_zscore(df = df, title = " ",per = "yearweek", output = "zscore", chart = "seasons")
+chart_zscore(df = df, title = " ",per = "yearweek", output = "seasonal", chart = "seasons")
 }
 \author{
 Philippe Cote

@@ -1,37 +1,49 @@
 # usethis::use_readme_md()
 # usethis::use_package("sp")
 # usethis::use_pipe()
+library(RTL)
 library(tidyverse)
 library(lubridate)
 library(jsonlite)
 source("~/keys.R")
 setwd("~/RTL/data-raw")
 
-## Basic sample df
+## Sample energy futures datasets
 df_fut <- readRDS("df_fut") ; usethis::use_data(df_fut, overwrite = T)
 
 iuser = mstar[["iuser"]] ; ipassword = mstar[["ipassword"]]
-
+startdate <- "2013-01-01"
 crude <- c(paste0("CL_",sprintf('%0.3d', 1:36),"_Month"), paste0("NG_",sprintf('%0.3d', 1:36),"_Month"))
+crudeICE <- c(paste0("BRN_",sprintf('%0.3d', 1:36),"_Month"))
 pdts <- c(paste0("HO_",sprintf('%0.3d', 1:18),"_Month"), paste0("RB_",sprintf('%0.3d', 1:18),"_Month"))
 crude <- RTL::getPrices(feed="CME_NymexFutures_EOD_continuous",
-               contracts = crude,from = "2015-01-01",
+               contracts = crude,from = startdate,
                iuser = iuser, ipassword = ipassword) %>%
   pivot_longer(-date,names_to = "series", values_to = "value") %>%
   dplyr::mutate(series = stringr::str_replace_all(series,c("_0" = "","_Month" = ""))) %>% na.omit()
+crudeICE <- RTL::getPrices(feed="ICE_EuroFutures_continuous",
+                        contracts = crudeICE,from = startdate,
+                        iuser = iuser, ipassword = ipassword) %>%
+  pivot_longer(-date,names_to = "series", values_to = "value") %>%
+  dplyr::mutate(series = stringr::str_replace_all(series,c("_0" = "","_Month" = ""))) %>% na.omit()
 pdts <- RTL::getPrices(feed="CME_NymexFutures_EOD_continuous",
-                         contracts = pdts,from = "2015-01-01",
+                         contracts = pdts,from = startdate,
                          iuser = iuser, ipassword = ipassword) %>%
   pivot_longer(-date,names_to = "series", values_to = "value") %>%
   dplyr::mutate(series = stringr::str_replace_all(series,c("_0" = "","_Month" = ""))) %>% na.omit()
 
-dflong <-  rbind(crude, pdts)
+dflong <-  rbind(crude, crudeICE, pdts)
 dfwide <- dflong %>% tidyr::pivot_wider(names_from = series, values_from = value) %>% na.omit()
 usethis::use_data(dflong, overwrite = T)
 usethis::use_data(dfwide, overwrite = T)
-rm(crude,pdts)
-###
+rm(crude,crudeICE,pdts)
 
+## Sample EIA dataset
+
+CushingStocks <- RTL::eia2tidy(ticker = "PET.W_EPC0_SAX_YCUOK_MBBL.W", key = EIAkey, name = "CushingStocks")
+usethis::use_data(CushingStocks, overwrite = T)
+
+## Sample GIS Mapping
 load("map.RData")
 crudepipelines <- crudepipes
 usethis::use_data(crudepipelines, overwrite = T)
@@ -43,19 +55,16 @@ ng_storage <- tibble::tribble(~ticker, ~series,"NG.NW2_EPG0_SWO_R48_BCF.W","NG S
   dplyr::select(series, df) %>% tidyr::unnest()
 usethis::use_data(ng_storage, overwrite = T)
 
-
-# EIA Mapping
+## EIA Mapping
 tickers_eia <- read.csv('eia.csv',sep=",",header=TRUE,na.strings="NA",stringsAsFactors=FALSE)
 usethis::use_data(tickers_eia, overwrite = T)
 
-## Futures Expiry Tables
-
-  # library(readxl)
-  # download.file(url="https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/Download.xls?productId=425",
-  #               destfile = "expiries")
-  # expiries <- read_excel("expiries")
-  # colnames(expiries) <- str_replace_all(string=colnames(expiries), pattern=" ", repl="")
-  # write_csv2(expiries,"~/nymex_wti_expiries.csv")
+# library(readxl)
+# download.file(url="https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/Download.xls?productId=425",
+#               destfile = "expiries")
+# expiries <- read_excel("expiries")
+# colnames(expiries) <- str_replace_all(string=colnames(expiries), pattern=" ", repl="")
+# write_csv2(expiries,"~/nymex_wti_expiries.csv")
 
 futmonths = c("F","G","H","J","K","M","N","Q","U","V","X","Z")
 expiry_table <- read.csv('expiry_table.csv',sep=",",header=TRUE,na.strings="NA",stringsAsFactors=FALSE)
@@ -83,21 +92,22 @@ tradeCycle <- read.csv('tradeCycle.csv',sep=",",header=TRUE,na.strings="NA",stri
 usethis::use_data(tradeCycle, overwrite = T)
 
 ## tweets
+  ### Trump
   # http://www.trumptwitterarchive.com/archive
+  # use geany text editor in Linux for very large files
 twtrump <- fromJSON("twtrump.json")
 twtrump <- twtrump %>%
-  dplyr::mutate(created=as.POSIXct(created_at,tz="GMT",format=c("%a %b %d %H:%M:%S +0000 %Y"))) %>%
-  dplyr:::select(text,favoriteCount=favorite_count,created,id=id_str) %>%
+  dplyr::mutate(created_at = as.POSIXct(created_at,tz="GMT",format=c("%a %b %d %H:%M:%S +0000 %Y"))) %>%
+  dplyr:::rename(favoriteCount = favorite_count, created = created_at, id = id_str) %>%
   as_tibble()
 usethis::use_data(twtrump, overwrite = T)
-
-# library(twitteR)
-# source(here::here("../dscf/packages.R"))
-# setup_twitter_oauth(consumer_key = tw$cons.key, consumer_secret = tw$cons.secret,
-#                     access_token = tw$access.token, access_secret = tw$access.secret)
-# twoott <- twitteR::searchTwitter('#OOTT', n = 1e4, since = '2016-11-06', retryOnRateLimit = 1e4)
-# twoott <- twitteR::twListToDF(twoott) %>% as_tibble()
-# usethis::use_data(twoott, overwrite = T)
+  ### OOTT
+library(twitteR)
+setup_twitter_oauth(consumer_key = tw$cons.key, consumer_secret = tw$cons.secret,
+                    access_token = tw$access.token, access_secret = tw$access.secret)
+twoott <- twitteR::searchTwitter('#OOTT', n = 1e4, since = '2016-11-06', retryOnRateLimit = 1e4)
+twoott <- twitteR::twListToDF(twoott) %>% as_tibble()
+usethis::use_data(twoott, overwrite = T)
 
 ## Canadain Crude Data
 cancrudeprices <- readRDS("~/dscf/data/crude_prices.RDS") ; usethis::use_data(cancrudeprices, overwrite = T)

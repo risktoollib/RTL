@@ -33,8 +33,12 @@ Accessible via `data(datsetname)`
 + `usSwapIRDef`: Data frame of definitions for instruments to build a curve for use with `RQuantlib`. Use `getIRswapCurve()` to extract the latest data from `FRED` and `Morningstar`.
 + `usSwapIR`: Toy data set output of `getIRswapCurve`.
 + `usSwapCurves`: Toy data set output of `RQuantlib::DiscountCurve()`.
++ `cancrudeassays` contains historical Canadian crude assays by batch from [Crudemonitor](https://crudemonitor.ca/home.php). `cancrudeassayssum` is a summarised average assays version.
++ `CushingStocks` contains EIA.gov crude oil stocks at Cushing.
++ `dflong` and `dfwide` contain continuous futures prices sample data sets for Nymex (CL, HO, RB and NG contracts) and ICE Brent.
++ `crudepipelines` and `refineries` contain GIS information in the North American crude space. 
 + `twtrump` and `twoott` are historical tweets toy data sets from @realDonaldTrump and #OOTT for learning NLP.
-+ `cancrudeassays` contains historical Canadian crude assays from [Crudemonitor](https://crudemonitor.ca/home.php) as a learning and testing data set.
++ ``
 
 ## Python
 

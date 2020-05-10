@@ -16,6 +16,12 @@
 #' @source \url{https://www.eia.gov/}
 "tickers_eia"
 
+#' CushingStocks
+#' @description EIA weekly Cushing crude stocks.
+#' @format data frame
+#' @source \url{https://www.eia.gov/opendata/qb.php?sdid=PET.W_EPC0_SAX_YCUOK_MBBL.W}
+"CushingStocks"
+
 #' cancrudeassays
 #' @description Data set with historical Canadian Crude Assays.
 #' @format data frame

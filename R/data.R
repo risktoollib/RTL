@@ -40,6 +40,11 @@
 #' @source Canadian Crude Monitor and BP Crude Assays
 "crudes"
 
+#' crudeassaysXOM
+#' @description Crude Assays from ExxonMobil.
+#' @format data frame
+#' @source \url{https://corporate.exxonmobil.com/Crude-oils/Crude-trading/Crude-oil-blends-by-API-gravity-and-by-sulfur-content#APIgravity}
+"crudeassaysXOM"
 #' cancrudeprices
 #' @description Randomized dataset of Canadian Crude monthly prices versus WTi Calendar Month Average.
 #' @format data frame

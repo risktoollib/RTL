@@ -5,6 +5,8 @@ library(RTL)
 library(tidyverse)
 library(lubridate)
 library(jsonlite)
+library(filesstrings)
+library(rvest)
 source("~/keys.R")
 setwd("~/RTL/data-raw")
 
@@ -120,6 +122,7 @@ cancrudeassayssum <- cancrudeassays %>% dplyr::group_by(Ticker,Crude) %>%
   na.omit() %>% summarise_all(list(mean))
 usethis::use_data(cancrudeassayssum, overwrite = T)
 
+# BP Assays
 library(rvest)
 url = "https://www.bp.com/en/global/bp-global-energy-trading/features-and-updates/technical-downloads/crudes-assays.html"
 html <- xml2::read_html(url)
@@ -143,6 +146,45 @@ crudes$SweetSour <- factor(crudes$SweetSour, levels=c("Sweet", "Sour"))
 
 usethis::use_data(crudes, overwrite = T)
 rm(x,y)
+
+## Exxon Assays
+
+url = "https://corporate.exxonmobil.com/Crude-oils/Crude-trading/Crude-oil-blends-by-API-gravity-and-by-sulfur-content#APIgravity"
+html <- xml2::read_html(url)
+css <- "body > main > div.article--wrapper > section.rich-text > div > div"
+
+urls <- html %>% html_nodes(css = css) %>%
+  html_nodes("a") %>% rvest::html_attr("href") %>%
+  as_tibble() %>% dplyr::filter(grepl("/Crude-oils/",value)) %>%
+  dplyr::transmute(site = paste0("https://corporate.exxonmobil.com",value)) %>% unique()
+
+fetchURL <- function(url, css, prefix){
+  xml2::read_html(url) %>% html_nodes(css = css) %>%
+    html_nodes("a") %>% rvest::html_attr("href") %>%
+    paste0(prefix,.)
+}
+
+urls <- urls %>% dplyr::mutate(prefix = "https://corporate.exxonmobil.com",
+                       xls = mapply(fetchURL,url = site,
+                                      css = "body > main > div.article--wrapper > section.articleMedia.articleMedia-in-line.articleMedia--relatedContent > div > article > div > div:nth-child(3) > h3",
+                                      prefix = prefix)) %>%
+  dplyr::select(-prefix) %>% dplyr::filter(!grepl(".pdf",xls,ignore.case = T)) %>%
+  dplyr::mutate(cn = gsub("/.*","",gsub("https://corporate.exxonmobil.com/-/media/Global/Files/crude-oils/","",xls)))
+
+crudeassaysXOM <- list()
+for (i in 1:nrow(urls)){
+  destfile = urls$cn[i]
+  curl::curl_download(url = urls$xls[i],
+                      destfile = destfile)
+  tmp <- read_excel(destfile, skip = 4) %>%
+    dplyr::rename_all(list(~make.names(.)))
+  colnames(tmp)[1] <- destfile
+  crudeassaysXOM[[destfile]] <- tmp
+  file.remove(destfile)
+}
+
+usethis::use_data(crudeassaysXOM, overwrite = T)
+rm(html,tmp,urls,css,destfile,i)
 
 ## IR Curves for RQuantlib
   # Curves and Def

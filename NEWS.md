@@ -7,6 +7,7 @@
 + Added `eiaStocks` sample data set.
 + Upgrade for `dplyr 1.0.0`.
 + Sample data sets `dflong` and `dfwide` updated.
++ Added `crudeassaysXOM` as a list for complete public assays from ExxonMobil.
 
 # RTL 0.1.2
 

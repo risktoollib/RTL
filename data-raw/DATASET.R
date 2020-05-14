@@ -5,8 +5,8 @@ library(RTL)
 library(tidyverse)
 library(lubridate)
 library(jsonlite)
-library(filesstrings)
 library(rvest)
+library(readxl)
 source("~/keys.R")
 setwd("~/RTL/data-raw")
 
@@ -126,6 +126,8 @@ usethis::use_data(cancrudeassayssum, overwrite = T)
 library(rvest)
 url = "https://www.bp.com/en/global/bp-global-energy-trading/features-and-updates/technical-downloads/crudes-assays.html"
 html <- xml2::read_html(url)
+
+## Simplified tables
 x <- html %>% rvest::html_nodes("table") %>%
   rvest::html_table(fill=T) %>% .[[1]] %>%
   dplyr::as_tibble() %>% dplyr::slice(-1) %>% dplyr::select(1:5) %>%
@@ -143,11 +145,37 @@ crudes <- rbind(x,y) %>%
                                           TRUE ~ "Medium"))
 crudes$LightMedHeavy <- factor(crudes$LightMedHeavy, levels=c("Light", "Medium", "Heavy"))
 crudes$SweetSour <- factor(crudes$SweetSour, levels=c("Sweet", "Sour"))
-
 usethis::use_data(crudes, overwrite = T)
 rm(x,y)
 
-## Exxon Assays
+## xls assays
+css <- "body > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div:nth-child(3) > div > div > div.nr-table-component.nr-component.aem-GridColumn.aem-GridColumn--default--12"
+urls <- html %>% html_nodes(css = css) %>%
+  html_nodes("a") %>% rvest::html_attr("href") %>%
+  as_tibble() %>%
+  dplyr::transmute(xls = paste0("https://www.bp.com",value)) %>% unique() %>%
+  dplyr::mutate(cn = str_replace_all(xls,
+                                     c("https://www.bp.com/content/dam/bp/business-sites/en/global/bp-global-energy-trading/documents/what-we-do/crudes/" = "",".xls" = "")))
+
+crudeassaysBP <- list()
+for (i in 1:nrow(urls)){
+  destfile = urls$cn[i]
+  curl::curl_download(url = urls$xls[i],
+                      destfile = destfile)
+  tmp <- readxl::read_excel(destfile, range = "B30:P85", col_names = F)
+  colnames(tmp) <- c("Specification","Whole.crude","Light.Naphtha","Heavy.Naphtha1","Heavy.Naphtha2","Kero","Light.Gas.Oil","HeavyGasOil","Light.VGO","Heavy.VGO1","Heavy.VGO2","AtRes1","AtRes2","VacRes1","VacRes2")
+  tmp <- tmp %>%
+    tidyr::drop_na("Specification") %>%
+    dplyr::na_if('-') %>%
+    dplyr::mutate_at(vars(!starts_with("Spec")),as.numeric) %>%
+    as_tibble()
+  crudeassaysBP[[destfile]] <- tmp
+  file.remove(destfile)
+}
+
+usethis::use_data(crudeassaysBP, overwrite = T)
+
+# Exxon Assays
 
 url = "https://corporate.exxonmobil.com/Crude-oils/Crude-trading/Crude-oil-blends-by-API-gravity-and-by-sulfur-content#APIgravity"
 html <- xml2::read_html(url)

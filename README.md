@@ -35,11 +35,11 @@ Accessible via `data(datsetname)`
 + `usSwapCurves`: Sample data set output of `RQuantlib::DiscountCurve()`.
 + `cancrudeassays` contains historical Canadian crude assays by batch from [Crudemonitor](https://crudemonitor.ca/home.php). `cancrudeassayssum` is a summarised average assays version.
 + `crudeassaysXOM` for all publicly available complete assays in Excel format from [ExxonMobil](https://corporate.exxonmobil.com/Crude-oils/Crude-trading/Crude-oil-blends-by-API-gravity-and-by-sulfur-content#APIgravity)
++ `crudeassaysBP` for all publicly available complete assays in Excel format from [BP](https://www.bp.com/en/global/bp-global-energy-trading/features-and-updates/technical-downloads/crudes-assays.html)
 + `eiaStocks`: Sample data set of EIA.gov stocks for key commodiities.
 + `dflong` and `dfwide` contain continuous futures prices sample data sets for Nymex (CL, HO, RB and NG contracts) and ICE Brent.
 + `crudepipelines` and `refineries` contain GIS information in the North American crude space. 
 + `twtrump` and `twoott` are historical tweets toy data sets from @realDonaldTrump and #OOTT for learning NLP.
-+ ``
 
 ## Python
 

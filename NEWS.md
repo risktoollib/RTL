@@ -1,6 +1,7 @@
 # RTL 0.1.3
 
-+ `eia2tidy` removed dependency to `EIAdata` package.
++ `eia2tidy()` removed dependency to `EIAdata` package.
++ `chart_pairs()` funtion added to render plotly pairs chart for time series.
 + Summarised statistics dataset `cancrudeassayssum ` for Canadian Crude assays.
 + Crude oil qualities dataset `crudes ` from crudemonitor.ca and BP Assays.
 + Sample GIS data sets for North American `refineries` and `crudepipelines`.

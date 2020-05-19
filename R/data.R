@@ -22,6 +22,12 @@
 #' @source \url{https://www.eia.gov}
 "eiaStocks"
 
+#' eiaStorageCap
+#' @description EIA crude storage capacity in thousand bbls.
+#' @format data frame
+#' @source \url{https://www.eia.gov/petroleum/storagecapacity/}
+"eiaStorageCap"
+
 #' cancrudeassays
 #' @description Data set with historical Canadian Crude Assays.
 #' @format data frame

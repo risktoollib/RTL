@@ -51,6 +51,31 @@ eiaStocks <-tibble::tribble(~ticker, ~name,
   dplyr::select(df) %>% tidyr::unnest(df)
 usethis::use_data(eiaStocks, overwrite = T)
 
+## EIA Storage Capacity
+url <- "https://www.eia.gov/petroleum/storagecapacity/crudeoilstorage.xlsx"
+destfile <- "crudeoilstorage.xlsx"
+curl::curl_download(url, destfile)
+name <- "Refinery and Tank and Underground Working Storage Capacity"
+
+cc <- function(name = "Refinery and Tank and Underground Working Storage Capacity", sheet = "US", loc = "US") {
+  tmp <- read_excel(destfile, skip = 3, sheet = sheet) %>% dplyr::filter(.[[1]] == name) %>%
+    dplyr::rename(location = "...1") %>% dplyr::mutate(location = loc)
+  colnames(tmp) <- c("location",as.character(as.Date(as.numeric(colnames(tmp)[-1]),origin = "1899-12-30")))
+  tmp <- tmp %>% tidyr::pivot_longer(-location,names_to = "date", values_to = "kbbls") %>%
+    dplyr::mutate(date = as.Date(date),kbbls = as.numeric(kbbls))
+  return(tmp)
+}
+
+eiaStorageCap <- bind_rows(cc(sheet = "US", loc = "US"),
+          cc(sheet = "PADD 1", loc = "P1"),
+          cc(sheet = "PADD 2", loc = "P2"),
+          cc(sheet = "PADD 3", loc = "P3"),
+          cc(sheet = "PADD 4", loc = "P4"),
+          cc(sheet = "PADD 5", loc = "P5"),
+          cc(name = "Tank Working Storage Capacity", sheet = "Cushing", loc = "Cushing"))
+
+usethis::use_data(eiaStorageCap, overwrite = T)
+
 ## Sample GIS Mapping
 load("map.RData")
 crudepipelines <- crudepipes

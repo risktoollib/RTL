@@ -5,7 +5,7 @@
 + Summarised statistics dataset `cancrudeassayssum ` for Canadian Crude assays.
 + Crude oil qualities dataset `crudes ` from crudemonitor.ca and BP Assays.
 + Sample GIS data sets for North American `refineries` and `crudepipelines`.
-+ Added `eiaStocks` sample data set.
++ Added `eiaStocks` and `eiaStorageCap` data sets.
 + Upgrade for `dplyr 1.0.0`.
 + Sample data sets `dflong` and `dfwide` updated.
 + Added `crudeassaysXOM` as a list for complete public assays from ExxonMobil.

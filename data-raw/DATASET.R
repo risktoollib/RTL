@@ -73,7 +73,7 @@ eiaStorageCap <- bind_rows(cc(sheet = "US", loc = "US"),
           cc(sheet = "PADD 4", loc = "P4"),
           cc(sheet = "PADD 5", loc = "P5"),
           cc(name = "Tank Working Storage Capacity", sheet = "Cushing", loc = "Cushing"))
-
+file.remove(destfile)
 usethis::use_data(eiaStorageCap, overwrite = T)
 
 ## Sample GIS Mapping

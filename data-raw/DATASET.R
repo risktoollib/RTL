@@ -59,10 +59,10 @@ name <- "Refinery and Tank and Underground Working Storage Capacity"
 
 cc <- function(name = "Refinery and Tank and Underground Working Storage Capacity", sheet = "US", loc = "US") {
   tmp <- read_excel(destfile, skip = 3, sheet = sheet) %>% dplyr::filter(.[[1]] == name) %>%
-    dplyr::rename(location = "...1") %>% dplyr::mutate(location = loc)
-  colnames(tmp) <- c("location",as.character(as.Date(as.numeric(colnames(tmp)[-1]),origin = "1899-12-30")))
-  tmp <- tmp %>% tidyr::pivot_longer(-location,names_to = "date", values_to = "kbbls") %>%
-    dplyr::mutate(date = as.Date(date),kbbls = as.numeric(kbbls))
+    dplyr::rename(series = "...1") %>% dplyr::mutate(series = loc)
+  colnames(tmp) <- c("series",as.character(as.Date(as.numeric(colnames(tmp)[-1]),origin = "1899-12-30")))
+  tmp <- tmp %>% tidyr::pivot_longer(-series,names_to = "date", values_to = "value") %>%
+    dplyr::mutate(date = as.Date(date),value = as.numeric(value))
   return(tmp)
 }
 

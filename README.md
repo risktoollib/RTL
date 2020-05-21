@@ -48,11 +48,11 @@ A python wrapper for some functions is available at https://github.com/bbcho/pyR
 
 ## Installation
 
-library(devtools)
+**Latest Package**
+`devtools::install_github("risktoollib/RTL")`
 
-devtools::install_github("risktoollib/RTL")
-
-library(RTL)
+**CRAN Stable**
+`install.packages("RTL")`
 
 ## Credentials
 

@@ -7,8 +7,24 @@ library(lubridate)
 library(jsonlite)
 library(rvest)
 library(readxl)
-source("~/keys.R")
-setwd("~/RTL/data-raw")
+source("../keys.R")
+setwd(paste0(getwd(),"/data-raw"))
+
+## Orbital
+
+url = "https://nssdc.gsfc.nasa.gov/planetary/factsheet/index.html"
+html <- xml2::read_html(url)
+
+## Simplified tables
+planets <- html %>% rvest::html_nodes("table") %>% rvest::html_table(header= TRUE, fill=T) %>% .[[1]]
+colnames(planets)[1] <- "Metric"
+planets <- planets %>% dplyr::as_tibble() %>%
+  dplyr::rename_all(.funs = stringr::str_to_title) %>%
+  mutate_all(function(x) gsub(",|\\*","",x)) %>%
+  dplyr::mutate_at(vars(!matches("Metric")), as.numeric) %>% na.omit() %>%
+  tidyr::pivot_longer(-Metric,names_to = "Planet", values_to = "value") %>%
+  tidyr::pivot_wider(names_from = Metric, values_from = value)
+usethis::use_data(planets, overwrite = T)
 
 ## Sample energy futures datasets
 df_fut <- readRDS("df_fut") ; usethis::use_data(df_fut, overwrite = T)
@@ -240,20 +256,24 @@ usethis::use_data(crudeassaysXOM, overwrite = T)
 rm(html,tmp,urls,css,destfile,i)
 
 ## IR Curves for RQuantlib
-  # Curves and Def
-library(RTL)
+  # Curves and Def - ICE
+library(Quandl)
+Quandl::Quandl.api_key(quandlkey)
 fromDate = "2019-01-01" #Sys.Date() - months(36)
 usSwapIR <- dplyr::tibble(tickQL = c("d1d","d1w","d1m","d3m","d6m","d1y",
                                      paste0("fut",1:8),
                                      paste0("s",c(2,3,5,7,10,15,20,30),"y")),
                           type = c(rep("ICE.LIBOR",6),rep("EuroDollar",8),rep("IRS",8)),
-                          source = c(rep("FRED",6),rep("Morningstar",8),rep("FRED",8)),
+                          source = c(rep("FRED",6),rep("quandl",8),rep("FRED",8)),
                           tickSource = c("USDONTD156N","USD1WKD156N","USD1MTD156N","USD3MTD156N","USD6MTD156N","USD12MD156N",
-                                         paste0("ED_",sprintf('%0.3d', 1:8),"_Month"),
+                                         paste0("CHRIS/CME_ED",sprintf('%0.1d', 1:8)),
                                          paste0("ICERATES1100USD",c(2,3,5,7,10,15,20,30),"Y")))
-
-c = usSwapIR %>% dplyr::filter(source == "Morningstar") %>% .$tickSource
-r <- getPrices(feed="CME_CmeFutures_EOD_continuous",contracts=c,from = fromDate,iuser = mstar[[1]], ipassword = mstar[[2]])
+#c = usSwapIR %>% dplyr::filter(source == "Morningstar") %>% .$tickSource
+#r <- getPrices(feed="CME_CmeFutures_EOD_continuous",contracts=c,from = fromDate,iuser = mstar[[1]], ipassword = mstar[[2]])
+c = usSwapIR %>% dplyr::filter(source == "quandl") %>% .$tickSource
+r <- tidyquant::tq_get(x = c, get = "quandl",from = fromDate ,to = as.character(Sys.Date())) %>%
+  dplyr::select(symbol,date,settle) %>% dplyr::mutate(price=100-settle) %>%
+  tidyr::pivot_wider(date,names_from = symbol, values_from = price)
 c = usSwapIR %>% dplyr::filter(source == "FRED") %>% .$tickSource
 x <- tidyquant::tq_get(c, get  = "economic.data", from = fromDate ,to = as.character(Sys.Date())) %>%
   dplyr::mutate(price=price/100) %>%
@@ -289,3 +309,13 @@ usethis::use_data(usSwapCurves, overwrite = T)
 usethis::use_data(usSwapCurvesPar, overwrite = T)
 
 devtools::document()
+
+
+
+
+
+
+
+
+
+

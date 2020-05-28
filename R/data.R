@@ -1,3 +1,9 @@
+#' planets
+#' @description Planet metrics from NASA
+#' @format data frame
+#' @source \url{"https://nssdc.gsfc.nasa.gov/planetary/factsheet/index.html}
+"planets"
+
 #' expiry_table
 #' @description This dataframe provides detailed information on major futures contracts specifications
 #' pertaining to last settlement, notices and delivery dates. It also provides tickers in some data service.
@@ -5,7 +11,7 @@
 "expiry_table"
 
 #' holidaysOil
-#' @description THoliday calendars for NYMEX and ICE Brent
+#' @description Holiday calendars for NYMEX and ICE Brent
 #' @format data frame
 "holidaysOil"
 

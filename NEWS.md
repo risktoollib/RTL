@@ -9,6 +9,7 @@
 + Upgrade for `dplyr 1.0.0`.
 + Sample data sets `dflong` and `dfwide` updated.
 + Added `crudeassaysXOM` as a list for complete public assays from ExxonMobil.
++ Added `planets` data for interest rate exercises.
 
 # RTL 0.1.2
 

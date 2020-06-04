@@ -8,7 +8,7 @@
 data frame
 }
 \source{
-\url{"https://nssdc.gsfc.nasa.gov/planetary/factsheet/index.html}
+\url{https://nssdc.gsfc.nasa.gov/planetary/factsheet/index.html}
 }
 \usage{
 planets

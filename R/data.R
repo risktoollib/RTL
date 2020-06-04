@@ -1,7 +1,7 @@
 #' planets
 #' @description Planet metrics from NASA
 #' @format data frame
-#' @source \url{"https://nssdc.gsfc.nasa.gov/planetary/factsheet/index.html}
+#' @source \url{https://nssdc.gsfc.nasa.gov/planetary/factsheet/index.html}
 "planets"
 
 #' expiry_table

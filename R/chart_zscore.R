@@ -40,64 +40,64 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek"
   #s <- list(freq = ~yearweek(.))
 
   if (output == "stl") {
-      x <- df %>%
-        tsibble::as_tsibble(key = series, index = date) %>%
-        tsibble::group_by_key()
-      if (per %in% c("yearweek")) {x <- x %>% tsibble::index_by(freq = ~yearweek(.))}
-      if (per %in% c("yearmonth")) {x <- x %>% tsibble::index_by(freq = ~yearmonth(.))}
-      if (per %in% c("yearquarter")) {x <- x %>% tsibble::index_by(freq = ~yearquarter(.))}
-      #tsibble::index_by(freq = ~do.call(per,args=list(.))) %>%
-      x <- x %>% dplyr::summarise(value = mean(value)) %>%
-        fabletools::model(feasts::STL(value ~ season(window = Inf))) %>%
-        fabletools::components() %>%
-        ggplot2::autoplot()
-      return(x)
-    }
+    x <- df %>%
+      tsibble::as_tsibble(key = series, index = date) %>%
+      tsibble::group_by_key()
+    if (per %in% c("yearweek")) {x <- x %>% tsibble::index_by(freq = ~yearweek(.))}
+    if (per %in% c("yearmonth")) {x <- x %>% tsibble::index_by(freq = ~yearmonth(.))}
+    if (per %in% c("yearquarter")) {x <- x %>% tsibble::index_by(freq = ~yearquarter(.))}
+    #tsibble::index_by(freq = ~do.call(per,args=list(.))) %>%
+    x <- x %>% dplyr::summarise(value = mean(value)) %>%
+      fabletools::model(feasts::STL(value ~ season(window = Inf))) %>%
+      fabletools::components() %>%
+      ggplot2::autoplot()
+    return(x)
+  }
 
   if (output == "stats") {
-      x <- rbind(df,df %>% dplyr::mutate(series = title)) %>%
-        tsibble::as_tsibble(key=series, index = date) %>%
-        tsibble::group_by_key() #%>%
-      if (per %in% c("yearweek")) {x <- x %>% tsibble::index_by(freq = ~yearweek(.))}
-      if (per %in% c("yearmonth")) {x <- x %>% tsibble::index_by(freq = ~yearmonth(.))}
-      if (per %in% c("yearquarter")) {x <- x %>% tsibble::index_by(freq = ~yearquarter(.))}
-      x <- x %>%  dplyr::summarise(value = mean(value)) %>%
-        fabletools::model(feasts::STL(value ~ season(window = Inf))) %>%
-        fabletools::components() %>%
-        dplyr::slice(1)
-      return(x)
-    }
-
-  df <- df %>%
+    x <- rbind(df,df %>% dplyr::mutate(series = title)) %>%
       tsibble::as_tsibble(key=series, index = date) %>%
       tsibble::group_by_key() #%>%
+    if (per %in% c("yearweek")) {x <- x %>% tsibble::index_by(freq = ~yearweek(.))}
+    if (per %in% c("yearmonth")) {x <- x %>% tsibble::index_by(freq = ~yearmonth(.))}
+    if (per %in% c("yearquarter")) {x <- x %>% tsibble::index_by(freq = ~yearquarter(.))}
+    x <- x %>%  dplyr::summarise(value = mean(value)) %>%
+      fabletools::model(feasts::STL(value ~ season(window = Inf))) %>%
+      fabletools::components() %>%
+      dplyr::slice(1)
+    return(x)
+  }
+
+  df <- df %>%
+    tsibble::as_tsibble(key=series, index = date) %>%
+    tsibble::group_by_key() #%>%
   if (per %in% c("yearweek")) {df <- df %>% tsibble::index_by(freq = ~yearweek(.))}
   if (per %in% c("yearmonth")) {df <- df %>% tsibble::index_by(freq = ~yearmonth(.))}
   if (per %in% c("yearquarter")) {df <- df %>% tsibble::index_by(freq = ~yearquarter(.))}
   df <- df %>%
-      #tsibble::index_by(freq = ~do.call(per,args=list(.))) %>%
-      dplyr::summarise(value = mean(value))
+    #tsibble::index_by(freq = ~do.call(per,args=list(.))) %>%
+    dplyr::summarise(value = mean(value))
   z <- df %>%
     fabletools::model(feasts::STL(value ~ season(window = Inf))) %>%
     fabletools::components() %>%
-      dplyr::transmute(per = as.numeric(do.call(stringr::str_sub,args=list(freq, start = s, end = e))),
-                       year = lubridate::year(freq),
-                       value=remainder) %>%
-      dplyr::as_tibble() %>%
-      dplyr::group_by(per) %>%
-      dplyr::summarise(u = mean(value), sigma = stats::sd(value))
+    dplyr::transmute(per = as.numeric(do.call(stringr::str_sub,args=list(freq, start = s, end = e))),
+                     year = lubridate::year(freq),
+                     value=remainder) %>%
+    dplyr::as_tibble() %>%
+    dplyr::group_by(per) %>%
+    dplyr::summarise(u = mean(value), sigma = stats::sd(value))
   x <- df %>%
     fabletools::model(feasts::STL(value ~ season(window = Inf))) %>%
     fabletools::components() %>%
-      dplyr::mutate(per = as.numeric(do.call(stringr::str_sub,args=list(freq, start = s, end = e)))) %>%
-      dplyr::left_join(z, by = c("per")) %>%
-      dplyr::mutate(z.score = (remainder - u) / sigma)
+    dplyr::mutate(per = as.numeric(do.call(stringr::str_sub,args=list(freq, start = s, end = e)))) %>%
+    dplyr::left_join(z, by = c("per")) %>%
+    dplyr::mutate(z.score = (remainder - u) / sigma)
 
   if (output == "seasonal") {
 
     if (chart == "seasons") {x <- df %>% feasts::gg_season(value)}
     if (chart == "series") {x <- df %>% feasts::gg_subseries(value)}
-    }
+  }
 
   if (output == "zscore") {
 

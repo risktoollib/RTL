@@ -39,12 +39,14 @@ is not detrended so results once you apply an STL decompostion
 will vary from the unajusted seasonal plot.
 }
 \examples{
+\dontrun{
 df <- eiaStocks \%>\% dplyr::filter(series == "NGLower48")
 title <- "NGLower48"
 chart_zscore(df = df, title = " ",per = "yearweek", output = "stl", chart = "seasons")
 chart_zscore(df = df, title = " ",per = "yearweek", output = "stats", chart = "seasons")
 chart_zscore(df = df, title = " ",per = "yearweek", output = "zscore", chart = "seasons")
 chart_zscore(df = df, title = " ",per = "yearweek", output = "seasonal", chart = "seasons")
+}
 }
 \author{
 Philippe Cote

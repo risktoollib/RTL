@@ -22,12 +22,14 @@
 #' @export chart_zscore
 #' @author Philippe Cote
 #' @examples
+#' \dontrun{
 #' df <- eiaStocks %>% dplyr::filter(series == "NGLower48")
 #' title <- "NGLower48"
 #' chart_zscore(df = df, title = " ",per = "yearweek", output = "stl", chart = "seasons")
 #' chart_zscore(df = df, title = " ",per = "yearweek", output = "stats", chart = "seasons")
 #' chart_zscore(df = df, title = " ",per = "yearweek", output = "zscore", chart = "seasons")
 #' chart_zscore(df = df, title = " ",per = "yearweek", output = "seasonal", chart = "seasons")
+#' }
 
 chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek", output = "zscore", chart = "seasons") {
 

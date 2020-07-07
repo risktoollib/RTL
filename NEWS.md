@@ -1,3 +1,7 @@
+# RTL 0.1.4
+
++ `eia2tidy()` fix for key variable in function.
+
 # RTL 0.1.3
 
 + `eia2tidy()` removed dependency to `EIAdata` package.

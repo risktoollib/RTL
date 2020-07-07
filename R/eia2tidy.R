@@ -1,7 +1,7 @@
 #' \code{eia2tidy}
 #' @description Converts output of getEAI() in a tidy tibble with names("date","value"). Makes a clean wrapper for use with purrr.
 #' @param ticker EIA series name.
-#' @param key EIA API token.
+#' @param key Your private EIA API token.
 #' @param name Name you want to give the series. Defaults to ticker if set to " "
 #' @return A tibble object
 #' @export eia2tidy
@@ -21,7 +21,7 @@ eia2tidy <- function(ticker,key,name = " ") {
   #names(x) <- "value"
   #out <- x %>% timetk::tk_tbl(rename_index = "date")
   if (nchar(name)==1) {name <- ticker}
-  url <-  paste0("http://api.eia.gov/series/?api_key=",EIAkey,"&series_id=",ticker,"&out=json")
+  url <-  paste0("http://api.eia.gov/series/?api_key=",key,"&series_id=",ticker,"&out=json")
   x <- url %>% httr::GET()
   x <- jsonlite::fromJSON(httr::content(x,"text",encoding = "UTF-8"))
   out <- x$series$data[[1]] %>%

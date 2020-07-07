@@ -9,7 +9,7 @@ eia2tidy(ticker, key, name = " ")
 \arguments{
 \item{ticker}{EIA series name.}
 
-\item{key}{EIA API token.}
+\item{key}{Your private EIA API token.}
 
 \item{name}{Name you want to give the series. Defaults to ticker if set to " "}
 }
@@ -17,7 +17,8 @@ eia2tidy(ticker, key, name = " ")
 A tibble object
 }
 \description{
-Converts output of getEAI() in a tidy tibble with names("date","value"). Makes a clean wrapper for use with purrr.
+Extracts data from the Energy Information Administration (EIA) API to tibble format with optional custom series name.
+Makes a clean wrapper for use with purrr for multiple series extraction.
 }
 \examples{
 \dontrun{

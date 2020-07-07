@@ -42,7 +42,7 @@ Accessible via `data(datsetname)`
 
 ## Python
 
-A python wrapper for some functions is available at https://github.com/bbcho/pyRTL
+A python version of RTL for most functions is available at https://pypi.org/project/risktools/.
 
 ## Installation
 

@@ -5,5 +5,5 @@ utils::globalVariables(c("df_fut","dflong","dfwide","expiry_table","holidaysOil"
                          "t.years","t.periods","disc.factor","pv",
                          "par","usSwapCurves","times","day2next","disc","disc.float","fixed","floating","net",
                          "freq","remainder","week","u","sigma","res","s","e",
-                         "calDays","hol","bizDays","futs"))
+                         "calDays","hol","bizDays","futs","type"))
 

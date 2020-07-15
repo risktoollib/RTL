@@ -7,7 +7,7 @@
 getCurve(
   feed = "CME_NymexFuturesIntraday_EOD",
   contract = "CL",
-  from = "2020-07-13",
+  date = "2020-07-13",
   fields = c("Open, High, Low, Close"),
   iuser = "x@xyz.com",
   ipassword = "pass"
@@ -18,7 +18,7 @@ getCurve(
 
 \item{contract}{Morningstar contract root.}
 
-\item{from}{From date as character string.}
+\item{date}{From date as character string.}
 
 \item{fields}{Defaults to c("Open, High, Low, Close").}
 
@@ -43,8 +43,8 @@ You need your own credentials with Morningstar.
 
 \examples{
 \dontrun{
-getCurve <- function(feed="CME_NymexFuturesIntraday_EOD",contract="CL",
-from="2020-07-13",fields = c("Open, High, Low, Close"),
+getCurve <- function(feed = "CME_NymexFuturesIntraday_EOD",contract = "CL",
+date = "2020-07-13",fields = c("Open, High, Low, Close"),
 iuser = "x@xyz.com", ipassword = "pass")
 }
 }

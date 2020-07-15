@@ -119,7 +119,7 @@ getPrice <- function(feed="CME_NymexFutures_EOD",contract="CL9Z",from="2019-01-0
 #' from="2019-08-26",iuser = username, ipassword = password)
 #' }
 
-getPrices <- function(feed="CME_NymexFutures_EOD",contracts=c("CL9Z","CL0F","CL0M"),from="2019-01-01",iuser = "x@xyz.com", ipassword = "pass") {
+getPrices <- function(feed = "CME_NymexFutures_EOD",contracts = c("CL9Z","CL0F","CL0M"),from = "2019-01-01",iuser = "x@xyz.com", ipassword = "pass") {
 
   x <- getPrice(feed=feed,contract=contracts[1],from=from,iuser = iuser, ipassword = ipassword)
   for (c in contracts[-1]) {
@@ -165,4 +165,46 @@ getIRswapCurve <- function(currency="USD",from="2019-01-01",iuser = "x@xyz.com",
   r <- dplyr::left_join(x, r, by=c("date"))
   colnames(r) <- c("date",dplyr::tibble(tickSource = colnames(r)[-1]) %>% dplyr::left_join(usSwapIR,by = c("tickSource")) %>% .$tickQL)
   return(r)
+}
+
+
+#' \code{getCurve}
+#' @description
+#' Returns forward curves from Morningstar API. See below for current feeds supported.
+#' You need your own credentials with Morningstar.
+#'
+#' @section Current Feeds Supported:
+#' \itemize{
+#'   \item CME_NymexFuturesIntraday_EOD
+#'   \item ICE_EuroFutures and ICE_EuroFutures_continuous
+#' }
+#'
+#' @param feed Morningstar Feed Table.
+#' @param contract Morningstar contract root.
+#' @param from From date as character string.
+#' @param fields Defaults to c("Open, High, Low, Close").
+#' @param iuser Morningstar user name as character - sourced locally in examples.
+#' @param ipassword Morningstar user password as character - sourced locally in examples.
+#' @return wide data frame
+#' @export getCurve
+#' @author Philippe Cote
+#' @examples
+#' \dontrun{
+#' getCurve <- function(feed="CME_NymexFuturesIntraday_EOD",contract="CL",
+#' from="2020-07-13",fields = c("Open, High, Low, Close"),
+#' iuser = "x@xyz.com", ipassword = "pass")
+#' }
+
+getCurve <- function(feed="CME_NymexFuturesIntraday_EOD",contract="CL",from="2020-07-13",
+                     fields = c("Open, High, Low, Close"),
+                     iuser = "x@xyz.com", ipassword = "pass") {
+
+  #URL <- "https://mp.morningstarcommodity.com/lds/feeds/CME_NymexFuturesIntraday_EOD/curve?root=CL&cols=Open,High,Low,Close&date=2020-07-13"
+  URL = httr::modify_url(url = "https://mp.morningstarcommodity.com",
+                         path = paste0("/lds/feeds/",feed, "/curve?root=",contract,"&cols=",gsub(" ","",fields),
+                                       "&date=",from))
+  httr::handle_reset(URL)
+  es <- httr::GET(url = URL,httr::authenticate(user = iuser,password = ipassword,type = "basic"))
+  out <- es %>% httr::content() %>% purrr::flatten()
+  return(out)
 }

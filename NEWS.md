@@ -1,5 +1,6 @@
 # RTL 0.1.4
 
++ `getCurve()` added to extract forward curves from `Morningstar`. 
 + `eia2tidy()` fix for key variable in function.
 
 # RTL 0.1.3

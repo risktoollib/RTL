@@ -190,12 +190,12 @@ getIRswapCurve <- function(currency="USD",from="2019-01-01",iuser = "x@xyz.com",
 #' @author Philippe Cote
 #' @examples
 #' \dontrun{
-#' getCurve <- function(feed = "CME_NymexFuturesIntraday_EOD",contract = "CL",
+#' getCurve(feed = "CME_NymexFuturesIntraday_EOD",contract = "CL",
 #' date = "2020-07-13",fields = c("Open, High, Low, Close"),
 #' iuser = "x@xyz.com", ipassword = "pass")
 #' }
 
-getCurve <- function(feed="CME_NymexFuturesIntraday_EOD",contract="CL",date ="2020-07-13",
+getCurve <- function(feed = "CME_NymexFuturesIntraday_EOD",contract = "CL",date ="2020-07-13",
                      fields = c("Open, High, Low, Close"),
                      iuser = "x@xyz.com", ipassword = "pass") {
 
@@ -205,15 +205,15 @@ getCurve <- function(feed="CME_NymexFuturesIntraday_EOD",contract="CL",date ="20
                                        "&date=",date))
   httr::handle_reset(URL)
   es <- httr::GET(url = URL,httr::authenticate(user = iuser,password = ipassword,type = "basic"))
-  out <- es %>% httr::content() #%>% purrr::flatten()
-  out <- tibble::tibble(purrr::map(out,"expirationDate") %>% unlist() %>% tibble::as_tibble(as.Date(.)) %>% dplyr::rename(expiry = value),
-            purrr::map(out,"col") %>% unlist() %>% tibble::as_tibble() %>% dplyr::rename(type = value),
-         purrr::map(out,"value") %>% unlist() %>% tibble::as_tibble()) %>%
+  out <- es %>% httr::content()
+  out <- tibble::tibble(purrr::map(out,"expirationDate") %>% unlist() %>% tibble::enframe(name = NULL, value = "expiry") %>% dplyr::transmute(expiry = as.Date(expiry)),
+            purrr::map(out,"col") %>% unlist() %>% tibble::enframe(name = NULL, value = "type"),
+         purrr::map(out,"value") %>% unlist() %>% tibble::enframe(name = NULL)) %>%
     dplyr::arrange(expiry) %>%
     tidyr::pivot_wider(names_from = type, values_from = value)
   return(out)
 }
 
- # getCurve(feed="CME_NymexFuturesIntraday_EOD",contract="CL",date = "2020-07-10",
- #          fields = c("Open,Close"),
- #          iuser = mstar[[1]], ipassword = mstar[[2]])
+ getCurve(feed="CME_NymexFuturesIntraday_EOD",contract="RB",date = "2020-07-10",
+           fields = c("Open,Close"),
+           iuser = mstar[[1]], ipassword = mstar[[2]])

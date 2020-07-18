@@ -214,6 +214,6 @@ getCurve <- function(feed = "CME_NymexFuturesIntraday_EOD",contract = "CL",date 
   return(out)
 }
 
- getCurve(feed="CME_NymexFuturesIntraday_EOD",contract="RB",date = "2020-07-10",
-           fields = c("Open,Close"),
-           iuser = mstar[[1]], ipassword = mstar[[2]])
+ # getCurve(feed="CME_NymexFuturesIntraday_EOD",contract="RB",date = "2020-07-10",
+ #           fields = c("Open,Close"),
+ #           iuser = mstar[[1]], ipassword = mstar[[2]])

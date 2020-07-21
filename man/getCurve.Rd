@@ -47,6 +47,9 @@ You need your own credentials with Morningstar.
 getCurve(feed = "Crb_Futures_Price_Volume_And_Open_Interest",contract = "CL",
 date = "2020-07-13",fields = c("Open, High, Low, Close"),
 iuser = "x@xyz.com", ipassword = "pass")
+getCurve(feed = "Crb_Futures_Price_Volume_And_Open_Interest",contract = "BG",
+date = "2020-07-13",fields = c("Open, High, Low, Close"),
+iuser = "x@xyz.com", ipassword = "pass")
 }
 }
 \author{

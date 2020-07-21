@@ -180,8 +180,8 @@ getIRswapCurve <- function(currency="USD",from="2019-01-01",iuser = "x@xyz.com",
 #'   \item ICE_EuroFutures and ICE_EuroFutures_continuous
 #' }
 #'
-#' @param feed Morningstar Feed Table.
-#' @param contract Morningstar contract root.
+#' @param feed Morningstar Feed Table e.g "Crb_Futures_Price_Volume_And_Open_Interest".
+#' @param contract Morningstar contract root e.g. "CL" for CME WTI and "BG" for ICE Brent.
 #' @param date From date as character string.
 #' @param fields Defaults to c("Open, High, Low, Close").
 #' @param iuser Morningstar user name as character - sourced locally in examples.
@@ -192,6 +192,9 @@ getIRswapCurve <- function(currency="USD",from="2019-01-01",iuser = "x@xyz.com",
 #' @examples
 #' \dontrun{
 #' getCurve(feed = "Crb_Futures_Price_Volume_And_Open_Interest",contract = "CL",
+#' date = "2020-07-13",fields = c("Open, High, Low, Close"),
+#' iuser = "x@xyz.com", ipassword = "pass")
+#' getCurve(feed = "Crb_Futures_Price_Volume_And_Open_Interest",contract = "BG",
 #' date = "2020-07-13",fields = c("Open, High, Low, Close"),
 #' iuser = "x@xyz.com", ipassword = "pass")
 #' }

@@ -5,7 +5,7 @@
 \title{\code{getCurve}}
 \usage{
 getCurve(
-  feed = "CME_NymexFuturesIntraday_EOD",
+  feed = "Crb_Futures_Price_Volume_And_Open_Interest",
   contract = "CL",
   date = "2020-07-13",
   fields = c("Open, High, Low, Close"),
@@ -36,6 +36,7 @@ You need your own credentials with Morningstar.
 \section{Current Feeds Supported}{
 
 \itemize{
+  \item Crb_Futures_Price_Volume_And_Open_Interest
   \item CME_NymexFuturesIntraday_EOD
   \item ICE_EuroFutures and ICE_EuroFutures_continuous
 }
@@ -43,7 +44,7 @@ You need your own credentials with Morningstar.
 
 \examples{
 \dontrun{
-getCurve <- function(feed = "CME_NymexFuturesIntraday_EOD",contract = "CL",
+getCurve(feed = "Crb_Futures_Price_Volume_And_Open_Interest",contract = "CL",
 date = "2020-07-13",fields = c("Open, High, Low, Close"),
 iuser = "x@xyz.com", ipassword = "pass")
 }

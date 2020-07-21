@@ -1,6 +1,6 @@
 ## Purpose
 
-+ Purposely designed functions for trading, trading analytics and risk practitioners in in Commodities and Finance. 
++ Purposely designed functions for trading, trading analytics and risk practitioners in Commodities and Finance. 
 + Build to support delivery of Finance classes from one of the co-authors of RTL at the [Alberta School of Business](https://www.ualberta.ca/business).
 
 ## Features

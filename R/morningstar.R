@@ -175,6 +175,7 @@ getIRswapCurve <- function(currency="USD",from="2019-01-01",iuser = "x@xyz.com",
 #'
 #' @section Current Feeds Supported:
 #' \itemize{
+#'   \item Crb_Futures_Price_Volume_And_Open_Interest
 #'   \item CME_NymexFuturesIntraday_EOD
 #'   \item ICE_EuroFutures and ICE_EuroFutures_continuous
 #' }
@@ -190,12 +191,12 @@ getIRswapCurve <- function(currency="USD",from="2019-01-01",iuser = "x@xyz.com",
 #' @author Philippe Cote
 #' @examples
 #' \dontrun{
-#' getCurve(feed = "CME_NymexFuturesIntraday_EOD",contract = "CL",
+#' getCurve(feed = "Crb_Futures_Price_Volume_And_Open_Interest",contract = "CL",
 #' date = "2020-07-13",fields = c("Open, High, Low, Close"),
 #' iuser = "x@xyz.com", ipassword = "pass")
 #' }
 
-getCurve <- function(feed = "CME_NymexFuturesIntraday_EOD",contract = "CL",date ="2020-07-13",
+getCurve <- function(feed = "Crb_Futures_Price_Volume_And_Open_Interest",contract = "CL",date ="2020-07-13",
                      fields = c("Open, High, Low, Close"),
                      iuser = "x@xyz.com", ipassword = "pass") {
 

@@ -43,4 +43,5 @@ Imports:
     plotly,
     fabletools,
     jsonlite,
-    sp
+    sp,
+    RCurl

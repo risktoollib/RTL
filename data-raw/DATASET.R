@@ -1,5 +1,5 @@
 # usethis::use_readme_md()
-# usethis::use_package("sp")
+# usethis::use_package("RCurl")
 # usethis::use_pipe()
 library(RTL)
 library(tidyverse)

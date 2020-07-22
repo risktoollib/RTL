@@ -14,9 +14,9 @@ getCurve(
 )
 }
 \arguments{
-\item{feed}{Morningstar Feed Table.}
+\item{feed}{Morningstar Feed Table e.g "Crb_Futures_Price_Volume_And_Open_Interest".}
 
-\item{contract}{Morningstar contract root.}
+\item{contract}{Morningstar contract root e.g. "CL" for CME WTI and "BG" for ICE Brent.}
 
 \item{date}{From date as character string.}
 
@@ -44,9 +44,11 @@ You need your own credentials with Morningstar.
 
 \examples{
 \dontrun{
+# CME WTI Futures
 getCurve(feed = "Crb_Futures_Price_Volume_And_Open_Interest",contract = "CL",
 date = "2020-07-13",fields = c("Open, High, Low, Close"),
 iuser = "x@xyz.com", ipassword = "pass")
+
 getCurve(feed = "Crb_Futures_Price_Volume_And_Open_Interest",contract = "BG",
 date = "2020-07-13",fields = c("Open, High, Low, Close"),
 iuser = "x@xyz.com", ipassword = "pass")

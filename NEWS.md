@@ -2,6 +2,7 @@
 
 + `getCurve()` added to extract OHLC futures contract forward curves from `Morningstar`. 
 + `eia2tidy()` fix for key variable in function.
++ `crudes` dataset updated.
 
 # RTL 0.1.3
 

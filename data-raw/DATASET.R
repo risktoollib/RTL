@@ -164,6 +164,7 @@ cancrudeassayssum <- cancrudeassays %>% dplyr::group_by(Ticker,Crude) %>%
 usethis::use_data(cancrudeassayssum, overwrite = T)
 
 # BP Assays
+### capline https://cappl.com/Reports1.aspx
 library(rvest)
 url = "https://www.bp.com/en/global/bp-global-energy-trading/features-and-updates/technical-downloads/crudes-assays.html"
 html <- xml2::read_html(url)
@@ -180,10 +181,24 @@ y <- cancrudeassayssum %>% dplyr::transmute(Crude,
   dplyr::ungroup() %>% dplyr::select(-Ticker)
 
 crudes <- rbind(x,y) %>%
+  tibble::add_row(Crude = "Tapis", Country = "Malaysia", API = 42.7, Sulphur = .044, TAN = 0.215) %>%
+  tibble::add_row(Crude = "Maya", Country = "Mexico", API = 22, Sulphur = 3.3, TAN = 0.3) %>%
+  tibble::add_row(Crude = "Light Louisiana Sweet", Country = "US", API = 38.5, Sulphur = .40, TAN = 0.25) %>%
+  tibble::add_row(Crude = "West Texas Intermediate", Country = "US", API = 40.6, Sulphur = .22, TAN = 0.1)
+
+crudes <- crudes %>%
   dplyr::mutate(SweetSour = case_when(Sulphur < 0.5 ~ "Sweet", TRUE ~ "Sour"),
                 LightMedHeavy = case_when(API < 22.3 ~ "Heavy",
                                           API > 31.1 ~ "Light",
-                                          TRUE ~ "Medium"))
+                                          TRUE ~ "Medium"),
+                Benchmark = if_else(Crude %in% c("Maya",#"Oriente","Napo",
+                                               "West Texas Intermediate","Light Louisiana Sweet",
+                                               "Oman Export Blend","Mars",
+                                               "Brent","Tapis"),"yes","no"),
+                Notes = case_when(Country == "Canada" ~ "Canada",
+                                          Benchmark == "yes" ~ "Benchmark",
+                                          TRUE ~ "Others"),)
+
 crudes$LightMedHeavy <- factor(crudes$LightMedHeavy, levels=c("Light", "Medium", "Heavy"))
 crudes$SweetSour <- factor(crudes$SweetSour, levels=c("Sweet", "Sour"))
 usethis::use_data(crudes, overwrite = T)

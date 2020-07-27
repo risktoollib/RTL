@@ -1,6 +1,10 @@
 # RTL 0.1.4
 
+## New
 + `getCurve()` added to extract OHLC futures contract forward curves from `Morningstar`. 
++ `chart_eia_steo()` returns a Supply/Demand balance from the EIA STEO data set. Currently configured for Global Liquids and will be augmented for US Crude, Light and Middle Distillates.
+
+## Updates and Fixes
 + `eia2tidy()` fix for key variable in function.
 + `crudes` dataset updated.
 

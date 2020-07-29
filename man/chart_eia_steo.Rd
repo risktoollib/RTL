@@ -7,9 +7,11 @@
 chart_eia_steo(
   market = "globalOil",
   key = "your EIA.gov API key",
+  from = "2018-07-01",
   fig.title = "EIA STEO Global Liquids SD Balance",
   fig.units = "million barrels per day",
-  legend.pos = list(x = 0.4, y = 0.53)
+  legend.pos = list(x = 0.4, y = 0.53),
+  output = "chart"
 )
 }
 \arguments{
@@ -17,11 +19,15 @@ chart_eia_steo(
 
 \item{key}{Your private EIA API token.}
 
+\item{from}{Date as character "2020-07-01". Default to all dates available.}
+
 \item{fig.title}{Defaults to "EIA STEO Global Liquids SD Balance".}
 
 \item{fig.units}{Defaults to "million barrels per day"}
 
 \item{legend.pos}{Defaults to list(x = 0.4, y = 0.53)}
+
+\item{output}{"chart" for plotly object or "data" for dataframe.}
 }
 \value{
 A plotly object

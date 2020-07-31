@@ -270,6 +270,11 @@ for (i in 1:nrow(urls)){
 usethis::use_data(crudeassaysXOM, overwrite = T)
 rm(html,tmp,urls,css,destfile,i)
 
+## Physical Diffs
+fizdiffs <-  readRDS("fizdiffs.RDS")
+usethis::use_data(fizdiffs, overwrite = T)
+
+
 ## IR Curves for RQuantlib
   # Curves and Def - ICE
 library(Quandl)

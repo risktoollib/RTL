@@ -134,3 +134,8 @@
 #' @description Crude Trading Trade Cycles
 #' @format data frame
 "tradeCycle"
+
+#' fizdiffs
+#' @description Randomized data set for education purpose of selected physical crude differentials to WTI.
+#' @format data frame
+"fizdiffs"

@@ -6,4 +6,5 @@ utils::globalVariables(c("df_fut","dflong","dfwide","expiry_table","holidaysOil"
                          "par","usSwapCurves","times","day2next","disc","disc.float","fixed","floating","net",
                          "freq","remainder","week","u","sigma","res","s","e",
                          "calDays","hol","bizDays","futs","type","expirationDate",
-                         "ticker","name","SupplyNOPEC","SupplyOPEC","Demand","Inv_Change"))
+                         "ticker","name","SupplyNOPEC","SupplyOPEC","Demand","Inv_Change",
+                         "tickers_eia","sd_category","tick.r","imports","exports","demand","supply"))

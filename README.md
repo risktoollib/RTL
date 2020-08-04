@@ -20,6 +20,7 @@
   + Morningstar_FX_Forwards.
   + ... see `?getPrice` for up to date selection and examples.
 + `chart_zscore()` supports seasonality adjusted analysis of residuals, particularly useful when dealing with commodity stocks and/or days demand time series with trends as well as non-constant variance across seasonal periods.
++ `chart_eia_steo()` and `chart_eia_sd()` return either a chart or dataframe of supply demand balances from the EIA.
 
 ## Data Sets
 

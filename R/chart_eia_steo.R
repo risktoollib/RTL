@@ -7,7 +7,7 @@
 #' @param fig.units Defaults to "million barrels per day"
 #' @param legend.pos Defaults to list(x = 0.4, y = 0.53)
 #' @param output "chart" for plotly object or "data" for dataframe.
-#' @return A plotly object
+#' @return A plotly object or a dataframe
 #' @export chart_eia_steo
 #' @author Philippe Cote
 #' @examples

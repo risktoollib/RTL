@@ -3,6 +3,7 @@
 ## New
 + `getCurve()` added to extract OHLC futures contract forward curves from `Morningstar`. 
 + `chart_eia_steo()` returns a Supply/Demand balance from the EIA STEO data set. Currently configured for Global Liquids and will be augmented for US Crude, Light and Middle Distillates.
++ `chart_eia_sd()` returns Supply/Demand balance from the EIA weekly data for mogas, distillates, jet and resids.
 + `tickers_eia` table updated to build Supply Demand Balances for US products.
 
 ## Updates and Fixes

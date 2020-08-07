@@ -36,7 +36,6 @@ Imports:
     tidyquant,
     readr,
     Quandl,
-    fGarch,
     fitdistrplus,
     tsibble,
     feasts,
@@ -44,4 +43,5 @@ Imports:
     fabletools,
     jsonlite,
     sp,
-    RCurl
+    RCurl,
+    rugarch

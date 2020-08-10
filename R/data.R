@@ -139,3 +139,13 @@
 #' @description Randomized data set for education purpose of selected physical crude differentials to WTI.
 #' @format data frame
 "fizdiffs"
+
+#' ref.opt.inputs
+#' @description Simple refinery input to be used in running LP modeling for education purposes.
+#' @format data frame
+"ref.opt.inputs"
+
+#' ref.opt.ouputs
+#' @description Simple refinery outputs and constraints to be used in running LP modeling for education purposes.
+#' @format data frame
+"ref.opt.outputs"

@@ -1,5 +1,5 @@
 # usethis::use_readme_md()
-usethis::use_package("rugarch")
+#usethis::use_package("lpSolve")
 # usethis::use_pipe()
 library(RTL)
 library(tidyverse)
@@ -328,6 +328,23 @@ usethis::use_data(usSwapIRdef, overwrite = T)
 usethis::use_data(usSwapCurves, overwrite = T)
 usethis::use_data(usSwapCurvesPar, overwrite = T)
 
+
+# Refinery Optimization
+
+ref.opt.inputs <- data.frame(info=c("price","processing.fee"),
+                     LightSweet=c(-50,-1),
+                     HeavySour=c(-30,-4))
+
+ref.opt.outputs <- data.frame(product=c("mogas","distillate","fo","resid"),
+                       prices=c(70,70,30,20),
+                       max.prod=c(50000,40000,20000,10000),
+                       LightSweet.yield=c(0.65,.20,.10,0.05),
+                       HeavySour.yield=c(0.40,0.20,.30,.1))
+
+usethis::use_data(ref.opt.inputs, overwrite = T)
+usethis::use_data(ref.opt.outputs, overwrite = T)
+
+# Global
 devtools::document()
 
 

@@ -44,4 +44,5 @@ Imports:
     jsonlite,
     sp,
     RCurl,
-    rugarch
+    rugarch,
+    lpSolve

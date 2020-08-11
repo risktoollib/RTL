@@ -149,3 +149,8 @@
 #' @description Simple refinery outputs and constraints to be used in running LP modeling for education purposes.
 #' @format data frame
 "ref.opt.outputs"
+
+#' tradeprocess
+#' @description Data set for explaning the various ways to monetize a market view.
+#' @format data frame
+"tradeprocess"

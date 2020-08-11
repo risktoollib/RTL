@@ -344,6 +344,12 @@ ref.opt.outputs <- data.frame(product=c("mogas","distillate","fo","resid"),
 usethis::use_data(ref.opt.inputs, overwrite = T)
 usethis::use_data(ref.opt.outputs, overwrite = T)
 
+# Educational Dataset
+
+tradeprocess <- RTL::getPrices(feed="CME_NymexFutures_EOD",contracts = c("CL21H","HO0V","HO21H","LT21H"),
+                               from="2018-01-01",iuser = mstar[[1]], ipassword = mstar[[2]])
+usethis::use_data(tradeprocess, overwrite = T)
+
 # Global
 devtools::document()
 

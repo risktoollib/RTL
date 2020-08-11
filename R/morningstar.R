@@ -201,7 +201,7 @@ getIRswapCurve <- function(currency="USD",from="2019-01-01",iuser = "x@xyz.com",
 #' iuser = "x@xyz.com", ipassword = "pass")
 #' }
 
-getCurve <- function(feed = "Crb_Futures_Price_Volume_And_Open_Interest",contract = "CL",date ="2020-07-13",
+getCurve <- function(feed = "Crb_Futures_Price_Volume_And_Open_Interest",contract = "CL",date ="2020-08-10",
                      fields = c("Open, High, Low, Close"),
                      iuser = "x@xyz.com", ipassword = "pass") {
 
@@ -209,7 +209,9 @@ getCurve <- function(feed = "Crb_Futures_Price_Volume_And_Open_Interest",contrac
                          path = paste0("/lds/feeds/",feed, "/curve?root=",contract,"&cols=",gsub(" ","",fields),
                                        "&date=",date))
   es = RCurl::getURL(url = URL, userpw = paste(iuser,ipassword,sep=":"))
-  out <- jsonlite::fromJSON(es) %>% dplyr::as_tibble() %>%
+  out <- jsonlite::fromJSON(es) %>% dplyr::as_tibble()
+  es <- out$keys %>% unlist() %>% unique() %>% sort()
+  out <- out %>%
     dplyr::transmute(expirationDate = as.Date(expirationDate),
                      type = col,
                      value = as.numeric(value)) %>%
@@ -217,8 +219,9 @@ getCurve <- function(feed = "Crb_Futures_Price_Volume_And_Open_Interest",contrac
     dplyr::arrange(expirationDate)
 
   out <- out %>%
-    dplyr::mutate(contract = paste(contract, sprintf('%0.2d', 1:nrow(out)), sep = "")) %>%
-    dplyr::select(contract, dplyr::everything())
+    dplyr::mutate(contract = paste(contract, sprintf('%0.2d', 1:nrow(out)), sep = ""),
+                  code = es) %>%
+    dplyr::select(contract, code, dplyr::everything())
 
   return(out)
 }

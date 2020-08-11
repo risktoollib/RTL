@@ -7,7 +7,7 @@
 getCurve(
   feed = "Crb_Futures_Price_Volume_And_Open_Interest",
   contract = "CL",
-  date = "2020-07-13",
+  date = "2020-08-10",
   fields = c("Open, High, Low, Close"),
   iuser = "x@xyz.com",
   ipassword = "pass"

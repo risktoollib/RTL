@@ -4,7 +4,12 @@
 \alias{swapFutWeight}
 \title{\code{swapFutWeight}}
 \usage{
-swapFutWeight(Month = "2020-09-01", contract = "cmewti", exchange = "nymex")
+swapFutWeight(
+  Month = "2020-09-01",
+  contract = "cmewti",
+  exchange = "nymex",
+  output = "first.fut.weight"
+)
 }
 \arguments{
 \item{Month}{First calendar day of the month.}
@@ -12,15 +17,19 @@ swapFutWeight(Month = "2020-09-01", contract = "cmewti", exchange = "nymex")
 \item{contract}{Contract code in data(expiry_table). sort(unique(expiry_table$cmdty)) for options.}
 
 \item{exchange}{Exchange code in data(holidaysOil). Currently only "nymex" and "ice" supported.}
+
+\item{output}{Either "numDaysFut1", "numDaysFut2" or "first.fut.weight"}
 }
 \value{
-Percentage applied to first contract. To compute swap 1 - value = % applied to 2nd line contract.
+What you defined in outputs.
+If first.fut.weight, to compute swap 1 - first.fut.weight = % applied to 2nd line contract.
 }
 \description{
 Returns the percentage weight of the future in Calendar Month Average swaps
 }
 \examples{
-swapFutWeight(Month = "2020-09-01",contract = "cmewti",exchange = "nymex")
+swapFutWeight(Month = "2020-09-01",
+contract = "cmewti",exchange = "nymex", output = "first.fut.weight")
 }
 \author{
 Philippe Cote

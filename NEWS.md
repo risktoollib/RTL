@@ -7,6 +7,7 @@
 + `tickers_eia` table updated to build Supply Demand Balances for US products.
 + Datasets `ref.opt.inputs` and `ref.opt.outputs` to support refinery LP optimization education using `lpSolve` package. 
 + `swapFutWeight()` returns the % applied to the first line contract in Calendar Month Average commodity swaps when two futures contracts are involved e.g. WTI. It uses the proper NYMEX or ICE holiday calendars and fit for purpose for building trading sheets.
++ `swapInfo()` returns all information required to price first line futures contract averaging swap or CMA physical trade, including a current month instrument with prior settlements.
 
 ## Updates and Fixes
 + `eia2tidy()` fix for key variable in function.

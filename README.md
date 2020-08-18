@@ -21,6 +21,7 @@
   + ... see `?getPrice` for up to date selection and examples.
 + `chart_zscore()` supports seasonality adjusted analysis of residuals, particularly useful when dealing with commodity stocks and/or days demand time series with trends as well as non-constant variance across seasonal periods.
 + `chart_eia_steo()` and `chart_eia_sd()` return either a chart or dataframe of supply demand balances from the EIA.
++ `swapInfo()` returns all information required to price first line futures contract averaging swap or CMA physical trade, including a current month instrument with prior settlements. 
 
 ## Data Sets
 

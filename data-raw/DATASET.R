@@ -7,7 +7,7 @@ library(lubridate)
 library(jsonlite)
 library(rvest)
 library(readxl)
-source("../keys.R")
+source("~/now/keys.R")
 setwd(paste0(getwd(),"/data-raw"))
 
 ## Orbital
@@ -30,7 +30,7 @@ usethis::use_data(planets, overwrite = T)
 df_fut <- readRDS("df_fut") ; usethis::use_data(df_fut, overwrite = T)
 
 iuser = mstar[["iuser"]] ; ipassword = mstar[["ipassword"]]
-startdate <- "2013-01-01"
+startdate <- "2015-01-01"
 crude <- c(paste0("CL_",sprintf('%0.3d', 1:36),"_Month"), paste0("NG_",sprintf('%0.3d', 1:36),"_Month"))
 crudeICE <- c(paste0("BRN_",sprintf('%0.3d', 1:36),"_Month"))
 pdts <- c(paste0("HO_",sprintf('%0.3d', 1:18),"_Month"), paste0("RB_",sprintf('%0.3d', 1:18),"_Month"))
@@ -93,10 +93,16 @@ file.remove(destfile)
 usethis::use_data(eiaStorageCap, overwrite = T)
 
 ## Sample GIS Mapping
-load("map.RData")
-crudepipelines <- crudepipes
+library(rgdal)
+crudepipelines <- rgdal::readOGR(dsn = "./data-raw/CrudeOil_Pipelines_US_EIA/", layer = "CrudeOil_Pipelines_US_202001")
+refineries <- rgdal::readOGR(dsn = "./data-raw/Petroleum_Refineries_US_EIA/", layer = "Petroleum_Refineries_US_2020")
+productspipelines <- rgdal::readOGR(dsn = "./data-raw/PetroleumProduct_Pipelines_US_EIA/", layer = "PetroleumProduct_Pipelines_US_202001")
+productsterminals <- rgdal::readOGR(dsn = "./data-raw/PetroleumProduct_Terminals_US_EIA/", layer = "PetroleumProduct_Terminals_US_202001")
+
 usethis::use_data(crudepipelines, overwrite = T)
 usethis::use_data(refineries, overwrite = T)
+usethis::use_data(productspipelines, overwrite = T)
+usethis::use_data(productsterminals, overwrite = T)
 
 ## EIA Mapping
 tickers_eia <- read.csv('eia.csv',sep=",",header=TRUE,na.strings="NA",stringsAsFactors=FALSE)
@@ -138,19 +144,20 @@ usethis::use_data(tradeCycle, overwrite = T)
   ### Trump
   # http://www.trumptwitterarchive.com/archive
   # use geany text editor in Linux for very large files
-twtrump <- fromJSON("twtrump.json")
-twtrump <- twtrump %>%
-  dplyr::mutate(created_at = as.POSIXct(created_at,tz="GMT",format=c("%a %b %d %H:%M:%S +0000 %Y"))) %>%
-  dplyr:::rename(favoriteCount = favorite_count, created = created_at, id = id_str) %>%
-  as_tibble()
-usethis::use_data(twtrump, overwrite = T)
+# twtrump <- fromJSON("./data-raw/twtrump.json")
+# twtrump <- twtrump %>%
+#   dplyr::mutate(created_at = as.POSIXct(created_at,tz="GMT",format=c("%a %b %d %H:%M:%S +0000 %Y"))) %>%
+#   dplyr:::rename(favoriteCount = favorite_count, created = created_at, id = id_str) %>%
+#   as_tibble()
+#usethis::use_data(twtrump, overwrite = T)
+
   ### OOTT
-library(twitteR)
-setup_twitter_oauth(consumer_key = tw$cons.key, consumer_secret = tw$cons.secret,
-                    access_token = tw$access.token, access_secret = tw$access.secret)
-twoott <- twitteR::searchTwitter('#OOTT', n = 1e4, since = '2016-11-06', retryOnRateLimit = 1e4)
-twoott <- twitteR::twListToDF(twoott) %>% as_tibble()
-usethis::use_data(twoott, overwrite = T)
+#library(twitteR)
+#setup_twitter_oauth(consumer_key = tw$cons.key, consumer_secret = tw$cons.secret,
+#                    access_token = tw$access.token, access_secret = tw$access.secret)
+#twoott <- twitteR::searchTwitter('#OOTT', n = 1e4, since = '2018-01-01', retryOnRateLimit = 1e4)
+#twoott <- twitteR::twListToDF(twoott) %>% as_tibble()
+#usethis::use_data(twoott, overwrite = T)
 
 ## Canadain Crude Data
 cancrudeprices <- readRDS("~/dscf/data/crude_prices.RDS") ; usethis::use_data(cancrudeprices, overwrite = T)

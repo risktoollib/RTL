@@ -1,7 +1,7 @@
 ## Purpose
 
 + Purposely designed functions for trading, trading analytics and risk practitioners in Commodities and Finance. 
-+ Build to support delivery of Finance classes from one of the co-authors of RTL at the [Alberta School of Business](https://www.ualberta.ca/business).
++ Build to support delivery of Finance classes from one of the co-authors of RTL at the [Alberta School of Business](https://www.ualberta.ca/business/index.html).
 
 ## Features
 
@@ -42,7 +42,6 @@ Accessible via `data(datsetname)`
 + `eiaStorageCap`: EIA crude storage capacity by PADD.
 + `dflong` and `dfwide` contain continuous futures prices sample data sets for Nymex (CL, HO, RB and NG contracts) and ICE Brent.
 + `crudepipelines` and `refineries` contain GIS information in the North American crude space. 
-+ `twtrump` and `twoott` are historical tweets toy data sets from @realDonaldTrump and #OOTT for learning NLP.
 
 ## Python
 

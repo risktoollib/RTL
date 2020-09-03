@@ -7,10 +7,13 @@
 \format{
 data frame
 }
+\source{
+\url{https://www.eia.gov/maps/layer_info-m.php}
+}
 \usage{
 refineries
 }
 \description{
-Sample GIS data set for North American refineries.
+GIS data set for North American refineries.
 }
 \keyword{datasets}

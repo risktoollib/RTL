@@ -4,3 +4,4 @@
 ^RTL\.Rcheck$
 ^RTL.*\.tar\.gz$
 ^RTL.*\.tgz$
+^\.httr-oauth$

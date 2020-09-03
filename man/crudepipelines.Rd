@@ -7,10 +7,13 @@
 \format{
 data frame
 }
+\source{
+\url{https://www.eia.gov/maps/layer_info-m.php}
+}
 \usage{
 crudepipelines
 }
 \description{
-Sample GIS data set for North American crude pipelines.
+GIS data set for North American crude pipelines.
 }
 \keyword{datasets}

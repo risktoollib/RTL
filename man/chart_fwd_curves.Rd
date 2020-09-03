@@ -23,7 +23,8 @@ Returns a plot of forward curves through time
 }
 \examples{
 \dontrun{
-chart_fwd_curves(df=dfwide,cmdty="cmewti",weekly=TRUE,
+df <- dfwide \%>\% dplyr::select(date, dplyr::starts_with("CL"))
+chart_fwd_curves(df = df,cmdty = "cmewti",weekly = TRUE,
 main="WTI Forward Curves",ylab="$ per bbl",xlab="",cex=2)
 }
 }

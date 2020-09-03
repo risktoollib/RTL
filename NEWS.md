@@ -13,6 +13,9 @@
 + `eia2tidy()` fix for key variable in function.
 + `crudes` dataset updated.
 
+## Removed
+ + `twtrump` and `twoott` tweets datasets for learning NLP.
+
 # RTL 0.1.3
 
 + `eia2tidy()` removed dependency to `EIAdata` package.

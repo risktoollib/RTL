@@ -2,10 +2,10 @@ Package: RTL
 Type: Package
 Title: Risk Tool Library 
 Version: 0.1.4
-Date: 2020-07-07
+Date: 2020-09-03
 Authors@R: c(person("Philippe", "Cote", email = "pcote@ualberta.ca", role = c("aut", "cre")),person("Nima", "Safaian", email = "nima.safaian@gmail.com", role = c("aut")))
 Description: Collection of functions and metadata to complement core packages
-    in Finance and Commodities, including futures expiry tables and <http://www.morningstarcommodity.com/>
+    in Finance and Commodities, including futures expiry tables and <https://www.morningstar.com/products/commodities-and-energy/>
     API functions. See <https://github.com/risktoollib/RTL>.
 Depends: R (>= 4.0)
 License: GPL (>= 3)

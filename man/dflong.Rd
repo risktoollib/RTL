@@ -6,7 +6,7 @@
 \title{dflong}
 \format{
 data frame
-#' @source \url{http://www.morningstarcommodity.com}
+#' @source \url{https://www.morningstar.com/products/commodities-and-energy}
 }
 \usage{
 dflong

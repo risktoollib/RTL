@@ -160,15 +160,78 @@ usethis::use_data(tradeCycle, overwrite = T)
 #usethis::use_data(twoott, overwrite = T)
 
 ## Canadain Crude Data
-cancrudeprices <- readRDS("~/dscf/data/crude_prices.RDS") ; usethis::use_data(cancrudeprices, overwrite = T)
-cancrudeassays <- readRDS("~/dscf/data/crude_assays.RDS") ; usethis::use_data(cancrudeassays, overwrite = T)
+
+url <-  "https://crudemonitor.ca/crudes/index.php?acr=MSW"
+html <- xml2::read_html(url)
+
+get_all_assays<-function(x) {
+  print(x)
+  t<-try(read_html(paste0("http://www.crudemonitor.ca/",x)) %>%  html_nodes("a") %>% xml_attr('href') %>%
+           data.frame(baselocation=.) %>% dplyr::filter(grepl("date=",baselocation)))
+  if(!class(t)=="try-error"){
+    return(read_html(paste0("http://www.crudemonitor.ca/",x)) %>%  html_nodes("a") %>% xml_attr('href') %>%
+             data.frame(baselocation=.) %>% dplyr::filter(grepl("date=",baselocation)))
+  } else { return(data.frame(baselocation=character()))}
+}
+#x<-"sampledata.php?name=Cochin+Condensate&batch=CHN-010&date=2016-10-05"
+get_assay_values<-function(x){
+  print(x)
+  tmp<-read_html(paste0("http://www.crudemonitor.ca/",x)) %>%
+    html_nodes('#datatables') %>% html_text() %>% stringr::str_split("\\n",simplify = T)
+  out<-data.frame(measure=tmp[1,grep("\\S+\\s\\(",tmp[1,])],value=tmp[1,grep("\\S+\\s\\(",tmp[1,])+1])
+  return(out)
+}
+
+assay_id <-read_html("http://www.crudemonitor.ca/report.php") %>%
+  html_nodes("a") %>% xml_attr('href') %>% data.frame(baselocation=.) %>%
+  dplyr::filter(grepl("report.php\\?acr=",baselocation)) %>%
+  setNames("shortname") %>%
+  dplyr::filter(grepl("=AHS|=AWB|=BRN|=CDB|=CL|=LLB|=LLK|=MSW|=SYN|=WCS|=WDB|=WH",shortname)) %>%
+  arrange %>%
+  dplyr::mutate(longname = purrr::map(shortname,get_all_assays)) %>% tidyr::unnest(longname) %>%
+  tidyr::separate(shortname,into = c("j1","Ticker"),sep = "acr=") %>%
+  dplyr::mutate(filelocation = baselocation) %>%
+  tidyr::separate(baselocation,into = c("j2","j3","Batch","Date","junk"),sep="=") %>%
+  dplyr::mutate(Crude = gsub("&batch","",j3)) %>%
+  dplyr::mutate(Crude = gsub("\\+"," ",Crude)) %>%
+  dplyr::select(Ticker,Date,Batch,filelocation,Crude)
+
+# Scrape Assay Content by ID
+assays <-assay_id %>% na.omit() %>%
+  dplyr::mutate(data = purrr::map(filelocation,get_assay_values)) %>%
+  unnest(data)
+
+# Tidying Data
+cancrudeassays <- assays %>%
+  dplyr::mutate(Ticker = gsub("\\&.*","",Ticker),
+                Date=as.Date(str_remove(Date,"&PHPSESSID")),
+                Batch = gsub("\\&.*","",Batch),
+                Measurement=gsub("\\s\\(.*","",measure),
+                Value=parse_number(as.character(value),na=c("","NA","ND"))) %>%
+  dplyr::select(Date,Batch,Ticker,Crude,Measurement,Value) %>%
+  na.omit()
+
+# Computing Monthly Measurements Averages
+
+cancrudeassays <-   cancrudeassays %>%
+  pivot_wider(names_from = "Measurement",values_from = "Value") %>%
+  dplyr::mutate(YM=tsibble::yearmonth(Date),
+                Location=case_when(grepl("AHS|AWB|C5|CAL|MSW|PSO|WDB|WH",Ticker)  ~ "Edmonton",
+                                   grepl("BRN|CDB|CL|LLB|LLK|WCS",Ticker)  ~ "Hardisty",
+                                   TRUE ~ "unknown")) %>%
+  dplyr::select(Date,Location,YM,everything(),-contains("%")) %>%
+  group_by(Ticker,Crude,YM,Location) %>%
+  summarise_if(is.numeric, mean, na.rm = TRUE)
+
 
 cancrudeassayssum <- cancrudeassays %>% dplyr::group_by(Ticker,Crude) %>%
-  dplyr::filter(YM > "2015-01-01", Ticker != "MSW(S)") %>%
+  #dplyr::filter(YM > "2015-01-01", Ticker != "MSW(S)") %>%
   dplyr::select(-Location,-Sediment,-Salt,-Olefins,-Viscosity) %>%
   dplyr::mutate(TAN = case_when(Ticker == "MSW" ~ 0,TRUE ~ TAN)) %>%
   na.omit() %>% summarise_all(list(mean))
+
 usethis::use_data(cancrudeassayssum, overwrite = T)
+cancrudeprices <- readRDS("./data-raw/crude_prices.RDS") ; usethis::use_data(cancrudeprices, overwrite = T)
 
 # BP Assays
 ### capline https://cappl.com/Reports1.aspx

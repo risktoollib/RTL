@@ -4,6 +4,8 @@
 
 ## Updates and Fixes
 
++ Morningstar tickers for `getPrice()` and `getPrices()` functions.
+
 ## Removed
 
 # RTL 0.1.4

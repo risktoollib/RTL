@@ -26,13 +26,15 @@
 #' @author Philippe Cote
 #' @examples
 #' \dontrun{
-#' getPrice(feed="CME_NymexFutures_EOD",contract="CL9Z",
-#' from="2019-08-26",iuser = usernam, ipassword = password)
+#' getPrice(feed="CME_NymexFutures_EOD",contract="@CL0Z",
+#' from="2019-08-26",iuser = username, ipassword = password)
+#' getPrice(feed="CME_NymexFutures_EOD",contract="@CL21Z",
+#' from="2019-08-26",iuser = username, ipassword = password)
 #' getPrice(feed="CME_NymexFutures_EOD_continuous",contract="CL_006_Month",
 #' from="2019-08-26",iuser = username, ipassword = password)
-#' getPrice(feed="CME_NymexOptions_EOD",contract="LO0M2500",
-#' from="2020-03-15",iuser = usernam, ipassword = password)
-#' getPrice(feed="CME_CbotFuturesEOD",contract="C9Z",
+#' getPrice(feed="CME_NymexOptions_EOD",contract="@LO21ZP4000",
+#' from="2020-03-15",iuser = username, ipassword = password)
+#' getPrice(feed="CME_CbotFuturesEOD",contract="C0Z",
 #' from="2019-08-26",iuser = username, ipassword = password)
 #' getPrice(feed="CME_CbotFuturesEOD_continuous",contract="ZB_001_Month",
 #' from="2019-08-26",iuser = username, ipassword = password)
@@ -48,7 +50,7 @@
 #' from="2019-08-26",iuser = username, ipassword = password)
 #' getPrice(feed="ICE_EuroFutures_continuous",contract="BRN_001_Month",
 #' from="2019-08-26",iuser = username, ipassword = password)
-#' getPrice(feed="ICE_NybotCoffeeSugarCocoaFutures",contract="SB0H",
+#' getPrice(feed="ICE_NybotCoffeeSugarCocoaFutures",contract="SB21H",
 #' from="2019-08-26",iuser = username, ipassword = password)
 #' getPrice(feed="ICE_NybotCoffeeSugarCocoaFutures_continuous",contract="SF_001_Month",
 #' from="2019-08-26",iuser = username, ipassword = password)
@@ -115,8 +117,8 @@ getPrice <- function(feed="CME_NymexFutures_EOD",contract="CL9Z",from="2019-01-0
 #' @author Philippe Cote
 #' @examples
 #' \dontrun{
-#' getPrices(feed="CME_NymexFutures_EOD",contracts=c("CL9Z","CL0F","CL0M"),
-#' from="2019-08-26",iuser = username, ipassword = password)
+#' getPrices(feed = "CME_NymexFutures_EOD",contracts = c("@CL0Z","@CL1F","@CL21H","@CL21Z"),
+#' from = "2020-01-01",iuser = username, ipassword = password)
 #' }
 
 getPrices <- function(feed = "CME_NymexFutures_EOD",contracts = c("CL9Z","CL0F","CL0M"),from = "2019-01-01",iuser = "x@xyz.com", ipassword = "pass") {

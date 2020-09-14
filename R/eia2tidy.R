@@ -29,8 +29,9 @@ eia2tidy <- function(ticker,key,name = " ") {
     dplyr::as_tibble(.name_repair = ~ c("date","value")) %>%
     dplyr::mutate(series = name,
                   date = dplyr::case_when(nchar(date)==4 ~as.Date(paste0(date,"-01-01"),format="%Y-%m-%d"),
-                                 nchar(date)==6 ~as.Date(paste(substr(date,1,4),substr(date,5,6),"01",sep="-"),format="%Y-%m-%d"),
-                                 nchar(date)==8 ~as.Date(date,format="%Y%m%d")),
+                                          grepl("Q",date) ~ zoo::as.Date(zoo::as.yearqtr(date, format = "%YQ%q"), frac = 1),
+                                          nchar(date)==6 ~as.Date(paste(substr(date,1,4),substr(date,5,6),"01",sep="-"),format="%Y-%m-%d"),
+                                          nchar(date)==8 ~as.Date(date,format="%Y%m%d")),
                   value = as.numeric(value)) %>%
     dplyr::select(series,date,value)
   return(out)

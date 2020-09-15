@@ -18,10 +18,13 @@ A tibble object
 }
 \description{
 Extracts data from the Energy Information Administration (EIA) API to tibble format with optional custom series name.
-Makes a clean wrapper for use with purrr for multiple series extraction.
+Makes a clean wrapper for use with purrr for multiple series extraction. Query Browser at https://www.eia.gov/opendata/qb.php.
 }
 \examples{
 \dontrun{
+Single Series
+RTL::eia2tidy(ticker = "PET.MCRFPTX2.M", key = EIAkey, name = "TexasProd")
+Multiple Series
 eia_df <-tibble::tribble(~ticker, ~name,
 "PET.W_EPC0_SAX_YCUOK_MBBL.W", "CrudeCushing",
 "NG.NW2_EPG0_SWO_R48_BCF.W","NGLower48") \%>\%

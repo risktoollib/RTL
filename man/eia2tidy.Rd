@@ -14,7 +14,7 @@ eia2tidy(ticker, key, name = " ")
 \item{name}{Name you want to give the series. Defaults to ticker if set to " "}
 }
 \value{
-A tibble object
+A tibble object with class date for weekly, monthly, quarterly or annual data and class POSIXct for hourly.
 }
 \description{
 Extracts data from the Energy Information Administration (EIA) API to tibble format with optional custom series name.

@@ -4,7 +4,7 @@
 
 ## Updates and Fixes
 
-+ `eia2tidy()` amended for quarterly data.
++ `eia2tidy()` amended for quarterly and hourly data.
 + Morningstar tickers for `getPrice()` and `getPrices()` functions.
 
 ## Removed

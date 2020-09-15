@@ -4,7 +4,7 @@
 #' @param ticker EIA series name.
 #' @param key Your private EIA API token.
 #' @param name Name you want to give the series. Defaults to ticker if set to " "
-#' @return A tibble object
+#' @return A tibble object with class date for weekly, monthly, quarterly or annual data and class POSIXct for hourly.
 #' @export eia2tidy
 #' @author Philippe Cote
 #' @examples
@@ -21,21 +21,26 @@
 #'  }
 
 eia2tidy <- function(ticker,key,name = " ") {
-  #x <- EIAdata::getEIA(ID=ticker,key=key)
-  #names(x) <- "value"
-  #out <- x %>% timetk::tk_tbl(rename_index = "date")
   if (nchar(name)==1) {name <- ticker}
   url <-  paste0("http://api.eia.gov/series/?api_key=",key,"&series_id=",ticker,"&out=json")
   x <- url %>% httr::GET()
   x <- jsonlite::fromJSON(httr::content(x,"text",encoding = "UTF-8"))
-  out <- x$series$data[[1]] %>%
-    dplyr::as_tibble(.name_repair = ~ c("date","value")) %>%
-    dplyr::mutate(series = name,
-                  date = dplyr::case_when(nchar(date)==4 ~as.Date(paste0(date,"-01-01"),format="%Y-%m-%d"),
-                                          grepl("Q",date) ~ zoo::as.Date(zoo::as.yearqtr(date, format = "%YQ%q"), frac = 1),
-                                          nchar(date)==6 ~as.Date(paste(substr(date,1,4),substr(date,5,6),"01",sep="-"),format="%Y-%m-%d"),
-                                          nchar(date)==8 ~as.Date(date,format="%Y%m%d")),
-                  value = as.numeric(value)) %>%
-    dplyr::select(series,date,value)
+  out <- x$series$data[[1]] %>% dplyr::as_tibble(.name_repair = ~ c("date","value"))
+
+  if (nchar(out$date)[1] == 12) {
+    out <- out %>% dplyr::mutate(series = name,
+                                 date = lubridate::parse_date_time(date,c("'%Y%m%d%h")),
+                                 value = as.numeric(value)) %>%
+      dplyr::select(series,date,value)
+  } else {
+    out <- out %>%
+      dplyr::mutate(series = name,
+                    date = dplyr::case_when(nchar(date) == 4 ~ as.Date(paste0(date,"-01-01"),format="%Y-%m-%d"),
+                                            grepl("Q",date) ~ zoo::as.Date(zoo::as.yearqtr(date, format = "%YQ%q"), frac = 1),
+                                            nchar(date) == 6 ~ as.Date(paste(substr(date,1,4),substr(date,5,6),"01",sep="-"),format="%Y-%m-%d"),
+                                            nchar(date) == 8 ~ as.Date(date,format="%Y%m%d")),
+                    value = as.numeric(value)) %>%
+      dplyr::select(series,date,value)
+  }
   return(out)
 }

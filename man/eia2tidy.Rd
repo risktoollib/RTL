@@ -9,7 +9,7 @@ eia2tidy(ticker, key, name = " ")
 \arguments{
 \item{ticker}{EIA series name.}
 
-\item{key}{Your private EIA API token.}
+\item{key}{Your private EIA API token as character "yourkey".}
 
 \item{name}{Name you want to give the series. Defaults to ticker if set to " "}
 }
@@ -28,7 +28,7 @@ Multiple Series
 eia_df <-tibble::tribble(~ticker, ~name,
 "PET.W_EPC0_SAX_YCUOK_MBBL.W", "CrudeCushing",
 "NG.NW2_EPG0_SWO_R48_BCF.W","NGLower48") \%>\%
- dplyr::mutate(key = EIAkey) \%>\%
+ dplyr::mutate(key = "EIAkey") \%>\%
  dplyr::mutate(df = purrr::pmap(list(ticker,key,name),.f=RTL::eia2tidy)) \%>\%
  dplyr::select(df) \%>\% tidyr::unnest(df)
  }

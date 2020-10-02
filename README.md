@@ -14,6 +14,8 @@
   + CME_NymexFutures_EOD and CME_NymexFutures_EOD_continuous.
   + CME_NymexOptions_EOD.
   + CME_CbotFuturesEOD and CME_CbotFuturesEOD_continuous.
+  + CME_Comex_FuturesSettlement_EOD and CME_Comex_FuturesSettlement_EOD_continuous.
+  + LME_AskBidPrices_Delayed.
   + CME_CmeFutures_EOD and CME_CmeFutures_EOD_continuous.
   + CME_STLCPC_Futures.
   + ICE_NybotCoffeeSugarCocoaFutures and ICE_NybotCoffeeSugarCocoaFutures_continuous.

@@ -2,6 +2,12 @@
 
 ## New
 
++ Morningstar feeds: 
+
+    + CME_Comex_FuturesSettlement_EOD and CME_Comex_FuturesSettlement_EOD_continuous.
+    + LME_AskBidPrices_Delayed.
+    + SHFE_FuturesSettlement_RT.
+    
 ## Updates and Fixes
 
 + `eia2tidy()` amended for quarterly and hourly data.

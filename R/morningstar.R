@@ -9,6 +9,9 @@
 #'   \item CME_NymexFutures_EOD and CME_NymexFutures_EOD_continuous
 #'   \item CME_NymexOptions_EOD
 #'   \item CME_CmeFutures_EOD and CME_CmeFutures_EOD_continuous
+#'   \item CME_Comex_FuturesSettlement_EOD and CME_Comex_FuturesSettlement_EOD_continuous
+#'   \item LME_AskBidPrices_Delayed
+#'   \item SHFE_FuturesSettlement_RT
 #'   \item ICE_EuroFutures and ICE_EuroFutures_continuous
 #'   \item ICE_NybotCoffeeSugarCocoaFutures and ICE_NybotCoffeeSugarCocoaFutures_continuous
 #'   \item CME_STLCPC_Futures
@@ -56,12 +59,18 @@
 #' from="2019-08-26",iuser = username, ipassword = password)
 #' }
 
-getPrice <- function(feed="CME_NymexFutures_EOD",contract="CL9Z",from="2019-01-01",iuser = "x@xyz.com", ipassword = "pass") {
-  #mpurl <- "https://mp.morningstarcommodity.com/lds/feeds/CME_NymexFutures_EOD/ts?Symbol=CL9Z"
+getPrice <- function(feed = "CME_NymexFutures_EOD",contract = "@CL0Z",
+                     from = "2020-09-01",iuser = "x@xyz.com", ipassword = "pass") {
+  #mpurl <- "https://mp.morningstarcommodity.com/lds/feeds/CME_NymexFutures_EOD/ts?Symbol=@CL9Z"
   userpw <- paste0(iuser,":",ipassword)
-  if (feed %in% c("CME_NymexFutures_EOD","CME_NymexOptions_EOD","CME_CbotFuturesEOD","CME_CmeFutures_EOD","ICE_EuroFutures","ICE_NybotCoffeeSugarCocoaFutures")) {
+  if (feed %in% c("CME_NymexFutures_EOD","CME_NymexOptions_EOD","CME_CbotFuturesEOD","CME_CmeFutures_EOD",
+                  "ICE_EuroFutures","ICE_NybotCoffeeSugarCocoaFutures",
+                  "CME_Comex_FuturesSettlement_EOD",
+                  "LME_AskBidPrices_Delayed", "SHFE_FuturesSettlement_RT")) {
     URL = httr::modify_url(url = "https://mp.morningstarcommodity.com",path = paste0("/lds/feeds/",feed, "/ts?","Symbol=",contract,"&fromDateTime=",from))}
-  if (feed %in% c("CME_NymexFutures_EOD_continuous","CME_CbotFuturesEOD_continuous","CME_CmeFutures_EOD_continuous","ICE_EuroFutures_continuous","ICE_NybotCoffeeSugarCocoaFutures_continuous")) {
+  if (feed %in% c("CME_NymexFutures_EOD_continuous","CME_CmeFutures_EOD_continuous",
+                  "ICE_EuroFutures_continuous","ICE_NybotCoffeeSugarCocoaFutures_continuous",
+                  "CME_Comex_FuturesSettlement_EOD_continuous","CME_CbotFuturesEOD_continuous")) {
     URL = httr::modify_url(url = "https://mp.morningstarcommodity.com",path = paste0("/lds/feeds/",feed, "/ts?","Contract=",contract,"&fromDateTime=",from))}
   if (feed %in% c("CME_STLCPC_Futures")) {URL = httr::modify_url(url = "https://mp.morningstarcommodity.com",path = paste0("/lds/feeds/",feed, "/ts?","product=",contract,"&fromDateTime=",from))}
   if (feed %in% c("CFTC_CommitmentsOfTradersCombined")) {
@@ -101,7 +110,6 @@ getPrice <- function(feed="CME_NymexFutures_EOD",contract="CL9Z",from="2019-01-0
   if (length(colnames(out))==2) {colnames(out)[2] <- contract}
   return(out)
 }
-
 
 #' \code{getPrices}
 #' @description

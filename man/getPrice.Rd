@@ -6,8 +6,8 @@
 \usage{
 getPrice(
   feed = "CME_NymexFutures_EOD",
-  contract = "CL9Z",
-  from = "2019-01-01",
+  contract = "@CL0Z",
+  from = "2020-09-01",
   iuser = "x@xyz.com",
   ipassword = "pass"
 )
@@ -37,6 +37,9 @@ You need your own credentials with Morningstar. In examples sourced locally.
   \item CME_NymexFutures_EOD and CME_NymexFutures_EOD_continuous
   \item CME_NymexOptions_EOD
   \item CME_CmeFutures_EOD and CME_CmeFutures_EOD_continuous
+  \item CME_Comex_FuturesSettlement_EOD and CME_Comex_FuturesSettlement_EOD_continuous
+  \item LME_AskBidPrices_Delayed
+  \item SHFE_FuturesSettlement_RT
   \item ICE_EuroFutures and ICE_EuroFutures_continuous
   \item ICE_NybotCoffeeSugarCocoaFutures and ICE_NybotCoffeeSugarCocoaFutures_continuous
   \item CME_STLCPC_Futures

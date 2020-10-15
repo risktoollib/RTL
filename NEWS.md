@@ -7,6 +7,7 @@
     + CME_Comex_FuturesSettlement_EOD and CME_Comex_FuturesSettlement_EOD_continuous.
     + LME_AskBidPrices_Delayed.
     + SHFE_FuturesSettlement_RT.
+    + EIA GIS data sets `ngpipelines`, `ngstorage`, `nghubs`, `lngterminals`.
     
 ## Updates and Fixes
 

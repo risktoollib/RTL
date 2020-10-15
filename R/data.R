@@ -88,10 +88,34 @@
 "productspipelines"
 
 #' productsterminals
-#' @description GIS data set for North American products pipelines.
+#' @description GIS data set for North American products terminals.
 #' @format data frame
 #' @source \url{https://www.eia.gov/maps/layer_info-m.php}
 "productsterminals"
+
+#' ngpipelines
+#' @description GIS data set for North American NG pipelines.
+#' @format data frame
+#' @source \url{https://www.eia.gov/maps/layer_info-m.php}
+"ngpipelines"
+
+#' ngstorage
+#' @description GIS data set for North American NG storage.
+#' @format data frame
+#' @source \url{https://www.eia.gov/maps/layer_info-m.php}
+"ngstorage"
+
+#' nghubs
+#' @description GIS data set for North American NG Trading Hubs.
+#' @format data frame
+#' @source \url{https://www.eia.gov/maps/layer_info-m.php}
+"nghubs"
+
+#' lngterminals
+#' @description GIS data set for North American LNG terminals.
+#' @format data frame
+#' @source \url{https://www.eia.gov/maps/layer_info-m.php}
+"lngterminals"
 
 #' df_fut
 #' @description Futures settlement data set.

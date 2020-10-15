@@ -191,3 +191,8 @@ PET.W_EPM0F_EEX_NUS-Z00_MBBLD.W,eia.mogas.exports,product,exports,mogas
 PET.WKJEXUS2.W,eia.jet.exports,product,exports,jet
 PET.WREEXUS2.W,eia.resid.exports,product,exports,resid
 PET.W_EPLLPZ_EEX_NUS-Z00_MBBLD.W,eia.propane.propylene.exports,product,exports,propanepropylene
+NG.N9070US2.M,eia.ng.production,ng,production,ng
+NG.N9130US2.M,eia.ng.exports,ng,exports,ng
+NG.N9100US2.M,eia.ng.imports,ng,imports,ng
+NG.N3060US2.M,eia.ng.consumption,ng,demand,ng
+NG.NW2_EPG0_SWO_R48_BCF.W,eia.ng.storage,ng,stocks,ng

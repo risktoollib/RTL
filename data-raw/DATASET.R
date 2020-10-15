@@ -94,18 +94,26 @@ usethis::use_data(eiaStorageCap, overwrite = T)
 
 ## Sample GIS Mapping
 library(rgdal)
-crudepipelines <- rgdal::readOGR(dsn = "./data-raw/CrudeOil_Pipelines_US_EIA/", layer = "CrudeOil_Pipelines_US_202001")
-refineries <- rgdal::readOGR(dsn = "./data-raw/Petroleum_Refineries_US_EIA/", layer = "Petroleum_Refineries_US_2020")
-productspipelines <- rgdal::readOGR(dsn = "./data-raw/PetroleumProduct_Pipelines_US_EIA/", layer = "PetroleumProduct_Pipelines_US_202001")
-productsterminals <- rgdal::readOGR(dsn = "./data-raw/PetroleumProduct_Terminals_US_EIA/", layer = "PetroleumProduct_Terminals_US_202001")
+crudepipelines <- rgdal::readOGR(dsn = "~/now/GIS_RTL/CrudeOil_Pipelines_US_EIA/", layer = "CrudeOil_Pipelines_US_202001")
+refineries <- rgdal::readOGR(dsn = "~/now/GIS_RTL/Petroleum_Refineries_US_EIA/", layer = "Petroleum_Refineries_US_2020")
+productspipelines <- rgdal::readOGR(dsn = "~/now/GIS_RTL/PetroleumProduct_Pipelines_US_EIA/", layer = "PetroleumProduct_Pipelines_US_202001")
+productsterminals <- rgdal::readOGR(dsn = "~/now/GIS_RTL/PetroleumProduct_Terminals_US_EIA/", layer = "PetroleumProduct_Terminals_US_202001")
+ngpipelines <- rgdal::readOGR(dsn = "~/now/GIS_RTL/NaturalGas_InterIntrastate_Pipelines_US_EIA/", layer = "NaturalGas_Pipelines_US_202001")
+ngstorage <- rgdal::readOGR(dsn = "~/now/GIS_RTL/NaturalGas_StorageRegions_US_EIA/", layer = "NaturalGas_StorageRegions_20151119")
+nghubs <- rgdal::readOGR(dsn = "~/now/GIS_RTL/NaturalGas_TradingHubs_US_EIA/", layer = "NaturalGas_TradingHubs_US_202002")
+lngterminals <- rgdal::readOGR(dsn = "~/now/GIS_RTL/Lng_ImportExportTerminals_US_EIA/", layer = "LNG_ImpExp_Terminals_US_202004")
 
 usethis::use_data(crudepipelines, overwrite = T)
 usethis::use_data(refineries, overwrite = T)
 usethis::use_data(productspipelines, overwrite = T)
 usethis::use_data(productsterminals, overwrite = T)
+usethis::use_data(ngpipelines, overwrite = T)
+usethis::use_data(ngstorage, overwrite = T)
+usethis::use_data(nghubs, overwrite = T)
+usethis::use_data(lngterminals, overwrite = T)
 
 ## EIA Mapping
-tickers_eia <- read.csv('eia.csv',sep=",",header=TRUE,na.strings="NA",stringsAsFactors=FALSE)
+tickers_eia <- read.csv('./data-raw/eia.csv',sep=",",header=TRUE,na.strings="NA",stringsAsFactors=FALSE)
 usethis::use_data(tickers_eia, overwrite = T)
 
 # library(readxl)

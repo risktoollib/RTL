@@ -7,7 +7,7 @@
 
 + Historical forward curves charting.
 + Calendars and expiry dates data objects for a wide range of commodity futures contracts.
-+ Function to adjust continuous contracts returns for roll adjustments using expiries above.
++ `rolladjust` to adjust continuous contracts returns for roll adjustments using expiries above.
 + [Morningstar Marketplace API](https://mp.morningstarcommodity.com/marketplace/) functions `getPrice()`, `getPrices()` and `getCurve()` using your own Morningstar credentials. Current feeds included:
 
   + ICE_EuroFutures and ICE_EuroFutures_continuous.
@@ -23,7 +23,9 @@
   + ... see `?getPrice` for up to date selection and examples.
 + `chart_zscore()` supports seasonality adjusted analysis of residuals, particularly useful when dealing with commodity stocks and/or days demand time series with trends as well as non-constant variance across seasonal periods.
 + `chart_eia_steo()` and `chart_eia_sd()` return either a chart or dataframe of supply demand balances from the EIA.
++ `chart_spreads()` to generate specific contract spreads across years e.g. ULSD March/April. Requires Morninstar credentials.
 + `swapInfo()` returns all information required to price first line futures contract averaging swap or CMA physical trade, including a current month instrument with prior settlements. 
++ ...
 + ... Check the functions index and send feedback to `pcote@ualberta.ca`. We welcome feedback, suggestions and collaborators.
 
 

@@ -10,4 +10,4 @@ utils::globalVariables(c("df_fut","dflong","dfwide","expiry_table","holidaysOil"
                          "tickers_eia","sd_category","tick.r","imports","exports","demand","supply",
                          "ref.opt.inputs","ref.opt.outputs","prices","LightSweet.yield","LightSweet",
                          "HeavySour","HeavySour.yield","Element","product","max.prod","info","code",
-                         "Close","fut.contract"))
+                         "Close","fut.contract","DaysFromExp"))

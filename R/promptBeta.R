@@ -46,18 +46,24 @@ promptBeta<-function(x=x,period="all",betatype="all",output="chart") {
   rownames(df) <- NULL
   df$contract <- term
 
-  chart <- df %>% tidyr::gather(series,value,-contract) %>%
-    ggplot2::ggplot(ggplot2::aes(x=contract,y=value,col=series)) + ggplot2::geom_line() +
-    ggplot2::theme(legend.position="top") + ggplot2::ylim(0,1) +
-    ggplot2::labs(title="Contract Betas vs Front Contract",
-         subtitle="Bear (Bull) = Beta in Down (Up) Moves ",
-         caption="",
-         y="Beta", x="Contract")
+  chart <- df %>%
+    tidyr::pivot_longer(-contract, names_to = "series",values_to = "value") %>%
+    plotly::plot_ly(x = ~contract, y = ~value, name = ~series, color = ~series) %>%
+    plotly::add_lines() %>%
+    plotly::layout(title = list(text = "Contract Betas vs Front Contract", x = 0),
+                   xaxis = list(title = ""),
+                   yaxis = list(title = ""))
+    # ggplot2::ggplot(ggplot2::aes(x=contract,y=value,col=series)) + ggplot2::geom_line() +
+    # ggplot2::theme(legend.position="top") + ggplot2::ylim(0,1.1) +
+    # ggplot2::labs(title="Contract Betas vs Front Contract",
+    #      subtitle="Bear (Bull) = Beta in Down (Up) Moves ",
+    #      caption="",
+    #      y="Beta", x="Contract")
 
   if (output=="betas") {return(df)}
   if (output=="chart") {return(chart)}
   if (output=="stats") {
-    stats <- list(betaformula=betaformula,betaformulaObject=betaformulaObject)
+    stats <- list(betaformula = betaformula,betaformulaObject = betaformulaObject)
     return(stats)
     }
 }

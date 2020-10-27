@@ -52,7 +52,7 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek"
     x <- x %>% dplyr::summarise(value = mean(value)) %>%
       fabletools::model(feasts::STL(value ~ season(window = Inf))) %>%
       fabletools::components() %>%
-      ggplot2::autoplot()
+      ggplot2::autoplot() + ggplot2::ggtitle(title)
     return(x)
   }
 
@@ -97,8 +97,8 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek"
 
   if (output == "seasonal") {
 
-    if (chart == "seasons") {x <- df %>% feasts::gg_season(value)}
-    if (chart == "series") {x <- df %>% feasts::gg_subseries(value)}
+    if (chart == "seasons") {x <- df %>% feasts::gg_season(value) + ggplot2::ggtitle(title)}
+    if (chart == "series") {x <- df %>% feasts::gg_subseries(value) + ggplot2::ggtitle(title)}
   }
 
   if (output == "zscore") {

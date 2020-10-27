@@ -8,7 +8,7 @@ chart_spreads(
   cpairs = cpairs,
   daysFromExpiry = 200,
   from = "2012-01-01",
-  conversion = 42,
+  conversion = 1,
   feed = "CME_NymexFutures_EOD",
   iuser = "x@xyz.com",
   ipassword = "pass",

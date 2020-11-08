@@ -38,7 +38,7 @@ chart_spreads <- function(cpairs = cpairs,
                           yaxis = "$ per bbl",
                           output = "chart"){
 
-  out <- dplyr::tibble(year = NA, value = NA, DaysFromExp = NA)
+  out <- dplyr::tibble(year = NA, value = NA, DaysFromExp = NA, date = Sys.Date())
 
   for (i in 1:nrow(cpairs)) {
 
@@ -49,7 +49,8 @@ chart_spreads <- function(cpairs = cpairs,
       dplyr::transmute(year = !!dplyr::pull(cpairs,var = c("year"))[i],
                        value := !!dplyr::sym(dplyr::pull(cpairs,var = c("first"))[i]) - !!dplyr::sym(dplyr::pull(cpairs,var = c("second"))[i]),
                        DaysFromExp = -seq(nrow(.),1,-1),
-                       value = value * conversion) %>%
+                       value = value * conversion,
+                       date = date) %>%
       dplyr::filter(DaysFromExp >= -daysFromExpiry)
     out <- rbind(out,x)
   }

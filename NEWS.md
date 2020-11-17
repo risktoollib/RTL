@@ -4,6 +4,8 @@
 
 ## Updates and Fixes
 
++ Updated `cancrudeassays` dataset. Removed AHS and WCB grades.
+
 ## Removed
 
 # RTL 0.1.5

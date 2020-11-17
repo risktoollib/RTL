@@ -194,7 +194,7 @@ assay_id <-read_html("http://www.crudemonitor.ca/report.php") %>%
   html_nodes("a") %>% xml_attr('href') %>% data.frame(baselocation=.) %>%
   dplyr::filter(grepl("report.php\\?acr=",baselocation)) %>%
   setNames("shortname") %>%
-  dplyr::filter(grepl("=AHS|=AWB|=BRN|=CDB|=CL|=LLB|=LLK|=MSW|=SYN|=WCS|=WDB|=WH",shortname)) %>%
+  dplyr::filter(grepl("=AWB|=BRN|=CDB|=CL|=LLB|=LLK|=MSW|=SYN|=WCS|=WH",shortname)) %>%
   arrange %>%
   dplyr::mutate(longname = purrr::map(shortname,get_all_assays)) %>% tidyr::unnest(longname) %>%
   tidyr::separate(shortname,into = c("j1","Ticker"),sep = "acr=") %>%
@@ -212,25 +212,33 @@ assays <-assay_id %>% na.omit() %>%
 # Tidying Data
 cancrudeassays <- assays %>%
   dplyr::mutate(Ticker = gsub("\\&.*","",Ticker),
-                Date=as.Date(str_remove(Date,"&PHPSESSID")),
+                Date = as.Date(str_remove(Date,"&PHPSESSID")),
                 Batch = gsub("\\&.*","",Batch),
-                Measurement=gsub("\\s\\(.*","",measure),
-                Value=parse_number(as.character(value),na=c("","NA","ND"))) %>%
+                Measurement = gsub("\\s\\(.*","",measure),
+                Value = parse_number(as.character(value),na=c("","NA","ND"))) %>%
   dplyr::select(Date,Batch,Ticker,Crude,Measurement,Value) %>%
-  na.omit()
+  stats::na.omit()
 
 # Computing Monthly Measurements Averages
 
 cancrudeassays <-   cancrudeassays %>%
   pivot_wider(names_from = "Measurement",values_from = "Value") %>%
-  dplyr::mutate(YM=tsibble::yearmonth(Date),
-                Location=case_when(grepl("AHS|AWB|C5|CAL|MSW|PSO|WDB|WH",Ticker)  ~ "Edmonton",
+  dplyr::mutate(date = tsibble::yearmonth(Date),
+                Location = case_when(grepl("AHS|AWB|C5|CAL|MSW|PSO|WDB|WH",Ticker)  ~ "Edmonton",
                                    grepl("BRN|CDB|CL|LLB|LLK|WCS",Ticker)  ~ "Hardisty",
                                    TRUE ~ "unknown")) %>%
-  dplyr::select(Date,Location,YM,everything(),-contains("%")) %>%
-  group_by(Ticker,Crude,YM,Location) %>%
+  dplyr::select(Date,Location,date,everything(),-contains("%")) %>%
+  group_by(Ticker,Crude,date,Location) %>%
   summarise_if(is.numeric, mean, na.rm = TRUE)
 
+cancrudeassays <-  cancrudeassays %>% dplyr::ungroup() %>% dplyr::arrange(Ticker, date) %>%
+  dplyr::mutate(TAN = replace(TAN, is.nan(TAN), NA),
+                TAN = case_when((is.na(TAN) & Ticker %in% c("MSW", "SYN")) ~ 0,
+                                TRUE ~ TAN)) %>%
+  tidyr::fill(TAN)
+
+
+usethis::use_data(cancrudeassays, overwrite = T)
 
 cancrudeassayssum <- cancrudeassays %>% dplyr::group_by(Ticker,Crude) %>%
   #dplyr::filter(YM > "2015-01-01", Ticker != "MSW(S)") %>%
@@ -239,7 +247,8 @@ cancrudeassayssum <- cancrudeassays %>% dplyr::group_by(Ticker,Crude) %>%
   na.omit() %>% summarise_all(list(mean))
 
 usethis::use_data(cancrudeassayssum, overwrite = T)
-cancrudeprices <- readRDS("./data-raw/crude_prices.RDS") ; usethis::use_data(cancrudeprices, overwrite = T)
+cancrudeprices <- readRDS("./data-raw/crude_prices.RDS")
+usethis::use_data(cancrudeprices, overwrite = T)
 
 # BP Assays
 ### capline https://cappl.com/Reports1.aspx

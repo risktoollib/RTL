@@ -194,7 +194,7 @@ assay_id <-read_html("http://www.crudemonitor.ca/report.php") %>%
   html_nodes("a") %>% xml_attr('href') %>% data.frame(baselocation=.) %>%
   dplyr::filter(grepl("report.php\\?acr=",baselocation)) %>%
   setNames("shortname") %>%
-  dplyr::filter(grepl("=AWB|=BRN|=CDB|=CL|=LLB|=LLK|=MSW|=SYN|=WCS|=WH",shortname)) %>%
+  dplyr::filter(grepl("=AWB|=BRN|=CDB|=CL|=LLB|=LLK|=MSW|=WCS|=WH",shortname)) %>%
   arrange %>%
   dplyr::mutate(longname = purrr::map(shortname,get_all_assays)) %>% tidyr::unnest(longname) %>%
   tidyr::separate(shortname,into = c("j1","Ticker"),sep = "acr=") %>%
@@ -205,7 +205,7 @@ assay_id <-read_html("http://www.crudemonitor.ca/report.php") %>%
   dplyr::select(Ticker,Date,Batch,filelocation,Crude)
 
 # Scrape Assay Content by ID
-assays <-assay_id %>% na.omit() %>%
+assays <- assay_id %>% na.omit() %>%
   dplyr::mutate(data = purrr::map(filelocation,get_assay_values)) %>%
   unnest(data)
 
@@ -217,17 +217,18 @@ cancrudeassays <- assays %>%
                 Measurement = gsub("\\s\\(.*","",measure),
                 Value = parse_number(as.character(value),na=c("","NA","ND"))) %>%
   dplyr::select(Date,Batch,Ticker,Crude,Measurement,Value) %>%
-  stats::na.omit()
+  stats::na.omit() %>%
+  dplyr::filter(Ticker != "MSW(S)")
 
 # Computing Monthly Measurements Averages
 
 cancrudeassays <-   cancrudeassays %>%
   pivot_wider(names_from = "Measurement",values_from = "Value") %>%
   dplyr::mutate(date = tsibble::yearmonth(Date),
-                Location = case_when(grepl("AHS|AWB|C5|CAL|MSW|PSO|WDB|WH",Ticker)  ~ "Edmonton",
+                Location = case_when(grepl("AHS|AWB|C5|CAL|MSW|PSO|WDB|WH|KDB",Ticker)  ~ "Edmonton",
                                    grepl("BRN|CDB|CL|LLB|LLK|WCS",Ticker)  ~ "Hardisty",
                                    TRUE ~ "unknown")) %>%
-  dplyr::select(Date,Location,date,everything(),-contains("%")) %>%
+  dplyr::select(date,Location,everything(),-contains("%")) %>%
   group_by(Ticker,Crude,date,Location) %>%
   summarise_if(is.numeric, mean, na.rm = TRUE)
 
@@ -247,7 +248,8 @@ cancrudeassayssum <- cancrudeassays %>% dplyr::group_by(Ticker,Crude) %>%
   na.omit() %>% summarise_all(list(mean))
 
 usethis::use_data(cancrudeassayssum, overwrite = T)
-cancrudeprices <- readRDS("./data-raw/crude_prices.RDS")
+cancrudeprices <- readRDS("crude_prices.RDS") %>%
+  dplyr::transmute(Ticker = Ticker, date = tsibble::yearmonth(YM), Value = Value)
 usethis::use_data(cancrudeprices, overwrite = T)
 
 # BP Assays

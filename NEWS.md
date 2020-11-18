@@ -4,7 +4,7 @@
 
 ## Updates and Fixes
 
-+ Updated `cancrudeassays` dataset. Removed AHS and WCB grades.
++ Updated `cancrudeassays` dataset. Removed AHS, WCB and SYN grades.
 
 ## Removed
 

@@ -2,6 +2,8 @@
 
 ## New
 
++ Genscpae API interface added for `getGenscapeStorageOil()`.
+
 ## Updates and Fixes
 
 + Updated `cancrudeassays` dataset. Removed AHS, WCB and SYN grades.

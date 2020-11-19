@@ -8,6 +8,7 @@
 + Historical forward curves charting.
 + Calendars and expiry dates data objects for a wide range of commodity futures contracts.
 + `rolladjust` to adjust continuous contracts returns for roll adjustments using expiries above.
++ [Gensccape API ](https://developer.genscape.com/) functions `getGenscapeStorageOil()`.
 + [Morningstar Marketplace API](https://mp.morningstarcommodity.com/marketplace/) functions `getPrice()`, `getPrices()` and `getCurve()` using your own Morningstar credentials. Current feeds included:
 
   + ICE_EuroFutures and ICE_EuroFutures_continuous.

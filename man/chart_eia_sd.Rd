@@ -31,7 +31,7 @@ Supply Demand Balance from EIA Short Term Energy Outlook.
 }
 \examples{
 \dontrun{
-chart_eia_sd(key = EIAkey, market = "mogas")
+chart_eia_sd(key = key, market = "mogas")
  }
 }
 \author{

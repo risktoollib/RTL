@@ -10,7 +10,7 @@
 #' @author Philippe Cote
 #' @examples
 #' \dontrun{
-#' chart_eia_sd(key = EIAkey, market = "mogas")
+#' chart_eia_sd(key = key, market = "mogas")
 #'  }
 
 chart_eia_sd <- function(market = "mogas",

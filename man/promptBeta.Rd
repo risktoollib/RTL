@@ -9,27 +9,28 @@ promptBeta(x = x, period = "all", betatype = "all", output = "chart")
 \arguments{
 \item{x}{Wide dataframe with date column and multiple series columns (multivariate).}
 
-\item{period}{"all" or numeric period of time in last n periods.}
+\item{period}{"all" or numeric period of time in last n periods as character eg "100".}
 
 \item{betatype}{"all" "bull" "bear".}
 
-\item{output}{"betas", "chart","stats"}
+\item{output}{"betas" or "chart"}
 }
 \value{
-ggplot chart, df of betas or stats
+betas data frame or plotly chart of betas
 }
 \description{
-Returns betas of multiple xts prices (by using relative returns).
+Returns betas of futures contracts versus front futures contract.
 }
 \examples{
 \dontrun{
 x <- dflong \%>\% dplyr::filter(grepl("CL",series))
-x <- x \%>\% dplyr::mutate(series=readr::parse_number(series)) \%>\% dplyr::group_by(series)
-x <- returns(df=x,retType="abs",period.return=1,spread=TRUE)
-x <- rolladjust(x=x,commodityname=c("cmewti"),rolltype=c("Last.Trade"))
-promptBeta(x=x,period="all",betatype="all",output="chart")
-promptBeta(x=x,period="all",betatype="all",output="betas")
-promptBeta(x=x,period="all",betatype="all",output="stats")
+x <- x \%>\% dplyr::mutate(series = readr::parse_number(series)) \%>\% dplyr::group_by(series)
+x <- RTL::returns(df = x,retType = "abs",period.return = 1,spread = TRUE)
+x <- RTL::rolladjust(x = x,commodityname = c("cmewti"),rolltype = c("Last.Trade"))
+x <- x \%>\% dplyr::filter(!grepl("2020-04-20|2020-04-21",date))
+promptBeta(x = x,period = "all",betatype = "all",output = "chart")
+promptBeta(x = x,period = "all",betatype = "all",output = "betas")
+promptBeta(x = x,period = "100",betatype = "all",output = "betas")
 }
 }
 \author{

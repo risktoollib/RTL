@@ -20,7 +20,8 @@ chart_zscore(
 \item{per}{Frequency of seasonality "yearweek" (DEFAULT). "yearmonth", "yearquarter"}
 
 \item{output}{"stl" for STL decomposition chart,
-"stats" for STL statistical test results.
+"stats" for STL fitted statistics.
+"res" for STL fitted data.
 "zscore" for residuals Z-score,
 "seasonal" for standard seasonal chart.}
 
@@ -44,6 +45,7 @@ df <- eiaStocks \%>\% dplyr::filter(series == "NGLower48")
 title <- "NGLower48"
 chart_zscore(df = df, title = " ",per = "yearweek", output = "stl", chart = "seasons")
 chart_zscore(df = df, title = " ",per = "yearweek", output = "stats", chart = "seasons")
+chart_zscore(df = df, title = " ",per = "yearweek", output = "res", chart = "seasons")
 chart_zscore(df = df, title = " ",per = "yearweek", output = "zscore", chart = "seasons")
 chart_zscore(df = df, title = " ",per = "yearweek", output = "seasonal", chart = "seasons")
 }

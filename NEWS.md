@@ -5,6 +5,8 @@
 ## Updates and Fixes
 
 + Updated `cancrudeassays` dataset. Removed AHS, WCB and SYN grades.
++ `chart_zscore()` amended. Output `stats` returns statistical tests and `res` fitted results.
++ `promptBeta()` removed output `stats`. 
 
 ## Removed
 

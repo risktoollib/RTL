@@ -1,25 +1,26 @@
 #' \code{promptBeta}
-#' @description Returns betas of multiple xts prices (by using relative returns).
+#' @description Returns betas of futures contracts versus front futures contract.
 #' @param x Wide dataframe with date column and multiple series columns (multivariate).
-#' @param period "all" or numeric period of time in last n periods.
+#' @param period "all" or numeric period of time in last n periods as character eg "100".
 #' @param betatype "all" "bull" "bear".
-#' @param output "betas", "chart","stats"
-#' @return ggplot chart, df of betas or stats
+#' @param output "betas" or "chart"
+#' @return betas data frame or plotly chart of betas
 #' @export promptBeta
 #' @author Philippe Cote
 #' @examples
 #' \dontrun{
 #' x <- dflong %>% dplyr::filter(grepl("CL",series))
-#' x <- x %>% dplyr::mutate(series=readr::parse_number(series)) %>% dplyr::group_by(series)
-#' x <- returns(df=x,retType="abs",period.return=1,spread=TRUE)
-#' x <- rolladjust(x=x,commodityname=c("cmewti"),rolltype=c("Last.Trade"))
-#' promptBeta(x=x,period="all",betatype="all",output="chart")
-#' promptBeta(x=x,period="all",betatype="all",output="betas")
-#' promptBeta(x=x,period="all",betatype="all",output="stats")
+#' x <- x %>% dplyr::mutate(series = readr::parse_number(series)) %>% dplyr::group_by(series)
+#' x <- RTL::returns(df = x,retType = "abs",period.return = 1,spread = TRUE)
+#' x <- RTL::rolladjust(x = x,commodityname = c("cmewti"),rolltype = c("Last.Trade"))
+#' x <- x %>% dplyr::filter(!grepl("2020-04-20|2020-04-21",date))
+#' promptBeta(x = x,period = "all",betatype = "all",output = "chart")
+#' promptBeta(x = x,period = "all",betatype = "all",output = "betas")
+#' promptBeta(x = x,period = "100",betatype = "all",output = "betas")
 #' }
 
 
-promptBeta<-function(x=x,period="all",betatype="all",output="chart") {
+promptBeta <- function(x = x, period = "all", betatype = "all", output = "chart") {
 
   term = stats::na.omit(as.numeric(gsub("[^0-9]","",colnames(x))))
 
@@ -30,17 +31,18 @@ promptBeta<-function(x=x,period="all",betatype="all",output="chart") {
   bull <- PerformanceAnalytics::CAPM.beta.bull(ret,ret[,1])
   bear <- PerformanceAnalytics::CAPM.beta.bear(ret,ret[,1])
 
-  n<-1:nrow(t(all))
-  f<-data.frame(Beta=t(all),Prompt=n);names(f)<-c("Beta","Prompt")
+  n <- 1:nrow(t(all))
+  f <- data.frame(Beta = t(all),Prompt = n)
+  names(f) <- c("Beta","Prompt")
 
-  betaformula <- "Only applicable when computing term betas and estimating an exponential fit along the term"
-  betaformulaObject <- "Only applicable when computing term betas and estimating an exponential fit along the term"
+  # betaformula <- "Only applicable when computing term betas and estimating an exponential fit along the term"
+  # betaformulaObject <- "Only applicable when computing term betas and estimating an exponential fit along the term"
+  # betaformula <- summary(stats::nls(Beta ~ a + exp(b*Prompt),data = f,start = list(a = 0,b = 0)))
+  # betaformulaObject <- stats::nls(Beta ~ a + exp(b*Prompt),data = f,start = list(a = 0,b = 0))
 
-  betaformula<-summary(stats::nls(Beta ~ exp(a+b*Prompt),data=f,start=list(a=0,b=0)))
-  betaformulaObject<-stats::nls(Beta ~ exp(a+b*Prompt),data=f,start=list(a=0,b=0))
-
-  out<-cbind(t(all),t(bull),t(bear))
-  out<-data.frame(out);names(out)<-c("all","bull","bear")
+  out <- cbind(t(all),t(bull),t(bear))
+  out <- data.frame(out)
+  names(out) <- c("all","bull","bear")
 
   df <- out
   rownames(df) <- NULL
@@ -60,10 +62,10 @@ promptBeta<-function(x=x,period="all",betatype="all",output="chart") {
     #      caption="",
     #      y="Beta", x="Contract")
 
-  if (output=="betas") {return(df)}
-  if (output=="chart") {return(chart)}
-  if (output=="stats") {
-    stats <- list(betaformula = betaformula,betaformulaObject = betaformulaObject)
-    return(stats)
-    }
+  if (output == "betas") {return(df)}
+  if (output == "chart") {return(chart)}
+  # if (output == "stats") {
+  #   stats <- list(betaformula = betaformula,betaformulaObject = betaformulaObject)
+  #   return(stats)
+  #   }
 }

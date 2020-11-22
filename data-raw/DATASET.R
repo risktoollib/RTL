@@ -148,25 +148,6 @@ usethis::use_data(holidaysOil, overwrite = T)
 tradeCycle <- read.csv('tradeCycle.csv',sep=",",header=TRUE,na.strings="NA",stringsAsFactors=FALSE)
 usethis::use_data(tradeCycle, overwrite = T)
 
-## tweets
-  ### Trump
-  # http://www.trumptwitterarchive.com/archive
-  # use geany text editor in Linux for very large files
-# twtrump <- fromJSON("./data-raw/twtrump.json")
-# twtrump <- twtrump %>%
-#   dplyr::mutate(created_at = as.POSIXct(created_at,tz="GMT",format=c("%a %b %d %H:%M:%S +0000 %Y"))) %>%
-#   dplyr:::rename(favoriteCount = favorite_count, created = created_at, id = id_str) %>%
-#   as_tibble()
-#usethis::use_data(twtrump, overwrite = T)
-
-  ### OOTT
-#library(twitteR)
-#setup_twitter_oauth(consumer_key = tw$cons.key, consumer_secret = tw$cons.secret,
-#                    access_token = tw$access.token, access_secret = tw$access.secret)
-#twoott <- twitteR::searchTwitter('#OOTT', n = 1e4, since = '2018-01-01', retryOnRateLimit = 1e4)
-#twoott <- twitteR::twListToDF(twoott) %>% as_tibble()
-#usethis::use_data(twoott, overwrite = T)
-
 ## Canadain Crude Data
 
 url <-  "https://crudemonitor.ca/crudes/index.php?acr=MSW"

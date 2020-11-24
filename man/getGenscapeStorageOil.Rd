@@ -5,6 +5,7 @@
 \title{\code{getGenscapeStorageOil}}
 \usage{
 getGenscapeStorageOil(
+  feed = "owner-volumes",
   regions = "Canada",
   products = "Crude",
   revision = "revised",
@@ -14,6 +15,8 @@ getGenscapeStorageOil(
 )
 }
 \arguments{
+\item{feed}{"owner-volumes" DEFAULT or "tank-volumes"}
+
 \item{regions}{See API webpage. Multiple values separated by commas e.g. "Canada, Cushing").}
 
 \item{products}{See API webpage. Multiple values separated by commas e.g. "Crude, JetFuel").}
@@ -36,7 +39,7 @@ https://developer.genscape.com/docs/services/oil-storage/operations/StorageVolum
 }
 \examples{
 \dontrun{
-getGenscapeStorageOil <- function(regions = "Canada", products = "Crude",
+getGenscapeStorageOil <- function(feed = "owner-volumes",regions = "Canada", products = "Crude",
 evision = "revised", limit = 5000, offset = 0,
 apikey = "<yourapikey>")
 }

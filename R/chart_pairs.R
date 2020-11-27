@@ -7,6 +7,7 @@
 #' @author Philippe Cote
 #' @examples
 #' df <- dfwide %>% dplyr::select(date,CL01,NG01,HO01,RB01)
+#' chart_pairs(df = df, title = "example")
 
 chart_pairs <- function(df = df, title = "Time Series Pairs Plot") {
   a <- purrr::map2(df, names(df), ~list(values=.x, label=.y))

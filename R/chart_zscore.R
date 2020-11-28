@@ -36,7 +36,7 @@
 chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek", output = "zscore", chart = "seasons") {
 
   if (nchar(title) == 0) {title <- unique(df$series)}
-  if (!output %in% c("zscore","seasonal","stats","stl")) {stop(print("Incorrect output parameter"))}
+  if (!output %in% c("zscore","seasonal","stats","stl","res")) {stop(print("Incorrect output parameter"))}
   if (!per %in% c("yearweek","yearmonth","yearquarter")) {stop(print("Incorrect period parameter"))}
   if (per %in% c("yearweek","yearquarter")) {s = 7 ; e = 8}
   if (per == "yearmonth") {s = 6 ; e = 8}
@@ -60,7 +60,7 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek"
 
   if (output == "stats") {
     x <- rbind(df,df %>% dplyr::mutate(series = title)) %>%
-      tsibble::as_tsibble(key=series, index = date) %>%
+      tsibble::as_tsibble(key = series, index = date) %>%
       tsibble::group_by_key() #%>%
     if (per %in% c("yearweek")) {x <- x %>% tsibble::index_by(freq = ~yearweek(.))}
     if (per %in% c("yearmonth")) {x <- x %>% tsibble::index_by(freq = ~yearmonth(.))}
@@ -72,7 +72,7 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek"
 
   if (output == "res") {
     x <- rbind(df,df %>% dplyr::mutate(series = title)) %>%
-      tsibble::as_tsibble(key=series, index = date) %>%
+      tsibble::as_tsibble(key = series, index = date) %>%
       tsibble::group_by_key() #%>%
     if (per %in% c("yearweek")) {x <- x %>% tsibble::index_by(freq = ~yearweek(.))}
     if (per %in% c("yearmonth")) {x <- x %>% tsibble::index_by(freq = ~yearmonth(.))}
@@ -84,7 +84,7 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek"
   }
 
   df <- df %>%
-    tsibble::as_tsibble(key=series, index = date) %>%
+    tsibble::as_tsibble(key = series, index = date) %>%
     tsibble::group_by_key() #%>%
   if (per %in% c("yearweek")) {df <- df %>% tsibble::index_by(freq = ~yearweek(.))}
   if (per %in% c("yearmonth")) {df <- df %>% tsibble::index_by(freq = ~yearmonth(.))}
@@ -95,16 +95,16 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek"
   z <- df %>%
     fabletools::model(feasts::STL(value ~ season(window = Inf))) %>%
     fabletools::components() %>%
-    dplyr::transmute(per = as.numeric(do.call(stringr::str_sub,args=list(freq, start = s, end = e))),
+    dplyr::transmute(per = as.numeric(do.call(stringr::str_sub,args = list(freq, start = s, end = e))),
                      year = lubridate::year(freq),
-                     value=remainder) %>%
+                     value = remainder) %>%
     dplyr::as_tibble() %>%
     dplyr::group_by(per) %>%
     dplyr::summarise(u = mean(value), sigma = stats::sd(value))
   x <- df %>%
     fabletools::model(feasts::STL(value ~ season(window = Inf))) %>%
     fabletools::components() %>%
-    dplyr::mutate(per = as.numeric(do.call(stringr::str_sub,args=list(freq, start = s, end = e)))) %>%
+    dplyr::mutate(per = as.numeric(do.call(stringr::str_sub,args = list(freq, start = s, end = e)))) %>%
     dplyr::left_join(z, by = c("per")) %>%
     dplyr::mutate(z.score = (remainder - u) / sigma)
 

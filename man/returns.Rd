@@ -22,8 +22,8 @@ A dataframe object of returns.
 Computes periodic returns from a dataframe ordered by date
 }
 \examples{
-returns(df=dflong,retType="rel",period.return=1,spread=TRUE)
-returns(df=dflong,retType="rel",period.return=1,spread=FALSE)
+returns(df = dflong,retType = "abs",period.return = 1,spread = TRUE)
+returns(df = dflong,retType = "abs",period.return = 1,spread = FALSE)
 }
 \author{
 Philippe Cote

@@ -11,6 +11,8 @@ getGenscapeStorageOil(
   revision = "revised",
   limit = 5000,
   offset = 0,
+  startDate = "2011-01-01",
+  endDate = as.character(Sys.Date()),
   apikey = "yourapikey"
 )
 }
@@ -27,6 +29,10 @@ getGenscapeStorageOil(
 
 \item{offset}{See API webpage.}
 
+\item{startDate}{"yyyy-mm-dd" as character string}
+
+\item{endDate}{"yyyy-mm-dd" as character string}
+
 \item{apikey}{Your API key as a character string.}
 }
 \value{
@@ -40,7 +46,7 @@ https://developer.genscape.com/docs/services/oil-storage/operations/StorageVolum
 \examples{
 \dontrun{
 getGenscapeStorageOil <- function(feed = "owner-volumes",regions = "Canada", products = "Crude",
-evision = "revised", limit = 5000, offset = 0,
+evision = "revised", limit = 5000, offset = 0, startDate = "2011-01-01", endDate = "2020-11-01"
 apikey = "<yourapikey>")
 }
 }

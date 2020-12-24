@@ -6,3 +6,7 @@
 ^RTL.*\.tar\.gz$
 ^RTL.*\.tgz$
 ^\.httr-oauth$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$

@@ -1,6 +1,13 @@
 # usethis::use_readme_md()
-#usethis::use_package("lpSolve")
+# usethis::use_package("lpSolve")
 # usethis::use_pipe()
+
+# Setup RTL Webpage
+#usethis::use_pkgdown()
+#usethis::use_github_actions("pkgdown")
+#usethis::use_github_action(url = "https://raw.githubusercontent.com/r-lib/actions/master/examples/pkgdown.yaml")
+
+#
 library(RTL)
 library(tidyverse)
 library(lubridate)

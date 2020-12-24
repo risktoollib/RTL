@@ -2,7 +2,7 @@
 #' @description Extracts data from the Energy Information Administration (EIA) API to tibble format with optional custom series name.
 #' Makes a clean wrapper for use with purrr for multiple series extraction. Query Browser at https://www.eia.gov/opendata/qb.php.
 #' @param ticker EIA series name.
-#' @param key Your private EIA API token as character "yourkey".
+#' @param key Your private EIA API token as character "<yourapikey>".
 #' @param name Name you want to give the series. Defaults to ticker if set to " "
 #' @return A tibble object with class date for weekly, monthly, quarterly or annual data and class POSIXct for hourly.
 #' @export eia2tidy
@@ -10,7 +10,7 @@
 #' @examples
 #' \dontrun{
 #' Single Series
-#' RTL::eia2tidy(ticker = "PET.MCRFPTX2.M", key = EIAkey, name = "TexasProd")
+#' RTL::eia2tidy(ticker = "PET.MCRFPTX2.M", key = "<yourapikey>", name = "TexasProd")
 #' Multiple Series
 #' eia_df <-tibble::tribble(~ticker, ~name,
 #' "PET.W_EPC0_SAX_YCUOK_MBBL.W", "CrudeCushing",
@@ -21,7 +21,7 @@
 #'  }
 
 eia2tidy <- function(ticker,key,name = " ") {
-  if (nchar(name)==1) {name <- ticker}
+  if (nchar(name) == 1) {name <- ticker}
   url <-  paste0("http://api.eia.gov/series/?api_key=",key,"&series_id=",ticker,"&out=json")
   x <- url %>% httr::GET()
   x <- jsonlite::fromJSON(httr::content(x,"text",encoding = "UTF-8"))

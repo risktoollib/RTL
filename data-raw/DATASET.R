@@ -5,6 +5,7 @@
 # Setup RTL Webpage
 #usethis::use_pkgdown()
 #usethis::use_github_actions("pkgdown")
+#pkgdown::build_site()
 #usethis::use_github_action(url = "https://raw.githubusercontent.com/r-lib/actions/master/examples/pkgdown.yaml")
 
 #

@@ -9,7 +9,7 @@ eia2tidy(ticker, key, name = " ")
 \arguments{
 \item{ticker}{EIA series name.}
 
-\item{key}{Your private EIA API token as character "yourkey".}
+\item{key}{Your private EIA API token as character "<yourapikey>".}
 
 \item{name}{Name you want to give the series. Defaults to ticker if set to " "}
 }
@@ -23,7 +23,7 @@ Makes a clean wrapper for use with purrr for multiple series extraction. Query B
 \examples{
 \dontrun{
 Single Series
-RTL::eia2tidy(ticker = "PET.MCRFPTX2.M", key = EIAkey, name = "TexasProd")
+RTL::eia2tidy(ticker = "PET.MCRFPTX2.M", key = "<yourapikey>", name = "TexasProd")
 Multiple Series
 eia_df <-tibble::tribble(~ticker, ~name,
 "PET.W_EPC0_SAX_YCUOK_MBBL.W", "CrudeCushing",

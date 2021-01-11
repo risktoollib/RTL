@@ -16,14 +16,13 @@ jobs:
           sudo apt install libcurl4-openssl-dev
       - name: Install dependencies
         run: |
-          Rscript -e 'install.packages("remotes")' \
+          Rscript -e 'install.packages(c("remotes","usethis"))' \
                   -e 'remotes::install_deps(dependencies = TRUE)' \
                   -e 'remotes::install_github("jimhester/pkgdown@github-actions-deploy")'
       - name: Install package
         run: R CMD INSTALL .
       - name: Establish git credentials
         run: |
-          install.packages("usethis")
           usethis::use_git_config(user.name = "risktoollib", user.email = "pcote@ualberta.ca")
         shell: Rscript {0}
       - name: Deploy package

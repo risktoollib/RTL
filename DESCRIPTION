@@ -13,7 +13,7 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/risktoollib/RTL
 Suggests: 
-    testthat (>= 2.1.0)
+    plotly
 RoxygenNote: 7.1.1
 Imports: 
     zoo,
@@ -39,7 +39,6 @@ Imports:
     fitdistrplus,
     tsibble,
     feasts,
-    plotly,
     fabletools,
     jsonlite,
     sp,

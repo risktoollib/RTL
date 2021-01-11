@@ -23,7 +23,7 @@
 #' apikey = "<yourapikey>")
 #' }
 
-getGenscapeStorageOil <- function(feed = "owner-volumes",regions = "Canada", products = "Crude",
+getGenscapeStorageOil <- function(feed = "owner-volumes", regions = "Canada", products = "Crude",
                         revision = "revised", limit = 5000, offset = 0,
                         startDate = "2011-01-01", endDate = as.character(Sys.Date()),
                         apikey = "yourapikey") {

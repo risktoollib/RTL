@@ -370,7 +370,8 @@ usSwapIR <- dplyr::tibble(tickQL = c("d1d","d1w","d1m","d3m","d6m","d1y",
 #r <- getPrices(feed="CME_CmeFutures_EOD_continuous",contracts=c,from = fromDate,iuser = mstar[[1]], ipassword = mstar[[2]])
 c = usSwapIR %>% dplyr::filter(source == "quandl") %>% .$tickSource
 r <- tidyquant::tq_get(x = c, get = "quandl",from = fromDate ,to = as.character(Sys.Date())) %>%
-  dplyr::select(symbol,date,settle) %>% dplyr::mutate(price=100-settle) %>%
+  #dplyr::select(symbol,date,settle) %>% dplyr::mutate(price = 100 - settle) %>%
+  dplyr::select(symbol,date,settle) %>% dplyr::mutate(price = settle) %>%
   tidyr::pivot_wider(date,names_from = symbol, values_from = price)
 c = usSwapIR %>% dplyr::filter(source == "FRED") %>% .$tickSource
 x <- tidyquant::tq_get(c, get  = "economic.data", from = fromDate ,to = as.character(Sys.Date())) %>%
@@ -405,7 +406,6 @@ usethis::use_data(usSwapIR, overwrite = T)
 usethis::use_data(usSwapIRdef, overwrite = T)
 usethis::use_data(usSwapCurves, overwrite = T)
 usethis::use_data(usSwapCurvesPar, overwrite = T)
-
 
 # Refinery Optimization
 

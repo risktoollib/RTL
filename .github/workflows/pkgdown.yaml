@@ -16,7 +16,7 @@ jobs:
           sudo apt install libcurl4-openssl-dev
       - name: Install dependencies
         run: |
-          install.packages(c("remotes","usethis"))
+          install.packages("remotes")
           remotes::install_deps(dependencies = TRUE)
           remotes::install_github("jimhester/pkgdown@github-actions-deploy")
       - name: Install package

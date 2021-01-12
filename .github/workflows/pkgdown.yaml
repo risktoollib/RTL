@@ -24,7 +24,6 @@ jobs:
       - name: Establish git credentials
         run: |
           Rscript -e 'usethis::use_git_config(user.name = "risktoollib", user.email = "pcote@ualberta.ca")'
-        shell: Rscript {0}
       - name: Deploy package
         run: |
           Rscript -e "pkgdown:::deploy_local(new_process = FALSE, remote_url = 'https://x-access-token:${{secrets.GH_TOKEN}}@github.com/${{github.repository}}.git')"

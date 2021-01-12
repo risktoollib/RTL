@@ -23,7 +23,7 @@ jobs:
         run: R CMD INSTALL .
       - name: Establish git credentials
         run: |
-          usethis::use_git_config(user.name = "risktoollib", user.email = "pcote@ualberta.ca")
+          Rscript -e 'usethis::use_git_config(user.name = "risktoollib", user.email = "pcote@ualberta.ca")'
         shell: Rscript {0}
       - name: Deploy package
         run: |

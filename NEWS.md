@@ -2,7 +2,7 @@
 
 ## New
 
-+ Genscpae API interface added for `getGenscapeStorageOil()`.
++ Genscpae API interface added for `getGenscapeStorageOil()` and `getGenscapePipeOil()`.
 
 ## Updates and Fixes
 

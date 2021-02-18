@@ -6,7 +6,7 @@
 \usage{
 getPrice(
   feed = "CME_NymexFutures_EOD",
-  contract = "@CL0Z",
+  contract = "@CL21Z",
   from = "2020-09-01",
   iuser = "x@xyz.com",
   ipassword = "pass"

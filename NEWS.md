@@ -3,6 +3,10 @@
 ## New
 
 + Genscpae API interface added for `getGenscapeStorageOil()` and `getGenscapePipeOil()`.
++ Added the following feeds to Morningstar API function `getPrice()`:
+    + `ERCOT_LmpsByResourceNodeAndElectricalBus`
+    + `PJM_Rt_Hourly_Lmp`
+    + Send email to pcote@ualberta.ca if you wish to add more feeds.
 
 ## Updates and Fixes
 

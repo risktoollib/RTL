@@ -45,6 +45,8 @@ You need your own credentials with Morningstar. In examples sourced locally.
   \item CME_STLCPC_Futures
   \item CFTC_CommitmentsOfTradersCombined. Requires multiple keys. Separate them by a space e.g. "N10 06765A NYME 01".
   \item Morningstar_FX_Forwards. Requires multiple keys. Separate them by a space e.g. "USDCAD 2M".
+  \item ERCOT_LmpsByResourceNodeAndElectricalBus.
+  \item PJM_Rt_Hourly_Lmp.
 }
 }
 

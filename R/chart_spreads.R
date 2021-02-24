@@ -47,7 +47,8 @@ chart_spreads <- function(cpairs = cpairs,
                                       dplyr::pull(cpairs,var = c("second"))[i]),
                         from = from, iuser = iuser, ipassword = ipassword) %>%
       dplyr::transmute(year = !!dplyr::pull(cpairs,var = c("year"))[i],
-                       value := !!dplyr::sym(dplyr::pull(cpairs,var = c("first"))[i]) - !!dplyr::sym(dplyr::pull(cpairs,var = c("second"))[i]),
+                       value := !!dplyr::sym(gsub("@","",dplyr::pull(cpairs,var = c("first"))[i])) -
+                         !!dplyr::sym(gsub("@","",dplyr::pull(cpairs,var = c("second"))[i])),
                        DaysFromExp = -seq(nrow(.),1,-1),
                        value = value * conversion,
                        date = date) %>%
@@ -66,4 +67,3 @@ chart_spreads <- function(cpairs = cpairs,
   return(out)
   }
 }
-

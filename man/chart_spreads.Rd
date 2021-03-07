@@ -8,7 +8,7 @@ chart_spreads(
   cpairs = cpairs,
   daysFromExpiry = 200,
   from = "2012-01-01",
-  conversion = 1,
+  conversion = c(1, 1),
   feed = "CME_NymexFutures_EOD",
   iuser = "x@xyz.com",
   ipassword = "pass",
@@ -24,7 +24,7 @@ chart_spreads(
 
 \item{from}{From date as character string}
 
-\item{conversion}{Defaults to 1. 42 from $ per gallons to bbls.}
+\item{conversion}{Defaults to c(1,1) first and second contracts. 42 from $ per gallons to bbls.}
 
 \item{feed}{Morningstar Feed Table.}
 
@@ -48,9 +48,9 @@ Chart spreads in specific futures contracts for multiple years.
 \dontrun{
 cpairs <- dplyr::tibble(year = c("2014","2019","2020"),
 first = c("@HO4H","@HO9H","@HO0H"),
-second = c("@HO4J","@HO9J","@HO0J"))
+second = c("@CL4J","@CL9J","@CL0J"))
 chart_spreads(cpairs = cpairs, daysFromExpiry = 200, from = "2012-01-01",
-conversion = 42,feed = "CME_NymexFutures_EOD",
+conversion = c(42,1),feed = "CME_NymexFutures_EOD",
 iuser = "x@xyz.com", ipassword = "pass",
 title = "March/April ULSD Nymex Spreads",
 yaxis = "$ per bbl",

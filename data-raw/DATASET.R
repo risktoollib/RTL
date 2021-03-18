@@ -395,7 +395,6 @@ setEvaluationDate(tradeDate)
 times <- seq(0,20,1/12)
 savepar <- par(mfrow=c(3,3), mar=c(4,4,2,0.5))
 on.exit(par(savepar))
-#params$interpHow="spline"
 usSwapCurves <- DiscountCurve(params, tsQuotes, times)
 tsQuotes <- list(flat=0.03)
 usSwapCurvesPar <- DiscountCurve(params, tsQuotes, times)

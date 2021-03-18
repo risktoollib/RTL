@@ -163,10 +163,10 @@ html <- xml2::read_html(url)
 
 get_all_assays<-function(x) {
   print(x)
-  t<-try(read_html(paste0("http://www.crudemonitor.ca/",x)) %>%  html_nodes("a") %>% xml_attr('href') %>%
+  t<-try(read_html(paste0("http://www.crudemonitor.ca/",x)) %>%  html_nodes("a") %>% rvest::html_attr("href") %>%
            data.frame(baselocation=.) %>% dplyr::filter(grepl("date=",baselocation)))
   if(!class(t)=="try-error"){
-    return(read_html(paste0("http://www.crudemonitor.ca/",x)) %>%  html_nodes("a") %>% xml_attr('href') %>%
+    return(read_html(paste0("http://www.crudemonitor.ca/",x)) %>%  html_nodes("a") %>% rvest::html_attr("href") %>%
              data.frame(baselocation=.) %>% dplyr::filter(grepl("date=",baselocation)))
   } else { return(data.frame(baselocation=character()))}
 }
@@ -180,7 +180,7 @@ get_assay_values<-function(x){
 }
 
 assay_id <-read_html("http://www.crudemonitor.ca/report.php") %>%
-  html_nodes("a") %>% xml_attr('href') %>% data.frame(baselocation=.) %>%
+  rvest::html_nodes("a") %>% rvest::html_attr("href") %>% data.frame(baselocation=.) %>%
   dplyr::filter(grepl("report.php\\?acr=",baselocation)) %>%
   setNames("shortname") %>%
   dplyr::filter(grepl("=AWB|=BRN|=CDB|=CL|=LLB|=LLK|=MSW|=WCS|=WH",shortname)) %>%
@@ -227,7 +227,6 @@ cancrudeassays <-  cancrudeassays %>% dplyr::ungroup() %>% dplyr::arrange(Ticker
                                 TRUE ~ TAN)) %>%
   tidyr::fill(TAN)
 
-
 usethis::use_data(cancrudeassays, overwrite = T)
 
 cancrudeassayssum <- cancrudeassays %>% dplyr::group_by(Ticker,Crude) %>%
@@ -237,6 +236,7 @@ cancrudeassayssum <- cancrudeassays %>% dplyr::group_by(Ticker,Crude) %>%
   na.omit() %>% summarise_all(list(mean))
 
 usethis::use_data(cancrudeassayssum, overwrite = T)
+
 cancrudeprices <- readRDS("crude_prices.RDS") %>%
   dplyr::transmute(Ticker = Ticker, date = tsibble::yearmonth(YM), Value = Value)
 usethis::use_data(cancrudeprices, overwrite = T)
@@ -357,7 +357,7 @@ usethis::use_data(fizdiffs, overwrite = T)
   # Curves and Def - ICE
 library(Quandl)
 Quandl::Quandl.api_key(quandlkey)
-fromDate = "2019-01-01" #Sys.Date() - months(36)
+fromDate = Sys.Date() - months(1)
 usSwapIR <- dplyr::tibble(tickQL = c("d1d","d1w","d1m","d3m","d6m","d1y",
                                      paste0("fut",1:8),
                                      paste0("s",c(2,3,5,7,10,15,20,30),"y")),
@@ -379,8 +379,8 @@ x <- tidyquant::tq_get(c, get  = "economic.data", from = fromDate ,to = as.chara
   tidyr::pivot_wider(date,names_from = symbol, values_from = price)
 r <- dplyr::left_join(x, r, by=c("date"))
 colnames(r) <- c("date",dplyr::tibble(tickSource = colnames(r)[-1]) %>% dplyr::left_join(usSwapIR,by = c("tickSource")) %>% .$tickQL)
-usSwapIRdef <- usSwapIR
-usSwapIR <- r
+usSwapIRdef <- usSwapIR %>% stats::na.omit()
+usSwapIR <- r %>% stats::na.omit()
 
   # Discount Objects
 
@@ -424,7 +424,7 @@ usethis::use_data(ref.opt.outputs, overwrite = T)
 
 # Educational Dataset
 
-tradeprocess <- RTL::getPrices(feed="CME_NymexFutures_EOD",contracts = c("CL21H","HO1F","HO21H","LT21H"),
+tradeprocess <- RTL::getPrices(feed="CME_NymexFutures_EOD",contracts = c("@CL21H","@HO1F","@HO21H","@LT21H"),
                                from="2018-01-01",iuser = mstar[[1]], ipassword = mstar[[2]])
 usethis::use_data(tradeprocess, overwrite = T)
 

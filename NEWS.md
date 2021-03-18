@@ -15,6 +15,7 @@
 + `chart_zscore()` amended. Output `stats` returns statistical tests and `res` fitted results.
 + `promptBeta()` removed output `stats`. 
 + Updated `usSwapIR`, `usSwapCurves` with rates as of `2020-12-31`.
++ `tradeCycle` table updated for Canadian crude oil 2021 calendar. Source: COLC.
 
 ## Removed
 

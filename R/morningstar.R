@@ -285,4 +285,3 @@ getCurve <- function(feed = "Crb_Futures_Price_Volume_And_Open_Interest",contrac
 #     tidyr::pivot_wider(names_from = type, values_from = value)
 #   return(out)
 # }
-

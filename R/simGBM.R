@@ -22,3 +22,12 @@ simGBM <- function(S0=10,drift=0,sigma=0.2,T2M=1,dt=1/12) {
   }
   return(S)
 }
+
+# library(profvis)
+# library(tidyverse)
+# T2M = 10
+# dt = 1/365
+# profvis({
+#   m <- replicate(2000, simGBM(S0 = S0,drift = drift,sigma = sigma,T = T,dt = dt))
+#   as_tibble(m)
+#   })

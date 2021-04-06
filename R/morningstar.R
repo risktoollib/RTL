@@ -32,8 +32,6 @@
 #' @author Philippe Cote
 #' @examples
 #' \dontrun{
-#' getPrice(feed="CME_NymexFutures_EOD",contract="@CL0Z",
-#' from="2019-08-26",iuser = username, ipassword = password)
 #' getPrice(feed="CME_NymexFutures_EOD",contract="@CL21Z",
 #' from="2019-08-26",iuser = username, ipassword = password)
 #' getPrice(feed="CME_NymexFutures_EOD_continuous",contract="CL_006_Month",
@@ -107,7 +105,11 @@ getPrice <- function(feed = "CME_NymexFutures_EOD",contract = "@CL21Z",
     if(length(es %>% purrr::flatten() %>% .$series %>% .$values %>% purrr::flatten()) > 0) {
       out <-
         dplyr::tibble(date = as.character(lubridate::ymd(es %>% purrr::flatten() %>% purrr::flatten() %>% .$dates)) %>% lubridate::ymd(),
-                      value = as.numeric(es %>% purrr::flatten() %>% purrr::flatten() %>% .$values %>% .[[1]] %>% purrr::flatten())) %>%
+                      opt = feed == "CME_NymexOptions_EOD",
+                      value = ifelse(opt == TRUE,
+                                     as.numeric(es %>% purrr::flatten() %>% purrr::flatten() %>% .$values %>% .[[4]] %>% purrr::flatten()),
+                                     as.numeric(es %>% purrr::flatten() %>% purrr::flatten() %>% .$values %>% .[[1]] %>% purrr::flatten()))) %>%
+        dplyr::select(-opt) %>%
         dplyr::mutate(value = ifelse(is.nan(value), NA, value)) } else {
           out = dplyr::tibble(
             date = character(),
@@ -285,3 +287,4 @@ getCurve <- function(feed = "Crb_Futures_Price_Volume_And_Open_Interest",contrac
 #     tidyr::pivot_wider(names_from = type, values_from = value)
 #   return(out)
 # }
+

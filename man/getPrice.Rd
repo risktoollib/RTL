@@ -52,8 +52,6 @@ You need your own credentials with Morningstar. In examples sourced locally.
 
 \examples{
 \dontrun{
-getPrice(feed="CME_NymexFutures_EOD",contract="@CL0Z",
-from="2019-08-26",iuser = username, ipassword = password)
 getPrice(feed="CME_NymexFutures_EOD",contract="@CL21Z",
 from="2019-08-26",iuser = username, ipassword = password)
 getPrice(feed="CME_NymexFutures_EOD_continuous",contract="CL_006_Month",

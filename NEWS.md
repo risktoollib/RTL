@@ -16,6 +16,7 @@
 + `promptBeta()` removed output `stats`. 
 + Updated `usSwapIR`, `usSwapCurves` with rates as of `2020-12-31`.
 + `tradeCycle` table updated for Canadian crude oil 2021 calendar. Source: COLC.
++ `getPrice` fixed to return Settle instead of Open when `feed=CME_NymexOptions_EOD`.
 
 ## Removed
 

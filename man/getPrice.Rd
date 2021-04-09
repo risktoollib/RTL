@@ -47,6 +47,7 @@ You need your own credentials with Morningstar. In examples sourced locally.
   \item Morningstar_FX_Forwards. Requires multiple keys. Separate them by a space e.g. "USDCAD 2M".
   \item ERCOT_LmpsByResourceNodeAndElectricalBus.
   \item PJM_Rt_Hourly_Lmp.
+ \item AESO_ForecastAndActualPoolPrice.
 }
 }
 
@@ -78,6 +79,8 @@ getPrice(feed="ICE_NybotCoffeeSugarCocoaFutures",contract="SB21H",
 from="2019-08-26",iuser = username, ipassword = password)
 getPrice(feed="ICE_NybotCoffeeSugarCocoaFutures_continuous",contract="SF_001_Month",
 from="2019-08-26",iuser = username, ipassword = password)
+getPrice(feed = "AESO_ForecastAndActualPoolPrice",contract = "Forecast_Pool_Price",
+from = "2021-04-01",iuser = username, ipassword = password)
 }
 }
 \author{

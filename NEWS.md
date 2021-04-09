@@ -1,3 +1,16 @@
+# RTL 0.1.7
+
+## New
+
++ Added the following feeds to Morningstar API function `getPrice()`:
+    + `AESO_ForecastAndActualPoolPrice`
+    + Send email to pcote@ualberta.ca if you wish to add more feeds.
+
+## Updates and Fixes
+
+## Removed
+
+
 # RTL 0.1.6
 
 ## New

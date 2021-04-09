@@ -19,6 +19,7 @@
 #'   \item Morningstar_FX_Forwards. Requires multiple keys. Separate them by a space e.g. "USDCAD 2M".
 #'   \item ERCOT_LmpsByResourceNodeAndElectricalBus.
 #'   \item PJM_Rt_Hourly_Lmp.
+#'  \item AESO_ForecastAndActualPoolPrice.
 
 #' }
 #'
@@ -58,6 +59,8 @@
 #' from="2019-08-26",iuser = username, ipassword = password)
 #' getPrice(feed="ICE_NybotCoffeeSugarCocoaFutures_continuous",contract="SF_001_Month",
 #' from="2019-08-26",iuser = username, ipassword = password)
+#' getPrice(feed = "AESO_ForecastAndActualPoolPrice",contract = "Forecast_Pool_Price",
+#' from = "2021-04-01",iuser = username, ipassword = password)
 #' }
 
 getPrice <- function(feed = "CME_NymexFutures_EOD",contract = "@CL21Z",
@@ -95,11 +98,12 @@ getPrice <- function(feed = "CME_NymexFutures_EOD",contract = "@CL21Z",
   }
   if (feed %in% c("ERCOT_LmpsByResourceNodeAndElectricalBus")) {URL = httr::modify_url(url = "https://mp.morningstarcommodity.com",path = paste0("/lds/feeds/",feed, "/ts?","SettlementPoint=",contract,"&fromDateTime=",from))}
   if (feed %in% c("PJM_Rt_Hourly_Lmp")) {URL = httr::modify_url(url = "https://mp.morningstarcommodity.com",path = paste0("/lds/feeds/",feed, "/ts?","pnodeid=",contract,"&fromDateTime=",from))}
+  if (feed %in% c("AESO_ForecastAndActualPoolPrice")) {URL = httr::modify_url(url = "https://mp.morningstarcommodity.com",path = paste0("/lds/feeds/",feed, "/ts?","market=",contract,"&fromDateTime=",from))}
 
   httr::handle_reset(URL)
   es <- httr::GET(url = URL,httr::authenticate(user = iuser,password = ipassword,type = "basic")) #,httr::progress())
   es <- httr::content(es)
-  elecFeeds = "ERCOT|PJM"
+  elecFeeds = "ERCOT|PJM|AESO"
   # Non electricity feeds
   if (!grepl(elecFeeds, feed) & length(es) > 0) {
     if(length(es %>% purrr::flatten() %>% .$series %>% .$values %>% purrr::flatten()) > 0) {
@@ -122,6 +126,7 @@ getPrice <- function(feed = "CME_NymexFutures_EOD",contract = "@CL21Z",
     if(length(es %>% purrr::flatten() %>% .$series %>% .$values %>% purrr::flatten()) > 0) {
       if (grepl("ERCOT", feed)) {tz <- "CST" ; x = 1}
       if (grepl("PJM", feed)) {tz <- "EST" ; x = 5}
+      if (grepl("AESO", feed)) {tz <- "MST" ; x = 1}
       out <-
         dplyr::tibble(date = as.POSIXct(sub("T","",es %>% purrr::flatten() %>% purrr::flatten() %>% .$date %>% unlist()),tz = tz),
                       value = as.numeric(es %>% purrr::flatten() %>% purrr::flatten() %>% .$values %>% .[[x]] %>% purrr::flatten())) %>%
@@ -139,6 +144,7 @@ getPrice <- function(feed = "CME_NymexFutures_EOD",contract = "@CL21Z",
 #getPrice2(feed = "CME_NymexFutures_EOD",contract = "@CL21Z",from = "2020-09-01",iuser, ipassword )
 #getPrice2(feed = "ERCOT_LmpsByResourceNodeAndElectricalBus",contract = "HB_NORTH",from = "2020-09-01",iuser, ipassword )
 #getPrice2(feed = "PJM_Rt_Hourly_Lmp",contract = "51287",from = "2020-09-01",iuser, ipassword )
+#getPrice2(feed = "AESO_ForecastAndActualPoolPrice",contract = "Forecast_Pool_Price",from,iuser,ipassword)
 
 
 #' \code{getPrices}

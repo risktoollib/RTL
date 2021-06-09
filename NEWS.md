@@ -5,6 +5,8 @@
 + Added the following feeds to Morningstar API function `getPrice()`:
     + `AESO_ForecastAndActualPoolPrice`
     + Send email to pcote@ualberta.ca if you wish to add more feeds.
+    
++ `expiry_table` updated for expiries + Yahoo Finance tickers to pull using `tidyquant::tq_get()` 
 
 ## Updates and Fixes
 

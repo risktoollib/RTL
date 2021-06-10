@@ -1,6 +1,6 @@
 Package: RTL
 Type: Package
-Title: Risk Tool Library 
+Title: Risk Tool Library - Trading Analytics for Commodities
 Version: 0.1.7
 Date: 2021-06-10
 Authors@R: c(person("Philippe", "Cote", email = "pcote@ualberta.ca", role = c("aut", "cre")),person("Nima", "Safaian", email = "nima.safaian@gmail.com", role = c("aut")), person("Mikel", "Buchinski", email = "mbuchins@ualberta.ca", role = c("ctb")),person("Joe", "Rikk", email = "rikk@ualberta.ca", role = c("ctb")), person("Gabriela", "Sanchez", email = "gsanchez@ualberta.ca", role = c("ctb")), person("Usman", "Farooq", email = "ufarooq@ualberta.ca", role = c("ctb")))

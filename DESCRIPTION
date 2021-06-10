@@ -2,7 +2,7 @@ Package: RTL
 Type: Package
 Title: Risk Tool Library 
 Version: 0.1.7
-Date: 2021-06-09
+Date: 2021-06-10
 Authors@R: c(person("Philippe", "Cote", email = "pcote@ualberta.ca", role = c("aut", "cre")),person("Nima", "Safaian", email = "nima.safaian@gmail.com", role = c("aut")), person("Mikel", "Buchinski", email = "mbuchins@ualberta.ca", role = c("ctb")),person("Joe", "Rikk", email = "rikk@ualberta.ca", role = c("ctb")), person("Gabriela", "Sanchez", email = "gsanchez@ualberta.ca", role = c("ctb")), person("Usman", "Farooq", email = "ufarooq@ualberta.ca", role = c("ctb")))
 Description: Collection of functions and metadata to complement core packages
     in Finance and Commodities, including futures expiry tables and <https://www.morningstar.com/products/commodities-and-energy>
@@ -14,7 +14,12 @@ LazyData: true
 LazyDataCompression: xz
 URL: https://github.com/risktoollib/RTL
 Suggests: 
-    plotly
+    rgdal,
+    Quandl,
+    fitdistrplus,
+    lpSolve,
+    rugarch,
+    PerformanceAnalytics
 RoxygenNote: 7.1.1
 Imports: 
     zoo,
@@ -30,20 +35,17 @@ Imports:
     purrr,
     lubridate,
     timetk,
-    PerformanceAnalytics,
     tibbletime,
     quantmod,
     forecast,
     tidyquant,
     readr,
-    Quandl,
-    fitdistrplus,
     tsibble,
     feasts,
     fabletools,
     jsonlite,
     sp,
     RCurl,
-    rugarch,
-    lpSolve,
-    rlang
+    rlang,
+    utils,
+    plotly

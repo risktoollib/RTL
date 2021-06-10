@@ -22,6 +22,11 @@
 
 promptBeta <- function(x = x, period = "all", betatype = "all", output = "chart") {
 
+  if (!requireNamespace("PerformanceAnalytics", quietly = TRUE)) {
+    stop("Package \"PerformanceAnalytics\" needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
+
   term = stats::na.omit(as.numeric(gsub("[^0-9]","",colnames(x))))
 
   if (is.numeric(period)) {x <- x %>% dplyr::filter(dplyr::last(period))}

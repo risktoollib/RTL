@@ -6,12 +6,24 @@
     + `AESO_ForecastAndActualPoolPrice`
     + Send email to pcote@ualberta.ca if you wish to add more feeds.
     
-+ `expiry_table` updated for expiries + Yahoo Finance tickers to pull using `tidyquant::tq_get()` 
++ `getGIS()` to obtain a object from a shapefile URL. **The datasets below were removed and can be recreated as follows:**
+    + crudepipelines <- `getGIS(url = "https://www.eia.gov/maps/map_data/CrudeOil_Pipelines_US_EIA.zip")`
+    + refineries <- `getGIS(url = "https://www.eia.gov/maps/map_data/Petroleum_Refineries_US_EIA.zip")`
+    + productspipelines <- `getGIS(url = "https://www.eia.gov/maps/map_data/PetroleumProduct_Pipelines_US_EIA.zip")`
+    + productsterminals <- `getGIS(url = "https://www.eia.gov/maps/map_data/PetroleumProduct_Terminals_US_EIA.zip")`
+    + ngpipelines <- `getGIS(url = "https://www.eia.gov/maps/map_data/NaturalGas_InterIntrastate_Pipelines_US_EIA.zip")`
+    + ngstorage <- `getGIS(url = "https://www.eia.gov/maps/map_data/PetroleumProduct_Terminals_US_EIA.zip")`
+    + nghubs <- `getGIS(url = "https://www.eia.gov/maps/map_data/NaturalGas_TradingHubs_US_EIA.zip")`
+    + lngterminals <- `getGIS(url = "https://www.eia.gov/maps/map_data/Lng_ImportExportTerminals_US_EIA.zip")`
 
 ## Updates and Fixes
 
++ `expiry_table` updated for expiries + Yahoo Finance tickers to pull using `tidyquant::tq_get()`.
++ `eiaStorageCap`: EIA crude storage capacity by PADD.
+
 ## Removed
 
++ None.
 
 # RTL 0.1.6
 

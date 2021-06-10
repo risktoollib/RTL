@@ -11,16 +11,27 @@
 #' distdescplot(x=x)
 
 distdescplot <- function(x=x){
+
+  if (!requireNamespace("fitdistrplus", quietly = TRUE)) {
+    stop("Package \"fitdistrplus\" needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
+
+  if (!requireNamespace("PerformanceAnalytics", quietly = TRUE)) {
+    stop("Package \"PerformanceAnalytics\" needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
+
   x <- xts::as.xts(x[, 2], order.by = x$date)
-  x.stationary <- x-mean(x)
+  x.stationary <- x - mean(x)
   # fit <- fGarch::garchFit(~garch(1, 1), data = x.stationary, trace = FALSE)
   # if (xts::periodicity(x)$scale=="daily") {garchvol <- fit@sigma.t * sqrt(252)}
   # if (xts::periodicity(x)$scale=="weekly") {garchvol <- fit@sigma.t * sqrt(52)}
   # if (xts::periodicity(x)$scale=="monthly") {garchvol <- fit@sigma.t * sqrt(12)}
   fit <-  rugarch::ugarchfit(data = x, spec = rugarch::ugarchspec(), solver = "hybrid")
-  if (xts::periodicity(x)$scale=="daily") {garchvol <- fit@fit$sigma * sqrt(252)}
-  if (xts::periodicity(x)$scale=="weekly") {garchvol <- fit@fit$sigma * sqrt(52)}
-  if (xts::periodicity(x)$scale=="monthly") {garchvol <- fit@fit$sigma * sqrt(12)}
+  if (xts::periodicity(x)$scale == "daily") {garchvol <- fit@fit$sigma * sqrt(252)}
+  if (xts::periodicity(x)$scale == "weekly") {garchvol <- fit@fit$sigma * sqrt(52)}
+  if (xts::periodicity(x)$scale == "monthly") {garchvol <- fit@fit$sigma * sqrt(12)}
   voldata <- merge(x, garchvol)
   colnames(voldata) <- c("returns", "garch vol")
   voldata$CumulativeReturn <- cumsum(voldata$returns)

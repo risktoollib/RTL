@@ -1,6 +1,11 @@
-# usethis::use_readme_md()
-# usethis::use_package("lpSolve")
 # usethis::use_pipe()
+# usethis::use_readme_md()
+# usethis::use_package("plotly")
+#usethis::use_package("Quandl","suggests")
+#usethis::use_package("fitdistplus", "suggests")
+#usethis::use_package("lpSolve", "suggests")
+#usethis::use_package("rugarch", "suggests")
+#usethis::use_package("PerformanceAnalytics", "suggests")
 
 # Setup RTL Webpage
 #usethis::use_pkgdown()
@@ -19,14 +24,6 @@ library(readxl)
 library(readr)
 source("~/now/keys.R")
 setwd(paste0(getwd(),"/data-raw"))
-
-
-dplyr::mutate(across(c(is.numeric,
-                  -contains("units"),
-                  -c(PRO_ALLOW, RTL_ACTUAL, REAL_PRICE, REAL_PRICE_HHU,
-                     REBATE, RETURN_UNITS, UNITS_PER_CASE, Profit,
-                     STR_COST, DCC, CREDIT_AMT)),
-                factor))
 
 ## Orbital
 
@@ -112,6 +109,7 @@ usethis::use_data(eiaStorageCap, overwrite = T)
 
 ## Sample GIS Mapping
 library(rgdal)
+
 crudepipelines <- rgdal::readOGR(dsn = "~/now/RTL/GIS_EIA/CrudeOil_Pipelines_US_EIA/", layer = "CrudeOil_Pipelines_US_202001")
 refineries <- rgdal::readOGR(dsn = "~/now/RTL/GIS_EIA/Petroleum_Refineries_US_EIA/", layer = "Petroleum_Refineries_US_2020")
 productspipelines <- rgdal::readOGR(dsn = "~/now/RTL/GIS_EIA/PetroleumProduct_Pipelines_US_EIA/", layer = "PetroleumProduct_Pipelines_US_202001")
@@ -121,6 +119,7 @@ ngstorage <- rgdal::readOGR(dsn = "~/now/RTL/GIS_EIA/NaturalGas_StorageRegions_U
 nghubs <- rgdal::readOGR(dsn = "~/now/RTL/GIS_EIA/NaturalGas_TradingHubs_US_EIA/", layer = "NaturalGas_TradingHubs_US_202002")
 lngterminals <- rgdal::readOGR(dsn = "~/now/RTL/GIS_EIA/Lng_ImportExportTerminals_US_EIA/", layer = "LNG_ImpExp_Terminals_US_202004")
 
+#usethis::use_data(abOilNG, overwrite = T)
 usethis::use_data(crudepipelines, overwrite = T)
 usethis::use_data(refineries, overwrite = T)
 usethis::use_data(productspipelines, overwrite = T)

@@ -11,6 +11,10 @@
 #' SPY$retClCl <- na.omit(quantmod::Delt(Cl(SPY),k=1,type='arithmetic'))
 #' tradeStats(x=SPY$retClCl,Rf=0)
 tradeStats <- function(x,Rf=0) {
+  if (!requireNamespace("PerformanceAnalytics", quietly = TRUE)) {
+    stop("Package \"PerformanceAnalytics\" needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
   x = stats::na.omit(x)
   cumret = as.numeric(PerformanceAnalytics::Return.cumulative(x,geometric = TRUE))
   ret.ann = as.numeric(PerformanceAnalytics::Return.annualized(x, scale=252))

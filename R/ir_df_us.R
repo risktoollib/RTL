@@ -10,7 +10,12 @@
 #' us.df <- ir_df_us(quandlkey = quandlkey,ir.sens=0.01)
 #' }
 
-ir_df_us <- function(quandlkey = quandlkey,ir.sens=0.01) {
+ir_df_us <- function(quandlkey = quandlkey, ir.sens = 0.01) {
+
+  if (!requireNamespace("Quandl", quietly = TRUE)) {
+    stop("Package \"Quandl\" needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
   Quandl::Quandl.api_key(quandlkey)
   fedsfund <- tidyquant::tq_get("FED/RIFSPFF_N_D", get = "quandl", from = Sys.Date() - 30) %>%
     stats::na.omit() %>% dplyr::transmute(date = date, FedsFunds0 = log((1 + value/(360))^365))

@@ -8,8 +8,13 @@
 #' @examples
 #' refineryLP(crudes = ref.opt.inputs, products = ref.opt.outputs)
 refineryLP <- function(crudes = ref.opt.inputs, products = ref.opt.outputs) {
-  requireNamespace("lpSolve", quietly=TRUE)
-    GPW <- tibble::tibble(Element=c("Gross.Product.Worth","Crude.Cost","Processing"),
+
+  if (!requireNamespace("lpSolve", quietly = TRUE)) {
+    stop("Package \"lpSolve\" needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
+
+  GPW <- tibble::tibble(Element=c("Gross.Product.Worth","Crude.Cost","Processing"),
                                 LightSweet=c(products %>% dplyr::transmute(LightSweet = prices*LightSweet.yield) %>% stats::na.omit() %>% sum(),
                                              crudes %>% dplyr::filter(info == "price") %>% dplyr::select(LightSweet) %>% as.numeric(),
                                              crudes %>% dplyr::filter(info == "processing.fee") %>% dplyr::select(LightSweet) %>% as.numeric()),

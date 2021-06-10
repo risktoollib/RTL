@@ -19,8 +19,7 @@
 #'   \item Morningstar_FX_Forwards. Requires multiple keys. Separate them by a space e.g. "USDCAD 2M".
 #'   \item ERCOT_LmpsByResourceNodeAndElectricalBus.
 #'   \item PJM_Rt_Hourly_Lmp.
-#'  \item AESO_ForecastAndActualPoolPrice.
-
+#'   \item AESO_ForecastAndActualPoolPrice.
 #' }
 #'
 #' @param feed Morningstar Feed Table.

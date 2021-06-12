@@ -17,21 +17,18 @@
 
 #' tickers_eia
 #' @description Supports automated upload of EIA data through its API by categories.
-#' Data frame organized by Supply Demand caterogies and products.
+#' Data frame organized by Supply Demand categories and products.
 #' @format data frame
-#' @source \url{https://www.eia.gov/}
 "tickers_eia"
 
 #' eiaStocks
 #' @description EIA weekly crude, NG, ULSD and RBOB stocks.
 #' @format data frame
-#' @source \url{https://www.eia.gov}
 "eiaStocks"
 
 #' eiaStorageCap
 #' @description EIA crude storage capacity in thousand bbls.
 #' @format data frame
-#' @source \url{https://www.eia.gov/petroleum/storagecapacity/}
 "eiaStorageCap"
 
 #' cancrudeassays

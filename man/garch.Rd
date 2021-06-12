@@ -18,12 +18,14 @@ plot.xts object or xts series
 Computes annualised Garch(1,1) volatilities using fGarch package.
 }
 \examples{
+\dontrun{
 x <- dflong \%>\% dplyr::filter(series=="CL01")
 x <- returns(df=x,retType="rel",period.return=1,spread=TRUE)
 x <- rolladjust(x=x,commodityname=c("cmewti"),rolltype=c("Last.Trade"))
 summary(garch(x=x,out="fit"))
 garch(x=x,out="chart")
 garch(x=x,out="data")
+}
 }
 \author{
 Philippe Cote

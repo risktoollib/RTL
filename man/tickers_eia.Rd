@@ -7,14 +7,11 @@
 \format{
 data frame
 }
-\source{
-\url{https://www.eia.gov/}
-}
 \usage{
 tickers_eia
 }
 \description{
 Supports automated upload of EIA data through its API by categories.
-Data frame organized by Supply Demand caterogies and products.
+Data frame organized by Supply Demand categories and products.
 }
 \keyword{datasets}

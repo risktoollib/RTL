@@ -7,9 +7,6 @@
 \format{
 data frame
 }
-\source{
-\url{https://www.eia.gov/petroleum/storagecapacity/}
-}
 \usage{
 eiaStorageCap
 }

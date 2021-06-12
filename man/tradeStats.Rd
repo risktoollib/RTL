@@ -7,7 +7,7 @@
 tradeStats(x, Rf = 0)
 }
 \arguments{
-\item{x}{xts object of returns}
+\item{x}{Univariate xts object of returns or dataframe with date and return variable.}
 
 \item{Rf}{Risk-free rate}
 }
@@ -18,10 +18,11 @@ List of risk/reward metrics.
 Compute list of risk reward metrics
 }
 \examples{
-library(quantmod)
-getSymbols("SPY", return.class = "zoo")
-SPY$retClCl <- na.omit(quantmod::Delt(Cl(SPY),k=1,type='arithmetic'))
-tradeStats(x=SPY$retClCl,Rf=0)
+library(tidyverse)
+library(tidyquant)
+x <- tidyquant::tq_get("SPY") \%>\% dplyr::mutate(ret = log(adjusted / dplyr::lag(adjusted)))
+x <- x \%>\% stats::na.omit()\%>\% dplyr::select(date,ret)
+tradeStats(x = x,Rf=0)
 }
 \author{
 Philippe Cote

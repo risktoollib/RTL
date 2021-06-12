@@ -1,6 +1,7 @@
 # usethis::use_pipe()
 # usethis::use_readme_md()
-# usethis::use_package("plotly")
+# usethis::use_package("tidyverse")
+usethis::use_package("tidyverse", type = "imports")
 #usethis::use_package("Quandl","suggests")
 #usethis::use_package("fitdistplus", "suggests")
 #usethis::use_package("lpSolve", "suggests")

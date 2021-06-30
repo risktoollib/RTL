@@ -1,6 +1,6 @@
 #' \code{tradeStats}
 #' @description Compute list of risk reward metrics
-#' @param x Univariate xts object of returns or dataframe with date and return variable.
+#' @param x Univariate xts object of returns OR dataframe with date and return variables.
 #' @param Rf Risk-free rate
 #' @return List of risk/reward metrics.
 #' @export tradeStats
@@ -17,7 +17,7 @@ tradeStats <- function(x, Rf = 0) {
          call. = FALSE)
   }
   x <- x %>% stats::na.omit(x)
-  if (class(x)[1] == "zoo") {x <- timetk::tk_tbl(x,rename_index = "date")}
+  if (class(x)[1] %in% c("xts","zoo")) {x <- timetk::tk_tbl(x,rename_index = "date")}
   colnames(x) <- c("date", "ret")
   #cumret = as.numeric(PerformanceAnalytics::Return.cumulative(dplyr::select(x,ret),geometric = TRUE))
   cumret <- (cumprod(1 + x$ret) - 1) %>% dplyr::last()

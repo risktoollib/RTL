@@ -7,7 +7,7 @@
 tradeStats(x, Rf = 0)
 }
 \arguments{
-\item{x}{Univariate xts object of returns or dataframe with date and return variable.}
+\item{x}{Univariate xts object of returns OR dataframe with date and return variables.}
 
 \item{Rf}{Risk-free rate}
 }

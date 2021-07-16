@@ -244,6 +244,10 @@ getIRswapCurve <- function(currency="USD",from="2019-01-01",iuser = "x@xyz.com",
 #' getCurve(feed = "Crb_Futures_Price_Volume_And_Open_Interest",contract = "BG",
 #' date = "2020-07-13",fields = c("Open, High, Low, Close"),
 #' iuser = "x@xyz.com", ipassword = "pass")
+#'
+#' getCurve(feed = "LME_ClosingPriceDelayed",contract = "AHD",
+#' date = "2021-06-25",fields = c("Last_Price"),
+#' iuser = "x@xyz.com", ipassword = "pass")
 #' }
 
 getCurve <- function(feed = "Crb_Futures_Price_Volume_And_Open_Interest",contract = "CL",date ="2020-08-10",
@@ -253,9 +257,20 @@ getCurve <- function(feed = "Crb_Futures_Price_Volume_And_Open_Interest",contrac
   URL = httr::modify_url(url = "https://mp.morningstarcommodity.com",
                          path = paste0("/lds/feeds/",feed, "/curve?root=",contract,"&cols=",gsub(" ","",fields),
                                        "&date=",date))
-  es = RCurl::getURL(url = URL, userpw = paste(iuser,ipassword,sep=":"))
+  es = RCurl::getURL(url = URL, userpw = paste(iuser,ipassword,sep = ":"))
   out <- jsonlite::fromJSON(es) %>% dplyr::as_tibble()
-  es <- out$keys %>% unlist() %>% unique() %>% sort()
+  if ( (length(unique(out$expirationDate)) != length(out$expirationDate)) & length(unique(out$col)) == 1 ) {
+    out <- out |> dplyr::arrange(expirationDate)
+    out <- out[1:length(unique(out$expirationDate)),]
+     }
+  if (nrow(out$keys[[1]]) == 1) {
+    es <- out$keys %>% unlist() %>% unique() %>% sort()
+  } else {
+    es <- contract
+  }
+
+  if (length(unique(out$expirationDate)) == 1) {out$expirationDate <- out$deliveryEndDate}
+
   out <- out %>%
     dplyr::transmute(expirationDate = as.Date(expirationDate),
                      type = col,

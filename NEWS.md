@@ -3,6 +3,7 @@
 ## Updates and Fixes
 
 + `tradestats()`.
++ `getCurve()` updated for LME and SHFE feeds.
 
 # RTL 0.1.7
 

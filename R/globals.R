@@ -11,4 +11,4 @@ utils::globalVariables(c("df_fut","dflong","dfwide","expiry_table","holidaysOil"
                          "ref.opt.inputs","ref.opt.outputs","prices","LightSweet.yield","LightSweet",
                          "HeavySour","HeavySour.yield","Element","product","max.prod","info","code",
                          "Close","fut.contract","DaysFromExp","reportDate","opt","adjusted","ret",
-                         "table.AnnualizedReturns","table.DownsideRiskRatio"))
+                         "table.AnnualizedReturns","table.DownsideRiskRatio","deliveryStartDate"))

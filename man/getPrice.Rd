@@ -81,6 +81,8 @@ getPrice(feed="ICE_NybotCoffeeSugarCocoaFutures_continuous",contract="SF_001_Mon
 from="2019-08-26",iuser = username, ipassword = password)
 getPrice(feed = "AESO_ForecastAndActualPoolPrice",contract = "Forecast_Pool_Price",
 from = "2021-04-01",iuser = username, ipassword = password)
+getPrice(feed = "LME_MonthlyDelayed_Derived",contract = "AHD 2021-12-01 2021-12-31",
+from = "2021-04-01",iuser = username, ipassword = password)
 }
 }
 \author{

@@ -46,7 +46,7 @@ usethis::use_data(planets, overwrite = T)
 df_fut <- readRDS("df_fut") ; usethis::use_data(df_fut, overwrite = T)
 
 iuser = mstar[["iuser"]] ; ipassword = mstar[["ipassword"]]
-startdate <- "2015-01-01"
+startdate <- "2004-01-01"
 crude <- c(paste0("CL_",sprintf('%0.3d', 1:36),"_Month"), paste0("NG_",sprintf('%0.3d', 1:36),"_Month"))
 crudeICE <- c(paste0("BRN_",sprintf('%0.3d', 1:36),"_Month"))
 pdts <- c(paste0("HO_",sprintf('%0.3d', 1:18),"_Month"), paste0("RB_",sprintf('%0.3d', 1:18),"_Month"))

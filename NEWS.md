@@ -4,6 +4,8 @@
 
 + `tradestats()`.
 + `getCurve()` updated for LME and SHFE feeds.
++ Added `fxfwd` dataset for USD/CAD FX forwards.
++ Added `eurodollar` dataset for eurodollar future contract.
 
 # RTL 0.1.7
 

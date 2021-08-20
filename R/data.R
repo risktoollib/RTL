@@ -1,3 +1,21 @@
+#' wtiSwap
+#' @description WTI Crude futures for swap pricing - demo dataset
+#' @format data frame
+#' @source {Morningstar}
+"wtiSwap"
+
+#' fxfwd
+#' @description Foreign Exchange Forward Rates - demo dataset
+#' @format data frame
+#' @source {Morningstar}
+"fxfwd"
+
+#' eurodollar
+#' @description Eurodollar Futures - demo dataset
+#' @format data frame
+#' @source {Morningstar}
+"eurodollar"
+
 #' planets
 #' @description Planet metrics from NASA
 #' @format data frame

@@ -26,6 +26,43 @@ library(readr)
 source("~/now/keys.R")
 setwd(paste0(getwd(),"/data-raw"))
 
+## WTI swaps
+c <- paste0("CL0",c("M","N","Q"))
+wtiSwap <- RTL::getPrices(feed = "CME_NymexFutures_EOD",
+                       contracts = c,
+                       from = "2019-08-26",
+                       iuser = mstar[[1]], ipassword = mstar[[2]])
+
+usethis::use_data(wtiSwap, overwrite = T)
+
+
+## Eurodollar
+
+eurodollar <- RTL::getPrices(
+  feed = "CME_CmeFutures_EOD",
+  contracts = c("ED24Z"),
+  from = "2019-01-01",
+  iuser = mstar[[1]],
+  ipassword = mstar[[2]]
+) %>%
+  tidyr::pivot_longer(-date, names_to = "series", values_to = "price")
+
+usethis::use_data(eurodollar, overwrite = T)
+
+## FX forwards
+
+fromDate <-  Sys.Date() - lubridate::years(1)
+fxfwd <-
+  RTL::getPrices(
+    feed = "Morningstar_FX_Forwards",
+    contracts = c("USDCAD 1Y", "USDCAD 5Y"),
+    from = fromDate,
+    iuser = mstar[[1]],
+    ipassword = mstar[[2]]
+  )
+
+usethis::use_data(fxfwd, overwrite = T)
+
 ## Orbital
 
 url = "https://nssdc.gsfc.nasa.gov/planetary/factsheet/index.html"

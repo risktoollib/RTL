@@ -84,12 +84,6 @@
 #' @format data frame
 "cancrudeprices"
 
-#' df_fut
-#' @description Futures settlement data set.
-#' @format data frame
-#' #' @source \url{https://www.morningstar.com/products/commodities-and-energy}
-"df_fut"
-
 #' dflong
 #' @description Futures settlement data set.
 #' @format data frame

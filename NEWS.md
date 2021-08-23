@@ -2,10 +2,11 @@
 
 ## Updates and Fixes
 
-+ `tradestats()`.
++ `tradestats` partially migrated to `tidyquant` from `quantmod`.
 + `getCurve()` updated for LME and SHFE feeds.
 + Added `fxfwd` dataset for USD/CAD FX forwards.
 + Added `eurodollar` dataset for eurodollar future contract.
++ Added `rmp` for Producer Hedging dataset. 
 
 # RTL 0.1.7
 

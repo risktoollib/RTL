@@ -103,11 +103,30 @@ pdts <- RTL::getPrices(feed = "CME_NymexFutures_EOD_continuous",
   pivot_longer(-date,names_to = "series", values_to = "value") %>%
   dplyr::mutate(series = stringr::str_replace_all(series,c("_0" = "","_Month" = ""))) %>% na.omit()
 
-dflong <-  rbind(crude, crudeICE, pdts)
+alu <- c(paste("ALI",sprintf(fmt = "%0.3d",1:6),"Month",sep = "_"),
+         paste("AUP",sprintf(fmt = "%0.3d",1:6),"Month",sep = "_"),
+         paste("EDP",sprintf(fmt = "%0.3d",1:6),"Month",sep = "_"),
+         paste("MJP",sprintf(fmt = "%0.3d",1:6),"Month",sep = "_"))
+
+lbs2mt <- function(x) {x * 55116 / 25}
+
+alu <-
+  RTL::getPrices(
+    feed = "CME_Comex_FuturesSettlement_EOD_continuous",
+    contracts = alu,
+    from = startdate,
+    iuser = mstar[[1]],
+    ipassword = mstar[[2]]
+  ) %>%
+  dplyr::rename_all( ~ str_replace_all(., "_Month|_0", "")) %>%
+  dplyr::mutate(across(dplyr::contains("AUP"), lbs2mt)) %>%
+  tidyr::pivot_longer(-date, names_to = "series", values_to = "value")
+
+dflong <-  rbind(crude, crudeICE, pdts, alu)
 dfwide <- dflong %>% tidyr::pivot_wider(names_from = series, values_from = value) %>% na.omit()
 usethis::use_data(dflong, overwrite = T)
 usethis::use_data(dfwide, overwrite = T)
-rm(crude,crudeICE,pdts)
+rm(crude,crudeICE,pdts,alu)
 
 ## Sample EIA dataset
 eiaStocks <- tibble::tribble(~ticker, ~name,

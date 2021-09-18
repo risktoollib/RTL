@@ -7,6 +7,7 @@
 + Added `fxfwd` dataset for USD/CAD FX forwards.
 + Added `eurodollar` dataset for eurodollar future contract.
 + Added `rmp` for Producer Hedging dataset. 
++ Added CME Aluminium prices to `dflong` and `dflong` datasets.
 
 # RTL 0.1.7
 

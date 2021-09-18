@@ -2,7 +2,7 @@ Package: RTL
 Type: Package
 Title: Risk Tool Library - Trading, Risk, Analytic for Commodities
 Version: 0.1.8
-Date: 2021-08-23
+Date: 2021-09-19
 Authors@R: c(person("Philippe", "Cote", email = "pcote@ualberta.ca", role = c("aut", "cre")),person("Nima", "Safaian", email = "nima.safaian@gmail.com", role = c("aut")), person("Mikel", "Buchinski", email = "mbuchins@ualberta.ca", role = c("ctb")),person("Joe", "Rikk", email = "rikk@ualberta.ca", role = c("ctb")), person("Gabriela", "Sanchez", email = "gsanchez@ualberta.ca", role = c("ctb")), person("Usman", "Farooq", email = "ufarooq@ualberta.ca", role = c("ctb")))
 Description: Collection of functions and metadata to complement core packages
     in Finance and Commodities, including futures expiry tables and <https://www.morningstar.com/products/commodities-and-energy>
@@ -21,7 +21,7 @@ Suggests:
     lpSolve,
     rugarch,
     PerformanceAnalytics
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Imports: 
     zoo,
     xts,

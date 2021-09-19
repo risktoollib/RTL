@@ -45,9 +45,10 @@ https://developer.genscape.com/docs/services/oil-storage/operations/StorageVolum
 }
 \examples{
 \dontrun{
+# where yourapikey = "yourapikey".
 getGenscapeStorageOil(feed = "owner-volumes",regions = "Canada", products = "Crude",
-evision = "revised", limit = 5000, offset = 0, startDate = "2011-01-01", endDate = "2020-11-01"
-apikey = "<yourapikey>")
+revision = "revised", limit = 5000, offset = 0,
+startDate = "2011-01-01", endDate = "2020-11-01", apikey = yourapikey)
 }
 }
 \author{

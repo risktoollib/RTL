@@ -14,7 +14,7 @@
 #' @author Philippe Cote
 #' @examples
 #' \dontrun{
-#' getGIS(url = url = "https://gis.energy.gov.ab.ca/GeoviewData/OS_Agreements_Shape.zip")
+#' getGIS(url = "https://gis.energy.gov.ab.ca/GeoviewData/OS_Agreements_Shape.zip")
 #' }
 
 getGIS <- function(url = "https://gis.energy.gov.ab.ca/GeoviewData/OS_Agreements_Shape.zip") {

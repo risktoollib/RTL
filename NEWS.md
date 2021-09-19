@@ -4,10 +4,10 @@
 
 + `tradestats` partially migrated to `tidyquant` from `quantmod`.
 + `getCurve()` updated for LME and SHFE feeds.
-+ Added `fxfwd` dataset for USD/CAD FX forwards.
-+ Added `eurodollar` dataset for eurodollar future contract.
-+ Added `rmp` for Producer Hedging dataset. 
-+ Added CME Aluminium prices to `dflong` and `dflong` datasets.
++ `fxfwd` dataset created for USD/CAD FX forwards.
++ `eurodollar` dataset created for eurodollar future contract.
++ `rmp` dataset created for Producer Hedging project. 
++ `dflong` and `dflong` datasets now contain CME Aluminium prices.
 
 # RTL 0.1.7
 
@@ -110,10 +110,6 @@
 + Added `crudeassaysXOM` as a list for complete public assays from ExxonMobil.
 + Added `planets` data for interest rate exercises.
 
-# RTL 0.1.2
-
-+ `expiry_table` fixed for 2021-2024 CME WTI Futures.
-+ Added Morningstar `CME_NymexOptions_EOD` feed.
 
 # RTL 0.1.1
 

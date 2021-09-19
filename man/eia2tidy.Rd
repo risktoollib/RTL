@@ -22,9 +22,9 @@ Makes a clean wrapper for use with purrr for multiple series extraction. Query B
 }
 \examples{
 \dontrun{
-Single Series
-RTL::eia2tidy(ticker = "PET.MCRFPTX2.M", key = "<yourapikey>", name = "TexasProd")
-Multiple Series
+# Single Series
+RTL::eia2tidy(ticker = "PET.MCRFPTX2.M", key = "yourapikey", name = "TexasProd")
+# Multiple Series
 eia_df <-tibble::tribble(~ticker, ~name,
 "PET.W_EPC0_SAX_YCUOK_MBBL.W", "CrudeCushing",
 "NG.NW2_EPG0_SWO_R48_BCF.W","NGLower48") \%>\%

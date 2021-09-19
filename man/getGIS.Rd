@@ -27,7 +27,7 @@ Returns a SpatialPointsDataFrame from a shapefile URL.
 }
 \examples{
 \dontrun{
-getGIS(url = url = "https://gis.energy.gov.ab.ca/GeoviewData/OS_Agreements_Shape.zip")
+getGIS(url = "https://gis.energy.gov.ab.ca/GeoviewData/OS_Agreements_Shape.zip")
 }
 }
 \author{

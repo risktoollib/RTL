@@ -1,3 +1,15 @@
+#' spot2futConvergence
+#' @description Cash and futures dataset - demo dataset
+#' @format data frame
+#' @source {Morningstar, EIA}
+"spot2futConvergence"
+
+#' spot2futCurve
+#' @description Forward Curve - cash and futures - demo dataset
+#' @format data frame
+#' @source {Morningstar, EIA}
+"spot2futCurve"
+
 #' wtiSwap
 #' @description WTI Crude futures for swap pricing - demo dataset
 #' @format data frame

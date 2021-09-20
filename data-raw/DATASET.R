@@ -26,6 +26,46 @@ library(readr)
 source("~/now/keys.R")
 setwd(paste0(getwd(),"/data-raw"))
 
+## spot2fut convergence
+d <- "2020-03-25"
+cash <-
+  RTL::eia2tidy(ticker = "PET.RWTC.D", key = EIAkey, name = "cash") %>%
+  dplyr::select(-series) %>% dplyr::rename(cash = value) %>% dplyr::arrange(date)
+c <- cash %>% dplyr::filter(date == d)
+f <-
+  RTL::getCurve(
+    feed = "Crb_Futures_Price_Volume_And_Open_Interest",
+    contract = "CL",
+    date = d,
+    fields = c("Open, High, Low, Close"),
+    iuser = mstar[[1]],
+    ipassword = mstar[[2]]
+  )  %>%
+  dplyr::slice(1:12) %>% dplyr::select(-Open, -High, -Low)
+
+spot2futCurve <- f %>%
+  dplyr::add_row(
+    contract = "cash",
+    expirationDate = c$date,
+    Close = c$cash
+  ) %>%
+  dplyr::arrange(contract)
+usethis::use_data(spot2futCurve, overwrite = T)
+
+fut <- RTL::getPrice(
+  feed = "CME_NymexFutures_EOD",
+  contract = "CL0M",
+  from = paste(lubridate::year(Sys.Date()) - 2, "01", "01", sep = "-"),
+  iuser = mstar[[1]],
+  ipassword = mstar[[2]]
+)
+colnames(fut)[2] <- "fut"
+
+spot2futConvergence <- fut %>% dplyr::inner_join(cash, by = c("date")) %>%
+  dplyr::mutate(spot2fut = cash - fut) %>%
+  tidyr::pivot_longer(-date, names_to = "series", values_to = "value")
+usethis::use_data(spot2futConvergence, overwrite = T)
+
 ## WTI swaps
 c <- paste0("CL0",c("M","N","Q"))
 wtiSwap <- RTL::getPrices(feed = "CME_NymexFutures_EOD",

@@ -9,7 +9,6 @@
 #' @author Philippe Cote
 #' @examples
 #' returns(df = dflong,retType = "abs",period.return = 1,spread = TRUE)
-#' returns(df = dflong,retType = "abs",period.return = 1,spread = FALSE)
 
 returns <- function(df = dflong, retType = "abs", period.return = 1, spread = FALSE) {
   if (length(setdiff(colnames(df),c("date","value","series"))) > 0) stop("df is either not long or colnames incorrect")

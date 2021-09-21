@@ -8,7 +8,7 @@
 #' @export rolladjust
 #' @author Philippe Cote
 #' @examples
-#' ret <- returns(df=dflong,retType="abs",period.return=1,spread=TRUE)[,1:2]
+#' ret <- dplyr::tibble(date = seq.Date(Sys.Date()-60, Sys.Date(),1), CL01 = rnorm(61,0,1))
 #' rolladjust(x=ret,commodityname=c("cmewti"),rolltype=c("Last.Trade"))
 
 rolladjust <- function (x,commodityname=c("cmewti"),rolltype=c("Last.Trade"),...) {

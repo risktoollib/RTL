@@ -5,9 +5,8 @@
 #' @export distdescplot
 #' @author Philippe Cote
 #' @examples
-#' x <- dflong %>% dplyr::filter(series=="CL01")
-#' x <- returns(df=x,retType="rel",period.return=1,spread=TRUE)
-#' x <- rolladjust(x=x,commodityname=c("cmewti"),rolltype=c("Last.Trade"))
+#'   x <- dplyr::tibble(date = seq.Date(Sys.Date()-1000, Sys.Date(),1),
+#'   CL01 = c(rnorm(501,0,0.02),rnorm(500,0,0.01)))
 #' distdescplot(x=x)
 
 distdescplot <- function(x=x){

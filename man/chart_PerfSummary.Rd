@@ -27,9 +27,8 @@ Cumulative performance and drawdown charts.
 Multi Asset Display of Cumulative Performance and Drawdowns
 }
 \examples{
-df <- dflong \%>\% dplyr::filter(series \%in\% c("CL01","CL12","CL36"))
-ret <- returns(df=df,retType="rel",period.return=1,spread=TRUE)
-ret <-data.frame(rolladjust(x=ret,commodityname=c("cmewti"),rolltype=c("Last.Trade")))
+ret <- data.frame(date = seq.Date(Sys.Date()-60, Sys.Date(),1),
+CL01 = rnorm(61,0,.01), RB01 = rnorm(61,0,0.02))
 chart_PerfSummary(ret=ret, geometric=TRUE, main="Cumulative Returns and Drawdowns",linesize=1.25)
 }
 \author{

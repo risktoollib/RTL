@@ -9,7 +9,7 @@ rolladjust(x, commodityname = c("cmewti"), rolltype = c("Last.Trade"), ...)
 \arguments{
 \item{x}{An xts object of prices or returns.}
 
-\item{commodityname}{Name of commodity in expiry_table. See example below for values.}
+\item{commodityname}{Name of commodity in expiry_table. unique(expiry_table$cmdty) for list of commodity names}
 
 \item{rolltype}{Type of contract roll: "Last.Trade" or "First.Notice".}
 
@@ -22,8 +22,7 @@ Roll-adjusted xts object of returns
 Returns a xts price or return object adjusted for contract roll. The methodology used to adjust returns is to remove the daily returns on the day after expiry and for prices to adjust historical rolling front month contracts by the size of the roll at each expiry. This is conducive to quantitative trading strategies as it reflects the PL of a financial trader.
 }
 \examples{
-unique(expiry_table$cmdty) # for list of commodity names
-ret <- returns(df=dflong,retType="abs",period.return=1,spread=TRUE)[,1:2] 
+ret <- dplyr::tibble(date = seq.Date(Sys.Date()-60, Sys.Date(),1), CL01 = rnorm(61,0,1))
 rolladjust(x=ret,commodityname=c("cmewti"),rolltype=c("Last.Trade"))
 }
 \author{

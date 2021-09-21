@@ -8,7 +8,8 @@
 #' @export returns
 #' @author Philippe Cote
 #' @examples
-#' returns(df = dflong,retType = "abs",period.return = 1,spread = TRUE)
+#' x <- dflong %>% dplyr::filter(grepl("CL01",series))
+#' returns(df = x, retType = "abs",period.return = 1,spread = TRUE)
 
 returns <- function(df = dflong, retType = "abs", period.return = 1, spread = FALSE) {
   if (length(setdiff(colnames(df),c("date","value","series"))) > 0) stop("df is either not long or colnames incorrect")

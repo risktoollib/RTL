@@ -506,8 +506,8 @@ usethis::use_data(ref.opt.outputs, overwrite = T)
 
 # Educational Dataset
 
-tradeprocess <- RTL::getPrices(feed="CME_NymexFutures_EOD",contracts = c("@CL21H","@HO1F","@HO21H","@LT21H"),
-                               from="2018-01-01",iuser = mstar[[1]], ipassword = mstar[[2]])
+tradeprocess <- RTL::getPrices(feed="CME_NymexFutures_EOD",contracts = c("@CL22H","@HO22F","@HO22H","@LT22H"),
+                               from="2018-01-01",iuser = mstar[[1]], ipassword = mstar[[2]]) %>% stats::na.omit()
 usethis::use_data(tradeprocess, overwrite = T)
 
 # Global

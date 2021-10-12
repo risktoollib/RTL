@@ -19,7 +19,7 @@
 
 #### Genscape
 
-[Gensccape API ](https://developer.genscape.com/) functions:
+[Genscape API ](https://developer.genscape.com/) functions:
 
 + `getGenscapeStorageOil()`.
 + `getGenscapePipeOil()`.

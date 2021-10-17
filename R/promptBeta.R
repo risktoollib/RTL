@@ -29,7 +29,10 @@ promptBeta <- function(x = x, period = "all", betatype = "all", output = "chart"
 
   term = stats::na.omit(as.numeric(gsub("[^0-9]","",colnames(x))))
 
-  if (is.numeric(period)) {x <- x %>% dplyr::filter(dplyr::last(period))}
+  if (period != "all") {
+    period <- as.numeric(period)
+    x <- x %>% dplyr::slice_max(n = period,order_by = date) %>% dplyr::arrange(date)
+    }
   x <- as.data.frame(x)
   ret <- xts::xts(x[,-1],order.by = x[,1])
   all <- PerformanceAnalytics::CAPM.beta(ret,ret[,1])

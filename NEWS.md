@@ -2,6 +2,7 @@
 
 ## Updates and Fixes
 
++ Fixed `promptBeta()` period input.
 
 # RTL 0.1.8
 

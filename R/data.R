@@ -57,7 +57,7 @@
 "eiaStocks"
 
 #' eiaStorageCap
-#' @description EIA crude storage capacity in thousand bbls.
+#' @description EIA working storage capacity in thousand bbls.
 #' @format data frame
 "eiaStorageCap"
 

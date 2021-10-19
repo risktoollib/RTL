@@ -171,8 +171,8 @@ rm(crude,crudeICE,pdts,alu)
 ## Sample EIA dataset
 eiaStocks <- tibble::tribble(~ticker, ~name,
                          "PET.W_EPC0_SAX_YCUOK_MBBL.W", "CrudeCushing",
-                         "PET.WGTSTUS1.W", "Gasoline",
-                         "PET.WD0ST_NUS_1.W", "ULSD",
+                         "PET.WGTSTP11.W", "Gasoline",
+                         "PET.WD0ST_R10_1.W", "ULSD",
                          "NG.NW2_EPG0_SWO_R48_BCF.W","NGLower48") %>%
   dplyr::mutate(key = EIAkey) %>%
   dplyr::mutate(df = purrr::pmap(list(ticker,key,name),.f = RTL::eia2tidy)) %>%
@@ -180,6 +180,7 @@ eiaStocks <- tibble::tribble(~ticker, ~name,
 usethis::use_data(eiaStocks, overwrite = T)
 
 ## EIA Storage Capacity
+  ### Crude
 url <- "https://www.eia.gov/petroleum/storagecapacity/crudeoilstorage.xlsx"
 destfile <- "crudeoilstorage.xlsx"
 curl::curl_download(url, destfile)
@@ -201,6 +202,60 @@ eiaStorageCap <- bind_rows(cc(sheet = "US", loc = "US"),
           cc(sheet = "PADD 4", loc = "P4"),
           cc(sheet = "PADD 5", loc = "P5"),
           cc(name = "Tank Working Storage Capacity", sheet = "Cushing", loc = "Cushing"))
+
+eiaStorageCap <- eiaStorageCap %>% dplyr::mutate(product = "crude")
+
+  ### Products
+library(rvest)
+library(pdftools)
+library(tesseract)
+url = "https://www.eia.gov/petroleum/storagecapacity/archive/"
+urls = rvest::read_html(url) %>%
+  rvest::html_element(css = "table") %>%
+  html_elements("tr") %>%
+  rvest::html_elements("a") %>%
+  html_attr("href") %>%
+  paste0("https://www.eia.gov", .)
+
+dist1b <- dplyr::tibble(date = as.Date("2021-01-01"),p1mdist = 0, p1ldist = 0)
+
+for (i in 1:length(urls)) {
+  reportDate <- as.Date(stringr::str_sub(urls[i], 60,69), format = "%Y_%m_%d")
+  if (reportDate >= as.Date("2019-01-01")) {
+    urli <- urls[i] %>%
+      rvest::read_html() %>%
+      rvest::html_element(css = "table") %>%
+      html_elements("tr") %>%
+      rvest::html_elements("a") %>%
+      html_attr("href")
+    urli <- gsub(pattern = "/[^/]*$",replacement = paste0("/",urli[1]),x = urls[i])
+    destfile <- "storagecapacity.xlsx"
+    curl::curl_download(urli, destfile)
+    storagecapacity <- readxl::read_excel(destfile, sheet = "Table 1", skip = 8)
+    dist1b[i,1] <- reportDate
+    dist1b[i,2] <- (storagecapacity %>% dplyr::filter(.[[1]] == "Distillate Fuel Oil"))[2,2] %>% as.numeric(.)
+    dist1b[i,3] <- (storagecapacity %>% dplyr::filter(.[[1]] == "Motor Gasoline (incl. Motor Gasoline Blending Components)"))[2,2] %>% as.numeric(.)
+  } else {
+    urli <- gsub(pattern = "/[^/]*$",replacement = paste0("/","table1.pdf"),x = urls[i])
+    tmp <-  pdf_ocr_text(urli,pages = 1)
+    tmp <- read_lines(tmp)
+    tmp <- str_replace_all(string = tmp[grep('^Motor.*|^Dist.*', tmp)],
+                    pattern = c("Distillate Fuel Oil " = "", "Motor Gasoline \\(incl. Motor Gasoline Blending Components\\) " = ""))[3:4]
+
+    #tmp <-  pdf_ocr_data(urli,pages = 1)
+    dist1b[i,1] <- reportDate
+    dist1b[i,2] <- readr::parse_number(sub(" .*", "", tmp))[2]
+    dist1b[i,3] <- readr::parse_number(sub(" .*", "", tmp))[1]
+  }
+}
+
+dist1b <- dist1b %>%
+  dplyr::rename("distillates" = 2, "gasoline" = 3) %>%
+  dplyr::mutate(series = "P1") %>%
+  tidyr::pivot_longer(cols = c(-date, -series), names_to = "product", values_to = "value") %>%
+  dplyr::select(series, date, value, product)
+
+eiaStorageCap <- rbind(eiaStorageCap,dist1b)
 file.remove(destfile)
 usethis::use_data(eiaStorageCap, overwrite = T)
 

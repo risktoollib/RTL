@@ -11,6 +11,6 @@ data frame
 eiaStorageCap
 }
 \description{
-EIA crude storage capacity in thousand bbls.
+EIA working storage capacity in thousand bbls.
 }
 \keyword{datasets}

@@ -25,6 +25,9 @@ eia2tidy <- function(ticker,key,name = " ") {
   url <-  paste0("http://api.eia.gov/series/?api_key=",key,"&series_id=",ticker,"&out=json")
   x <- url %>% httr::GET()
   x <- jsonlite::fromJSON(httr::content(x,"text",encoding = "UTF-8"))
+  # promises::promise(~print(x$data$error)) %>%
+  #   promises::then()
+  # x %>% promises::promise()
   out <- x$series$data[[1]] %>% dplyr::as_tibble(.name_repair = ~ c("date","value"))
 
   if (nchar(out$date)[1] == 12) {

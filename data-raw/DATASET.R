@@ -1,7 +1,7 @@
 # usethis::use_pipe()
 # usethis::use_readme_md()
 # usethis::use_package("tidyverse")
-usethis::use_package("tidyverse", type = "imports")
+#usethis::use_package("tidyverse", type = "imports")
 #usethis::use_package("Quandl","suggests")
 #usethis::use_package("fitdistplus", "suggests")
 #usethis::use_package("lpSolve", "suggests")
@@ -127,21 +127,33 @@ startdate <- "2004-01-01"
 crude <- c(paste0("CL_",sprintf('%0.3d', 1:36),"_Month"), paste0("NG_",sprintf('%0.3d', 1:36),"_Month"))
 crudeICE <- c(paste0("BRN_",sprintf('%0.3d', 1:36),"_Month"))
 pdts <- c(paste0("HO_",sprintf('%0.3d', 1:18),"_Month"), paste0("RB_",sprintf('%0.3d', 1:18),"_Month"))
-crude <- RTL::getPrices(feed="CME_NymexFutures_EOD_continuous",
-               contracts = crude,from = startdate,
-               iuser = iuser, ipassword = ipassword) %>%
-  pivot_longer(-date,names_to = "series", values_to = "value") %>%
-  dplyr::mutate(series = stringr::str_replace_all(series,c("_0" = "","_Month" = ""))) %>% na.omit()
-crudeICE <- RTL::getPrices(feed = "ICE_EuroFutures_continuous",
-                        contracts = crudeICE,from = startdate,
-                        iuser = iuser, ipassword = ipassword) %>%
-  pivot_longer(-date,names_to = "series", values_to = "value") %>%
-  dplyr::mutate(series = stringr::str_replace_all(series,c("_0" = "","_Month" = ""))) %>% na.omit()
-pdts <- RTL::getPrices(feed = "CME_NymexFutures_EOD_continuous",
-                         contracts = pdts,from = startdate,
-                         iuser = iuser, ipassword = ipassword) %>%
-  pivot_longer(-date,names_to = "series", values_to = "value") %>%
-  dplyr::mutate(series = stringr::str_replace_all(series,c("_0" = "","_Month" = ""))) %>% na.omit()
+crude <- RTL::getPrices(
+  feed = "CME_NymexFutures_EOD_continuous",
+  contracts = crude,
+  from = startdate,
+  iuser = iuser,
+  ipassword = ipassword
+) %>%
+  pivot_longer(-date, names_to = "series", values_to = "value") %>%
+  dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>% na.omit()
+crudeICE <- RTL::getPrices(
+  feed = "ICE_EuroFutures_continuous",
+  contracts = crudeICE,
+  from = startdate,
+  iuser = iuser,
+  ipassword = ipassword
+) %>%
+  pivot_longer(-date, names_to = "series", values_to = "value") %>%
+  dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>% na.omit()
+pdts <- RTL::getPrices(
+  feed = "CME_NymexFutures_EOD_continuous",
+  contracts = pdts,
+  from = startdate,
+  iuser = iuser,
+  ipassword = ipassword
+) %>%
+  pivot_longer(-date, names_to = "series", values_to = "value") %>%
+  dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>% na.omit()
 
 alu <- c(paste("ALI",sprintf(fmt = "%0.3d",1:6),"Month",sep = "_"),
          paste("AUP",sprintf(fmt = "%0.3d",1:6),"Month",sep = "_"),
@@ -281,21 +293,30 @@ library(rgdal)
 # usethis::use_data(lngterminals, overwrite = T)
 
 ## EIA Mapping
-tickers_eia <- read.csv('./data-raw/eia.csv',sep = ",",header = TRUE,na.strings = "NA",stringsAsFactors = FALSE)
+tickers_eia <- read.csv('eia.csv',sep = ",",header = TRUE,na.strings = "NA",stringsAsFactors = FALSE)
 usethis::use_data(tickers_eia, overwrite = T)
 
 ## Holiday Calendar
-holidaysOil <- read.csv('holidays.csv',sep=",",header=TRUE,na.strings="NA",stringsAsFactors=FALSE) %>%
-  dplyr::mutate(nymex = as.Date(as.character(nymex),"%Y-%m-%d",tz="UTC"),
-                ice = as.Date(as.character(ice),"%Y-%m-%d",tz="UTC")) %>% tidyr::gather()
+holidaysOil <-
+  read.csv(
+    'holidays.csv',
+    sep = ",",
+    header = TRUE,
+    na.strings = "NA",
+    stringsAsFactors = FALSE
+  ) %>%
+  dplyr::mutate(
+    nymex = as.Date(as.character(nymex), "%Y-%m-%d", tz = "UTC"),
+    ice = as.Date(as.character(ice), "%Y-%m-%d", tz = "UTC")
+  ) %>% tidyr::gather()
 holidaysOil <- holidaysOil[complete.cases(holidaysOil),]
 usethis::use_data(holidaysOil, overwrite = T)
 
 ## tradeCycle
-tradeCycle <- read.csv('tradeCycle.csv',sep=",",header=TRUE,na.strings="NA",stringsAsFactors=FALSE)
+tradeCycle <- read.csv('tradeCycle.csv',sep = ",",header = TRUE,na.strings = "NA",stringsAsFactors = FALSE)
 usethis::use_data(tradeCycle, overwrite = T)
 
-## Canadain Crude Data
+## Canadian Crude Data
 
 url <-  "https://crudemonitor.ca/crudes/index.php?acr=MSW"
 html <- xml2::read_html(url)

@@ -432,7 +432,9 @@ expiry_table <- rbind(expiry_table,LCO,LGO,CL,BZ,HO,RB,GC,SI,ALI) %>%
 usethis::use_data(expiry_table, overwrite = T)
 
 ## tradeCycle
-tradeCycle <- read.csv('tradeCycle.csv',sep = ",",header = TRUE,na.strings = "NA",stringsAsFactors = FALSE)
+tradeCycle <- read.csv('tradeCycle.csv',sep = ",",header = TRUE,na.strings = "NA",stringsAsFactors = FALSE) %>%
+  dplyr::mutate(flowmonth = as.Date(flowmonth),
+                trade.cycle.end = as.Date(trade.cycle.end))
 nymex <- holidaysOil %>% dplyr::filter(key == "nymex") %>% dplyr::select(value) %>% .[[1]]
 bizdays::create.calendar(name = "nymex", holidays = nymex ,weekdays = c('saturday', 'sunday'))
 tradeCycle <- expiry_table %>%
@@ -442,7 +444,7 @@ tradeCycle <- expiry_table %>%
                    flowmonth = lubridate::rollback(dates = Last.Trade + months(1), roll_to_first = TRUE),
                    trade.cycle.end = bizdays::offset(Last.Trade,3,"nymex")) %>%
   tidyr::drop_na() %>%
-  rbind(tradeCycle, .)
+  rbind(tradeCycle, .) %>% dplyr::as_tibble()
 usethis::use_data(tradeCycle, overwrite = T)
 
 ## Canadian Crude Data

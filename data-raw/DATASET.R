@@ -272,7 +272,7 @@ file.remove(destfile)
 usethis::use_data(eiaStorageCap, overwrite = T)
 
 ## Sample GIS Mapping
-library(rgdal)
+#library(rgdal)
 
 # crudepipelines <- rgdal::readOGR(dsn = "~/now/RTL/GIS_EIA/CrudeOil_Pipelines_US_EIA/", layer = "CrudeOil_Pipelines_US_202001")
 # refineries <- rgdal::readOGR(dsn = "~/now/RTL/GIS_EIA/Petroleum_Refineries_US_EIA/", layer = "Petroleum_Refineries_US_2020")
@@ -309,11 +309,140 @@ holidaysOil <-
     nymex = as.Date(as.character(nymex), "%Y-%m-%d", tz = "UTC"),
     ice = as.Date(as.character(ice), "%Y-%m-%d", tz = "UTC")
   ) %>% tidyr::gather()
-holidaysOil <- holidaysOil[complete.cases(holidaysOil),]
+holidaysOil <- holidaysOil[complete.cases(holidaysOil),] %>% dplyr::as_tibble()
 usethis::use_data(holidaysOil, overwrite = T)
+
+# Expiry table
+futmonths = c("F","G","H","J","K","M","N","Q","U","V","X","Z")
+expiry_table <- read.csv('expiry_table.csv',sep = ",",header = TRUE,na.strings = "NA",stringsAsFactors = FALSE) %>%
+  dplyr::as_tibble() %>%
+  dplyr::mutate(Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
+                First.Notice = as.Date(First.Notice,"%Y-%m-%d",tz = "UTC"),
+                First.Delivery = as.Date(First.Delivery,"%Y-%m-%d",tz = "UTC"),
+                Last.Delivery = as.Date(Last.Delivery,"%Y-%m-%d",tz = "UTC"))
+
+
+LGO <- read_csv("https://www.theice.com/api/productguide/spec/34361119/expiry/csv",
+                col_types = cols(`CONTRACT SYMBOL` = col_skip(),
+                                 FTD = col_skip(), LTD = col_date(format = "%m/%d/%Y"),
+                                 FND = col_date(format = "%m/%d/%Y"),
+                                 LND = col_skip(), FDD = col_date(format = "%m/%d/%Y"),
+                                 LDD = col_date(format = "%m/%d/%Y"),
+                                 FSD = col_skip(), `OPTIONS FTD` = col_skip(),
+                                 `OPTIONS LTD` = col_skip())) %>%
+  dplyr::transmute(cmdty = "icegasoil", tick.prefix = "LGO", Last.Trade = LTD,
+                   First.Notice = FND, First.Delivery = FDD, Last.Delivery = LDD)
+
+LCO <- read_csv("https://www.theice.com/api/productguide/spec/219/expiry/csv",
+                col_types = cols(`CONTRACT SYMBOL` = col_skip(),
+                                 FTD = col_skip(), LTD = col_date(format = "%m/%d/%Y"),
+                                 FND = col_date(format = "%m/%d/%Y"),
+                                 LND = col_skip(), FDD = col_date(format = "%m/%d/%Y"),
+                                 LDD = col_date(format = "%m/%d/%Y"),
+                                 FSD = col_skip(), `OPTIONS FTD` = col_skip(),
+                                 `OPTIONS LTD` = col_skip())) %>%
+  dplyr::transmute(cmdty = "icebrent", tick.prefix = "LCO", Last.Trade = LTD,
+                   First.Notice = FND,
+                   First.Delivery = lubridate::rollback(First.Notice,roll_to_first = TRUE) + months(2),
+                   Last.Delivery = lubridate::rollback(First.Delivery + months(1)))
+
+#destfile <- "Download.xls"
+#curl::curl_download(url = "https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/Download.xls?productId=425",destfile)
+CL <- read_excel("CL.xls", col_types = c("skip", "skip", "skip", "text", "skip", "skip",
+                                         "skip", "skip", "skip", "text", "skip", "text", "text")) %>%
+  dplyr::as_tibble(.name_repair = "universal") %>%
+  dplyr::transmute(cmdty = "cmewti", tick.prefix = "CL",
+                   Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
+                   First.Notice = as.Date(First.Notice,"%Y-%m-%d",tz = "UTC"),
+                   First.Delivery = as.Date(First.Delivery,"%Y-%m-%d",tz = "UTC"),
+                   Last.Delivery = as.Date(Last.Delivery,"%Y-%m-%d",tz = "UTC"))
+
+#curl::curl_download(url = "https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/Download.xls?productId=424",destfile)
+
+BZ <- read_excel("BZ.xls", col_types = c("skip", "skip", "skip", "text", "text", "skip",
+                                         "skip", "skip", "skip", "text", "skip","text", "text")) %>%
+  dplyr::as_tibble(.name_repair = "universal") %>%
+  dplyr::transmute(cmdty = "cmebrent", tick.prefix = "BZ",
+                   Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
+                   First.Notice = as.Date(Settlement,"%Y-%m-%d",tz = "UTC"),
+                   First.Delivery = lubridate::rollback(First.Notice, roll_to_first = TRUE) + months(2),
+                   Last.Delivery = First.Delivery)
+
+#curl::curl_download(url = "https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/Download.xls?productId=426",destfile)
+HO <- read_excel("HO.xls", col_types = c("skip", "skip", "skip", "text", "skip", "skip",
+                                         "skip", "skip", "skip", "text", "skip", "text", "text")) %>%
+  dplyr::as_tibble(.name_repair = "universal") %>%
+  dplyr::transmute(cmdty = "cmeulsd", tick.prefix = "HO",
+                   Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
+                   First.Notice = as.Date(First.Notice,"%Y-%m-%d",tz = "UTC"),
+                   First.Delivery = as.Date(First.Delivery,"%Y-%m-%d",tz = "UTC"),
+                   Last.Delivery = as.Date(Last.Delivery,"%Y-%m-%d",tz = "UTC"))
+
+
+#curl::curl_download(url = "https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/Download.xls?productId=429",destfile)
+RB <- read_excel("RB.xls", col_types = c("skip", "skip", "skip", "text", "skip", "skip",
+                                         "skip", "skip", "skip", "text", "skip", "text", "text"))  %>%
+  dplyr::as_tibble(.name_repair = "universal") %>%
+  dplyr::transmute(cmdty = "cmerbob", tick.prefix = "RB",
+                   Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
+                   First.Notice = as.Date(First.Notice,"%Y-%m-%d",tz = "UTC"),
+                   First.Delivery = as.Date(First.Delivery,"%Y-%m-%d",tz = "UTC"),
+                   Last.Delivery = as.Date(Last.Delivery,"%Y-%m-%d",tz = "UTC"))
+
+GC <- read_excel("GC.xls", col_types = c("skip", "skip", "skip", "text", "skip", "skip",
+                                         "skip", "skip", "skip", "text", "skip", "text", "text"))  %>%
+  dplyr::as_tibble(.name_repair = "universal") %>%
+  dplyr::transmute(cmdty = "comexgold", tick.prefix = "GC",
+                   Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
+                   First.Notice = as.Date(First.Notice,"%Y-%m-%d",tz = "UTC"),
+                   First.Delivery = as.Date(First.Delivery,"%Y-%m-%d",tz = "UTC"),
+                   Last.Delivery = as.Date(Last.Delivery,"%Y-%m-%d",tz = "UTC"))
+
+SI <- read_excel("SI.xls", col_types = c("skip", "skip", "skip", "text", "skip", "skip",
+                                         "skip", "skip", "skip", "text", "skip", "text", "text"))  %>%
+  dplyr::as_tibble(.name_repair = "universal") %>%
+  dplyr::transmute(cmdty = "comexsilver", tick.prefix = "SI",
+                   Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
+                   First.Notice = as.Date(First.Notice,"%Y-%m-%d",tz = "UTC"),
+                   First.Delivery = as.Date(First.Delivery,"%Y-%m-%d",tz = "UTC"),
+                   Last.Delivery = as.Date(Last.Delivery,"%Y-%m-%d",tz = "UTC"))
+
+ALI <- read_excel("ALI.xls", col_types = c("skip", "skip", "skip", "text", "skip", "skip",
+                                           "skip", "skip", "skip", "text", "skip", "text", "text"))  %>%
+  dplyr::as_tibble(.name_repair = "universal") %>%
+  dplyr::transmute(cmdty = "comexalu", tick.prefix = "ALI",
+                   Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
+                   First.Notice = as.Date(First.Notice,"%Y-%m-%d",tz = "UTC"),
+                   First.Delivery = as.Date(First.Delivery,"%Y-%m-%d",tz = "UTC"),
+                   Last.Delivery = as.Date(Last.Delivery,"%Y-%m-%d",tz = "UTC"))
+
+expiry_table <- rbind(expiry_table,LCO,LGO,CL,BZ,HO,RB,GC,SI,ALI) %>%
+  dplyr::distinct() %>%
+  dplyr::mutate(Year = year(First.Delivery),
+                Month = month(First.Delivery),
+                Month.Letter = futmonths[Month],
+                yahoo.ticker = paste0(tick.prefix,
+                                      Month.Letter,
+                                      str_sub(Year, start = 3L, end = 4L), ".",
+                                      dplyr::case_when(tick.prefix %in% c("CL","","RB","HO","NG") ~ "NYM",
+                                                       tick.prefix %in% c("GC","SI","ALI")  ~ "CMX",
+                                                       TRUE ~ "NA")),
+                yahoo.ticker = ifelse(grepl("NA",yahoo.ticker),NA,yahoo.ticker)) %>%
+  dplyr::filter(Year > 2003)
+usethis::use_data(expiry_table, overwrite = T)
 
 ## tradeCycle
 tradeCycle <- read.csv('tradeCycle.csv',sep = ",",header = TRUE,na.strings = "NA",stringsAsFactors = FALSE)
+nymex <- holidaysOil %>% dplyr::filter(key == "nymex") %>% dplyr::select(value) %>% .[[1]]
+bizdays::create.calendar(name = "nymex", holidays = nymex ,weekdays = c('saturday', 'sunday'))
+tradeCycle <- expiry_table %>%
+  dplyr::filter(cmdty == "cmewti") %>%
+  dplyr::select(Last.Trade) %>%
+  dplyr::transmute(market = "usdomestic",
+                   flowmonth = lubridate::rollback(dates = Last.Trade + months(1), roll_to_first = TRUE),
+                   trade.cycle.end = bizdays::offset(Last.Trade,3,"nymex")) %>%
+  tidyr::drop_na() %>%
+  rbind(tradeCycle, .)
 usethis::use_data(tradeCycle, overwrite = T)
 
 ## Canadian Crude Data
@@ -486,10 +615,11 @@ fetchURL <- function(url, css, prefix){
     paste0(prefix,.)
 }
 
-urls <- urls %>% dplyr::mutate(prefix = "https://corporate.exxonmobil.com",
-                       xls = mapply(fetchURL,url = site,
-                                      css = "body > main > div.article--wrapper > section.articleMedia.articleMedia-in-line.articleMedia--relatedContent > div > article > div > div:nth-child(3) > h3",
-                                      prefix = prefix)) %>%
+urls <- urls %>%
+  dplyr::mutate(prefix = "https://corporate.exxonmobil.com",
+                xls = mapply(fetchURL,url = site,
+                             css = "body > main > div.article--wrapper > section.articleMedia.articleMedia-in-line.articleMedia--relatedContent > div > article > div > div:nth-child(3) > h3",
+                             prefix = prefix)) %>%
   dplyr::select(-prefix) %>% dplyr::filter(!grepl(".pdf",xls,ignore.case = T)) %>%
   dplyr::mutate(cn = gsub("/.*","",gsub("https://corporate.exxonmobil.com/-/media/Global/Files/crude-oils/","",xls)))
 
@@ -590,124 +720,7 @@ usethis::use_data(tradeprocess, overwrite = T)
 devtools::document()
 
 
-# Expiry table
-futmonths = c("F","G","H","J","K","M","N","Q","U","V","X","Z")
-expiry_table <- read.csv('expiry_table.csv',sep = ",",header = TRUE,na.strings = "NA",stringsAsFactors = FALSE) %>%
-  dplyr::as_tibble() %>%
-  dplyr::mutate(Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
-                First.Notice = as.Date(First.Notice,"%Y-%m-%d",tz = "UTC"),
-                First.Delivery = as.Date(First.Delivery,"%Y-%m-%d",tz = "UTC"),
-                Last.Delivery = as.Date(Last.Delivery,"%Y-%m-%d",tz = "UTC"))
 
-
-LGO <- read_csv("https://www.theice.com/api/productguide/spec/34361119/expiry/csv",
-                col_types = cols(`CONTRACT SYMBOL` = col_skip(),
-                                 FTD = col_skip(), LTD = col_date(format = "%m/%d/%Y"),
-                                 FND = col_date(format = "%m/%d/%Y"),
-                                 LND = col_skip(), FDD = col_date(format = "%m/%d/%Y"),
-                                 LDD = col_date(format = "%m/%d/%Y"),
-                                 FSD = col_skip(), `OPTIONS FTD` = col_skip(),
-                                 `OPTIONS LTD` = col_skip())) %>%
-  dplyr::transmute(cmdty = "icegasoil", tick.prefix = "LGO", Last.Trade = LTD,
-                   First.Notice = FND, First.Delivery = FDD, Last.Delivery = LDD)
-
-LCO <- read_csv("https://www.theice.com/api/productguide/spec/219/expiry/csv",
-                col_types = cols(`CONTRACT SYMBOL` = col_skip(),
-                                 FTD = col_skip(), LTD = col_date(format = "%m/%d/%Y"),
-                                 FND = col_date(format = "%m/%d/%Y"),
-                                 LND = col_skip(), FDD = col_date(format = "%m/%d/%Y"),
-                                 LDD = col_date(format = "%m/%d/%Y"),
-                                 FSD = col_skip(), `OPTIONS FTD` = col_skip(),
-                                 `OPTIONS LTD` = col_skip())) %>%
-  dplyr::transmute(cmdty = "icebrent", tick.prefix = "LCO", Last.Trade = LTD,
-                   First.Notice = FND,
-                   First.Delivery = lubridate::rollback(First.Notice,roll_to_first = TRUE) + months(2),
-                   Last.Delivery = lubridate::rollback(First.Delivery + months(1)))
-
-#destfile <- "Download.xls"
-#curl::curl_download(url = "https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/Download.xls?productId=425",destfile)
-CL <- read_excel("CL.xls", col_types = c("skip", "skip", "skip", "text", "skip", "skip",
-                                         "skip", "skip", "skip", "text", "skip", "text", "text")) %>%
-  dplyr::as_tibble(.name_repair = "universal") %>%
-  dplyr::transmute(cmdty = "cmewti", tick.prefix = "CL",
-                   Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
-                   First.Notice = as.Date(First.Notice,"%Y-%m-%d",tz = "UTC"),
-                   First.Delivery = as.Date(First.Delivery,"%Y-%m-%d",tz = "UTC"),
-                   Last.Delivery = as.Date(Last.Delivery,"%Y-%m-%d",tz = "UTC"))
-
-#curl::curl_download(url = "https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/Download.xls?productId=424",destfile)
-
-BZ <- read_excel("BZ.xls", col_types = c("skip", "skip", "skip", "text", "text", "skip",
-                                         "skip", "skip", "skip", "text", "skip","text", "text")) %>%
-  dplyr::as_tibble(.name_repair = "universal") %>%
-  dplyr::transmute(cmdty = "cmebrent", tick.prefix = "BZ",
-                   Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
-                   First.Notice = as.Date(Settlement,"%Y-%m-%d",tz = "UTC"),
-                   First.Delivery = lubridate::rollback(First.Notice, roll_to_first = TRUE) + months(2),
-                   Last.Delivery = First.Delivery)
-
-#curl::curl_download(url = "https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/Download.xls?productId=426",destfile)
-HO <- read_excel("HO.xls", col_types = c("skip", "skip", "skip", "text", "skip", "skip",
-                                         "skip", "skip", "skip", "text", "skip", "text", "text")) %>%
-  dplyr::as_tibble(.name_repair = "universal") %>%
-  dplyr::transmute(cmdty = "cmeulsd", tick.prefix = "HO",
-                   Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
-                   First.Notice = as.Date(First.Notice,"%Y-%m-%d",tz = "UTC"),
-                   First.Delivery = as.Date(First.Delivery,"%Y-%m-%d",tz = "UTC"),
-                   Last.Delivery = as.Date(Last.Delivery,"%Y-%m-%d",tz = "UTC"))
-
-
-#curl::curl_download(url = "https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/Download.xls?productId=429",destfile)
-RB <- read_excel("RB.xls", col_types = c("skip", "skip", "skip", "text", "skip", "skip",
-                                         "skip", "skip", "skip", "text", "skip", "text", "text"))  %>%
-  dplyr::as_tibble(.name_repair = "universal") %>%
-  dplyr::transmute(cmdty = "cmerbob", tick.prefix = "RB",
-                   Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
-                   First.Notice = as.Date(First.Notice,"%Y-%m-%d",tz = "UTC"),
-                   First.Delivery = as.Date(First.Delivery,"%Y-%m-%d",tz = "UTC"),
-                   Last.Delivery = as.Date(Last.Delivery,"%Y-%m-%d",tz = "UTC"))
-
-GC <- read_excel("GC.xls", col_types = c("skip", "skip", "skip", "text", "skip", "skip",
-                                         "skip", "skip", "skip", "text", "skip", "text", "text"))  %>%
-  dplyr::as_tibble(.name_repair = "universal") %>%
-  dplyr::transmute(cmdty = "comexgold", tick.prefix = "GC",
-                   Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
-                   First.Notice = as.Date(First.Notice,"%Y-%m-%d",tz = "UTC"),
-                   First.Delivery = as.Date(First.Delivery,"%Y-%m-%d",tz = "UTC"),
-                   Last.Delivery = as.Date(Last.Delivery,"%Y-%m-%d",tz = "UTC"))
-
-SI <- read_excel("SI.xls", col_types = c("skip", "skip", "skip", "text", "skip", "skip",
-                                         "skip", "skip", "skip", "text", "skip", "text", "text"))  %>%
-  dplyr::as_tibble(.name_repair = "universal") %>%
-  dplyr::transmute(cmdty = "comexsilver", tick.prefix = "SI",
-                   Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
-                   First.Notice = as.Date(First.Notice,"%Y-%m-%d",tz = "UTC"),
-                   First.Delivery = as.Date(First.Delivery,"%Y-%m-%d",tz = "UTC"),
-                   Last.Delivery = as.Date(Last.Delivery,"%Y-%m-%d",tz = "UTC"))
-
-ALI <- read_excel("ALI.xls", col_types = c("skip", "skip", "skip", "text", "skip", "skip",
-                                           "skip", "skip", "skip", "text", "skip", "text", "text"))  %>%
-  dplyr::as_tibble(.name_repair = "universal") %>%
-  dplyr::transmute(cmdty = "comexalu", tick.prefix = "ALI",
-                   Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
-                   First.Notice = as.Date(First.Notice,"%Y-%m-%d",tz = "UTC"),
-                   First.Delivery = as.Date(First.Delivery,"%Y-%m-%d",tz = "UTC"),
-                   Last.Delivery = as.Date(Last.Delivery,"%Y-%m-%d",tz = "UTC"))
-
-expiry_table <- rbind(expiry_table,LCO,LGO,CL,BZ,HO,RB,GC,SI,ALI) %>%
-  dplyr::distinct() %>%
-  dplyr::mutate(Year = year(First.Delivery),
-                Month = month(First.Delivery),
-                Month.Letter = futmonths[Month],
-                yahoo.ticker = paste0(tick.prefix,
-                                      Month.Letter,
-                                      str_sub(Year, start = 3L, end = 4L), ".",
-                                      dplyr::case_when(tick.prefix %in% c("CL","","RB","HO","NG") ~ "NYM",
-                                                       tick.prefix %in% c("GC","SI","ALI")  ~ "CMX",
-                                                       TRUE ~ "NA")),
-                yahoo.ticker = ifelse(grepl("NA",yahoo.ticker),NA,yahoo.ticker)) %>%
-  dplyr::filter(Year > 2003)
-usethis::use_data(expiry_table, overwrite = T)
 
 
 

@@ -4,6 +4,7 @@
 
 + Fixed `promptBeta()` period input.
 + Added storage capacity to `eiaStorageCap` data set for PADD1 middle and light distillates as a proxy for NYH.
++ `tradeCycle` updated for 2022 Canadian Notice of Shipments and US Domestic crude calendar added.
 
 # RTL 0.1.8
 

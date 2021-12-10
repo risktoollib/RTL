@@ -23,6 +23,7 @@ library(jsonlite)
 library(rvest)
 library(readxl)
 library(readr)
+library(RSelenium)
 source("~/now/keys.R")
 setwd(paste0(getwd(),"/data-raw"))
 
@@ -647,30 +648,30 @@ usethis::use_data(fizdiffs, overwrite = T)
 
 ## IR Curves for RQuantlib
   # Curves and Def - ICE
-tidyquant::quandl_api_key(quandlkey)
 fromDate = Sys.Date() - months(1)
+
 usSwapIR <- dplyr::tibble(tickQL = c("d1d","d1w","d1m","d3m","d6m","d1y",
                                      paste0("fut",1:8),
                                      paste0("s",c(2,3,5,7,10,15,20,30),"y")),
                           type = c(rep("ICE.LIBOR",6),rep("EuroDollar",8),rep("IRS",8)),
-                          source = c(rep("FRED",6),rep("quandl",8),rep("FRED",8)),
+                          source = c(rep("FRED",6),rep("CME",8),rep("FRED",8)),
                           tickSource = c("USDONTD156N","USD1WKD156N","USD1MTD156N","USD3MTD156N","USD6MTD156N","USD12MD156N",
-                                         paste0("CHRIS/CME_ED",sprintf('%0.1d', 1:8)),
+                                         paste0("GE_",sprintf('%0.3d', 1:8),"_Month"),
                                          paste0("ICERATES1100USD",c(2,3,5,7,10,15,20,30),"Y")))
 #c = usSwapIR %>% dplyr::filter(source == "Morningstar") %>% .$tickSource
-#r <- getPrices(feed="CME_CmeFutures_EOD_continuous",contracts=c,from = fromDate,iuser = mstar[[1]], ipassword = mstar[[2]])
-c = usSwapIR %>% dplyr::filter(source == "quandl") %>% .$tickSource
-r <- tidyquant::tq_get(x = c, get = "quandl",from = fromDate ,to = as.character(Sys.Date())) %>%
-  #dplyr::select(symbol,date,settle) %>% dplyr::mutate(price = 100 - settle) %>%
-  dplyr::select(symbol,date,settle) %>% dplyr::mutate(price = settle) %>%
-  tidyr::pivot_wider(date,names_from = symbol, values_from = price)
+ed <- getPrices(feed = "CME_CmeFutures_EOD_continuous",
+               contracts = c(paste0("GE_",sprintf('%0.3d', 1:8),"_Month")),
+               from = fromDate,
+               iuser = mstar[[1]],
+               ipassword = mstar[[2]])
+#c = usSwapIR %>% dplyr::filter(source == "quandl") %>% .$tickSource
 c = usSwapIR %>% dplyr::filter(source == "FRED") %>% .$tickSource
 x <- tidyquant::tq_get(c, get  = "economic.data", from = fromDate ,to = as.character(Sys.Date())) %>%
   dplyr::mutate(price = price/100) %>%
   tidyr::pivot_wider(date,names_from = symbol, values_from = price)
-r <- dplyr::left_join(x, r, by = c("date"))
+r <- dplyr::left_join(x, ed, by = c("date"))
 colnames(r) <- c("date",dplyr::tibble(tickSource = colnames(r)[-1]) %>% dplyr::left_join(usSwapIR,by = c("tickSource")) %>% .$tickQL)
-usSwapIRdef <- usSwapIR %>% stats::na.omit()
+usSwapIRdef <- usSwapIR %>% tidyr::drop_na()
 usSwapIR <- r %>% stats::na.omit()
 
   # Discount Objects

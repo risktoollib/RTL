@@ -3,7 +3,7 @@
 [![CRAN 
 status](https://www.r-pkg.org/badges/version/RTL)](https://cran.r-project.org/package=RTL)
 [![Downloads](https://cranlogs.r-pkg.org/badges/RTL)](https://cran.rstudio.com/web/packages/RTL/index.html)
-
+[![R-CMD-check](https://github.com/risktoollib/RTL/actions/workflows/r.yml/badge.svg)](https://github.com/risktoollib/RTL/actions/workflows/r.yml)
 <!-- badges: end --> 
 
 

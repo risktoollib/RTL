@@ -1,3 +1,4 @@
+#usethis::use_cran_badge()
 # usethis::use_pipe()
 # usethis::use_readme_md()
 # usethis::use_package("tidyverse")

@@ -126,9 +126,13 @@ usethis::use_data(planets, overwrite = T)
 
 iuser = mstar[["iuser"]] ; ipassword = mstar[["ipassword"]]
 startdate <- "2004-01-01"
-crude <- c(paste0("CL_",sprintf('%0.3d', 1:36),"_Month"), paste0("NG_",sprintf('%0.3d', 1:36),"_Month"))
+
+crude <- c(paste0("CL_",sprintf('%0.3d', 1:36),"_Month"),
+           paste0("WCW_",sprintf('%0.3d', 1:12),"_Month"),
+           paste0("NG_",sprintf('%0.3d', 1:36),"_Month"))
 crudeICE <- c(paste0("BRN_",sprintf('%0.3d', 1:36),"_Month"))
 pdts <- c(paste0("HO_",sprintf('%0.3d', 1:18),"_Month"), paste0("RB_",sprintf('%0.3d', 1:18),"_Month"))
+
 crude <- RTL::getPrices(
   feed = "CME_NymexFutures_EOD_continuous",
   contracts = crude,
@@ -138,6 +142,7 @@ crude <- RTL::getPrices(
 ) %>%
   pivot_longer(-date, names_to = "series", values_to = "value") %>%
   dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>% na.omit()
+
 crudeICE <- RTL::getPrices(
   feed = "ICE_EuroFutures_continuous",
   contracts = crudeICE,

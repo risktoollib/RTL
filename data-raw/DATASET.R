@@ -128,14 +128,24 @@ iuser = mstar[["iuser"]] ; ipassword = mstar[["ipassword"]]
 startdate <- "2004-01-01"
 
 crude <- c(paste0("CL_",sprintf('%0.3d', 1:36),"_Month"),
-           paste0("WCW_",sprintf('%0.3d', 1:12),"_Month"),
            paste0("NG_",sprintf('%0.3d', 1:36),"_Month"))
+crudecan <- c(paste0("WCW_",sprintf('%0.3d', 1:36),"_Month"))
 crudeICE <- c(paste0("BRN_",sprintf('%0.3d', 1:36),"_Month"))
 pdts <- c(paste0("HO_",sprintf('%0.3d', 1:18),"_Month"), paste0("RB_",sprintf('%0.3d', 1:18),"_Month"))
 
 crude <- RTL::getPrices(
   feed = "CME_NymexFutures_EOD_continuous",
   contracts = crude,
+  from = startdate,
+  iuser = iuser,
+  ipassword = ipassword
+) %>%
+  pivot_longer(-date, names_to = "series", values_to = "value") %>%
+  dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>% na.omit()
+
+crudecan <- RTL::getPrices(
+  feed = "CME_NymexFutures_EOD_continuous",
+  contracts = crudecan,
   from = startdate,
   iuser = iuser,
   ipassword = ipassword
@@ -181,11 +191,11 @@ alu <-
   dplyr::mutate(across(dplyr::contains("AUP"), lbs2mt)) %>%
   tidyr::pivot_longer(-date, names_to = "series", values_to = "value")
 
-dflong <-  rbind(crude, crudeICE, pdts, alu)
+dflong <-  rbind(crude, crudecan, crudeICE, pdts, alu)
 dfwide <- dflong %>% tidyr::pivot_wider(names_from = series, values_from = value) %>% na.omit()
 usethis::use_data(dflong, overwrite = T)
 usethis::use_data(dfwide, overwrite = T)
-rm(crude,crudeICE,pdts,alu)
+rm(crude,crudecan,crudeICE,pdts,alu)
 
 ## Sample EIA dataset
 eiaStocks <- tibble::tribble(~ticker, ~name,

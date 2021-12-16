@@ -42,16 +42,44 @@ chart_eia_steo <- function(market = "globalOil",
     if (output == "data") {return(eia_df)} else {
       out <- eia_df %>%
         tidyr::pivot_longer(-date,names_to = "series",values_to = "value") %>%
-        dplyr::mutate(group = dplyr::case_when(series == "Inv_Change" ~ 2,TRUE ~ 1)) %>%
-        split(.$group) %>%
-        lapply(function(d) plotly::plot_ly(d, x = ~date, y = ~value,
-                                           color = ~series, colors = c("red","black","blue"),
-                                           type = c("scatter"), mode = "lines")) %>%
-        plotly::subplot(nrows = NROW(.), shareX = TRUE) %>%
+        dplyr::mutate(group = dplyr::case_when(series == "Inv_Change" ~ 2,TRUE ~ 1))
+        # split(.$group) %>%
+        # lapply(function(d) plotly::plot_ly(d, x = ~date, y = ~value,
+        #                                    color = ~series, colors = c("red","black","blue"),
+        #                                    type = c("scatter"), mode = "lines")) %>%
+        # plotly::subplot(nrows = NROW(.), shareX = TRUE) %>%
+        # plotly::layout(title = list(text = fig.title, x = 0),
+        #                xaxis = list(title = " "),
+        #                yaxis = list(title = fig.units ),
+        #                legend = legend.pos)
+
+      p1 <- eia_df %>%
+        plotly::plot_ly(x = ~date, y = ~Supply, name = "Supply",type = c("scatter"), mode = "lines") %>%
+        plotly::add_lines(x = ~date, y = ~Demand, name = "Demand") %>%
         plotly::layout(title = list(text = fig.title, x = 0),
                        xaxis = list(title = " "),
                        yaxis = list(title = fig.units ),
-                       legend = legend.pos)
+                       legend = legend.pos,
+                       shapes = list(
+                         list(type = "rect", fillcolor = "blue", line = list(color = "blue"), opacity = 0.15,
+                              x0 = lubridate::rollback(Sys.Date(), roll_to_first = TRUE), x1 = max(eia_df$date), xref = "x",
+                              y0 = floor(min(eia_df$Demand)), y1 = ceiling(max(eia_df$Supply)), yref = "y"))
+        )
+
+
+      p2 <- eia_df %>%
+        plotly::plot_ly(x = ~date, y = ~Inv_Change, name = "Inv_Change",type = c("scatter"), mode = "lines", fill = "tozeroy") %>%
+        plotly::layout(title = list(text = fig.title, x = 0),
+                       xaxis = list(title = " "),
+                       yaxis = list(title = fig.units ),
+                       legend = legend.pos,
+                       shapes = list(
+                         list(type = "rect", fillcolor = "blue", line = list(color = "blue"), opacity = 0.15,
+                              x0 = lubridate::rollback(Sys.Date(), roll_to_first = TRUE), x1 = max(eia_df$date), xref = "x",
+                              y0 = floor(min(eia_df$Inv_Change)), y1 = ceiling(max(eia_df$Inv_Change)), yref = "y"))
+        )
+      out <- plotly::subplot(p1,p2, nrows = 2, shareX = TRUE)
+
       return(out)
     }
     }

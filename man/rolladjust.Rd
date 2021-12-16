@@ -7,9 +7,9 @@
 rolladjust(x, commodityname = c("cmewti"), rolltype = c("Last.Trade"), ...)
 }
 \arguments{
-\item{x}{An xts object of prices or returns.}
+\item{x}{A df of returns.}
 
-\item{commodityname}{Name of commodity in expiry_table. unique(expiry_table$cmdty) for list of commodity names}
+\item{commodityname}{Name of commodity in expiry_table: unique(expiry_table$cmdty) or "cmecan" for WCW}
 
 \item{rolltype}{Type of contract roll: "Last.Trade" or "First.Notice".}
 

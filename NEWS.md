@@ -5,6 +5,8 @@
 + Fixed `promptBeta()` period input.
 + Added storage capacity to `eiaStorageCap` data set for PADD1 middle and light distillates as a proxy for NYH.
 + `tradeCycle` updated for 2022 Canadian Notice of Shipments and US Domestic crude calendar added.
++ `rolladjust()` updated with CME Canadian crude calendar cmdty == "cmecan".
++ `chart_eia_steo()` inventory imbalance subplot updated to a line fill type for better visibility. 
 
 # RTL 0.1.8
 

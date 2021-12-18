@@ -18,8 +18,7 @@ List of risk/reward metrics.
 Compute list of risk reward metrics
 }
 \examples{
-library(tidyverse)
-library(tidyquant)
+library(PerformanceAnalytics)
 x <- tidyquant::tq_get("SPY") \%>\% dplyr::mutate(ret = log(adjusted / dplyr::lag(adjusted)))
 x <- x \%>\% stats::na.omit()\%>\% dplyr::select(date,ret)
 tradeStats(x = x,Rf=0)

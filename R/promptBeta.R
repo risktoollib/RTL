@@ -22,10 +22,10 @@
 
 promptBeta <- function(x = x, period = "all", betatype = "all", output = "chart") {
 
-  if (!requireNamespace("PerformanceAnalytics", quietly = TRUE)) {
-    stop("Package \"PerformanceAnalytics\" needed for this function to work. Please install it.",
-         call. = FALSE)
-  }
+  # if (!requireNamespace("PerformanceAnalytics", quietly = TRUE)) {
+  #   stop("Package \"PerformanceAnalytics\" needed for this function to work. Please install it.",
+  #        call. = FALSE)
+  # }
 
   term = stats::na.omit(as.numeric(gsub("[^0-9]","",colnames(x))))
 
@@ -63,17 +63,8 @@ promptBeta <- function(x = x, period = "all", betatype = "all", output = "chart"
     plotly::layout(title = list(text = "Contract Betas vs Front Contract", x = 0),
                    xaxis = list(title = ""),
                    yaxis = list(title = ""))
-    # ggplot2::ggplot(ggplot2::aes(x=contract,y=value,col=series)) + ggplot2::geom_line() +
-    # ggplot2::theme(legend.position="top") + ggplot2::ylim(0,1.1) +
-    # ggplot2::labs(title="Contract Betas vs Front Contract",
-    #      subtitle="Bear (Bull) = Beta in Down (Up) Moves ",
-    #      caption="",
-    #      y="Beta", x="Contract")
 
   if (output == "betas") {return(df)}
   if (output == "chart") {return(chart)}
-  # if (output == "stats") {
-  #   stats <- list(betaformula = betaformula,betaformulaObject = betaformulaObject)
-  #   return(stats)
-  #   }
+
 }

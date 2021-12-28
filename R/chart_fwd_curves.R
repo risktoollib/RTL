@@ -2,39 +2,48 @@
 #' @description Returns a plot of forward curves through time
 #' @param df Wide dataframe with date column and multiple series columns (multivariate)
 #' @param cmdty Futures contract code in expiry_table object: unique(expiry_table$cmdty)
-#' @param weekly TRUE if you want weekly forward curves
+#' @param weekly Defaults to TRUE for weekly forward curves
 #' @param ... other graphical parameters
 #' @return plot of forward curves through time
+#' @import xts
+#' @import zoo
+#' @importFrom tibble is_tibble
 #' @export chart_fwd_curves
 #' @author Philippe Cote
 #' @examples
 #' \dontrun{
-#' df <- dfwide %>% dplyr::select(date, dplyr::starts_with("CL"))
+#' df <- dfwide %>% dplyr::select(date, dplyr::starts_with("CL")) %>% tidyr::drop_na()
 #' chart_fwd_curves(df = df,cmdty = "cmewti",weekly = TRUE,
 #' main="WTI Forward Curves",ylab="$ per bbl",xlab="",cex=2)
 #' }
 
-chart_fwd_curves <- function(df = dfwide,cmdty = "cmewti",weekly = FALSE,...) {
+chart_fwd_curves <- function(df = dfwide,cmdty = "cmewti",weekly = TRUE,...) {
 
-  term = stats::na.omit(as.numeric(gsub("[^0-9]","",colnames(df))))
-  if (tibble::is_tibble(df)) {df=as.data.frame(df)}
-  tmp = xts::xts(df[,-1],order.by = df[,1])
-  if (weekly==TRUE) {tmp<-xts::apply.weekly(tmp,xts::last)}
-  price<-as.matrix(zoo::coredata(tmp))
-  rownames(price)<-as.character(as.Date(zoo::index(tmp)))
-
-  ttm<-matrix(term,nrow(tmp),ncol(tmp),byrow=TRUE)
-  rownames(ttm)<-as.character(as.Date(zoo::index(tmp)))
-  expiry<-expiry_table[expiry_table$cmdty==cmdty,]$Last.Trade
-  ttmxts<-xts::as.xts(ttm)
-  for (i in 1:nrow(ttmxts)) {
-    d<-as.Date(zoo::index(ttmxts[i,]))
-    for (j in 1:ncol(ttmxts)) {
-      ttmxts[i,j]=as.numeric(expiry[d<expiry][as.numeric(ttmxts[i,j])]-d)
-    }
+  term = stats::na.omit(as.numeric(gsub("[^0-9]", "", colnames(df))))
+  if (tibble::is_tibble(df)) {
+    df = as.data.frame(df)
   }
-  ttm<-as.matrix(ttmxts)
-  futures=list("price"=price,"ttm"=ttm)
+  tmp = xts::xts(df[, -1], order.by = df[, 1])
+  if (weekly == TRUE) {
+    tmp <- xts::apply.weekly(tmp, xts::last)
+  }
+  price <- as.matrix(zoo::coredata(tmp))
+  rownames(price) <- as.character(as.Date(zoo::index(tmp)))
+
+  ttm <- matrix(term, nrow(tmp), ncol(tmp), byrow = TRUE)
+  rownames(ttm) <- as.character(as.Date(zoo::index(tmp)))
+  expiry <- expiry_table[expiry_table$cmdty == cmdty, ]$Last.Trade
+  ttmxts <- xts::as.xts(ttm)
+
+  contracts <- NULL
+  contracts <- ncol(ttmxts)
+  for (i in 1:nrow(ttmxts)) {
+    d <- as.Date(zoo::index(ttmxts[i,]))
+    ttmxts[i,] <- as.numeric(expiry[d <= expiry][1:contracts] - d)
+  }
+
+  ttm <- as.matrix(ttmxts)
+  futures = list("price" = price, "ttm" = ttm)
 
   ## charting
   dates <- as.Date(rownames(futures$ttm))

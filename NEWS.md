@@ -1,12 +1,18 @@
 # RTL 0.1.9
 
-## Updates and Fixes
+## Updates
 
-+ Fixed `promptBeta()` period input.
++ `dfwide` retains the `NA` so as not to reduce scope where all tickers have data. 
++ `chart_fwd_curves()` vectorized.
 + Added storage capacity to `eiaStorageCap` data set for PADD1 middle and light distillates as a proxy for NYH.
 + `tradeCycle` updated for 2022 Canadian Notice of Shipments and US Domestic crude calendar added.
 + `rolladjust()` updated with CME Canadian crude calendar cmdty == "cmecan".
 + `chart_eia_steo()` inventory imbalance subplot updated to a line fill type for better visibility. 
+
+## Bugs & Fixes
+
++ Fixed `promptBeta()` period input.
++ `getPrices()` merging with all = TRUE.
 
 # RTL 0.1.8
 

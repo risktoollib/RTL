@@ -177,7 +177,9 @@ getPrices <- function(feed = "CME_NymexFutures_EOD",contracts = c("CL9Z","CL0F",
 
   x <- getPrice(feed=feed,contract=contracts[1],from=from,iuser = iuser, ipassword = ipassword)
   for (c in contracts[-1]) {
-    x <- merge(x,getPrice(feed=feed,contract=c,from=from,iuser = iuser, ipassword = ipassword))
+    x <- merge(x,
+               getPrice(feed=feed,contract=c,from=from,iuser = iuser, ipassword = ipassword),
+               all = TRUE)
   }
   x <- dplyr::as_tibble(x)
   return(x)

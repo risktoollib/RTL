@@ -3,10 +3,12 @@
 #' @param df Wide data frame
 #' @param title Chart title
 #' @return A plotly object
+#' @importFrom plotly plot_ly layout
+#' @importFrom purrr map2
 #' @export chart_pairs
 #' @author Philippe Cote
 #' @examples
-#' df <- dfwide %>% dplyr::select(date,CL01,NG01,HO01,RB01)
+#' df <- dfwide %>% dplyr::select(date,CL01,NG01,HO01,RB01) %>% tidyr::drop_na()
 #' chart_pairs(df = df, title = "example")
 
 chart_pairs <- function(df = df, title = "Time Series Pairs Plot") {

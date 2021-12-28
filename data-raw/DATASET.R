@@ -218,7 +218,7 @@ alu <-
   tidyr::pivot_longer(-date, names_to = "series", values_to = "value")
 
 dflong <-  rbind(crude, crudecan, crudeICE, pdts, alu)
-dfwide <- dflong %>% tidyr::pivot_wider(names_from = series, values_from = value) %>% na.omit()
+dfwide <- dflong %>% tidyr::pivot_wider(names_from = series, values_from = value) #%>% na.omit()
 usethis::use_data(dflong, overwrite = T)
 usethis::use_data(dfwide, overwrite = T)
 rm(crude,crudecan,crudeICE,pdts,alu)

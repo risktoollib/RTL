@@ -7,9 +7,6 @@
 \format{
 data frame
 }
-\source{
-\url{https://corporate.exxonmobil.com/Crude-oils/Crude-trading/Crude-oil-blends-by-API-gravity-and-by-sulfur-content#APIgravity}
-}
 \usage{
 crudeassaysXOM
 }

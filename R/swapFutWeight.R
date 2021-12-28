@@ -20,12 +20,12 @@ swapFutWeight <- function(Month = "2020-09-01",
   m = as.Date(Month)
   m1 = lubridate::rollback(m + months(1))
   calDays <- seq(as.Date(m),m1,by="day")
-  hol <- holidaysOil %>% dplyr::filter(key == exchange)
+  hol <- RTL::holidaysOil %>% dplyr::filter(key == exchange)
   bizDays <- calDays[!(calDays %in% hol$value)]
   bizDays <- bizDays[!(weekdays(bizDays) %in% c('Saturday','Sunday'))]
 
   # Expiries
-  expiry <- expiry_table %>%
+  expiry <- RTL::expiry_table %>%
     dplyr::filter(cmdty == contract,
                   Last.Trade >= m,
                   Last.Trade <= m1) %>%

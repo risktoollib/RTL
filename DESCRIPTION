@@ -1,10 +1,18 @@
-Package: RTL
 Type: Package
-Title: Risk Tool Library - Trading, Risk, Analytic for Commodities
+Package: RTL
+Title: Risk Tool Library - Trading, Risk, 'Analytics' for Commodities
 Version: 0.1.9
 Date: 2021-12-28
-Authors@R: c(person("Philippe", "Cote", email = "pcote@ualberta.ca", role = c("aut", "cre")),person("Nima", "Safaian", email = "nima.safaian@gmail.com", role = c("aut")))
-Description: A toolkit for Commodities analytics, risk management and trading professionals. Includes functions for API calls to Morningstar Commodiites and Genscape.
+Authors@R: 
+  c(person(given = "Philippe",
+           family = "Cote",
+           role = c("aut", "cre"),
+           email = "pcote@ualberta.ca"),
+    person(given = "Nima",
+           family = "Safaian",
+           role = "aut",
+           email = "nima.safaian@gmail.com"))
+Description: A toolkit for Commodities 'analytics', risk management and trading professionals. Includes functions for API calls to 'Morningstar Commodities' and 'Genscape'.
 Depends: 
     R (>= 4.0)
 License: MIT + file LICENSE

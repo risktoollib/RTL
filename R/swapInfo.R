@@ -32,7 +32,7 @@ swapInfo <- function(date = "2020-05-06",
 
   to = as.Date(date) + months(4)
   calDays <- seq(as.Date(date),to,by="day")
-  hol <- holidaysOil %>% dplyr::filter(key == exchange)
+  hol <- RTL::holidaysOil %>% dplyr::filter(key == exchange)
   bizDays <- calDays[!(calDays %in% hol$value)]
   bizDays <- bizDays[!(weekdays(bizDays) %in% c('Saturday','Sunday'))]
 

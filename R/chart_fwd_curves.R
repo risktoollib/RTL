@@ -11,11 +11,9 @@
 #' @export chart_fwd_curves
 #' @author Philippe Cote
 #' @examples
-#' \dontrun{
 #' df <- dfwide %>% dplyr::select(date, dplyr::starts_with("CL")) %>% tidyr::drop_na()
 #' chart_fwd_curves(df = df,cmdty = "cmewti",weekly = TRUE,
 #' main="WTI Forward Curves",ylab="$ per bbl",xlab="",cex=2)
-#' }
 
 chart_fwd_curves <- function(df = dfwide,cmdty = "cmewti",weekly = TRUE,...) {
 

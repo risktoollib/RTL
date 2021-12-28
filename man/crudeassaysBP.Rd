@@ -7,9 +7,6 @@
 \format{
 data frame
 }
-\source{
-\url{https://www.bp.com/en/global/bp-global-energy-trading/features-and-updates/technical-downloads/crudes-assays.html}
-}
 \usage{
 crudeassaysBP
 }

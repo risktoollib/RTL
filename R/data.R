@@ -82,30 +82,28 @@
 #' crudeassaysBP
 #' @description Crude Assays from BP.
 #' @format data frame
-#' @source \url{https://www.bp.com/en/global/bp-global-energy-trading/features-and-updates/technical-downloads/crudes-assays.html}
 "crudeassaysBP"
 
 #' crudeassaysXOM
 #' @description Crude Assays from ExxonMobil.
 #' @format data frame
-#' @source \url{https://corporate.exxonmobil.com/Crude-oils/Crude-trading/Crude-oil-blends-by-API-gravity-and-by-sulfur-content#APIgravity}
 "crudeassaysXOM"
 
 #' cancrudeprices
-#' @description Randomized dataset of Canadian Crude monthly prices versus WTi Calendar Month Average.
+#' @description Randomized dataset of Canadian Crude monthly prices versus WTI Calendar Month Average.
 #' @format data frame
 "cancrudeprices"
 
 #' dflong
 #' @description Futures settlement data set.
 #' @format data frame
-#' #' @source \url{https://www.morningstar.com/products/commodities-and-energy}
+#' @source Morningstar Commodities
 "dflong"
 
 #' dfwide
 #' @description Futures settlement data set.
 #' @format data frame
-#' #' @source \url{https://www.morningstar.com/products/commodities-and-energy}
+#' @source Morningstar Commodities
 "dfwide"
 
 #' usSwapIR

@@ -11,6 +11,6 @@ data frame
 cancrudeprices
 }
 \description{
-Randomized dataset of Canadian Crude monthly prices versus WTi Calendar Month Average.
+Randomized dataset of Canadian Crude monthly prices versus WTI Calendar Month Average.
 }
 \keyword{datasets}

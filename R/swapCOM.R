@@ -24,12 +24,12 @@ swapCOM <- function(futures = futs,
                      exchange = "nymex") {
   # Pricing days
   calDays <- seq(as.Date(pricingDates[1]),as.Date(pricingDates[2]),by="day")
-  hol <- holidaysOil %>% dplyr::filter(key == exchange)
+  hol <- RTL::holidaysOil %>% dplyr::filter(key == exchange)
   bizDays <- calDays[!(calDays %in% hol$value)]
   bizDays <- bizDays[!(weekdays(bizDays) %in% c('Saturday','Sunday'))]
 
   # Expiries
-  expiry <- expiry_table %>%
+  expiry <- RTL::expiry_table %>%
     dplyr::filter(cmdty == contract,
                   Last.Trade >= pricingDates[1],
                   Last.Trade <= pricingDates[2]) %>%

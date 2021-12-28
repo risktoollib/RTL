@@ -2,10 +2,10 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- badges: start -->
 
-[![CRAN
-status](https://www.r-pkg.org/badges/version/RTL)](https://cran.r-project.org/package=RTL)
-[![Downloads](https://cranlogs.r-pkg.org/badges/RTL)](https://cran.rstudio.com/web/packages/RTL/index.html)
-[![R-CMD-check](https://github.com/risktoollib/RTL/actions/workflows/r.yml/badge.svg)](https://github.com/risktoollib/RTL/actions/workflows/r.yml)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/RTL)](https://cran.r-project.org/package=RTL)
+[![metacran
+downloads](https://cranlogs.r-pkg.org/badges/RTL)](https://cran.r-project.org/package=RTL)
+[![R-CMD-check](https://github.com/risktoollib/RTL/workflows/R-CMD-check/badge.svg)](https://github.com/risktoollib/RTL/actions)
 <!-- badges: end -->
 
 ## Overview
@@ -36,7 +36,7 @@ and collaborators.
     [ExxonMobil](https://corporate.exxonmobil.com/Crude-oils/Crude-trading/Crude-oil-blends-by-API-gravity-and-by-sulfur-content#APIgravity)
 -   `crudeassaysBP` for all publicly available complete assays in Excel
     format from
-    [BP](https://www.bp.com/en/global/bp-global-energy-trading/features-and-updates/technical-downloads/crudes-assays.html)
+    [BP](https://www.bp.com/en/global/bp-trading-and-shipping/documents-and-downloads/technical-downloads/crudes-assays.html)
 
 ### Swap Pricing and Contract Roll Adjustement
 

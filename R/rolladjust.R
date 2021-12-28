@@ -12,7 +12,7 @@
 #' rolladjust(x=ret,commodityname=c("cmewti"),rolltype=c("Last.Trade"))
 
 rolladjust <- function (x,commodityname=c("cmewti"),rolltype=c("Last.Trade"),...) {
-  if (!(commodityname %in% c(unique(expiry_table$cmdty),"cmecan"))) stop("Unknown commodityname: Type unique(expiry_table$cmdty) for available selection")
+  if (!(commodityname %in% c(unique(RTL::expiry_table$cmdty),"cmecan"))) stop("Unknown commodityname: Type unique(expiry_table$cmdty) for available selection")
   if (!(rolltype %in% c("Last.Trade","First.Notice"))) stop("Incorrect rolltype specified")
 
   seriesname <- names(x)
@@ -20,7 +20,7 @@ rolladjust <- function (x,commodityname=c("cmewti"),rolltype=c("Last.Trade"),...
   if (commodityname == "cmecan") {
     table <- tradeCycle %>% dplyr::filter(market == "canada") %>% dplyr::select(trade.cycle.end) %>% .[[1]]
   } else {
-    table <- subset(expiry_table, cmdty == commodityname)
+    table <- subset(RTL::expiry_table, cmdty == commodityname)
     if (rolltype=="Last.Trade") {table <- table$Last.Trade}
     if (rolltype=="First.Notice") {table <- table$First.Notice}
     }

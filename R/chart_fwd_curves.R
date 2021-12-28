@@ -32,7 +32,7 @@ chart_fwd_curves <- function(df = dfwide,cmdty = "cmewti",weekly = TRUE,...) {
 
   ttm <- matrix(term, nrow(tmp), ncol(tmp), byrow = TRUE)
   rownames(ttm) <- as.character(as.Date(zoo::index(tmp)))
-  expiry <- expiry_table[expiry_table$cmdty == cmdty, ]$Last.Trade
+  expiry <- RTL::expiry_table[RTL::expiry_table$cmdty == cmdty, ]$Last.Trade
   ttmxts <- xts::as.xts(ttm)
 
   contracts <- NULL

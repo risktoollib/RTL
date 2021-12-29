@@ -310,7 +310,12 @@ dist1b <- dist1b %>%
   tidyr::pivot_longer(cols = c(-date, -series), names_to = "product", values_to = "value") %>%
   dplyr::select(series, date, value, product)
 
-eiaStorageCap <- rbind(eiaStorageCap,dist1b)
+ng <- RTL::eia2tidy(ticker = "NG.NGM_EPG0_SACW0_R48_MMCF.M",
+                    key = EIAkey,
+                    name = "lower48") %>%
+  dplyr::mutate(product = "ng", value = value / 1000)
+
+eiaStorageCap <- rbind(eiaStorageCap,dist1b,ng)
 file.remove(destfile)
 usethis::use_data(eiaStorageCap, overwrite = T)
 

@@ -3,6 +3,7 @@
 ## Updates
 
 + `dfwide` retains the `NA` so as not to reduce scope where all tickers have data. 
++ `eiaStorageCap` now includes Lower 48 States Working Natural Gas Total Underground Storage Capacity. 
 + `chart_fwd_curves()` vectorized.
 + Added storage capacity to `eiaStorageCap` data set for PADD1 middle and light distillates as a proxy for NYH.
 + `tradeCycle` updated for 2022 Canadian Notice of Shipments and US Domestic crude calendar added.

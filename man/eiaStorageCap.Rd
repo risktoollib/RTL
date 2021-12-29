@@ -11,6 +11,6 @@ data frame
 eiaStorageCap
 }
 \description{
-EIA working storage capacity in thousand bbls.
+EIA working storage capacity in kbs except NG in bcf.
 }
 \keyword{datasets}

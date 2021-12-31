@@ -9,27 +9,31 @@
 #' @export stl_decomp
 #' @author Philippe Cote
 #' @examples
-#' x <- dflong %>% dplyr::filter(series=="CL01")
-#' stl_decomp(x,output="chart",s.window=13,s.degree=1)
-#' stl_decomp(x,output="data",s.window=13,s.degree=1)
+#' x <- dflong %>% dplyr::filter(series == "CL01")
+#' stl_decomp(x, output = "chart", s.window = 13, s.degree = 1)
+#' stl_decomp(x, output = "data", s.window = 13, s.degree = 1)
+stl_decomp <- function(x = x, output = "chart", s.window = 13, s.degree = 1, ...) {
+  tmp.name <- unique(x$series)
+  x.ts <- tibbletime::as_tbl_time(x, date) %>%
+    dplyr::select(-series) %>%
+    tibbletime::collapse_by("monthly") %>%
+    dplyr::group_by(date) %>%
+    dplyr::summarise_all(mean)
 
-stl_decomp <- function(x = x,output = "chart",s.window = 13,s.degree = 1,...) {
+  x.ts <- stats::ts(
+    data = x.ts$value,
+    start = c(lubridate::year(dplyr::first(x$date)), lubridate::month(dplyr::first(x$date))),
+    end = c(lubridate::year(dplyr::last(x$date)), lubridate::month(dplyr::last(x$date))),
+    frequency = 12
+  )
 
-  tmp.name<-unique(x$series)
-  x.ts <- tibbletime::as_tbl_time(x, date) %>% dplyr::select(-series) %>% tibbletime::collapse_by("monthly") %>%
-    dplyr::group_by(date) %>% dplyr::summarise_all(mean)
-
-  x.ts <- stats::ts(data=x.ts$value,
-    start = c(lubridate::year(dplyr::first(x$date)),lubridate::month(dplyr::first(x$date))),
-    end = c(lubridate::year(dplyr::last(x$date)),lubridate::month(dplyr::last(x$date))),
-    frequency = 12)
-
-  fit <- x.ts %>% stats::stl(s.window=s.window, s.degree=s.degree,robust=TRUE)
+  fit <- x.ts %>% stats::stl(s.window = s.window, s.degree = s.degree, robust = TRUE)
 
   if (output == "chart") {
-    return(fit %>% forecast::autoplot(ts.colour = 'blue') + ggplot2::ggtitle(paste("Seasonal / Trend Decomposition of",tmp.name)) + ggplot2::xlab(""))
-    }
+    return(fit %>% forecast::autoplot(ts.colour = "blue") + ggplot2::ggtitle(paste("Seasonal / Trend Decomposition of", tmp.name)) + ggplot2::xlab(""))
+  }
 
-  if (output == "data") {return(fit)}
-
+  if (output == "data") {
+    return(fit)
+  }
 }

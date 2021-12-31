@@ -38,12 +38,19 @@ Returns dataframe required to price a WTI averaging instrument based on first li
 }
 \examples{
 \dontrun{
-feeds = dplyr::tibble(feed = c("Crb_Futures_Price_Volume_And_Open_Interest",
-                              "CME_NymexFutures_EOD_continuous"),
-                     ticker = c("CL","CL_001_Month"))
-swapInfo(date = "2020-05-06",feeds = feeds, contract = "cmewti",exchange = "nymex",
-                    iuser = "x@xyz.com", ipassword = "pass", output = "all")
+feeds <- dplyr::tibble(
+  feed = c(
+    "Crb_Futures_Price_Volume_And_Open_Interest",
+    "CME_NymexFutures_EOD_continuous"
+  ),
+  ticker = c("CL", "CL_001_Month")
+)
+swapInfo(
+  date = "2020-05-06", feeds = feeds, contract = "cmewti", exchange = "nymex",
+  iuser = "x@xyz.com", ipassword = "pass", output = "all"
+)
 }
+
 }
 \author{
 Philippe Cote

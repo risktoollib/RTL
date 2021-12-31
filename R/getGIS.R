@@ -16,26 +16,23 @@
 #' \dontrun{
 #' getGIS(url = "https://gis.energy.gov.ab.ca/GeoviewData/OS_Agreements_Shape.zip")
 #' }
-
+#'
 getGIS <- function(url = "https://gis.energy.gov.ab.ca/GeoviewData/OS_Agreements_Shape.zip") {
-
   if (!requireNamespace("rgdal", quietly = TRUE)) {
     stop("Package \"rgdal\" needed for this function to work. Please install it.",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
 
 
   # from the website download https://gis.energy.gov.ab.ca/Geoview/OSPNG
   td <- tempdir()
-  tf <- tempfile(tmpdir = td,fileext = ".zip")
-  utils::download.file(url,tf)
-  fname <- utils::unzip(tf,list = TRUE)$Name
-  utils::unzip(tf,files = fname,exdir = td,overwrite = TRUE)
-  layer <-  sub(".*/","",sub(".shp.*","",grep(".shp",fname,value = TRUE)[1]))
-  dsn <- sub(paste0(layer,".*"),"",file.path(td,fname)[1])
+  tf <- tempfile(tmpdir = td, fileext = ".zip")
+  utils::download.file(url, tf)
+  fname <- utils::unzip(tf, list = TRUE)$Name
+  utils::unzip(tf, files = fname, exdir = td, overwrite = TRUE)
+  layer <- sub(".*/", "", sub(".shp.*", "", grep(".shp", fname, value = TRUE)[1]))
+  dsn <- sub(paste0(layer, ".*"), "", file.path(td, fname)[1])
   out <- rgdal::readOGR(dsn = dsn, layer = layer)
   return(out)
 }
-
-
-

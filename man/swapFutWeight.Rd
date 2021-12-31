@@ -28,8 +28,10 @@ If first.fut.weight, to compute swap 1 - first.fut.weight = % applied to 2nd lin
 Returns the percentage weight of the future in Calendar Month Average swaps
 }
 \examples{
-swapFutWeight(Month = "2020-09-01",
-contract = "cmewti",exchange = "nymex", output = "first.fut.weight")
+swapFutWeight(
+  Month = "2020-09-01",
+  contract = "cmewti", exchange = "nymex", output = "first.fut.weight"
+)
 }
 \author{
 Philippe Cote

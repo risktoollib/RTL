@@ -45,18 +45,25 @@ You need your own credentials with Morningstar.
 \examples{
 \dontrun{
 # CME WTI Futures
-getCurve(feed = "Crb_Futures_Price_Volume_And_Open_Interest",contract = "CL",
-date = "2020-07-13",fields = c("Open, High, Low, Close"),
-iuser = "x@xyz.com", ipassword = "pass")
+getCurve(
+  feed = "Crb_Futures_Price_Volume_And_Open_Interest", contract = "CL",
+  date = "2020-07-13", fields = c("Open, High, Low, Close"),
+  iuser = "x@xyz.com", ipassword = "pass"
+)
 
-getCurve(feed = "Crb_Futures_Price_Volume_And_Open_Interest",contract = "BG",
-date = "2020-07-13",fields = c("Open, High, Low, Close"),
-iuser = "x@xyz.com", ipassword = "pass")
+getCurve(
+  feed = "Crb_Futures_Price_Volume_And_Open_Interest", contract = "BG",
+  date = "2020-07-13", fields = c("Open, High, Low, Close"),
+  iuser = "x@xyz.com", ipassword = "pass"
+)
 
-getCurve(feed = "LME_ClosingPriceDelayed",contract = "AHD",
-date = "2021-06-25",fields = c("Last_Price"),
-iuser = "x@xyz.com", ipassword = "pass")
+getCurve(
+  feed = "LME_ClosingPriceDelayed", contract = "AHD",
+  date = "2021-06-25", fields = c("Last_Price"),
+  iuser = "x@xyz.com", ipassword = "pass"
+)
 }
+
 }
 \author{
 Philippe Cote

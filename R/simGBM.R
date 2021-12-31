@@ -9,15 +9,14 @@
 #' @export simGBM
 #' @author Philippe Cote
 #' @examples
-#' simGBM(S0=10,drift=0,sigma=0.2,T2M=1,dt=1/12)
-
-simGBM <- function(S0=10,drift=0,sigma=0.2,T2M=1,dt=1/12) {
-  periods = T2M/dt
-  S = rep(S0,periods)
+#' simGBM(S0 = 10, drift = 0, sigma = 0.2, T2M = 1, dt = 1 / 12)
+simGBM <- function(S0 = 10, drift = 0, sigma = 0.2, T2M = 1, dt = 1 / 12) {
+  periods <- T2M / dt
+  S <- rep(S0, periods)
   for (i in 2:periods) {
-    S[i] = S[i-1] * exp(
-      (drift - (sigma^2)/2) * dt +
-        sigma * stats::rnorm(1,mean=0,sd=1) * sqrt(dt)
+    S[i] <- S[i - 1] * exp(
+      (drift - (sigma^2) / 2) * dt +
+        sigma * stats::rnorm(1, mean = 0, sd = 1) * sqrt(dt)
     )
   }
   return(S)

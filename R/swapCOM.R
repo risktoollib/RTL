@@ -10,37 +10,43 @@
 #' @author Philippe Cote
 #' @examples
 #' \dontrun{
-#' c <- paste0("CL0",c("M","N","Q"))
-#' futs <-getPrices(feed="CME_NymexFutures_EOD",contracts = c,from="2019-08-26",
-#' iuser = username, ipassword = password)
-#' swapCOM(futures = futs, futuresNames=c("CL0M","CL0N"),
-#' pricingDates = c("2020-05-01","2020-05-30"), contract = "cmewti", exchange = "nymex")
+#' c <- paste0("CL0", c("M", "N", "Q"))
+#' futs <- getPrices(
+#'   feed = "CME_NymexFutures_EOD", contracts = c, from = "2019-08-26",
+#'   iuser = username, ipassword = password
+#' )
+#' swapCOM(
+#'   futures = futs, futuresNames = c("CL0M", "CL0N"),
+#'   pricingDates = c("2020-05-01", "2020-05-30"), contract = "cmewti", exchange = "nymex"
+#' )
 #' }
-
+#'
 swapCOM <- function(futures = futs,
-                     futuresNames=c("CL0M","CL0N"),
-                     pricingDates = c("2020-05-01","2020-05-30"),
-                     contract = "cmewti",
-                     exchange = "nymex") {
+                    futuresNames = c("CL0M", "CL0N"),
+                    pricingDates = c("2020-05-01", "2020-05-30"),
+                    contract = "cmewti",
+                    exchange = "nymex") {
   # Pricing days
-  calDays <- seq(as.Date(pricingDates[1]),as.Date(pricingDates[2]),by="day")
+  calDays <- seq(as.Date(pricingDates[1]), as.Date(pricingDates[2]), by = "day")
   hol <- RTL::holidaysOil %>% dplyr::filter(key == exchange)
   bizDays <- calDays[!(calDays %in% hol$value)]
-  bizDays <- bizDays[!(weekdays(bizDays) %in% c('Saturday','Sunday'))]
+  bizDays <- bizDays[!(weekdays(bizDays) %in% c("Saturday", "Sunday"))]
 
   # Expiries
   expiry <- RTL::expiry_table %>%
-    dplyr::filter(cmdty == contract,
-                  Last.Trade >= pricingDates[1],
-                  Last.Trade <= pricingDates[2]) %>%
+    dplyr::filter(
+      cmdty == contract,
+      Last.Trade >= pricingDates[1],
+      Last.Trade <= pricingDates[2]
+    ) %>%
     dplyr::select(Last.Trade)
 
-  x <- dplyr::tibble(date=bizDays,Up2expiry=ifelse(date <= expiry$Last.Trade,1,0))
-  first.fut.weight = sum(x$Up2expiry) / nrow(x)
+  x <- dplyr::tibble(date = bizDays, Up2expiry = ifelse(date <= expiry$Last.Trade, 1, 0))
+  first.fut.weight <- sum(x$Up2expiry) / nrow(x)
 
   # Compute Swap Price
   df <- futures %>%
-    dplyr::select(date,futuresNames[1],futuresNames[2]) %>%
-    dplyr::mutate(swap = .[[2]] * first.fut.weight + .[[3]] * (1-first.fut.weight))
+    dplyr::select(date, futuresNames[1], futuresNames[2]) %>%
+    dplyr::mutate(swap = .[[2]] * first.fut.weight + .[[3]] * (1 - first.fut.weight))
   return(df)
 }

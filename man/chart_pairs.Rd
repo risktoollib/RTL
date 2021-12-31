@@ -18,7 +18,9 @@ A plotly object
 Pairwise scatter chart for timeseries.
 }
 \examples{
-df <- dfwide \%>\% dplyr::select(date,CL01,NG01,HO01,RB01) \%>\% tidyr::drop_na()
+df <- dfwide \%>\%
+  dplyr::select(date, CL01, NG01, HO01, RB01) \%>\%
+  tidyr::drop_na()
 chart_pairs(df = df, title = "example")
 }
 \author{

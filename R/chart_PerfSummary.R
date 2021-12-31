@@ -8,25 +8,39 @@
 #' @export chart_PerfSummary
 #' @author Philippe Cote
 #' @examples
-#' ret <- data.frame(date = seq.Date(Sys.Date()-60, Sys.Date(),1),
-#' CL01 = rnorm(61,0,.01), RB01 = rnorm(61,0,0.02))
-#' chart_PerfSummary(ret=ret, geometric=TRUE, main="Cumulative Returns and Drawdowns",linesize=1.25)
+#' ret <- data.frame(
+#'   date = seq.Date(Sys.Date() - 60, Sys.Date(), 1),
+#'   CL01 = rnorm(61, 0, .01), RB01 = rnorm(61, 0, 0.02)
+#' )
+#' chart_PerfSummary(ret = ret,
+#' geometric = TRUE,
+#' main = "Cumulative Returns and Drawdowns",
+#' linesize = 1.25)
+chart_PerfSummary <- function(ret = ret, geometric = TRUE, main = "Cumulative Returns and Drawdowns", linesize = 1.25) {
+  ret <- xts::xts(ret[, -1], order.by = ret[, 1])
 
-chart_PerfSummary <- function(ret=ret, geometric=TRUE, main="Cumulative Returns and Drawdowns",linesize=1.25){
+  if (geometric == TRUE) {
+    cumret <- cumprod(ret + 1)
+  } else {
+    cumret <- cumsum(ret)
+  }
+  Drawdowns <- PerformanceAnalytics::Drawdowns(ret, geometric)
 
-  ret <- xts::xts(ret[,-1],order.by = ret[,1])
+  cumret <- dplyr::as_tibble(cumret) %>%
+    dplyr::mutate(date = zoo::index(cumret)) %>%
+    tidyr::gather(series, value, -date)
+  cumret$variable <- "CumRet"
 
-  if (geometric==TRUE) {cumret<-cumprod(ret+1)} else {cumret<-cumsum(ret)}
-  Drawdowns<-PerformanceAnalytics::Drawdowns(ret,geometric)
+  drawd <- dplyr::as_tibble(Drawdowns) %>%
+    dplyr::mutate(date = zoo::index(Drawdowns)) %>%
+    tidyr::gather(series, value, -date)
+  drawd$variable <- "Dranwdowns"
 
-  cumret <-dplyr::as_tibble(cumret) %>% dplyr::mutate(date=zoo::index(cumret)) %>% tidyr::gather(series,value,-date)
-  cumret$variable = "CumRet"
-
-  drawd <-dplyr::as_tibble(Drawdowns) %>% dplyr::mutate(date=zoo::index(Drawdowns)) %>% tidyr::gather(series,value,-date)
-  drawd$variable = "Dranwdowns"
-
-  df<-rbind(drawd,cumret)
-  df %>% ggplot2::ggplot(ggplot2::aes(x=date,y=value,color=series)) +
-    ggplot2::facet_grid(variable ~ ., scales="free", space="free") + ggplot2::geom_line() +
-    ggplot2::ggtitle(main) + ggplot2::xlab("") + ggplot2::ylab("")
+  df <- rbind(drawd, cumret)
+  df %>% ggplot2::ggplot(ggplot2::aes(x = date, y = value, color = series)) +
+    ggplot2::facet_grid(variable ~ ., scales = "free", space = "free") +
+    ggplot2::geom_line() +
+    ggplot2::ggtitle(main) +
+    ggplot2::xlab("") +
+    ggplot2::ylab("")
 }

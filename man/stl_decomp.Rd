@@ -24,9 +24,9 @@ a chart or list object of results
 Provides a summary of returns distribution
 }
 \examples{
-x <- dflong \%>\% dplyr::filter(series=="CL01")
-stl_decomp(x,output="chart",s.window=13,s.degree=1)
-stl_decomp(x,output="data",s.window=13,s.degree=1)
+x <- dflong \%>\% dplyr::filter(series == "CL01")
+stl_decomp(x, output = "chart", s.window = 13, s.degree = 1)
+stl_decomp(x, output = "data", s.window = 13, s.degree = 1)
 }
 \author{
 Philippe Cote

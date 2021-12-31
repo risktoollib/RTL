@@ -24,7 +24,7 @@ A numeric vector of simulated values
 Simulates a Geometric Brownian Motion process
 }
 \examples{
-simGBM(S0=10,drift=0,sigma=0.2,T2M=1,dt=1/12)
+simGBM(S0 = 10, drift = 0, sigma = 0.2, T2M = 1, dt = 1 / 12)
 }
 \author{
 Philippe Cote

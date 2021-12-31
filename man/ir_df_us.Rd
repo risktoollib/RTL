@@ -19,8 +19,9 @@ Extracts US Tresury Zero Rates
 }
 \examples{
 \dontrun{
-us.df <- ir_df_us(quandlkey = quandlkey,ir.sens=0.01)
+us.df <- ir_df_us(quandlkey = quandlkey, ir.sens = 0.01)
 }
+
 }
 \author{
 Philippe Cote

@@ -32,9 +32,12 @@ Refer to `getPrices()` for list of currently supported data feeds.
 }
 \examples{
 \dontrun{
-getPrices(feed = "CME_NymexFutures_EOD",contracts = c("@CL0Z","@CL1F","@CL21H","@CL21Z"),
-from = "2020-01-01",iuser = username, ipassword = password)
+getPrices(
+  feed = "CME_NymexFutures_EOD", contracts = c("@CL0Z", "@CL1F", "@CL21H", "@CL21Z"),
+  from = "2020-01-01", iuser = username, ipassword = password
+)
 }
+
 }
 \author{
 Philippe Cote

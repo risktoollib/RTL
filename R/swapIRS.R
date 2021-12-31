@@ -17,53 +17,68 @@
 #' @author Philippe Cote
 #' @examples
 #' data("usSwapCurves")
-#' swapIRS(trade.date = as.Date("2020-01-04"), eff.date = as.Date("2020-01-06"),
-#' mat.date = as.Date("2022-01-06"), notional = 1000000,
-#' PayRec = "Rec", fixed.rate=0.05, float.curve = usSwapCurves, reset.freq=3,
-#' disc.curve = usSwapCurves, convention = c("act",360),
-#' bus.calendar = "NY", output = "all")
-
+#' swapIRS(
+#'   trade.date = as.Date("2020-01-04"), eff.date = as.Date("2020-01-06"),
+#'   mat.date = as.Date("2022-01-06"), notional = 1000000,
+#'   PayRec = "Rec", fixed.rate = 0.05, float.curve = usSwapCurves, reset.freq = 3,
+#'   disc.curve = usSwapCurves, convention = c("act", 360),
+#'   bus.calendar = "NY", output = "all"
+#' )
 swapIRS <- function(trade.date = lubridate::today(),
                     eff.date = lubridate::today() + 2,
                     mat.date = lubridate::today() + 2 + lubridate::years(2),
                     notional = 1000000,
                     PayRec = "Rec",
-                    fixed.rate=0.05,
+                    fixed.rate = 0.05,
                     float.curve = usSwapCurves,
                     reset.freq = 3,
                     disc.curve = usSwapCurves,
-                    convention = c("act",360),
-                    bus.calendar="NY",
+                    convention = c("act", 360),
+                    bus.calendar = "NY",
                     output = "price") {
-  if (reset.freq == 1) {dates <- c(trade.date,seq(eff.date,mat.date,"month"))}
-  if (reset.freq == 3) {dates <- c(trade.date,seq(eff.date,mat.date,"quarter"))}
-  if (reset.freq == 12) {dates <- c(trade.date,seq(eff.date,mat.date,"year"))}
+  if (reset.freq == 1) {
+    dates <- c(trade.date, seq(eff.date, mat.date, "month"))
+  }
+  if (reset.freq == 3) {
+    dates <- c(trade.date, seq(eff.date, mat.date, "quarter"))
+  }
+  if (reset.freq == 12) {
+    dates <- c(trade.date, seq(eff.date, mat.date, "year"))
+  }
 
   DaysYear <- as.numeric(convention[2])
-  if (!DaysYear %in% c(360,365)) {stop("# days in year convention not defined")}
-  if (convention[1] != "act") {stop("function only defined for act")}
+  if (!DaysYear %in% c(360, 365)) {
+    stop("# days in year convention not defined")
+  }
+  if (convention[1] != "act") {
+    stop("function only defined for act")
+  }
 
-  tmp <- dplyr::tibble(dates = dates,
-                day2next = as.numeric(dplyr::lead(dates) - dates),
-                times = as.numeric(dates - trade.date)/365,
-                disc = stats::spline(disc.curve$times, disc.curve$discounts, xout=times)$y,
-                # condition needed as no payment between trade and effective date
-                # lag() needed as payment is in arrear
-                fixed = dplyr::lag(ifelse(day2next>20, notional * fixed.rate * (day2next/DaysYear),0))*disc,
-                disc.float = stats::spline(float.curve$times, float.curve$discounts, xout=times)$y,
-                floating = dplyr::lag(ifelse(day2next>20, ((disc.float / dplyr::lead(disc.float))-1) * notional, 0)) * disc,
-                net = fixed - floating
-  ) %>% replace(., is.na(.),0)
+  tmp <- dplyr::tibble(
+    dates = dates,
+    day2next = as.numeric(dplyr::lead(dates) - dates),
+    times = as.numeric(dates - trade.date) / 365,
+    disc = stats::spline(disc.curve$times, disc.curve$discounts, xout = times)$y,
+    # condition needed as no payment between trade and effective date
+    # lag() needed as payment is in arrear
+    fixed = dplyr::lag(ifelse(day2next > 20, notional * fixed.rate * (day2next / DaysYear), 0)) * disc,
+    disc.float = stats::spline(float.curve$times, float.curve$discounts, xout = times)$y,
+    floating = dplyr::lag(ifelse(day2next > 20, ((disc.float / dplyr::lead(disc.float)) - 1) * notional, 0)) * disc,
+    net = fixed - floating
+  ) %>% replace(., is.na(.), 0)
 
-  pv = sum(tmp$net)
+  pv <- sum(tmp$net)
 
   tmp <- tmp %>% dplyr::mutate(duration = as.numeric(dates - trade.date) / DaysYear * net / pv)
 
-  duration=sum(tmp$duration)
+  duration <- sum(tmp$duration)
 
-  if (PayRec=="Pay") {pv <- -pv}
+  if (PayRec == "Pay") {
+    pv <- -pv
+  }
 
-  ifelse(output=="price",
-         return(pv),
-         return(list(pv,tmp,duration)))
+  ifelse(output == "price",
+    return(pv),
+    return(list(pv, tmp, duration))
+  )
 }

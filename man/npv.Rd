@@ -40,11 +40,15 @@ Compute NPV
 }
 \examples{
 \dontrun{
-us.df <- ir_df_us(quandlkey = quandlkey,ir.sens=0.01)
-npv(init.cost=-375,C=50,cf.freq=.5,TV=250,T2M=2,
-disc.factors=us.df,BreakEven=TRUE,BE.yield=.0399)$npv
-npv(init.cost=-375,C=50,cf.freq=.5,TV=250,T2M=2,
-disc.factors=us.df,BreakEven=TRUE,BE.yield=.0399)$df
+us.df <- ir_df_us(quandlkey = quandlkey, ir.sens = 0.01)
+npv(
+  init.cost = -375, C = 50, cf.freq = .5, TV = 250, T2M = 2,
+  disc.factors = us.df, BreakEven = TRUE, BE.yield = .0399
+)$npv
+npv(
+  init.cost = -375, C = 50, cf.freq = .5, TV = 250, T2M = 2,
+  disc.factors = us.df, BreakEven = TRUE, BE.yield = .0399
+)$df
 }
 }
 \author{

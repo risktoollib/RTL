@@ -38,7 +38,8 @@ Supply Demand Balance from EIA Short Term Energy Outlook.
 \examples{
 \dontrun{
 chart_eia_steo(key = EIAkey, market = "globalOil")
- }
+}
+
 }
 \author{
 Philippe Cote

@@ -10,13 +10,12 @@
 #' @export simOU
 #' @author Philippe Cote
 #' @examples
-#' simOU(S0=5,mu=5,theta=.5,sigma=0.2,T2M=1,dt=1/12)
-
-simOU <- function(S0=5,mu=5,theta=.5,sigma=0.2,T2M=1,dt=1/12) {
-  periods = T2M/dt
-  S = rep(S0,periods)
+#' simOU(S0 = 5, mu = 5, theta = .5, sigma = 0.2, T2M = 1, dt = 1 / 12)
+simOU <- function(S0 = 5, mu = 5, theta = .5, sigma = 0.2, T2M = 1, dt = 1 / 12) {
+  periods <- T2M / dt
+  S <- rep(S0, periods)
   for (i in 2:periods) {
-    S[i] = S[i-1] + theta * (mu - S[i-1]) * dt + sigma * stats::rnorm(n=1,mean=0,sd=sqrt(dt))
+    S[i] <- S[i - 1] + theta * (mu - S[i - 1]) * dt + sigma * stats::rnorm(n = 1, mean = 0, sd = sqrt(dt))
   }
   return(S)
 }

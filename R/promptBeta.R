@@ -9,17 +9,17 @@
 #' @author Philippe Cote
 #' @examples
 #' \dontrun{
-#' x <- dflong %>% dplyr::filter(grepl("CL",series))
-#' x <- x %>% dplyr::mutate(series = readr::parse_number(series)) %>% dplyr::group_by(series)
-#' x <- RTL::returns(df = x,retType = "abs",period.return = 1,spread = TRUE)
-#' x <- RTL::rolladjust(x = x,commodityname = c("cmewti"),rolltype = c("Last.Trade"))
-#' x <- x %>% dplyr::filter(!grepl("2020-04-20|2020-04-21",date))
-#' promptBeta(x = x,period = "all",betatype = "all",output = "chart")
-#' promptBeta(x = x,period = "all",betatype = "all",output = "betas")
-#' promptBeta(x = x,period = "100",betatype = "all",output = "betas")
+#' x <- dflong %>% dplyr::filter(grepl("CL", series))
+#' x <- x %>%
+#'   dplyr::mutate(series = readr::parse_number(series)) %>%
+#'   dplyr::group_by(series)
+#' x <- RTL::returns(df = x, retType = "abs", period.return = 1, spread = TRUE)
+#' x <- RTL::rolladjust(x = x, commodityname = c("cmewti"), rolltype = c("Last.Trade"))
+#' x <- x %>% dplyr::filter(!grepl("2020-04-20|2020-04-21", date))
+#' promptBeta(x = x, period = "all", betatype = "all", output = "chart")
+#' promptBeta(x = x, period = "all", betatype = "all", output = "betas")
+#' promptBeta(x = x, period = "100", betatype = "all", output = "betas")
 #' }
-
-
 promptBeta <- function(x = x, period = "all", betatype = "all", output = "chart") {
 
   # if (!requireNamespace("PerformanceAnalytics", quietly = TRUE)) {
@@ -27,44 +27,51 @@ promptBeta <- function(x = x, period = "all", betatype = "all", output = "chart"
   #        call. = FALSE)
   # }
 
-  term = stats::na.omit(as.numeric(gsub("[^0-9]","",colnames(x))))
+  term <- stats::na.omit(as.numeric(gsub("[^0-9]", "", colnames(x))))
 
   if (period != "all") {
     period <- as.numeric(period)
-    x <- x %>% dplyr::slice_max(n = period,order_by = date) %>% dplyr::arrange(date)
-    }
+    x <- x %>%
+      dplyr::slice_max(n = period, order_by = date) %>%
+      dplyr::arrange(date)
+  }
   x <- as.data.frame(x)
-  ret <- xts::xts(x[,-1],order.by = x[,1])
-  all <- PerformanceAnalytics::CAPM.beta(ret,ret[,1])
-  bull <- PerformanceAnalytics::CAPM.beta.bull(ret,ret[,1])
-  bear <- PerformanceAnalytics::CAPM.beta.bear(ret,ret[,1])
+  ret <- xts::xts(x[, -1], order.by = x[, 1])
+  all <- PerformanceAnalytics::CAPM.beta(ret, ret[, 1])
+  bull <- PerformanceAnalytics::CAPM.beta.bull(ret, ret[, 1])
+  bear <- PerformanceAnalytics::CAPM.beta.bear(ret, ret[, 1])
 
   n <- 1:nrow(t(all))
-  f <- data.frame(Beta = t(all),Prompt = n)
-  names(f) <- c("Beta","Prompt")
+  f <- data.frame(Beta = t(all), Prompt = n)
+  names(f) <- c("Beta", "Prompt")
 
   # betaformula <- "Only applicable when computing term betas and estimating an exponential fit along the term"
   # betaformulaObject <- "Only applicable when computing term betas and estimating an exponential fit along the term"
   # betaformula <- summary(stats::nls(Beta ~ a + exp(b*Prompt),data = f,start = list(a = 0,b = 0)))
   # betaformulaObject <- stats::nls(Beta ~ a + exp(b*Prompt),data = f,start = list(a = 0,b = 0))
 
-  out <- cbind(t(all),t(bull),t(bear))
+  out <- cbind(t(all), t(bull), t(bear))
   out <- data.frame(out)
-  names(out) <- c("all","bull","bear")
+  names(out) <- c("all", "bull", "bear")
 
   df <- out
   rownames(df) <- NULL
   df$contract <- term
 
   chart <- df %>%
-    tidyr::pivot_longer(-contract, names_to = "series",values_to = "value") %>%
+    tidyr::pivot_longer(-contract, names_to = "series", values_to = "value") %>%
     plotly::plot_ly(x = ~contract, y = ~value, name = ~series, color = ~series) %>%
     plotly::add_lines() %>%
-    plotly::layout(title = list(text = "Contract Betas vs Front Contract", x = 0),
-                   xaxis = list(title = ""),
-                   yaxis = list(title = ""))
+    plotly::layout(
+      title = list(text = "Contract Betas vs Front Contract", x = 0),
+      xaxis = list(title = ""),
+      yaxis = list(title = "")
+    )
 
-  if (output == "betas") {return(df)}
-  if (output == "chart") {return(chart)}
-
+  if (output == "betas") {
+    return(df)
+  }
+  if (output == "chart") {
+    return(chart)
+  }
 }

@@ -24,9 +24,9 @@ Price, cash flows data frame and/or duration
 Compute bond price, cash flow table and duration
 }
 \examples{
-bond(ytm = 0.05, C = 0.05,T2M = 1,m = 2,output = "price")
-bond(ytm = 0.05,C = 0.05,T2M = 1,m = 2,output = "df")
-bond(ytm = 0.05,C = 0.05,T2M = 1,m = 2,output = "duration")
+bond(ytm = 0.05, C = 0.05, T2M = 1, m = 2, output = "price")
+bond(ytm = 0.05, C = 0.05, T2M = 1, m = 2, output = "df")
+bond(ytm = 0.05, C = 0.05, T2M = 1, m = 2, output = "duration")
 }
 \author{
 Philippe Cote

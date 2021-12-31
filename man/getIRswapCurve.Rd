@@ -29,8 +29,9 @@ using Morningstar and FRED as data source.
 }
 \examples{
 \dontrun{
-getIRswapCurve(currency="USD", from="2019-08-26",iuser = username, ipassword = password)
+getIRswapCurve(currency = "USD", from = "2019-08-26", iuser = username, ipassword = password)
 }
+
 }
 \author{
 Philippe Cote

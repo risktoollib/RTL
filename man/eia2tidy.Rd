@@ -25,13 +25,16 @@ Makes a clean wrapper for use with purrr for multiple series extraction. Query B
 # Single Series
 RTL::eia2tidy(ticker = "PET.MCRFPTX2.M", key = "yourapikey", name = "TexasProd")
 # Multiple Series
-eia_df <-tibble::tribble(~ticker, ~name,
-"PET.W_EPC0_SAX_YCUOK_MBBL.W", "CrudeCushing",
-"NG.NW2_EPG0_SWO_R48_BCF.W","NGLower48") \%>\%
- dplyr::mutate(key = "EIAkey") \%>\%
- dplyr::mutate(df = purrr::pmap(list(ticker,key,name),.f=RTL::eia2tidy)) \%>\%
- dplyr::select(df) \%>\% tidyr::unnest(df)
- }
+eia_df <- tibble::tribble(
+  ~ticker, ~name,
+  "PET.W_EPC0_SAX_YCUOK_MBBL.W", "CrudeCushing",
+  "NG.NW2_EPG0_SWO_R48_BCF.W", "NGLower48"
+) \%>\%
+  dplyr::mutate(key = "EIAkey") \%>\%
+  dplyr::mutate(df = purrr::pmap(list(ticker, key, name), .f = RTL::eia2tidy)) \%>\%
+  dplyr::select(df) \%>\%
+  tidyr::unnest(df)
+}
 }
 \author{
 Philippe Cote

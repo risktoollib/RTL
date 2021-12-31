@@ -29,6 +29,7 @@ Returns a SpatialPointsDataFrame from a shapefile URL.
 \dontrun{
 getGIS(url = "https://gis.energy.gov.ab.ca/GeoviewData/OS_Agreements_Shape.zip")
 }
+
 }
 \author{
 Philippe Cote

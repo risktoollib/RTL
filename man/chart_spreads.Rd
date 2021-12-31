@@ -46,16 +46,21 @@ Chart spreads in specific futures contracts for multiple years.
 }
 \examples{
 \dontrun{
-cpairs <- dplyr::tibble(year = c("2014","2019","2020"),
-first = c("@HO4H","@HO9H","@HO0H"),
-second = c("@CL4J","@CL9J","@CL0J"))
-chart_spreads(cpairs = cpairs, daysFromExpiry = 200, from = "2012-01-01",
-conversion = c(42,1),feed = "CME_NymexFutures_EOD",
-iuser = "x@xyz.com", ipassword = "pass",
-title = "March/April ULSD Nymex Spreads",
-yaxis = "$ per bbl",
-output = "data")
- }
+cpairs <- dplyr::tibble(
+  year = c("2014", "2019", "2020"),
+  first = c("@HO4H", "@HO9H", "@HO0H"),
+  second = c("@CL4J", "@CL9J", "@CL0J")
+)
+chart_spreads(
+  cpairs = cpairs, daysFromExpiry = 200, from = "2012-01-01",
+  conversion = c(42, 1), feed = "CME_NymexFutures_EOD",
+  iuser = "x@xyz.com", ipassword = "pass",
+  title = "March/April ULSD Nymex Spreads",
+  yaxis = "$ per bbl",
+  output = "data"
+)
+}
+
 }
 \author{
 Philippe Cote

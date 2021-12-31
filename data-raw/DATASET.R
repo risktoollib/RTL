@@ -1,4 +1,4 @@
-#usethis::use_cran_badge()
+# usethis::use_cran_badge()
 # usethis::use_pipe()
 # usethis::use_readme_md()
 # attachment::att_from_rscripts()
@@ -36,10 +36,10 @@
 
 
 # Setup RTL Webpage
-#usethis::use_pkgdown()
-#usethis::use_github_actions("pkgdown")
-#pkgdown::build_site()
-#usethis::use_github_action(url = "https://raw.githubusercontent.com/r-lib/actions/master/examples/pkgdown.yaml")
+# usethis::use_pkgdown()
+# usethis::use_github_actions("pkgdown")
+# pkgdown::build_site()
+# usethis::use_github_action(url = "https://raw.githubusercontent.com/r-lib/actions/master/examples/pkgdown.yaml")
 
 #
 library(RTL)
@@ -52,13 +52,15 @@ library(readxl)
 library(readr)
 library(RSelenium)
 source("~/now/keys.R")
-setwd(paste0(getwd(),"/data-raw"))
+setwd(paste0(getwd(), "/data-raw"))
 
 ## spot2fut convergence
 d <- "2020-03-25"
 cash <-
   RTL::eia2tidy(ticker = "PET.RWTC.D", key = EIAkey, name = "cash") %>%
-  dplyr::select(-series) %>% dplyr::rename(cash = value) %>% dplyr::arrange(date)
+  dplyr::select(-series) %>%
+  dplyr::rename(cash = value) %>%
+  dplyr::arrange(date)
 c <- cash %>% dplyr::filter(date == d)
 f <-
   RTL::getCurve(
@@ -68,8 +70,9 @@ f <-
     fields = c("Open, High, Low, Close"),
     iuser = mstar[[1]],
     ipassword = mstar[[2]]
-  )  %>%
-  dplyr::slice(1:12) %>% dplyr::select(-Open, -High, -Low)
+  ) %>%
+  dplyr::slice(1:12) %>%
+  dplyr::select(-Open, -High, -Low)
 
 spot2futCurve <- f %>%
   dplyr::add_row(
@@ -89,17 +92,20 @@ fut <- RTL::getPrice(
 )
 colnames(fut)[2] <- "fut"
 
-spot2futConvergence <- fut %>% dplyr::inner_join(cash, by = c("date")) %>%
+spot2futConvergence <- fut %>%
+  dplyr::inner_join(cash, by = c("date")) %>%
   dplyr::mutate(spot2fut = cash - fut) %>%
   tidyr::pivot_longer(-date, names_to = "series", values_to = "value")
 usethis::use_data(spot2futConvergence, overwrite = T)
 
 ## WTI swaps
-c <- paste0("CL0",c("M","N","Q"))
-wtiSwap <- RTL::getPrices(feed = "CME_NymexFutures_EOD",
-                       contracts = c,
-                       from = "2019-08-26",
-                       iuser = mstar[[1]], ipassword = mstar[[2]])
+c <- paste0("CL0", c("M", "N", "Q"))
+wtiSwap <- RTL::getPrices(
+  feed = "CME_NymexFutures_EOD",
+  contracts = c,
+  from = "2019-08-26",
+  iuser = mstar[[1]], ipassword = mstar[[2]]
+)
 
 usethis::use_data(wtiSwap, overwrite = T)
 
@@ -119,7 +125,7 @@ usethis::use_data(eurodollar, overwrite = T)
 
 ## FX forwards
 
-fromDate <-  Sys.Date() - lubridate::years(1)
+fromDate <- Sys.Date() - lubridate::years(1)
 fxfwd <-
   RTL::getPrices(
     feed = "Morningstar_FX_Forwards",
@@ -133,31 +139,39 @@ usethis::use_data(fxfwd, overwrite = T)
 
 ## Orbital
 
-url = "https://nssdc.gsfc.nasa.gov/planetary/factsheet/index.html"
+url <- "https://nssdc.gsfc.nasa.gov/planetary/factsheet/index.html"
 html <- xml2::read_html(url)
 
 ## Simplified tables
-planets <- html %>% rvest::html_nodes("table") %>% rvest::html_table(header = TRUE) %>% .[[1]]
+planets <- html %>%
+  rvest::html_nodes("table") %>%
+  rvest::html_table(header = TRUE) %>%
+  .[[1]]
 colnames(planets)[1] <- "Metric"
-planets <- planets %>% dplyr::as_tibble() %>%
+planets <- planets %>%
+  dplyr::as_tibble() %>%
   dplyr::rename_all(.funs = stringr::str_to_title) %>%
-  dplyr::mutate_all(function(x) gsub(",|\\*","",x)) %>%
-  dplyr::mutate(dplyr::across(.cols = -Metric, .fns = as.numeric)) %>% na.omit() %>%
-  tidyr::pivot_longer(-Metric,names_to = "Planet", values_to = "value") %>%
+  dplyr::mutate_all(function(x) gsub(",|\\*", "", x)) %>%
+  dplyr::mutate(dplyr::across(.cols = -Metric, .fns = as.numeric)) %>%
+  na.omit() %>%
+  tidyr::pivot_longer(-Metric, names_to = "Planet", values_to = "value") %>%
   tidyr::pivot_wider(names_from = Metric, values_from = value)
 usethis::use_data(planets, overwrite = T)
 
 ## Sample energy futures datasets
-#df_fut <- readRDS("df_fut") ; usethis::use_data(df_fut, overwrite = T)
+# df_fut <- readRDS("df_fut") ; usethis::use_data(df_fut, overwrite = T)
 
-iuser = mstar[["iuser"]] ; ipassword = mstar[["ipassword"]]
+iuser <- mstar[["iuser"]]
+ipassword <- mstar[["ipassword"]]
 startdate <- "2004-01-01"
 
-crude <- c(paste0("CL_",sprintf('%0.3d', 1:36),"_Month"),
-           paste0("NG_",sprintf('%0.3d', 1:36),"_Month"))
-crudecan <- c(paste0("WCW_",sprintf('%0.3d', 1:36),"_Month"))
-crudeICE <- c(paste0("BRN_",sprintf('%0.3d', 1:36),"_Month"))
-pdts <- c(paste0("HO_",sprintf('%0.3d', 1:18),"_Month"), paste0("RB_",sprintf('%0.3d', 1:18),"_Month"))
+crude <- c(
+  paste0("CL_", sprintf("%0.3d", 1:36), "_Month"),
+  paste0("NG_", sprintf("%0.3d", 1:36), "_Month")
+)
+crudecan <- c(paste0("WCW_", sprintf("%0.3d", 1:36), "_Month"))
+crudeICE <- c(paste0("BRN_", sprintf("%0.3d", 1:36), "_Month"))
+pdts <- c(paste0("HO_", sprintf("%0.3d", 1:18), "_Month"), paste0("RB_", sprintf("%0.3d", 1:18), "_Month"))
 
 crude <- RTL::getPrices(
   feed = "CME_NymexFutures_EOD_continuous",
@@ -167,7 +181,8 @@ crude <- RTL::getPrices(
   ipassword = ipassword
 ) %>%
   pivot_longer(-date, names_to = "series", values_to = "value") %>%
-  dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>% na.omit()
+  dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>%
+  na.omit()
 
 crudecan <- RTL::getPrices(
   feed = "CME_NymexFutures_EOD_continuous",
@@ -177,7 +192,8 @@ crudecan <- RTL::getPrices(
   ipassword = ipassword
 ) %>%
   pivot_longer(-date, names_to = "series", values_to = "value") %>%
-  dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>% na.omit()
+  dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>%
+  na.omit()
 
 crudeICE <- RTL::getPrices(
   feed = "ICE_EuroFutures_continuous",
@@ -187,7 +203,8 @@ crudeICE <- RTL::getPrices(
   ipassword = ipassword
 ) %>%
   pivot_longer(-date, names_to = "series", values_to = "value") %>%
-  dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>% na.omit()
+  dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>%
+  na.omit()
 pdts <- RTL::getPrices(
   feed = "CME_NymexFutures_EOD_continuous",
   contracts = pdts,
@@ -196,14 +213,19 @@ pdts <- RTL::getPrices(
   ipassword = ipassword
 ) %>%
   pivot_longer(-date, names_to = "series", values_to = "value") %>%
-  dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>% na.omit()
+  dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>%
+  na.omit()
 
-alu <- c(paste("ALI",sprintf(fmt = "%0.3d",1:6),"Month",sep = "_"),
-         paste("AUP",sprintf(fmt = "%0.3d",1:6),"Month",sep = "_"),
-         paste("EDP",sprintf(fmt = "%0.3d",1:6),"Month",sep = "_"),
-         paste("MJP",sprintf(fmt = "%0.3d",1:6),"Month",sep = "_"))
+alu <- c(
+  paste("ALI", sprintf(fmt = "%0.3d", 1:6), "Month", sep = "_"),
+  paste("AUP", sprintf(fmt = "%0.3d", 1:6), "Month", sep = "_"),
+  paste("EDP", sprintf(fmt = "%0.3d", 1:6), "Month", sep = "_"),
+  paste("MJP", sprintf(fmt = "%0.3d", 1:6), "Month", sep = "_")
+)
 
-lbs2mt <- function(x) {x * 55116 / 25}
+lbs2mt <- function(x) {
+  x * 55116 / 25
+}
 
 alu <-
   RTL::getPrices(
@@ -213,69 +235,77 @@ alu <-
     iuser = mstar[[1]],
     ipassword = mstar[[2]]
   ) %>%
-  dplyr::rename_all( ~ str_replace_all(., "_Month|_0", "")) %>%
+  dplyr::rename_all(~ str_replace_all(., "_Month|_0", "")) %>%
   dplyr::mutate(across(dplyr::contains("AUP"), lbs2mt)) %>%
   tidyr::pivot_longer(-date, names_to = "series", values_to = "value")
 
-dflong <-  rbind(crude, crudecan, crudeICE, pdts, alu)
-dfwide <- dflong %>% tidyr::pivot_wider(names_from = series, values_from = value) #%>% na.omit()
+dflong <- rbind(crude, crudecan, crudeICE, pdts, alu)
+dfwide <- dflong %>% tidyr::pivot_wider(names_from = series, values_from = value) # %>% na.omit()
 usethis::use_data(dflong, overwrite = T)
 usethis::use_data(dfwide, overwrite = T)
-rm(crude,crudecan,crudeICE,pdts,alu)
+rm(crude, crudecan, crudeICE, pdts, alu)
 
 ## Sample EIA dataset
-eiaStocks <- tibble::tribble(~ticker, ~name,
-                         "PET.W_EPC0_SAX_YCUOK_MBBL.W", "CrudeCushing",
-                         "PET.WGTSTP11.W", "Gasoline",
-                         "PET.WD0ST_R10_1.W", "ULSD",
-                         "NG.NW2_EPG0_SWO_R48_BCF.W","NGLower48") %>%
+eiaStocks <- tibble::tribble(
+  ~ticker, ~name,
+  "PET.W_EPC0_SAX_YCUOK_MBBL.W", "CrudeCushing",
+  "PET.WGTSTP11.W", "Gasoline",
+  "PET.WD0ST_R10_1.W", "ULSD",
+  "NG.NW2_EPG0_SWO_R48_BCF.W", "NGLower48"
+) %>%
   dplyr::mutate(key = EIAkey) %>%
-  dplyr::mutate(df = purrr::pmap(list(ticker,key,name),.f = RTL::eia2tidy)) %>%
-  dplyr::select(df) %>% tidyr::unnest(df)
+  dplyr::mutate(df = purrr::pmap(list(ticker, key, name), .f = RTL::eia2tidy)) %>%
+  dplyr::select(df) %>%
+  tidyr::unnest(df)
 usethis::use_data(eiaStocks, overwrite = T)
 
 ## EIA Storage Capacity
-  ### Crude
+### Crude
 url <- "https://www.eia.gov/petroleum/storagecapacity/crudeoilstorage.xlsx"
 destfile <- "crudeoilstorage.xlsx"
 curl::curl_download(url, destfile)
 name <- "Refinery and Tank and Underground Working Storage Capacity"
 
 cc <- function(name = "Refinery and Tank and Underground Working Storage Capacity", sheet = "US", loc = "US") {
-  tmp <- read_excel(destfile, skip = 3, sheet = sheet) %>% dplyr::filter(.[[1]] == name) %>%
-    dplyr::rename(series = "...1") %>% dplyr::mutate(series = loc)
-  colnames(tmp) <- c("series",as.character(as.Date(as.numeric(colnames(tmp)[-1]),origin = "1899-12-30")))
-  tmp <- tmp %>% tidyr::pivot_longer(-series,names_to = "date", values_to = "value") %>%
-    dplyr::mutate(date = as.Date(date),value = as.numeric(value))
+  tmp <- read_excel(destfile, skip = 3, sheet = sheet) %>%
+    dplyr::filter(.[[1]] == name) %>%
+    dplyr::rename(series = "...1") %>%
+    dplyr::mutate(series = loc)
+  colnames(tmp) <- c("series", as.character(as.Date(as.numeric(colnames(tmp)[-1]), origin = "1899-12-30")))
+  tmp <- tmp %>%
+    tidyr::pivot_longer(-series, names_to = "date", values_to = "value") %>%
+    dplyr::mutate(date = as.Date(date), value = as.numeric(value))
   return(tmp)
 }
 
-eiaStorageCap <- bind_rows(cc(sheet = "US", loc = "US"),
-          cc(sheet = "PADD 1", loc = "P1"),
-          cc(sheet = "PADD 2", loc = "P2"),
-          cc(sheet = "PADD 3", loc = "P3"),
-          cc(sheet = "PADD 4", loc = "P4"),
-          cc(sheet = "PADD 5", loc = "P5"),
-          cc(name = "Tank Working Storage Capacity", sheet = "Cushing", loc = "Cushing"))
+eiaStorageCap <- bind_rows(
+  cc(sheet = "US", loc = "US"),
+  cc(sheet = "PADD 1", loc = "P1"),
+  cc(sheet = "PADD 2", loc = "P2"),
+  cc(sheet = "PADD 3", loc = "P3"),
+  cc(sheet = "PADD 4", loc = "P4"),
+  cc(sheet = "PADD 5", loc = "P5"),
+  cc(name = "Tank Working Storage Capacity", sheet = "Cushing", loc = "Cushing")
+)
 
 eiaStorageCap <- eiaStorageCap %>% dplyr::mutate(product = "crude")
 
-  ### Products
+### Products
 library(rvest)
 library(pdftools)
 library(tesseract)
-url = "https://www.eia.gov/petroleum/storagecapacity/archive/"
-urls = rvest::read_html(url) %>%
+url <- "https://www.eia.gov/petroleum/storagecapacity/archive/"
+urls <- rvest::read_html(url) %>%
   rvest::html_element(css = "table") %>%
   html_elements("tr") %>%
   rvest::html_elements("a") %>%
   html_attr("href") %>%
   paste0("https://www.eia.gov", .)
 
-dist1b <- dplyr::tibble(date = as.Date("2021-01-01"),p1mdist = 0, p1ldist = 0)
+dist1b <- dplyr::tibble(date = as.Date("2021-01-01"), p1mdist = 0, p1ldist = 0)
 
 for (i in 1:length(urls)) {
-  reportDate <- as.Date(stringr::str_sub(urls[i], 60,69), format = "%Y_%m_%d")
+  reportDate <- as.Date(stringr::str_sub(urls[i], 60, 69), format = "%Y_%m_%d")
   if (reportDate >= as.Date("2019-01-01")) {
     urli <- urls[i] %>%
       rvest::read_html() %>%
@@ -283,24 +313,26 @@ for (i in 1:length(urls)) {
       html_elements("tr") %>%
       rvest::html_elements("a") %>%
       html_attr("href")
-    urli <- gsub(pattern = "/[^/]*$",replacement = paste0("/",urli[1]),x = urls[i])
+    urli <- gsub(pattern = "/[^/]*$", replacement = paste0("/", urli[1]), x = urls[i])
     destfile <- "storagecapacity.xlsx"
     curl::curl_download(urli, destfile)
     storagecapacity <- readxl::read_excel(destfile, sheet = "Table 1", skip = 8)
-    dist1b[i,1] <- reportDate
-    dist1b[i,2] <- (storagecapacity %>% dplyr::filter(.[[1]] == "Distillate Fuel Oil"))[2,2] %>% as.numeric(.)
-    dist1b[i,3] <- (storagecapacity %>% dplyr::filter(.[[1]] == "Motor Gasoline (incl. Motor Gasoline Blending Components)"))[2,2] %>% as.numeric(.)
+    dist1b[i, 1] <- reportDate
+    dist1b[i, 2] <- (storagecapacity %>% dplyr::filter(.[[1]] == "Distillate Fuel Oil"))[2, 2] %>% as.numeric(.)
+    dist1b[i, 3] <- (storagecapacity %>% dplyr::filter(.[[1]] == "Motor Gasoline (incl. Motor Gasoline Blending Components)"))[2, 2] %>% as.numeric(.)
   } else {
-    urli <- gsub(pattern = "/[^/]*$",replacement = paste0("/","table1.pdf"),x = urls[i])
-    tmp <-  pdf_ocr_text(urli,pages = 1)
+    urli <- gsub(pattern = "/[^/]*$", replacement = paste0("/", "table1.pdf"), x = urls[i])
+    tmp <- pdf_ocr_text(urli, pages = 1)
     tmp <- read_lines(tmp)
-    tmp <- str_replace_all(string = tmp[grep('^Motor.*|^Dist.*', tmp)],
-                    pattern = c("Distillate Fuel Oil " = "", "Motor Gasoline \\(incl. Motor Gasoline Blending Components\\) " = ""))[3:4]
+    tmp <- str_replace_all(
+      string = tmp[grep("^Motor.*|^Dist.*", tmp)],
+      pattern = c("Distillate Fuel Oil " = "", "Motor Gasoline \\(incl. Motor Gasoline Blending Components\\) " = "")
+    )[3:4]
 
-    #tmp <-  pdf_ocr_data(urli,pages = 1)
-    dist1b[i,1] <- reportDate
-    dist1b[i,2] <- readr::parse_number(sub(" .*", "", tmp))[2]
-    dist1b[i,3] <- readr::parse_number(sub(" .*", "", tmp))[1]
+    # tmp <-  pdf_ocr_data(urli,pages = 1)
+    dist1b[i, 1] <- reportDate
+    dist1b[i, 2] <- readr::parse_number(sub(" .*", "", tmp))[2]
+    dist1b[i, 3] <- readr::parse_number(sub(" .*", "", tmp))[1]
   }
 }
 
@@ -310,17 +342,19 @@ dist1b <- dist1b %>%
   tidyr::pivot_longer(cols = c(-date, -series), names_to = "product", values_to = "value") %>%
   dplyr::select(series, date, value, product)
 
-ng <- RTL::eia2tidy(ticker = "NG.NGM_EPG0_SACW0_R48_MMCF.M",
-                    key = EIAkey,
-                    name = "lower48") %>%
+ng <- RTL::eia2tidy(
+  ticker = "NG.NGM_EPG0_SACW0_R48_MMCF.M",
+  key = EIAkey,
+  name = "lower48"
+) %>%
   dplyr::mutate(product = "ng", value = value / 1000)
 
-eiaStorageCap <- rbind(eiaStorageCap,dist1b,ng)
+eiaStorageCap <- rbind(eiaStorageCap, dist1b, ng)
 file.remove(destfile)
 usethis::use_data(eiaStorageCap, overwrite = T)
 
 ## Sample GIS Mapping
-#library(rgdal)
+# library(rgdal)
 
 # crudepipelines <- rgdal::readOGR(dsn = "~/now/RTL/GIS_EIA/CrudeOil_Pipelines_US_EIA/", layer = "CrudeOil_Pipelines_US_202001")
 # refineries <- rgdal::readOGR(dsn = "~/now/RTL/GIS_EIA/Petroleum_Refineries_US_EIA/", layer = "Petroleum_Refineries_US_2020")
@@ -341,13 +375,13 @@ usethis::use_data(eiaStorageCap, overwrite = T)
 # usethis::use_data(lngterminals, overwrite = T)
 
 ## EIA Mapping
-tickers_eia <- read.csv('eia.csv',sep = ",",header = TRUE,na.strings = "NA",stringsAsFactors = FALSE)
+tickers_eia <- read.csv("eia.csv", sep = ",", header = TRUE, na.strings = "NA", stringsAsFactors = FALSE)
 usethis::use_data(tickers_eia, overwrite = T)
 
 ## Holiday Calendar
 holidaysOil <-
   read.csv(
-    'holidays.csv',
+    "holidays.csv",
     sep = ",",
     header = TRUE,
     na.strings = "NA",
@@ -356,223 +390,300 @@ holidaysOil <-
   dplyr::mutate(
     nymex = as.Date(as.character(nymex), "%Y-%m-%d", tz = "UTC"),
     ice = as.Date(as.character(ice), "%Y-%m-%d", tz = "UTC")
-  ) %>% tidyr::gather()
-holidaysOil <- holidaysOil[complete.cases(holidaysOil),] %>% dplyr::as_tibble()
+  ) %>%
+  tidyr::gather()
+holidaysOil <- holidaysOil[complete.cases(holidaysOil), ] %>% dplyr::as_tibble()
 usethis::use_data(holidaysOil, overwrite = T)
 
 # Expiry table
-futmonths = c("F","G","H","J","K","M","N","Q","U","V","X","Z")
-expiry_table <- read.csv('expiry_table.csv',sep = ",",header = TRUE,na.strings = "NA",stringsAsFactors = FALSE) %>%
+futmonths <- c("F", "G", "H", "J", "K", "M", "N", "Q", "U", "V", "X", "Z")
+expiry_table <- read.csv("expiry_table.csv", sep = ",", header = TRUE, na.strings = "NA", stringsAsFactors = FALSE) %>%
   dplyr::as_tibble() %>%
-  dplyr::mutate(Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
-                First.Notice = as.Date(First.Notice,"%Y-%m-%d",tz = "UTC"),
-                First.Delivery = as.Date(First.Delivery,"%Y-%m-%d",tz = "UTC"),
-                Last.Delivery = as.Date(Last.Delivery,"%Y-%m-%d",tz = "UTC"))
+  dplyr::mutate(
+    Last.Trade = as.Date(Last.Trade, "%Y-%m-%d", tz = "UTC"),
+    First.Notice = as.Date(First.Notice, "%Y-%m-%d", tz = "UTC"),
+    First.Delivery = as.Date(First.Delivery, "%Y-%m-%d", tz = "UTC"),
+    Last.Delivery = as.Date(Last.Delivery, "%Y-%m-%d", tz = "UTC")
+  )
 
 
 LGO <- read_csv("https://www.theice.com/api/productguide/spec/34361119/expiry/csv",
-                col_types = cols(`CONTRACT SYMBOL` = col_skip(),
-                                 FTD = col_skip(), LTD = col_date(format = "%m/%d/%Y"),
-                                 FND = col_date(format = "%m/%d/%Y"),
-                                 LND = col_skip(), FDD = col_date(format = "%m/%d/%Y"),
-                                 LDD = col_date(format = "%m/%d/%Y"),
-                                 FSD = col_skip(), `OPTIONS FTD` = col_skip(),
-                                 `OPTIONS LTD` = col_skip())) %>%
-  dplyr::transmute(cmdty = "icegasoil", tick.prefix = "LGO", Last.Trade = LTD,
-                   First.Notice = FND, First.Delivery = FDD, Last.Delivery = LDD)
+  col_types = cols(
+    `CONTRACT SYMBOL` = col_skip(),
+    FTD = col_skip(), LTD = col_date(format = "%m/%d/%Y"),
+    FND = col_date(format = "%m/%d/%Y"),
+    LND = col_skip(), FDD = col_date(format = "%m/%d/%Y"),
+    LDD = col_date(format = "%m/%d/%Y"),
+    FSD = col_skip(), `OPTIONS FTD` = col_skip(),
+    `OPTIONS LTD` = col_skip()
+  )
+) %>%
+  dplyr::transmute(
+    cmdty = "icegasoil", tick.prefix = "LGO", Last.Trade = LTD,
+    First.Notice = FND, First.Delivery = FDD, Last.Delivery = LDD
+  )
 
 LCO <- read_csv("https://www.theice.com/api/productguide/spec/219/expiry/csv",
-                col_types = cols(`CONTRACT SYMBOL` = col_skip(),
-                                 FTD = col_skip(), LTD = col_date(format = "%m/%d/%Y"),
-                                 FND = col_date(format = "%m/%d/%Y"),
-                                 LND = col_skip(), FDD = col_date(format = "%m/%d/%Y"),
-                                 LDD = col_date(format = "%m/%d/%Y"),
-                                 FSD = col_skip(), `OPTIONS FTD` = col_skip(),
-                                 `OPTIONS LTD` = col_skip())) %>%
-  dplyr::transmute(cmdty = "icebrent", tick.prefix = "LCO", Last.Trade = LTD,
-                   First.Notice = FND,
-                   First.Delivery = lubridate::rollback(First.Notice,roll_to_first = TRUE) + months(2),
-                   Last.Delivery = lubridate::rollback(First.Delivery + months(1)))
+  col_types = cols(
+    `CONTRACT SYMBOL` = col_skip(),
+    FTD = col_skip(), LTD = col_date(format = "%m/%d/%Y"),
+    FND = col_date(format = "%m/%d/%Y"),
+    LND = col_skip(), FDD = col_date(format = "%m/%d/%Y"),
+    LDD = col_date(format = "%m/%d/%Y"),
+    FSD = col_skip(), `OPTIONS FTD` = col_skip(),
+    `OPTIONS LTD` = col_skip()
+  )
+) %>%
+  dplyr::transmute(
+    cmdty = "icebrent", tick.prefix = "LCO", Last.Trade = LTD,
+    First.Notice = FND,
+    First.Delivery = lubridate::rollback(First.Notice, roll_to_first = TRUE) + months(2),
+    Last.Delivery = lubridate::rollback(First.Delivery + months(1))
+  )
 
-#destfile <- "Download.xls"
-#curl::curl_download(url = "https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/Download.xls?productId=425",destfile)
-CL <- read_excel("CL.xls", col_types = c("skip", "skip", "skip", "text", "skip", "skip",
-                                         "skip", "skip", "skip", "text", "skip", "text", "text")) %>%
+# destfile <- "Download.xls"
+# curl::curl_download(url = "https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/Download.xls?productId=425",destfile)
+CL <- read_excel("CL.xls", col_types = c(
+  "skip", "skip", "skip", "text", "skip", "skip",
+  "skip", "skip", "skip", "text", "skip", "text", "text"
+)) %>%
   dplyr::as_tibble(.name_repair = "universal") %>%
-  dplyr::transmute(cmdty = "cmewti", tick.prefix = "CL",
-                   Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
-                   First.Notice = as.Date(First.Notice,"%Y-%m-%d",tz = "UTC"),
-                   First.Delivery = as.Date(First.Delivery,"%Y-%m-%d",tz = "UTC"),
-                   Last.Delivery = as.Date(Last.Delivery,"%Y-%m-%d",tz = "UTC"))
+  dplyr::transmute(
+    cmdty = "cmewti", tick.prefix = "CL",
+    Last.Trade = as.Date(Last.Trade, "%Y-%m-%d", tz = "UTC"),
+    First.Notice = as.Date(First.Notice, "%Y-%m-%d", tz = "UTC"),
+    First.Delivery = as.Date(First.Delivery, "%Y-%m-%d", tz = "UTC"),
+    Last.Delivery = as.Date(Last.Delivery, "%Y-%m-%d", tz = "UTC")
+  )
 
-#curl::curl_download(url = "https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/Download.xls?productId=424",destfile)
+# curl::curl_download(url = "https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/Download.xls?productId=424",destfile)
 
-BZ <- read_excel("BZ.xls", col_types = c("skip", "skip", "skip", "text", "text", "skip",
-                                         "skip", "skip", "skip", "text", "skip","text", "text")) %>%
+BZ <- read_excel("BZ.xls", col_types = c(
+  "skip", "skip", "skip", "text", "text", "skip",
+  "skip", "skip", "skip", "text", "skip", "text", "text"
+)) %>%
   dplyr::as_tibble(.name_repair = "universal") %>%
-  dplyr::transmute(cmdty = "cmebrent", tick.prefix = "BZ",
-                   Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
-                   First.Notice = as.Date(Settlement,"%Y-%m-%d",tz = "UTC"),
-                   First.Delivery = lubridate::rollback(First.Notice, roll_to_first = TRUE) + months(2),
-                   Last.Delivery = First.Delivery)
+  dplyr::transmute(
+    cmdty = "cmebrent", tick.prefix = "BZ",
+    Last.Trade = as.Date(Last.Trade, "%Y-%m-%d", tz = "UTC"),
+    First.Notice = as.Date(Settlement, "%Y-%m-%d", tz = "UTC"),
+    First.Delivery = lubridate::rollback(First.Notice, roll_to_first = TRUE) + months(2),
+    Last.Delivery = First.Delivery
+  )
 
-#curl::curl_download(url = "https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/Download.xls?productId=426",destfile)
-HO <- read_excel("HO.xls", col_types = c("skip", "skip", "skip", "text", "skip", "skip",
-                                         "skip", "skip", "skip", "text", "skip", "text", "text")) %>%
+# curl::curl_download(url = "https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/Download.xls?productId=426",destfile)
+HO <- read_excel("HO.xls", col_types = c(
+  "skip", "skip", "skip", "text", "skip", "skip",
+  "skip", "skip", "skip", "text", "skip", "text", "text"
+)) %>%
   dplyr::as_tibble(.name_repair = "universal") %>%
-  dplyr::transmute(cmdty = "cmeulsd", tick.prefix = "HO",
-                   Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
-                   First.Notice = as.Date(First.Notice,"%Y-%m-%d",tz = "UTC"),
-                   First.Delivery = as.Date(First.Delivery,"%Y-%m-%d",tz = "UTC"),
-                   Last.Delivery = as.Date(Last.Delivery,"%Y-%m-%d",tz = "UTC"))
+  dplyr::transmute(
+    cmdty = "cmeulsd", tick.prefix = "HO",
+    Last.Trade = as.Date(Last.Trade, "%Y-%m-%d", tz = "UTC"),
+    First.Notice = as.Date(First.Notice, "%Y-%m-%d", tz = "UTC"),
+    First.Delivery = as.Date(First.Delivery, "%Y-%m-%d", tz = "UTC"),
+    Last.Delivery = as.Date(Last.Delivery, "%Y-%m-%d", tz = "UTC")
+  )
 
 
-#curl::curl_download(url = "https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/Download.xls?productId=429",destfile)
-RB <- read_excel("RB.xls", col_types = c("skip", "skip", "skip", "text", "skip", "skip",
-                                         "skip", "skip", "skip", "text", "skip", "text", "text"))  %>%
+# curl::curl_download(url = "https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/Download.xls?productId=429",destfile)
+RB <- read_excel("RB.xls", col_types = c(
+  "skip", "skip", "skip", "text", "skip", "skip",
+  "skip", "skip", "skip", "text", "skip", "text", "text"
+)) %>%
   dplyr::as_tibble(.name_repair = "universal") %>%
-  dplyr::transmute(cmdty = "cmerbob", tick.prefix = "RB",
-                   Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
-                   First.Notice = as.Date(First.Notice,"%Y-%m-%d",tz = "UTC"),
-                   First.Delivery = as.Date(First.Delivery,"%Y-%m-%d",tz = "UTC"),
-                   Last.Delivery = as.Date(Last.Delivery,"%Y-%m-%d",tz = "UTC"))
+  dplyr::transmute(
+    cmdty = "cmerbob", tick.prefix = "RB",
+    Last.Trade = as.Date(Last.Trade, "%Y-%m-%d", tz = "UTC"),
+    First.Notice = as.Date(First.Notice, "%Y-%m-%d", tz = "UTC"),
+    First.Delivery = as.Date(First.Delivery, "%Y-%m-%d", tz = "UTC"),
+    Last.Delivery = as.Date(Last.Delivery, "%Y-%m-%d", tz = "UTC")
+  )
 
-GC <- read_excel("GC.xls", col_types = c("skip", "skip", "skip", "text", "skip", "skip",
-                                         "skip", "skip", "skip", "text", "skip", "text", "text"))  %>%
+GC <- read_excel("GC.xls", col_types = c(
+  "skip", "skip", "skip", "text", "skip", "skip",
+  "skip", "skip", "skip", "text", "skip", "text", "text"
+)) %>%
   dplyr::as_tibble(.name_repair = "universal") %>%
-  dplyr::transmute(cmdty = "comexgold", tick.prefix = "GC",
-                   Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
-                   First.Notice = as.Date(First.Notice,"%Y-%m-%d",tz = "UTC"),
-                   First.Delivery = as.Date(First.Delivery,"%Y-%m-%d",tz = "UTC"),
-                   Last.Delivery = as.Date(Last.Delivery,"%Y-%m-%d",tz = "UTC"))
+  dplyr::transmute(
+    cmdty = "comexgold", tick.prefix = "GC",
+    Last.Trade = as.Date(Last.Trade, "%Y-%m-%d", tz = "UTC"),
+    First.Notice = as.Date(First.Notice, "%Y-%m-%d", tz = "UTC"),
+    First.Delivery = as.Date(First.Delivery, "%Y-%m-%d", tz = "UTC"),
+    Last.Delivery = as.Date(Last.Delivery, "%Y-%m-%d", tz = "UTC")
+  )
 
-SI <- read_excel("SI.xls", col_types = c("skip", "skip", "skip", "text", "skip", "skip",
-                                         "skip", "skip", "skip", "text", "skip", "text", "text"))  %>%
+SI <- read_excel("SI.xls", col_types = c(
+  "skip", "skip", "skip", "text", "skip", "skip",
+  "skip", "skip", "skip", "text", "skip", "text", "text"
+)) %>%
   dplyr::as_tibble(.name_repair = "universal") %>%
-  dplyr::transmute(cmdty = "comexsilver", tick.prefix = "SI",
-                   Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
-                   First.Notice = as.Date(First.Notice,"%Y-%m-%d",tz = "UTC"),
-                   First.Delivery = as.Date(First.Delivery,"%Y-%m-%d",tz = "UTC"),
-                   Last.Delivery = as.Date(Last.Delivery,"%Y-%m-%d",tz = "UTC"))
+  dplyr::transmute(
+    cmdty = "comexsilver", tick.prefix = "SI",
+    Last.Trade = as.Date(Last.Trade, "%Y-%m-%d", tz = "UTC"),
+    First.Notice = as.Date(First.Notice, "%Y-%m-%d", tz = "UTC"),
+    First.Delivery = as.Date(First.Delivery, "%Y-%m-%d", tz = "UTC"),
+    Last.Delivery = as.Date(Last.Delivery, "%Y-%m-%d", tz = "UTC")
+  )
 
-ALI <- read_excel("ALI.xls", col_types = c("skip", "skip", "skip", "text", "skip", "skip",
-                                           "skip", "skip", "skip", "text", "skip", "text", "text"))  %>%
+ALI <- read_excel("ALI.xls", col_types = c(
+  "skip", "skip", "skip", "text", "skip", "skip",
+  "skip", "skip", "skip", "text", "skip", "text", "text"
+)) %>%
   dplyr::as_tibble(.name_repair = "universal") %>%
-  dplyr::transmute(cmdty = "comexalu", tick.prefix = "ALI",
-                   Last.Trade = as.Date(Last.Trade,"%Y-%m-%d",tz = "UTC"),
-                   First.Notice = as.Date(First.Notice,"%Y-%m-%d",tz = "UTC"),
-                   First.Delivery = as.Date(First.Delivery,"%Y-%m-%d",tz = "UTC"),
-                   Last.Delivery = as.Date(Last.Delivery,"%Y-%m-%d",tz = "UTC"))
+  dplyr::transmute(
+    cmdty = "comexalu", tick.prefix = "ALI",
+    Last.Trade = as.Date(Last.Trade, "%Y-%m-%d", tz = "UTC"),
+    First.Notice = as.Date(First.Notice, "%Y-%m-%d", tz = "UTC"),
+    First.Delivery = as.Date(First.Delivery, "%Y-%m-%d", tz = "UTC"),
+    Last.Delivery = as.Date(Last.Delivery, "%Y-%m-%d", tz = "UTC")
+  )
 
-expiry_table <- rbind(expiry_table,LCO,LGO,CL,BZ,HO,RB,GC,SI,ALI) %>%
+expiry_table <- rbind(expiry_table, LCO, LGO, CL, BZ, HO, RB, GC, SI, ALI) %>%
   dplyr::distinct() %>%
-  dplyr::mutate(Year = year(First.Delivery),
-                Month = month(First.Delivery),
-                Month.Letter = futmonths[Month],
-                yahoo.ticker = paste0(tick.prefix,
-                                      Month.Letter,
-                                      str_sub(Year, start = 3L, end = 4L), ".",
-                                      dplyr::case_when(tick.prefix %in% c("CL","","RB","HO","NG") ~ "NYM",
-                                                       tick.prefix %in% c("GC","SI","ALI")  ~ "CMX",
-                                                       TRUE ~ "NA")),
-                yahoo.ticker = ifelse(grepl("NA",yahoo.ticker),NA,yahoo.ticker)) %>%
+  dplyr::mutate(
+    Year = year(First.Delivery),
+    Month = month(First.Delivery),
+    Month.Letter = futmonths[Month],
+    yahoo.ticker = paste0(
+      tick.prefix,
+      Month.Letter,
+      str_sub(Year, start = 3L, end = 4L), ".",
+      dplyr::case_when(
+        tick.prefix %in% c("CL", "", "RB", "HO", "NG") ~ "NYM",
+        tick.prefix %in% c("GC", "SI", "ALI") ~ "CMX",
+        TRUE ~ "NA"
+      )
+    ),
+    yahoo.ticker = ifelse(grepl("NA", yahoo.ticker), NA, yahoo.ticker)
+  ) %>%
   dplyr::filter(Year > 2003)
 usethis::use_data(expiry_table, overwrite = T)
 
 ## tradeCycle
-tradeCycle <- read.csv('tradeCycle.csv',sep = ",",header = TRUE,na.strings = "NA",stringsAsFactors = FALSE) %>%
-  dplyr::mutate(flowmonth = as.Date(flowmonth),
-                trade.cycle.end = as.Date(trade.cycle.end))
-nymex <- holidaysOil %>% dplyr::filter(key == "nymex") %>% dplyr::select(value) %>% .[[1]]
-bizdays::create.calendar(name = "nymex", holidays = nymex ,weekdays = c('saturday', 'sunday'))
+tradeCycle <- read.csv("tradeCycle.csv", sep = ",", header = TRUE, na.strings = "NA", stringsAsFactors = FALSE) %>%
+  dplyr::mutate(
+    flowmonth = as.Date(flowmonth),
+    trade.cycle.end = as.Date(trade.cycle.end)
+  )
+nymex <- holidaysOil %>%
+  dplyr::filter(key == "nymex") %>%
+  dplyr::select(value) %>%
+  .[[1]]
+bizdays::create.calendar(name = "nymex", holidays = nymex, weekdays = c("saturday", "sunday"))
 tradeCycle <- expiry_table %>%
   dplyr::filter(cmdty == "cmewti") %>%
   dplyr::select(Last.Trade) %>%
-  dplyr::transmute(market = "usdomestic",
-                   flowmonth = lubridate::rollback(dates = Last.Trade + months(1), roll_to_first = TRUE),
-                   trade.cycle.end = bizdays::offset(Last.Trade,3,"nymex")) %>%
+  dplyr::transmute(
+    market = "usdomestic",
+    flowmonth = lubridate::rollback(dates = Last.Trade + months(1), roll_to_first = TRUE),
+    trade.cycle.end = bizdays::offset(Last.Trade, 3, "nymex")
+  ) %>%
   tidyr::drop_na() %>%
-  rbind(tradeCycle, .) %>% dplyr::as_tibble()
+  rbind(tradeCycle, .) %>%
+  dplyr::as_tibble()
 usethis::use_data(tradeCycle, overwrite = T)
 
 ## Canadian Crude Data
 
-url <-  "https://crudemonitor.ca/crudes/index.php?acr=MSW"
+url <- "https://crudemonitor.ca/crudes/index.php?acr=MSW"
 html <- xml2::read_html(url)
 
-get_all_assays<-function(x) {
+get_all_assays <- function(x) {
   print(x)
-  t<-try(read_html(paste0("http://www.crudemonitor.ca/",x)) %>%  html_nodes("a") %>% rvest::html_attr("href") %>%
-           data.frame(baselocation=.) %>% dplyr::filter(grepl("date=",baselocation)))
-  if(!class(t)=="try-error"){
-    return(read_html(paste0("http://www.crudemonitor.ca/",x)) %>%  html_nodes("a") %>% rvest::html_attr("href") %>%
-             data.frame(baselocation=.) %>% dplyr::filter(grepl("date=",baselocation)))
-  } else { return(data.frame(baselocation=character()))}
+  t <- try(read_html(paste0("http://www.crudemonitor.ca/", x)) %>% html_nodes("a") %>% rvest::html_attr("href") %>%
+    data.frame(baselocation = .) %>% dplyr::filter(grepl("date=", baselocation)))
+  if (!class(t) == "try-error") {
+    return(read_html(paste0("http://www.crudemonitor.ca/", x)) %>% html_nodes("a") %>% rvest::html_attr("href") %>%
+      data.frame(baselocation = .) %>% dplyr::filter(grepl("date=", baselocation)))
+  } else {
+    return(data.frame(baselocation = character()))
+  }
 }
-#x<-"sampledata.php?name=Cochin+Condensate&batch=CHN-010&date=2016-10-05"
-get_assay_values<-function(x){
+# x<-"sampledata.php?name=Cochin+Condensate&batch=CHN-010&date=2016-10-05"
+get_assay_values <- function(x) {
   print(x)
-  tmp<-read_html(paste0("http://www.crudemonitor.ca/",x)) %>%
-    html_nodes('#datatables') %>% html_text() %>% stringr::str_split("\\n",simplify = T)
-  out<-data.frame(measure=tmp[1,grep("\\S+\\s\\(",tmp[1,])],value=tmp[1,grep("\\S+\\s\\(",tmp[1,])+1])
+  tmp <- read_html(paste0("http://www.crudemonitor.ca/", x)) %>%
+    html_nodes("#datatables") %>%
+    html_text() %>%
+    stringr::str_split("\\n", simplify = T)
+  out <- data.frame(measure = tmp[1, grep("\\S+\\s\\(", tmp[1, ])], value = tmp[1, grep("\\S+\\s\\(", tmp[1, ]) + 1])
   return(out)
 }
 
-assay_id <-read_html("http://www.crudemonitor.ca/report.php") %>%
-  rvest::html_nodes("a") %>% rvest::html_attr("href") %>% data.frame(baselocation=.) %>%
-  dplyr::filter(grepl("report.php\\?acr=",baselocation)) %>%
+assay_id <- read_html("http://www.crudemonitor.ca/report.php") %>%
+  rvest::html_nodes("a") %>%
+  rvest::html_attr("href") %>%
+  data.frame(baselocation = .) %>%
+  dplyr::filter(grepl("report.php\\?acr=", baselocation)) %>%
   setNames("shortname") %>%
-  dplyr::filter(grepl("=AWB|=BRN|=CDB|=CL|=LLB|=LLK|=MSW|=WCS|=WH",shortname)) %>%
-  arrange %>%
-  dplyr::mutate(longname = purrr::map(shortname,get_all_assays)) %>% tidyr::unnest(longname) %>%
-  tidyr::separate(shortname,into = c("j1","Ticker"),sep = "acr=") %>%
+  dplyr::filter(grepl("=AWB|=BRN|=CDB|=CL|=LLB|=LLK|=MSW|=WCS|=WH", shortname)) %>%
+  arrange() %>%
+  dplyr::mutate(longname = purrr::map(shortname, get_all_assays)) %>%
+  tidyr::unnest(longname) %>%
+  tidyr::separate(shortname, into = c("j1", "Ticker"), sep = "acr=") %>%
   dplyr::mutate(filelocation = baselocation) %>%
-  tidyr::separate(baselocation,into = c("j2","j3","Batch","Date","junk"),sep="=") %>%
-  dplyr::mutate(Crude = gsub("&batch","",j3)) %>%
-  dplyr::mutate(Crude = gsub("\\+"," ",Crude)) %>%
-  dplyr::select(Ticker,Date,Batch,filelocation,Crude)
+  tidyr::separate(baselocation, into = c("j2", "j3", "Batch", "Date", "junk"), sep = "=") %>%
+  dplyr::mutate(Crude = gsub("&batch", "", j3)) %>%
+  dplyr::mutate(Crude = gsub("\\+", " ", Crude)) %>%
+  dplyr::select(Ticker, Date, Batch, filelocation, Crude)
 
 # Scrape Assay Content by ID
-assays <- assay_id %>% na.omit() %>%
-  dplyr::mutate(data = purrr::map(filelocation,get_assay_values)) %>%
+assays <- assay_id %>%
+  na.omit() %>%
+  dplyr::mutate(data = purrr::map(filelocation, get_assay_values)) %>%
   unnest(data)
 
 # Tidying Data
 cancrudeassays <- assays %>%
-  dplyr::mutate(Ticker = gsub("\\&.*","",Ticker),
-                Date = as.Date(str_remove(Date,"&PHPSESSID")),
-                Batch = gsub("\\&.*","",Batch),
-                Measurement = gsub("\\s\\(.*","",measure),
-                Value = parse_number(as.character(value),na=c("","NA","ND"))) %>%
-  dplyr::select(Date,Batch,Ticker,Crude,Measurement,Value) %>%
+  dplyr::mutate(
+    Ticker = gsub("\\&.*", "", Ticker),
+    Date = as.Date(str_remove(Date, "&PHPSESSID")),
+    Batch = gsub("\\&.*", "", Batch),
+    Measurement = gsub("\\s\\(.*", "", measure),
+    Value = parse_number(as.character(value), na = c("", "NA", "ND"))
+  ) %>%
+  dplyr::select(Date, Batch, Ticker, Crude, Measurement, Value) %>%
   stats::na.omit() %>%
   dplyr::filter(Ticker != "MSW(S)")
 
 # Computing Monthly Measurements Averages
 
 cancrudeassays <- cancrudeassays %>%
-  pivot_wider(names_from = "Measurement",values_from = "Value") %>%
-  dplyr::mutate(date = tsibble::yearmonth(Date),
-                Location = case_when(grepl("AHS|AWB|C5|CAL|MSW|PSO|WDB|WH|KDB",Ticker)  ~ "Edmonton",
-                                   grepl("BRN|CDB|CL|LLB|LLK|WCS",Ticker)  ~ "Hardisty",
-                                   TRUE ~ "unknown")) %>%
-  dplyr::select(date,Location,everything(),-contains("%")) %>%
-  group_by(Ticker,Crude,date,Location) %>%
+  pivot_wider(names_from = "Measurement", values_from = "Value") %>%
+  dplyr::mutate(
+    date = tsibble::yearmonth(Date),
+    Location = case_when(
+      grepl("AHS|AWB|C5|CAL|MSW|PSO|WDB|WH|KDB", Ticker) ~ "Edmonton",
+      grepl("BRN|CDB|CL|LLB|LLK|WCS", Ticker) ~ "Hardisty",
+      TRUE ~ "unknown"
+    )
+  ) %>%
+  dplyr::select(date, Location, everything(), -contains("%")) %>%
+  group_by(Ticker, Crude, date, Location) %>%
   summarise_if(is.numeric, mean, na.rm = TRUE)
 
-cancrudeassays <-  cancrudeassays %>% dplyr::ungroup() %>% dplyr::arrange(Ticker, date) %>%
-  dplyr::mutate(TAN = replace(TAN, is.nan(TAN), NA),
-                TAN = case_when((is.na(TAN) & Ticker %in% c("MSW", "SYN")) ~ 0,
-                                TRUE ~ TAN)) %>%
+cancrudeassays <- cancrudeassays %>%
+  dplyr::ungroup() %>%
+  dplyr::arrange(Ticker, date) %>%
+  dplyr::mutate(
+    TAN = replace(TAN, is.nan(TAN), NA),
+    TAN = case_when(
+      (is.na(TAN) & Ticker %in% c("MSW", "SYN")) ~ 0,
+      TRUE ~ TAN
+    )
+  ) %>%
   tidyr::fill(TAN)
 
 usethis::use_data(cancrudeassays, overwrite = T)
 
-cancrudeassayssum <- cancrudeassays %>% dplyr::group_by(Ticker,Crude) %>%
-  #dplyr::filter(YM > "2015-01-01", Ticker != "MSW(S)") %>%
-  dplyr::select(-Location,-Sediment,-Salt,-Olefins,-Viscosity) %>%
-  dplyr::mutate(TAN = case_when(Ticker == "MSW" ~ 0,TRUE ~ TAN)) %>%
-  na.omit() %>% summarise_all(list(mean))
+cancrudeassayssum <- cancrudeassays %>%
+  dplyr::group_by(Ticker, Crude) %>%
+  # dplyr::filter(YM > "2015-01-01", Ticker != "MSW(S)") %>%
+  dplyr::select(-Location, -Sediment, -Salt, -Olefins, -Viscosity) %>%
+  dplyr::mutate(TAN = case_when(Ticker == "MSW" ~ 0, TRUE ~ TAN)) %>%
+  na.omit() %>%
+  summarise_all(list(mean))
 
 usethis::use_data(cancrudeassayssum, overwrite = T)
 
@@ -583,64 +694,86 @@ usethis::use_data(cancrudeprices, overwrite = T)
 # BP Assays
 ### capline https://cappl.com/Reports1.aspx
 library(rvest)
-url = "https://www.bp.com/en/global/bp-global-energy-trading/features-and-updates/technical-downloads/crudes-assays.html"
+url <- "https://www.bp.com/en/global/bp-global-energy-trading/features-and-updates/technical-downloads/crudes-assays.html"
 html <- xml2::read_html(url)
 
 ## Simplified tables
-x <- html %>% rvest::html_nodes("table") %>%
-  rvest::html_table(fill=T) %>% .[[1]] %>%
-  dplyr::as_tibble() %>% dplyr::slice(-1) %>% dplyr::select(1:5) %>%
+x <- html %>%
+  rvest::html_nodes("table") %>%
+  rvest::html_table(fill = T) %>%
+  .[[1]] %>%
+  dplyr::as_tibble() %>%
+  dplyr::slice(-1) %>%
+  dplyr::select(1:5) %>%
   dplyr::transmute(Crude = X1, Country = X2, API = as.numeric(X3), Sulphur = as.numeric(X4), TAN = as.numeric(X5))
 
-y <- cancrudeassayssum %>% dplyr::transmute(Crude,
-                                       Country="Canada",
-                                       API = Gravity, Sulphur,TAN) %>%
-  dplyr::ungroup() %>% dplyr::select(-Ticker)
+y <- cancrudeassayssum %>%
+  dplyr::transmute(Crude,
+    Country = "Canada",
+    API = Gravity, Sulphur, TAN
+  ) %>%
+  dplyr::ungroup() %>%
+  dplyr::select(-Ticker)
 
-crudes <- rbind(x,y) %>%
+crudes <- rbind(x, y) %>%
   tibble::add_row(Crude = "Tapis", Country = "Malaysia", API = 42.7, Sulphur = .044, TAN = 0.215) %>%
   tibble::add_row(Crude = "Maya", Country = "Mexico", API = 22, Sulphur = 3.3, TAN = 0.3) %>%
   tibble::add_row(Crude = "Light Louisiana Sweet", Country = "US", API = 38.5, Sulphur = .40, TAN = 0.25) %>%
   tibble::add_row(Crude = "West Texas Intermediate", Country = "US", API = 40.6, Sulphur = .22, TAN = 0.1)
 
 crudes <- crudes %>%
-  dplyr::mutate(SweetSour = case_when(Sulphur < 0.5 ~ "Sweet", TRUE ~ "Sour"),
-                LightMedHeavy = case_when(API < 22.3 ~ "Heavy",
-                                          API > 31.1 ~ "Light",
-                                          TRUE ~ "Medium"),
-                Benchmark = if_else(Crude %in% c("Maya",#"Oriente","Napo",
-                                               "West Texas Intermediate","Light Louisiana Sweet",
-                                               "Oman Export Blend","Mars",
-                                               "Brent","Tapis"),"yes","no"),
-                Notes = case_when(Country == "Canada" ~ "Canada",
-                                          Benchmark == "yes" ~ "Benchmark",
-                                          TRUE ~ "Others"),)
+  dplyr::mutate(
+    SweetSour = case_when(Sulphur < 0.5 ~ "Sweet", TRUE ~ "Sour"),
+    LightMedHeavy = case_when(
+      API < 22.3 ~ "Heavy",
+      API > 31.1 ~ "Light",
+      TRUE ~ "Medium"
+    ),
+    Benchmark = if_else(Crude %in% c(
+      "Maya", # "Oriente","Napo",
+      "West Texas Intermediate", "Light Louisiana Sweet",
+      "Oman Export Blend", "Mars",
+      "Brent", "Tapis"
+    ), "yes", "no"),
+    Notes = case_when(
+      Country == "Canada" ~ "Canada",
+      Benchmark == "yes" ~ "Benchmark",
+      TRUE ~ "Others"
+    ),
+  )
 
-crudes$LightMedHeavy <- factor(crudes$LightMedHeavy, levels=c("Light", "Medium", "Heavy"))
-crudes$SweetSour <- factor(crudes$SweetSour, levels=c("Sweet", "Sour"))
+crudes$LightMedHeavy <- factor(crudes$LightMedHeavy, levels = c("Light", "Medium", "Heavy"))
+crudes$SweetSour <- factor(crudes$SweetSour, levels = c("Sweet", "Sour"))
 usethis::use_data(crudes, overwrite = T)
-rm(x,y)
+rm(x, y)
 
 ## xls assays
 css <- "body > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div:nth-child(3) > div > div > div.nr-table-component.nr-component.aem-GridColumn.aem-GridColumn--default--12"
-urls <- html %>% html_nodes(css = css) %>%
-  html_nodes("a") %>% rvest::html_attr("href") %>%
+urls <- html %>%
+  html_nodes(css = css) %>%
+  html_nodes("a") %>%
+  rvest::html_attr("href") %>%
   as_tibble() %>%
-  dplyr::transmute(xls = paste0("https://www.bp.com",value)) %>% unique() %>%
-  dplyr::mutate(cn = str_replace_all(xls,
-                                     c("https://www.bp.com/content/dam/bp/business-sites/en/global/bp-global-energy-trading/documents/what-we-do/crudes/" = "",".xls" = "")))
+  dplyr::transmute(xls = paste0("https://www.bp.com", value)) %>%
+  unique() %>%
+  dplyr::mutate(cn = str_replace_all(
+    xls,
+    c("https://www.bp.com/content/dam/bp/business-sites/en/global/bp-global-energy-trading/documents/what-we-do/crudes/" = "", ".xls" = "")
+  ))
 
 crudeassaysBP <- list()
-for (i in 1:nrow(urls)){
-  destfile = urls$cn[i]
-  curl::curl_download(url = urls$xls[i],
-                      destfile = destfile)
+for (i in 1:nrow(urls)) {
+  destfile <- urls$cn[i]
+  curl::curl_download(
+    url = urls$xls[i],
+    destfile = destfile
+  )
   tmp <- readxl::read_excel(destfile, range = "B30:P85", col_names = F)
-  colnames(tmp) <- c("Specification","Whole.crude","Light.Naphtha","Heavy.Naphtha1","Heavy.Naphtha2","Kero","Light.Gas.Oil","HeavyGasOil","Light.VGO","Heavy.VGO1","Heavy.VGO2","AtRes1","AtRes2","VacRes1","VacRes2")
+  colnames(tmp) <- c("Specification", "Whole.crude", "Light.Naphtha", "Heavy.Naphtha1", "Heavy.Naphtha2", "Kero", "Light.Gas.Oil", "HeavyGasOil", "Light.VGO", "Heavy.VGO1", "Heavy.VGO2", "AtRes1", "AtRes2", "VacRes1", "VacRes2")
   tmp <- tmp %>%
     tidyr::drop_na("Specification") %>%
-    dplyr::na_if('-') %>%
-    dplyr::mutate_at(vars(!starts_with("Spec")),as.numeric) %>%
+    dplyr::na_if("-") %>%
+    dplyr::mutate_at(vars(!starts_with("Spec")), as.numeric) %>%
     as_tibble()
   crudeassaysBP[[destfile]] <- tmp
   file.remove(destfile)
@@ -650,95 +783,125 @@ usethis::use_data(crudeassaysBP, overwrite = T)
 
 # Exxon Assays
 
-url = "https://corporate.exxonmobil.com/Crude-oils/Crude-trading/Crude-oil-blends-by-API-gravity-and-by-sulfur-content#APIgravity"
+url <- "https://corporate.exxonmobil.com/Crude-oils/Crude-trading/Crude-oil-blends-by-API-gravity-and-by-sulfur-content#APIgravity"
 html <- xml2::read_html(url)
 css <- "body > main > div.article--wrapper > section.rich-text > div > div"
 
-urls <- html %>% html_nodes(css = css) %>%
-  html_nodes("a") %>% rvest::html_attr("href") %>%
-  as_tibble() %>% dplyr::filter(grepl("/Crude-oils/",value)) %>%
-  dplyr::transmute(site = paste0("https://corporate.exxonmobil.com",value)) %>% unique()
+urls <- html %>%
+  html_nodes(css = css) %>%
+  html_nodes("a") %>%
+  rvest::html_attr("href") %>%
+  as_tibble() %>%
+  dplyr::filter(grepl("/Crude-oils/", value)) %>%
+  dplyr::transmute(site = paste0("https://corporate.exxonmobil.com", value)) %>%
+  unique()
 
-fetchURL <- function(url, css, prefix){
-  xml2::read_html(url) %>% html_nodes(css = css) %>%
-    html_nodes("a") %>% rvest::html_attr("href") %>%
-    paste0(prefix,.)
+fetchURL <- function(url, css, prefix) {
+  xml2::read_html(url) %>%
+    html_nodes(css = css) %>%
+    html_nodes("a") %>%
+    rvest::html_attr("href") %>%
+    paste0(prefix, .)
 }
 
 urls <- urls %>%
-  dplyr::mutate(prefix = "https://corporate.exxonmobil.com",
-                xls = mapply(fetchURL,url = site,
-                             css = "body > main > div.article--wrapper > section.articleMedia.articleMedia-in-line.articleMedia--relatedContent > div > article > div > div:nth-child(3) > h3",
-                             prefix = prefix)) %>%
-  dplyr::select(-prefix) %>% dplyr::filter(!grepl(".pdf",xls,ignore.case = T)) %>%
-  dplyr::mutate(cn = gsub("/.*","",gsub("https://corporate.exxonmobil.com/-/media/Global/Files/crude-oils/","",xls)))
+  dplyr::mutate(
+    prefix = "https://corporate.exxonmobil.com",
+    xls = mapply(fetchURL,
+      url = site,
+      css = "body > main > div.article--wrapper > section.articleMedia.articleMedia-in-line.articleMedia--relatedContent > div > article > div > div:nth-child(3) > h3",
+      prefix = prefix
+    )
+  ) %>%
+  dplyr::select(-prefix) %>%
+  dplyr::filter(!grepl(".pdf", xls, ignore.case = T)) %>%
+  dplyr::mutate(cn = gsub("/.*", "", gsub("https://corporate.exxonmobil.com/-/media/Global/Files/crude-oils/", "", xls)))
 
 crudeassaysXOM <- list()
-for (i in 1:nrow(urls)){
-  destfile = urls$cn[i]
-  curl::curl_download(url = urls$xls[i],
-                      destfile = destfile)
+for (i in 1:nrow(urls)) {
+  destfile <- urls$cn[i]
+  curl::curl_download(
+    url = urls$xls[i],
+    destfile = destfile
+  )
   tmp <- read_excel(destfile, skip = 4) %>%
-    dplyr::rename_all(list(~make.names(.)))
+    dplyr::rename_all(list(~ make.names(.)))
   colnames(tmp)[1] <- destfile
   crudeassaysXOM[[destfile]] <- tmp
   file.remove(destfile)
 }
 
 usethis::use_data(crudeassaysXOM, overwrite = T)
-rm(html,tmp,urls,css,destfile,i)
+rm(html, tmp, urls, css, destfile, i)
 
 ## Physical Diffs
-fizdiffs <-  readRDS("fizdiffs.RDS")
+fizdiffs <- readRDS("fizdiffs.RDS")
 usethis::use_data(fizdiffs, overwrite = T)
 
 
 ## IR Curves for RQuantlib
-  # Curves and Def - ICE
-fromDate = Sys.Date() - months(1)
+# Curves and Def - ICE
+fromDate <- Sys.Date() - months(1)
 
-usSwapIR <- dplyr::tibble(tickQL = c("d1d","d1w","d1m","d3m","d6m","d1y",
-                                     paste0("fut",1:8),
-                                     paste0("s",c(2,3,5,7,10,15,20,30),"y")),
-                          type = c(rep("ICE.LIBOR",6),rep("EuroDollar",8),rep("IRS",8)),
-                          source = c(rep("FRED",6),rep("CME",8),rep("FRED",8)),
-                          tickSource = c("USDONTD156N","USD1WKD156N","USD1MTD156N","USD3MTD156N","USD6MTD156N","USD12MD156N",
-                                         paste0("GE_",sprintf('%0.3d', 1:8),"_Month"),
-                                         paste0("ICERATES1100USD",c(2,3,5,7,10,15,20,30),"Y")))
-#c = usSwapIR %>% dplyr::filter(source == "Morningstar") %>% .$tickSource
-ed <- getPrices(feed = "CME_CmeFutures_EOD_continuous",
-               contracts = c(paste0("GE_",sprintf('%0.3d', 1:8),"_Month")),
-               from = fromDate,
-               iuser = mstar[[1]],
-               ipassword = mstar[[2]])
-#c = usSwapIR %>% dplyr::filter(source == "quandl") %>% .$tickSource
-c = usSwapIR %>% dplyr::filter(source == "FRED") %>% .$tickSource
-x <- tidyquant::tq_get(c, get  = "economic.data", from = fromDate ,to = as.character(Sys.Date())) %>%
-  dplyr::mutate(price = price/100) %>%
-  tidyr::pivot_wider(date,names_from = symbol, values_from = price)
+usSwapIR <- dplyr::tibble(
+  tickQL = c(
+    "d1d", "d1w", "d1m", "d3m", "d6m", "d1y",
+    paste0("fut", 1:8),
+    paste0("s", c(2, 3, 5, 7, 10, 15, 20, 30), "y")
+  ),
+  type = c(rep("ICE.LIBOR", 6), rep("EuroDollar", 8), rep("IRS", 8)),
+  source = c(rep("FRED", 6), rep("CME", 8), rep("FRED", 8)),
+  tickSource = c(
+    "USDONTD156N", "USD1WKD156N", "USD1MTD156N", "USD3MTD156N", "USD6MTD156N", "USD12MD156N",
+    paste0("GE_", sprintf("%0.3d", 1:8), "_Month"),
+    paste0("ICERATES1100USD", c(2, 3, 5, 7, 10, 15, 20, 30), "Y")
+  )
+)
+# c = usSwapIR %>% dplyr::filter(source == "Morningstar") %>% .$tickSource
+ed <- getPrices(
+  feed = "CME_CmeFutures_EOD_continuous",
+  contracts = c(paste0("GE_", sprintf("%0.3d", 1:8), "_Month")),
+  from = fromDate,
+  iuser = mstar[[1]],
+  ipassword = mstar[[2]]
+)
+# c = usSwapIR %>% dplyr::filter(source == "quandl") %>% .$tickSource
+c <- usSwapIR %>%
+  dplyr::filter(source == "FRED") %>%
+  .$tickSource
+x <- tidyquant::tq_get(c, get = "economic.data", from = fromDate, to = as.character(Sys.Date())) %>%
+  dplyr::mutate(price = price / 100) %>%
+  tidyr::pivot_wider(date, names_from = symbol, values_from = price)
 r <- dplyr::left_join(x, ed, by = c("date"))
-colnames(r) <- c("date",dplyr::tibble(tickSource = colnames(r)[-1]) %>% dplyr::left_join(usSwapIR,by = c("tickSource")) %>% .$tickQL)
+colnames(r) <- c("date", dplyr::tibble(tickSource = colnames(r)[-1]) %>% dplyr::left_join(usSwapIR, by = c("tickSource")) %>% .$tickQL)
 usSwapIRdef <- usSwapIR %>% tidyr::drop_na()
 usSwapIR <- r %>% stats::na.omit()
 
-  # Discount Objects
+# Discount Objects
 
 library(RQuantLib)
-rates <- usSwapIR %>% stats::na.omit() %>% dplyr::filter(date == dplyr::last(date))
+rates <- usSwapIR %>%
+  stats::na.omit() %>%
+  dplyr::filter(date == dplyr::last(date))
 tradeDate <- rates$date
-tsQuotes <- rates %>% dplyr::select(contains("d"),contains("fut"),contains("s"),-date,-d1d) %>%
-  transpose() %>% unlist() %>% as.list()
-params <- list(tradeDate = tradeDate, settleDate = tradeDate + 2, dt = 1/12,
-               interpWhat="discount", interpHow="spline")
+tsQuotes <- rates %>%
+  dplyr::select(contains("d"), contains("fut"), contains("s"), -date, -d1d) %>%
+  transpose() %>%
+  unlist() %>%
+  as.list()
+params <- list(
+  tradeDate = tradeDate, settleDate = tradeDate + 2, dt = 1 / 12,
+  interpWhat = "discount", interpHow = "spline"
+)
 setEvaluationDate(tradeDate)
-times <- seq(0,20,1/12)
-savepar <- par(mfrow=c(3,3), mar=c(4,4,2,0.5))
+times <- seq(0, 20, 1 / 12)
+savepar <- par(mfrow = c(3, 3), mar = c(4, 4, 2, 0.5))
 on.exit(par(savepar))
 usSwapCurves <- DiscountCurve(params, tsQuotes, times)
-tsQuotes <- list(flat=0.03)
+tsQuotes <- list(flat = 0.03)
 usSwapCurvesPar <- DiscountCurve(params, tsQuotes, times)
 
-rm(r,x,rates,savepar,tsQuotes,params,mstar)
+rm(r, x, rates, savepar, tsQuotes, params, mstar)
 
 usethis::use_data(usSwapIR, overwrite = T)
 usethis::use_data(usSwapIRdef, overwrite = T)
@@ -747,34 +910,30 @@ usethis::use_data(usSwapCurvesPar, overwrite = T)
 
 # Refinery Optimization
 
-ref.opt.inputs <- data.frame(info=c("price","processing.fee"),
-                     LightSweet=c(-50,-1),
-                     HeavySour=c(-30,-4))
+ref.opt.inputs <- data.frame(
+  info = c("price", "processing.fee"),
+  LightSweet = c(-50, -1),
+  HeavySour = c(-30, -4)
+)
 
-ref.opt.outputs <- data.frame(product=c("mogas","distillate","fo","resid"),
-                       prices=c(70,70,30,20),
-                       max.prod=c(50000,40000,20000,10000),
-                       LightSweet.yield=c(0.65,.20,.10,0.05),
-                       HeavySour.yield=c(0.40,0.20,.30,.1))
+ref.opt.outputs <- data.frame(
+  product = c("mogas", "distillate", "fo", "resid"),
+  prices = c(70, 70, 30, 20),
+  max.prod = c(50000, 40000, 20000, 10000),
+  LightSweet.yield = c(0.65, .20, .10, 0.05),
+  HeavySour.yield = c(0.40, 0.20, .30, .1)
+)
 
 usethis::use_data(ref.opt.inputs, overwrite = T)
 usethis::use_data(ref.opt.outputs, overwrite = T)
 
 # Educational Dataset
 
-tradeprocess <- RTL::getPrices(feed="CME_NymexFutures_EOD",contracts = c("@CL22H","@HO22F","@HO22H","@LT22H"),
-                               from="2018-01-01",iuser = mstar[[1]], ipassword = mstar[[2]]) %>% stats::na.omit()
+tradeprocess <- RTL::getPrices(
+  feed = "CME_NymexFutures_EOD", contracts = c("@CL22H", "@HO22F", "@HO22H", "@LT22H"),
+  from = "2018-01-01", iuser = mstar[[1]], ipassword = mstar[[2]]
+) %>% stats::na.omit()
 usethis::use_data(tradeprocess, overwrite = T)
 
 # Global
 devtools::document()
-
-
-
-
-
-
-
-
-
-

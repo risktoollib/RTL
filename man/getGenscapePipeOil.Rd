@@ -47,11 +47,14 @@ https://developer.genscape.com/docs/services/oil-transportation/operations/GetPi
 }
 \examples{
 \dontrun{
-getGenscapePipeOil(frequency = "daily", regions = "Canada",pipelineIDs = c(97),
-                  revision = "revised", limit = 5000, offset = 0,
-                  startDate = "2015-01-01", endDate = as.character(Sys.Date()),
-                  apikey = "yourapikey")
+getGenscapePipeOil(
+  frequency = "daily", regions = "Canada", pipelineIDs = c(97),
+  revision = "revised", limit = 5000, offset = 0,
+  startDate = "2015-01-01", endDate = as.character(Sys.Date()),
+  apikey = "yourapikey"
+)
 }
+
 }
 \author{
 Philippe Cote

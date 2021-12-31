@@ -26,7 +26,7 @@ A numeric vector of simulated values
 Simulates a Ornstein–Uhlenbeck process
 }
 \examples{
-simOU(S0=5,mu=5,theta=.5,sigma=0.2,T2M=1,dt=1/12)
+simOU(S0 = 5, mu = 5, theta = .5, sigma = 0.2, T2M = 1, dt = 1 / 12)
 }
 \author{
 Philippe Cote

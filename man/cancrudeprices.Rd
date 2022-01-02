@@ -3,7 +3,7 @@
 \docType{data}
 \name{cancrudeprices}
 \alias{cancrudeprices}
-\title{cancrudeprices}
+\title{Randomized data for Canadian crude pricing.}
 \format{
 data frame
 }
@@ -11,6 +11,6 @@ data frame
 cancrudeprices
 }
 \description{
-Randomized dataset of Canadian Crude monthly prices versus WTI Calendar Month Average.
+Randomized data of Canadian Crude monthly prices versus WTI Calendar Month Average.
 }
 \keyword{datasets}

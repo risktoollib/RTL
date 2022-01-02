@@ -1,4 +1,4 @@
-#' \code{eia2tidy}
+#' EIA API call with tidy output
 #' @description Extracts data from the Energy Information Administration (EIA) API to tibble format with optional custom series name.
 #' Makes a clean wrapper for use with purrr for multiple series extraction. Query Browser at https://www.eia.gov/opendata/qb.php.
 #' @param ticker EIA series name.

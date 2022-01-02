@@ -2,7 +2,7 @@
 % Please edit documentation in R/getGIS.R
 \name{getGIS}
 \alias{getGIS}
-\title{\code{getGIS}}
+\title{Extract and convert GIS data from a URL}
 \usage{
 getGIS(
   url = "https://gis.energy.gov.ab.ca/GeoviewData/OS_Agreements_Shape.zip"

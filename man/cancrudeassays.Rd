@@ -3,7 +3,7 @@
 \docType{data}
 \name{cancrudeassays}
 \alias{cancrudeassays}
-\title{cancrudeassays}
+\title{Data for Canadian crude assays reported by Crude Monitor}
 \format{
 data frame
 }

@@ -1,4 +1,4 @@
-#' \code{returns}
+#' Compute absolute, relative or log returns.
 #' @description Computes periodic returns from a dataframe ordered by date
 #' @param df Long dataframe with colnames = c("date","value","series")
 #' @param retType "abs" for absolute, "rel" for relative, or "log" for log returns.

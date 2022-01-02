@@ -1,4 +1,4 @@
-#' \code{getPrice}
+#' Morningstar Commodities API single call
 #' @description
 #' Returns data from Morningstar API. See below for current feeds supported.
 #' You need your own credentials with Morningstar. In examples sourced locally.
@@ -230,7 +230,7 @@ getPrice <- function(feed = "CME_NymexFutures_EOD", contract = "@CL21Z",
 # getPrice2(feed = "AESO_ForecastAndActualPoolPrice",contract = "Forecast_Pool_Price",from,iuser,ipassword)
 
 
-#' \code{getPrices}
+#' Morningstar Commodities API multiple calls
 #' @description
 #' Multiple Morningstar API calls using getPrice functions.
 #' Refer to `getPrices()` for list of currently supported data feeds.
@@ -262,7 +262,7 @@ getPrices <- function(feed = "CME_NymexFutures_EOD", contracts = c("CL9Z", "CL0F
   return(x)
 }
 
-#' \code{getIRswapCurve}
+#' Morningstar Commodities API single call for IR curves
 #' @description
 #' Extract historical data for tsQuotes in RQuantlib to bootstrap swap curve
 #' using Morningstar and FRED as data source.
@@ -310,7 +310,7 @@ getIRswapCurve <- function(currency = "USD", from = "2019-01-01", iuser = "x@xyz
 }
 
 
-#' \code{getCurve}
+#' Morningstar Commodities API forward curves
 #' @description
 #' Returns forward curves from Morningstar API. See below for current feeds supported.
 #' You need your own credentials with Morningstar.

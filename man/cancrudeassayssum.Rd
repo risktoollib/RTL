@@ -3,7 +3,7 @@
 \docType{data}
 \name{cancrudeassayssum}
 \alias{cancrudeassayssum}
-\title{cancrudeassayssum}
+\title{Summarized data for Canadian crude assays}
 \format{
 data frame
 }

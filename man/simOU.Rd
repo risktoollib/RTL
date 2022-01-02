@@ -2,7 +2,7 @@
 % Please edit documentation in R/simOU.R
 \name{simOU}
 \alias{simOU}
-\title{\code{simOU}}
+\title{OU process simulation}
 \usage{
 simOU(S0 = 5, mu = 5, theta = 0.5, sigma = 0.2, T2M = 1, dt = 1/12)
 }

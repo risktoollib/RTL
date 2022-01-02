@@ -1,4 +1,4 @@
-#' \code{tradeStats}
+#' Risk-reward statistics for quant trading
 #' @description Compute list of risk reward metrics
 #' @param x Univariate xts object of returns OR dataframe with date and return variables.
 #' @param Rf Risk-free rate

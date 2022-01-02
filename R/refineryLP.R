@@ -1,5 +1,5 @@
-#' \code{refineryLP}
-#' @description Plain vanilla refinery optmization LP model.
+#' LP model for refinery optimization
+#' @description Plain vanilla refinery optimization LP model.
 #' @param crudes Data frame of crude inputs
 #' @param products Data frame of product outputs and max outputs.
 #' @return Optimal crude slate and profits

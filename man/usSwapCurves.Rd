@@ -3,7 +3,7 @@
 \docType{data}
 \name{usSwapCurves}
 \alias{usSwapCurves}
-\title{usSwapCurves}
+\title{Data for US interest rate discounting using zero rates curve.}
 \format{
 List
 #' @source Morningstar and FRED

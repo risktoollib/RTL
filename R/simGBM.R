@@ -1,4 +1,4 @@
-#' \code{simGBM}
+#' GBM process simulation
 #' @description Simulates a Geometric Brownian Motion process
 #' @param S0 Spot price at t=0
 #' @param drift Drift term in percentage

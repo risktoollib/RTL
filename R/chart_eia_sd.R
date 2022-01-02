@@ -1,5 +1,5 @@
-#' \code{chart_eia_sd}
-#' @description Supply Demand Balance from EIA Short Term Energy Outlook.
+#' EIA weekly Supply Demand information by product group
+#' @description Given a product group extracts all information to create SD Balances.
 #' @param market "mogas", "dist", "jet" or "resid".
 #' @param key Your private EIA API token.
 #' @param from Date as character "2020-07-01". Default to all dates available.

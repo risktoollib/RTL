@@ -3,7 +3,7 @@
 \docType{data}
 \name{eurodollar}
 \alias{eurodollar}
-\title{eurodollar}
+\title{Data for Eurodollar futures contracts}
 \format{
 data frame
 }
@@ -14,6 +14,6 @@ data frame
 eurodollar
 }
 \description{
-Eurodollar Futures - demo dataset
+ED futures contract for December 2024
 }
 \keyword{datasets}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/swapCOM.R
 \name{swapCOM}
 \alias{swapCOM}
-\title{\code{swapCOM}}
+\title{Commodity Calendar Month Average Swaps}
 \usage{
 swapCOM(
   futures = futs,

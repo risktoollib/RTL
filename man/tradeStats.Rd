@@ -2,7 +2,7 @@
 % Please edit documentation in R/tradeStats.R
 \name{tradeStats}
 \alias{tradeStats}
-\title{\code{tradeStats}}
+\title{Risk-reward statistics for quant trading}
 \usage{
 tradeStats(x, Rf = 0)
 }

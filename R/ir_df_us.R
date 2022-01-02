@@ -1,5 +1,5 @@
-#' \code{ir_df_us}
-#' @description Extracts US Tresury Zero Rates
+#' Extracts US Treasury Zero Rates
+#' @description Extracts US Treasury Zero Rates curve
 #' @param quandlkey Your Quandl key "quandlkey"
 #' @param ir.sens Creates plus and minus IR sensitivity scenarios with specified shock value.
 #' @return Data frame of zero rates

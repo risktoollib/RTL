@@ -2,7 +2,7 @@
 % Please edit documentation in R/chart_pairs.R
 \name{chart_pairs}
 \alias{chart_pairs}
-\title{\code{chart_pairs}}
+\title{Pairwise scatter plots for timeseries}
 \usage{
 chart_pairs(df = df, title = "Time Series Pairs Plot")
 }
@@ -15,7 +15,8 @@ chart_pairs(df = df, title = "Time Series Pairs Plot")
 A plotly object
 }
 \description{
-Pairwise scatter chart for timeseries.
+Plots pairwise scatter plots with the time dimension.
+Useful when exploring structural changes in timeseries properties for modeling.
 }
 \examples{
 df <- dfwide \%>\%

@@ -2,7 +2,7 @@
 % Please edit documentation in R/npv.R
 \name{npv}
 \alias{npv}
-\title{\code{npv}}
+\title{NPV}
 \usage{
 npv(
   init.cost = -375,
@@ -30,13 +30,14 @@ npv(
 
 \item{BreakEven}{TRUE when using a flat discount rate assumption.}
 
-\item{BE.yield}{Set the flat IR rate when BeakEven = TRUE.}
+\item{BE.yield}{Set the flat IR rate when BreakEven = TRUE.}
 }
 \value{
 List of NPV and NPV Data frame
 }
 \description{
-Compute NPV
+Computes NPV with discount factor interpolation.
+This function is used for teaching NPV and NPV at Risk and needs to be customized.
 }
 \examples{
 \dontrun{

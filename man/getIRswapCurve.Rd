@@ -2,7 +2,7 @@
 % Please edit documentation in R/morningstar.R
 \name{getIRswapCurve}
 \alias{getIRswapCurve}
-\title{\code{getIRswapCurve}}
+\title{Morningstar Commodities API single call for IR curves}
 \usage{
 getIRswapCurve(
   currency = "USD",

@@ -3,7 +3,7 @@
 \docType{data}
 \name{holidaysOil}
 \alias{holidaysOil}
-\title{holidaysOil}
+\title{Metadata for NYMEX and ICE holiday calendars}
 \format{
 data frame
 }

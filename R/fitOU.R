@@ -1,4 +1,4 @@
-#' \code{fitOU}
+#' Fits a Ornstein–Uhlenbeck process to a dataset
 #' @description Parameter estimation for Ornstein–Uhlenbeck process
 #' @param spread Spread time series.
 #' @return List of alpha, mu and sigma estimates

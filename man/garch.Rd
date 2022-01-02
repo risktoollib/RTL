@@ -2,7 +2,7 @@
 % Please edit documentation in R/garch.R
 \name{garch}
 \alias{garch}
-\title{\code{garch}}
+\title{Wrapper for a Garch(1,1) returning either a plot or data.}
 \usage{
 garch(x = x, out = TRUE)
 }

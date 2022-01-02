@@ -2,7 +2,7 @@
 % Please edit documentation in R/chart_PerfSummary.R
 \name{chart_PerfSummary}
 \alias{chart_PerfSummary}
-\title{\code{chart_PerformanceSummary}}
+\title{Cumulative performance and drawdown summary.}
 \usage{
 chart_PerfSummary(
   ret = ret,

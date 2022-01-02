@@ -25,7 +25,6 @@
 # usethis::use_package("httr")
 # usethis::use_package("jsonlite")
 # usethis::use_package("tidyquant")
-# usethis::use_package("tibbletime")
 # usethis::use_package("forecast")
 # usethis::use_package("timetk")
 # usethis::use_package("magrittr")

@@ -2,7 +2,7 @@
 % Please edit documentation in R/genscape.R
 \name{getGenscapePipeOil}
 \alias{getGenscapePipeOil}
-\title{\code{getGenscapePipeOil}}
+\title{Genscape API call for oil pipelines}
 \usage{
 getGenscapePipeOil(
   frequency = "daily",

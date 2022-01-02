@@ -1,4 +1,4 @@
-#' \code{distdescplot}
+#' Summary of distribution properties of a timeseries
 #' @description Provides a summary of returns distribution
 #' @param x Wide dataframe with date column and single series (univariate).
 #' @return Multiple plots describing the distribution.

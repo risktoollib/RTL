@@ -3,7 +3,7 @@
 \docType{data}
 \name{usSwapIRdef}
 \alias{usSwapIRdef}
-\title{usSwapIRdef}
+\title{Metadata to extract US interest rate curve data}
 \format{
 data frame
 #' @source Morningstar and FRED

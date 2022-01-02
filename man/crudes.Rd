@@ -3,7 +3,7 @@
 \docType{data}
 \name{crudes}
 \alias{crudes}
-\title{crudes}
+\title{Data for crude assays of 50+ types of crude oil.}
 \format{
 data frame
 }

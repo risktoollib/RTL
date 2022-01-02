@@ -2,7 +2,7 @@
 % Please edit documentation in R/swapInfo.R
 \name{swapInfo}
 \alias{swapInfo}
-\title{\code{swapInfo}}
+\title{Commodity Swap details to learn their pricing}
 \usage{
 swapInfo(
   date = "2020-05-06",

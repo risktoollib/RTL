@@ -2,7 +2,7 @@
 % Please edit documentation in R/rolladjust.R
 \name{rolladjust}
 \alias{rolladjust}
-\title{\code{rolladjust}}
+\title{Adjusts daily returns for futures contracts roll}
 \usage{
 rolladjust(x, commodityname = c("cmewti"), rolltype = c("Last.Trade"), ...)
 }

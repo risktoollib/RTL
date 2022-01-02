@@ -2,7 +2,7 @@
 % Please edit documentation in R/genscape.R
 \name{getGenscapeStorageOil}
 \alias{getGenscapeStorageOil}
-\title{\code{getGenscapeStorageOil}}
+\title{Genscape API call for oil storage}
 \usage{
 getGenscapeStorageOil(
   feed = "owner-volumes",

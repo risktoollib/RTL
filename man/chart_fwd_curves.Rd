@@ -2,7 +2,7 @@
 % Please edit documentation in R/chart_fwd_curves.R
 \name{chart_fwd_curves}
 \alias{chart_fwd_curves}
-\title{\code{chart_fwd_curves}}
+\title{Plots historical forward curves}
 \usage{
 chart_fwd_curves(df = dfwide, cmdty = "cmewti", weekly = TRUE, ...)
 }

@@ -1,4 +1,4 @@
-#' \code{simOU}
+#' OU process simulation
 #' @description Simulates a Ornstein–Uhlenbeck process
 #' @param S0 S at t=0
 #' @param mu Mean reversion level

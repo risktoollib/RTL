@@ -2,7 +2,7 @@
 % Please edit documentation in R/ir_df_us.R
 \name{ir_df_us}
 \alias{ir_df_us}
-\title{\code{ir_df_us}}
+\title{Extracts US Treasury Zero Rates}
 \usage{
 ir_df_us(quandlkey = quandlkey, ir.sens = 0.01)
 }
@@ -15,7 +15,7 @@ ir_df_us(quandlkey = quandlkey, ir.sens = 0.01)
 Data frame of zero rates
 }
 \description{
-Extracts US Tresury Zero Rates
+Extracts US Treasury Zero Rates curve
 }
 \examples{
 \dontrun{

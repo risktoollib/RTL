@@ -1,4 +1,4 @@
-#' \code{chart_PerformanceSummary}
+#' Cumulative performance and drawdown summary.
 #' @description Multi Asset Display of Cumulative Performance and Drawdowns
 #' @param ret Wide dataframe univariate or multivariate of percentage returns.
 #' @param main Chart title.

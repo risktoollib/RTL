@@ -2,7 +2,7 @@
 % Please edit documentation in R/bond.R
 \name{bond}
 \alias{bond}
-\title{\code{bond}}
+\title{Bond pricing}
 \usage{
 bond(ytm = 0.05, C = 0.05, T2M = 1, m = 2, output = "price")
 }

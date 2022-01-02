@@ -1,5 +1,5 @@
-#' \code{chart_eia_steo}
-#' @description Supply Demand Balance from EIA Short Term Energy Outlook.
+#' EIA Short Term Energy Outlook
+#' @description Extract data and either plots or renders dataframe.
 #' @param key Your private EIA API token.
 #' @param from Date as character "2020-07-01". Default to all dates available.
 #' @param market "globalOil" only currently implemented.

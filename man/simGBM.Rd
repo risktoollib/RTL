@@ -2,7 +2,7 @@
 % Please edit documentation in R/simGBM.R
 \name{simGBM}
 \alias{simGBM}
-\title{\code{simGBM}}
+\title{GBM process simulation}
 \usage{
 simGBM(S0 = 10, drift = 0, sigma = 0.2, T2M = 1, dt = 1/12)
 }

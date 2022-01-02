@@ -1,4 +1,4 @@
-#' \code{getGIS}
+#' Extract and convert GIS data from a URL
 #' @description Returns a SpatialPointsDataFrame from a shapefile URL.
 #'  @section Examples with EIA and Government of Alberta
 #' \itemize{

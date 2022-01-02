@@ -2,7 +2,7 @@
 % Please edit documentation in R/chart_spreads.R
 \name{chart_spreads}
 \alias{chart_spreads}
-\title{\code{chart_spreads}}
+\title{Futures contract spreads comparison across years}
 \usage{
 chart_spreads(
   cpairs = cpairs,
@@ -42,7 +42,7 @@ chart_spreads(
 A plotly object or a dataframe
 }
 \description{
-Chart spreads in specific futures contracts for multiple years.
+Plots specific contract pairs across years with time being days from expiry.
 }
 \examples{
 \dontrun{

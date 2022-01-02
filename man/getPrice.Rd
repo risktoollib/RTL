@@ -2,7 +2,7 @@
 % Please edit documentation in R/morningstar.R
 \name{getPrice}
 \alias{getPrice}
-\title{\code{getPrice}}
+\title{Morningstar Commodities API single call}
 \usage{
 getPrice(
   feed = "CME_NymexFutures_EOD",

@@ -1,5 +1,6 @@
-#' \code{chart_pairs}
-#' @description Pairwise scatter chart for timeseries.
+#' Pairwise scatter plots for timeseries
+#' @description Plots pairwise scatter plots with the time dimension.
+#' Useful when exploring structural changes in timeseries properties for modeling.
 #' @param df Wide data frame
 #' @param title Chart title
 #' @return A plotly object

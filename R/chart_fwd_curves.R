@@ -1,4 +1,4 @@
-#' \code{chart_fwd_curves}
+#' Plots historical forward curves
 #' @description Returns a plot of forward curves through time
 #' @param df Wide dataframe with date column and multiple series columns (multivariate)
 #' @param cmdty Futures contract code in expiry_table object: unique(expiry_table$cmdty)

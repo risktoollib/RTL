@@ -1,4 +1,4 @@
-#' \code{swapInfo}
+#' Commodity Swap details to learn their pricing
 #' @description Returns dataframe required to price a WTI averaging instrument based on first line settlements.
 #' @param date Character date as of which you want to extract daily settlement and forward values.
 #' @param feeds Feeds for Morningstar getCurve() and getPrice().

@@ -1,5 +1,5 @@
-#' \code{swapIRS}
-#' @description Commodity swap pricing from exchange settlement
+#' Interest Rate Swap
+#' @description Computes the mark to market of an IRS
 #' @param trade.date Date object. Defaults to today().
 #' @param eff.date Date object. Defaults to today() + 2 days.
 #' @param mat.date Date object. Defaults to today() + 2 years.

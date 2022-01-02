@@ -2,7 +2,7 @@
 % Please edit documentation in R/returns.R
 \name{returns}
 \alias{returns}
-\title{\code{returns}}
+\title{Compute absolute, relative or log returns.}
 \usage{
 returns(df = dflong, retType = "abs", period.return = 1, spread = FALSE)
 }

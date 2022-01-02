@@ -3,7 +3,7 @@
 \docType{data}
 \name{fxfwd}
 \alias{fxfwd}
-\title{fxfwd}
+\title{Data for USDCAD FX forward rates}
 \format{
 data frame
 }
@@ -14,6 +14,6 @@ data frame
 fxfwd
 }
 \description{
-Foreign Exchange Forward Rates - demo dataset
+USDCAD 1-year and 5-year forward points
 }
 \keyword{datasets}

@@ -3,7 +3,7 @@
 \docType{data}
 \name{usSwapIR}
 \alias{usSwapIR}
-\title{usSwapIR}
+\title{Data for bootstrapping US interest rate curve}
 \format{
 data frame
 #' @source Morningstar and FRED

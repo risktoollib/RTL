@@ -1,4 +1,4 @@
-#' \code{getGenscapeStorageOil}
+#' Genscape API call for oil storage
 #' @description
 #' Returns oil storage data from Genscape API.You need your own credentials.
 #' Refer to API documentation for argument values.
@@ -82,7 +82,7 @@ getGenscapeStorageOil <- function(feed = "owner-volumes", regions = "Canada", pr
   return(out)
 }
 
-#' \code{getGenscapePipeOil}
+#' Genscape API call for oil pipelines
 #' @description
 #' Returns oil pipeline flows in barrels per day data from Genscape API.You need your own credentials.
 #' Refer to API documentation for argument values. It is assumed if you use this function that

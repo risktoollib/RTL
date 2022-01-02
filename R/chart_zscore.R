@@ -1,9 +1,9 @@
-#' \code{chart_zscore}
+#' Z-Score applied to seasonal data divergence
 #' @description
 #' Supports analytics and display of seasonal data. Z-Score is
 #' computed on residuals conditional on their seasonal period.
 #' Beware that most seasonal charts in industry e.g. (NG Storage)
-#' is not detrended so results once you apply an STL decompostion
+#' is not de-trended so results once you apply an STL decomposition
 #' will vary from the unajusted seasonal plot.
 #' @param df Long data frame with columns series, date and value
 #' @param title Default is a blank space returning the unique value in df$series.

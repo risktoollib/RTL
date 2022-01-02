@@ -2,7 +2,7 @@
 % Please edit documentation in R/morningstar.R
 \name{getCurve}
 \alias{getCurve}
-\title{\code{getCurve}}
+\title{Morningstar Commodities API forward curves}
 \usage{
 getCurve(
   feed = "Crb_Futures_Price_Volume_And_Open_Interest",

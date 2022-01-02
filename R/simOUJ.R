@@ -1,4 +1,4 @@
-#' \code{simOUJ}
+#' OUJ process simulation
 #' @description Simulates a Ornstein–Uhlenbeck process with Jumps
 #' @param S0 S at t=0
 #' @param mu Mean reversion level

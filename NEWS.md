@@ -15,6 +15,10 @@
 + Fixed `promptBeta()` period input.
 + `getPrices()` merging with all = TRUE.
 
+## Deprecated
+
++ `stl_decomp()` has been removed.
+
 # RTL 0.1.8
 
 ## Updates and Fixes

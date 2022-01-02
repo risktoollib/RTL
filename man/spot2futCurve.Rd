@@ -3,7 +3,7 @@
 \docType{data}
 \name{spot2futCurve}
 \alias{spot2futCurve}
-\title{spot2futCurve}
+\title{Data for spot to futures convergence - forward curve}
 \format{
 data frame
 }
@@ -14,6 +14,6 @@ data frame
 spot2futCurve
 }
 \description{
-Forward Curve - cash and futures - demo dataset
+Forward Curve
 }
 \keyword{datasets}

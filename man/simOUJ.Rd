@@ -2,7 +2,7 @@
 % Please edit documentation in R/simOUJ.R
 \name{simOUJ}
 \alias{simOUJ}
-\title{\code{simOUJ}}
+\title{OUJ process simulation}
 \usage{
 simOUJ(
   S0 = 5,

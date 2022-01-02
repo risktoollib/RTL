@@ -1,4 +1,4 @@
-#' \code{garch}
+#' Wrapper for a Garch(1,1) returning either a plot or data.
 #' @description Computes annualised Garch(1,1) volatilities using fGarch package.
 #' @param x Wide dataframe with date column and single series (univariate).
 #' @param out "chart" to return chart, "data" to return data or "fit" for garch fit output

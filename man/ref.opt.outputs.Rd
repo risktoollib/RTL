@@ -3,7 +3,7 @@
 \docType{data}
 \name{ref.opt.outputs}
 \alias{ref.opt.outputs}
-\title{ref.opt.ouputs}
+\title{Metadata for teaching refinery optimization using a LP model - OUTPUTS}
 \format{
 data frame
 }

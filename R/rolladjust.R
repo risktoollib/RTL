@@ -1,4 +1,4 @@
-#' \code{rolladjust}
+#' Adjusts daily returns for futures contracts roll
 #' @description Returns a xts price or return object adjusted for contract roll. The methodology used to adjust returns is to remove the daily returns on the day after expiry and for prices to adjust historical rolling front month contracts by the size of the roll at each expiry. This is conducive to quantitative trading strategies as it reflects the PL of a financial trader.
 #' @param x A df of returns.
 #' @param commodityname Name of commodity in expiry_table: unique(expiry_table$cmdty) or "cmecan" for WCW

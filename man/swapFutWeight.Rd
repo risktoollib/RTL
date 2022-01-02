@@ -2,7 +2,7 @@
 % Please edit documentation in R/swapFutWeight.R
 \name{swapFutWeight}
 \alias{swapFutWeight}
-\title{\code{swapFutWeight}}
+\title{Commodity Calendar Month Average Swap futures weights}
 \usage{
 swapFutWeight(
   Month = "2020-09-01",

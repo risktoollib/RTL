@@ -2,7 +2,7 @@
 % Please edit documentation in R/chart_eia_steo.R
 \name{chart_eia_steo}
 \alias{chart_eia_steo}
-\title{\code{chart_eia_steo}}
+\title{EIA Short Term Energy Outlook}
 \usage{
 chart_eia_steo(
   market = "globalOil",
@@ -33,7 +33,7 @@ chart_eia_steo(
 A plotly object or a dataframe
 }
 \description{
-Supply Demand Balance from EIA Short Term Energy Outlook.
+Extract data and either plots or renders dataframe.
 }
 \examples{
 \dontrun{

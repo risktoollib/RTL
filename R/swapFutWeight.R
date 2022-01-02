@@ -1,4 +1,4 @@
-#' \code{swapFutWeight}
+#' Commodity Calendar Month Average Swap futures weights
 #' @description Returns the percentage weight of the future in Calendar Month Average swaps
 #' @param Month First calendar day of the month.
 #' @param exchange Exchange code in data(holidaysOil). Currently only "nymex" and "ice" supported.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/chart_eia_sd.R
 \name{chart_eia_sd}
 \alias{chart_eia_sd}
-\title{\code{chart_eia_sd}}
+\title{EIA weekly Supply Demand information by product group}
 \usage{
 chart_eia_sd(
   market = "mogas",
@@ -27,7 +27,7 @@ chart_eia_sd(
 A plotly object or a dataframe
 }
 \description{
-Supply Demand Balance from EIA Short Term Energy Outlook.
+Given a product group extracts all information to create SD Balances.
 }
 \examples{
 \dontrun{

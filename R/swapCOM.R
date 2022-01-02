@@ -1,4 +1,4 @@
-#' \code{swapCOM}
+#' Commodity Calendar Month Average Swaps
 #' @description Commodity swap pricing from exchange settlement
 #' @param futures Wide data frame of futures prices for the given swap pricing dates
 #' @param futuresNames Tickers of relevant futures contracts

@@ -42,7 +42,6 @@ Imports:
     httr,
     jsonlite,
     tidyquant,
-    tibbletime,
     forecast,
     timetk,
     magrittr,

@@ -1,4 +1,4 @@
-#' \code{bond}
+#' Bond pricing
 #' @description Compute bond price, cash flow table and duration
 #' @param ytm Yield to Maturity
 #' @param C Coupon rate per annum

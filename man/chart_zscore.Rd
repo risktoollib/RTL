@@ -2,7 +2,7 @@
 % Please edit documentation in R/chart_zscore.R
 \name{chart_zscore}
 \alias{chart_zscore}
-\title{\code{chart_zscore}}
+\title{Z-Score applied to seasonal data divergence}
 \usage{
 chart_zscore(
   df = df,
@@ -36,7 +36,7 @@ standard seasonal chart with feast package.
 Supports analytics and display of seasonal data. Z-Score is
 computed on residuals conditional on their seasonal period.
 Beware that most seasonal charts in industry e.g. (NG Storage)
-is not detrended so results once you apply an STL decompostion
+is not de-trended so results once you apply an STL decomposition
 will vary from the unajusted seasonal plot.
 }
 \examples{

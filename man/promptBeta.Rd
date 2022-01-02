@@ -2,7 +2,7 @@
 % Please edit documentation in R/promptBeta.R
 \name{promptBeta}
 \alias{promptBeta}
-\title{\code{promptBeta}}
+\title{Computes betas of futures contracts with respect to the 1st line contract}
 \usage{
 promptBeta(x = x, period = "all", betatype = "all", output = "chart")
 }

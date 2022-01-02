@@ -3,7 +3,7 @@
 \docType{data}
 \name{tradeprocess}
 \alias{tradeprocess}
-\title{tradeprocess}
+\title{Data for teaching the various ways to monetize a market call.}
 \format{
 data frame
 }
@@ -11,6 +11,6 @@ data frame
 tradeprocess
 }
 \description{
-Data set for explaning the various ways to monetize a market view.
+Data set for explaining the various ways to monetize a market view.
 }
 \keyword{datasets}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/fitOU.R
 \name{fitOU}
 \alias{fitOU}
-\title{\code{fitOU}}
+\title{Fits a Ornstein–Uhlenbeck process to a dataset}
 \usage{
 fitOU(spread)
 }

@@ -1,155 +1,157 @@
-#' spot2futConvergence
-#' @description Cash and futures dataset - demo dataset
+#' Data for spot to futures convergence - historical data
+#' @description Cash and futures
 #' @format data frame
 #' @source {Morningstar, EIA}
 "spot2futConvergence"
 
-#' spot2futCurve
-#' @description Forward Curve - cash and futures - demo dataset
+#' Data for spot to futures convergence - forward curve
+#' @description Forward Curve
 #' @format data frame
 #' @source {Morningstar, EIA}
 "spot2futCurve"
 
-#' wtiSwap
-#' @description WTI Crude futures for swap pricing - demo dataset
+#' Data for WTI Calendar Month Average Swap pricing
+#' @description WTI Crude futures
 #' @format data frame
 #' @source {Morningstar}
 "wtiSwap"
 
-#' fxfwd
-#' @description Foreign Exchange Forward Rates - demo dataset
+#' Data for USDCAD FX forward rates
+#' @description USDCAD 1-year and 5-year forward points
 #' @format data frame
 #' @source {Morningstar}
 "fxfwd"
 
-#' eurodollar
-#' @description Eurodollar Futures - demo dataset
+#' Data for Eurodollar futures contracts
+#' @description ED futures contract for December 2024
 #' @format data frame
 #' @source {Morningstar}
 "eurodollar"
 
-#' planets
+#' Data for IR compounding exercises
 #' @description Planet metrics from NASA
 #' @format data frame
 #' @source \url{https://nssdc.gsfc.nasa.gov/planetary/factsheet/index.html}
 "planets"
 
-#' expiry_table
+#' Metadata for expiry of common commodity futures contract.
 #' @description This dataframe provides detailed information on major futures contracts specifications
 #' pertaining to last settlement, notices and delivery dates. It also provides tickers in some data service.
 #' @format data frame
 "expiry_table"
 
-#' holidaysOil
+#' Metadata for NYMEX and ICE holiday calendars
 #' @description Holiday calendars for NYMEX and ICE Brent
 #' @format data frame
 "holidaysOil"
 
-#' tickers_eia
+#' Metadata of key EIA tickers grouped by products.
 #' @description Supports automated upload of EIA data through its API by categories.
 #' Data frame organized by Supply Demand categories and products.
 #' @format data frame
 "tickers_eia"
 
-#' eiaStocks
+#' Data for EIA weekly stocks
 #' @description EIA weekly crude, NG, ULSD and RBOB stocks.
 #' @format data frame
 "eiaStocks"
 
-#' eiaStorageCap
+#' Data for working storage capacity in the US
 #' @description EIA working storage capacity in kbs except NG in bcf.
 #' @format data frame
 "eiaStorageCap"
 
-#' cancrudeassays
+#' Data for Canadian crude assays reported by Crude Monitor
 #' @description Data set with historical Canadian Crude Assays.
 #' @format data frame
 #' @source \url{https://crudemonitor.ca/}
+#' @import tsibble
 "cancrudeassays"
 
-#' cancrudeassayssum
+#' Summarized data for Canadian crude assays
 #' @description Data set with historical Canadian Crude Assays Statistics.
 #' @format data frame
 #' @source \url{https://crudemonitor.ca/}
+#' @import tsibble
 "cancrudeassayssum"
 
-#' crudes
+#' Data for crude assays of 50+ types of crude oil.
 #' @description Crude oil qualities.
 #' @format data frame
 #' @source Canadian Crude Monitor and BP Crude Assays
 "crudes"
 
-#' crudeassaysBP
+#' Data for BP crude assays
 #' @description Crude Assays from BP.
 #' @format data frame
 "crudeassaysBP"
 
-#' crudeassaysXOM
+#' Data for ExxonMobil crude assays
 #' @description Crude Assays from ExxonMobil.
 #' @format data frame
 "crudeassaysXOM"
 
-#' cancrudeprices
-#' @description Randomized dataset of Canadian Crude monthly prices versus WTI Calendar Month Average.
+#' Randomized data for Canadian crude pricing.
+#' @description Randomized data of Canadian Crude monthly prices versus WTI Calendar Month Average.
 #' @format data frame
 "cancrudeprices"
 
-#' dflong
+#' Data for commodity prices in a long dataframe format
 #' @description Futures settlement data set.
 #' @format data frame
 #' @source Morningstar Commodities
 "dflong"
 
-#' dfwide
+#' Data for commodity prices in a wide dataframe format
 #' @description Futures settlement data set.
 #' @format data frame
 #' @source Morningstar Commodities
 "dfwide"
 
-#' usSwapIR
+#' Data for bootstrapping US interest rate curve
 #' @description USD Interest Rate Swap Curve for RQuantlib bootstrapping. See usSwapIRdef for sources and tickers.
 #' @format data frame
 #' #' @source Morningstar and FRED
 "usSwapIR"
 
-#' usSwapIRdef
+#' Metadata to extract US interest rate curve data
 #' @description USD Interest Rate Swap Curve definitions with sources and tickers
 #' @format data frame
 #' #' @source Morningstar and FRED
 "usSwapIRdef"
 
-#' usSwapCurves
+#' Data for US interest rate discounting using zero rates curve.
 #' @description USD IR Discount, Forward and Zero curves from RQuantlib::DiscountCurve
 #' @format List
 #' #' @source Morningstar and FRED
 "usSwapCurves"
 
-#' usSwapCurvesPar
+#' Data for US interest rate discounting using zero rates parallel curve.
 #' @description USD IR Discount, Forward and Zero curves from RQuantlib::DiscountCurve - Parallel toy data set
 #' @format data frame
 "usSwapCurvesPar"
 
-#' tradeCycle
+#' Data for Canadian and US physical crude trading calendars
 #' @description Crude Trading Trade Cycles
 #' @format data frame
 "tradeCycle"
 
-#' fizdiffs
+#' Randomized data of physical crude differentials
 #' @description Randomized data set for education purpose of selected physical crude differentials to WTI.
 #' @format data frame
 "fizdiffs"
 
-#' ref.opt.inputs
+#' Metadata for teaching refinery optimization using a LP model - INPUTS
 #' @description Simple refinery input to be used in running LP modeling for education purposes.
 #' @format data frame
 "ref.opt.inputs"
 
-#' ref.opt.ouputs
+#' Metadata for teaching refinery optimization using a LP model - OUTPUTS
 #' @description Simple refinery outputs and constraints to be used in running LP modeling for education purposes.
 #' @format data frame
 "ref.opt.outputs"
 
-#' tradeprocess
-#' @description Data set for explaning the various ways to monetize a market view.
+#' Data for teaching the various ways to monetize a market call.
+#' @description Data set for explaining the various ways to monetize a market view.
 #' @format data frame
 "tradeprocess"

@@ -1,4 +1,4 @@
-#' \code{CRReuro}
+#' Cox-Ross-Rubinstein binomial option model
 #' @description
 #' European option binomial model on a stock without dividends.For academic purpose only.
 #' Use fOptions::CRRBinomialTreeOptions for real-life usage.

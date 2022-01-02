@@ -3,7 +3,7 @@
 \docType{data}
 \name{planets}
 \alias{planets}
-\title{planets}
+\title{Data for IR compounding exercises}
 \format{
 data frame
 }

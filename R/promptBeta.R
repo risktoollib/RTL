@@ -1,4 +1,4 @@
-#' \code{promptBeta}
+#' Computes betas of futures contracts with respect to the 1st line contract
 #' @description Returns betas of futures contracts versus front futures contract.
 #' @param x Wide dataframe with date column and multiple series columns (multivariate).
 #' @param period "all" or numeric period of time in last n periods as character eg "100".

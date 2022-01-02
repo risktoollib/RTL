@@ -2,7 +2,7 @@
 % Please edit documentation in R/eia2tidy.R
 \name{eia2tidy}
 \alias{eia2tidy}
-\title{\code{eia2tidy}}
+\title{EIA API call with tidy output}
 \usage{
 eia2tidy(ticker, key, name = " ")
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/distdescplot.R
 \name{distdescplot}
 \alias{distdescplot}
-\title{\code{distdescplot}}
+\title{Summary of distribution properties of a timeseries}
 \usage{
 distdescplot(x = x)
 }

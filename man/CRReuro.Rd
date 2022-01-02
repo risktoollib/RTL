@@ -2,7 +2,7 @@
 % Please edit documentation in R/CRReuro.R
 \name{CRReuro}
 \alias{CRReuro}
-\title{\code{CRReuro}}
+\title{Cox-Ross-Rubinstein binomial option model}
 \usage{
 CRReuro(S, X, sigma, r, T2M, N, type)
 }

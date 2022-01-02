@@ -2,7 +2,7 @@
 % Please edit documentation in R/refineryLP.R
 \name{refineryLP}
 \alias{refineryLP}
-\title{\code{refineryLP}}
+\title{LP model for refinery optimization}
 \usage{
 refineryLP(crudes = ref.opt.inputs, products = ref.opt.outputs)
 }
@@ -15,7 +15,7 @@ refineryLP(crudes = ref.opt.inputs, products = ref.opt.outputs)
 Optimal crude slate and profits
 }
 \description{
-Plain vanilla refinery optmization LP model.
+Plain vanilla refinery optimization LP model.
 }
 \examples{
 refineryLP(crudes = ref.opt.inputs, products = ref.opt.outputs)

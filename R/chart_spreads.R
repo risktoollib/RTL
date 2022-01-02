@@ -1,5 +1,5 @@
-#' \code{chart_spreads}
-#' @description Chart spreads in specific futures contracts for multiple years.
+#' Futures contract spreads comparison across years
+#' @description Plots specific contract pairs across years with time being days from expiry.
 #' @param cpairs Data frame of contract pairs - see example.
 #' @param daysFromExpiry Number of days (numeric) from expiry to compute spreads.
 #' @param conversion Defaults to c(1,1) first and second contracts. 42 from $ per gallons to bbls.

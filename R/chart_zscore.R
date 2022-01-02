@@ -20,6 +20,7 @@
 #' "series" for feasts::gg_subseries()
 #' @return Time series of STL decomposition residuals Z-Scores, or
 #' standard seasonal chart with feast package.
+#' @importFrom tsibble as_tsibble index_by group_by_key
 #' @export chart_zscore
 #' @author Philippe Cote
 #' @examples

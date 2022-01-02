@@ -5,9 +5,6 @@
 #' @param weekly Defaults to TRUE for weekly forward curves
 #' @param ... other graphical parameters
 #' @return plot of forward curves through time
-#' @import xts
-#' @import zoo
-#' @importFrom tibble is_tibble
 #' @export chart_fwd_curves
 #' @author Philippe Cote
 #' @examples

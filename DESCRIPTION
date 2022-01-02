@@ -21,12 +21,6 @@ LazyData: true
 LazyDataCompression: xz
 URL: https://github.com/risktoollib/RTL
 RoxygenNote: 7.1.2
-Suggests: 
-    lpSolve,
-    rugarch,
-    Quandl,
-    rgdal,
-    PerformanceAnalytics
 Imports: 
     stringr,
     dplyr,
@@ -36,7 +30,6 @@ Imports:
     xts,
     readr,
     ggplot2,
-    tsibble,
     fabletools,
     feasts,
     httr,
@@ -49,4 +42,11 @@ Imports:
     RCurl,
     purrr,
     zoo,
-    tibble
+    tibble,
+    tsibble
+Suggests: 
+    lpSolve,
+    rugarch,
+    Quandl,
+    rgdal,
+    PerformanceAnalytics

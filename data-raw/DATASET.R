@@ -168,7 +168,7 @@ crude <- c(
   paste0("CL_", sprintf("%0.3d", 1:36), "_Month"),
   paste0("NG_", sprintf("%0.3d", 1:36), "_Month")
 )
-crudecan <- c(paste0("WCW_", sprintf("%0.3d", 1:36), "_Month"))
+crudecan <- c(paste0("WCW_", sprintf("%0.3d", 1:12), "_Month"))
 crudeICE <- c(paste0("BRN_", sprintf("%0.3d", 1:36), "_Month"))
 pdts <- c(paste0("HO_", sprintf("%0.3d", 1:18), "_Month"), paste0("RB_", sprintf("%0.3d", 1:18), "_Month"))
 
@@ -240,6 +240,17 @@ alu <-
 
 dflong <- rbind(crude, crudecan, crudeICE, pdts, alu)
 dfwide <- dflong %>% tidyr::pivot_wider(names_from = series, values_from = value) # %>% na.omit()
+# test for data gaps
+dflong %>% dplyr::filter(grepl("CL",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
+dflong %>% dplyr::filter(grepl("BRN",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
+dflong %>% dplyr::filter(grepl("HO",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
+dflong %>% dplyr::filter(grepl("RB",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
+dflong %>% dplyr::filter(grepl("WCW",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
+dflong %>% dplyr::filter(grepl("ALI",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
+dflong %>% dplyr::filter(grepl("NG",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
+dflong %>% dplyr::filter(grepl("AUP",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
+dflong %>% dplyr::filter(grepl("MJP",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
+
 usethis::use_data(dflong, overwrite = T)
 usethis::use_data(dfwide, overwrite = T)
 rm(crude, crudecan, crudeICE, pdts, alu)

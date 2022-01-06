@@ -28,7 +28,7 @@ wide data frame
 }
 \description{
 Multiple Morningstar API calls using getPrice functions.
-Refer to `getPrices()` for list of currently supported data feeds.
+Refer to \code{getPrices()} for list of currently supported data feeds.
 }
 \examples{
 \dontrun{

@@ -36,9 +36,9 @@ You need your own credentials with Morningstar.
 \section{Current Feeds Supported}{
 
 \itemize{
-  \item Crb_Futures_Price_Volume_And_Open_Interest
-  \item CME_NymexFuturesIntraday_EOD
-  \item ICE_EuroFutures and ICE_EuroFutures_continuous
+\item Crb_Futures_Price_Volume_And_Open_Interest
+\item CME_NymexFuturesIntraday_EOD
+\item ICE_EuroFutures and ICE_EuroFutures_continuous
 }
 }
 

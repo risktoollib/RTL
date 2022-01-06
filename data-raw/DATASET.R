@@ -7,9 +7,6 @@
 # usethis::use_package("Quandl","suggests")
 # usethis::use_package("rgdal","suggests")
 # usethis::use_package("PerformanceAnalytics","suggests")
-
-#
-#
 # usethis::use_package("dplyr")
 # usethis::use_package("stringr")
 # usethis::use_package("tibble")
@@ -25,7 +22,6 @@
 # usethis::use_package("httr")
 # usethis::use_package("jsonlite")
 # usethis::use_package("tidyquant")
-# usethis::use_package("forecast")
 # usethis::use_package("timetk")
 # usethis::use_package("magrittr")
 # usethis::use_package("rlang")
@@ -33,10 +29,13 @@
 # usethis::use_package("purrr")
 # usethis::use_package("zoo")
 
-
 # Setup RTL Webpage
 # usethis::use_pkgdown()
 # usethis::use_github_actions("pkgdown")
+# usethis::use_tidy_github_actions()
+# usethis::use_tidy_description()
+# usethis::use_tidy_dependencies()
+# usethis::use_roxygen_md()
 # pkgdown::build_site()
 # usethis::use_github_action(url = "https://raw.githubusercontent.com/r-lib/actions/master/examples/pkgdown.yaml")
 

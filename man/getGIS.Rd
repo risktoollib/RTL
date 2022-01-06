@@ -16,13 +16,13 @@ SpatialPointsDataFrame
 }
 \description{
 Returns a SpatialPointsDataFrame from a shapefile URL.
- @section Examples with EIA and Government of Alberta
+@section Examples with EIA and Government of Alberta
 \itemize{
-  \item from https://www.eia.gov/maps/layer_info-m.php :
-  \item crudepipelines <- getGIS(url = "https://www.eia.gov/maps/map_data/CrudeOil_Pipelines_US_EIA.zip")
-  \item refineries <- getGIS(url = "https://www.eia.gov/maps/map_data/Petroleum_Refineries_US_EIA.zip")
-  \item from https://gis.energy.gov.ab.ca/Geoview/OSPNG
-  \item AB <- getGIS(url = "https://gis.energy.gov.ab.ca/GeoviewData/OS_Agreements_Shape.zip")
+\item from https://www.eia.gov/maps/layer_info-m.php :
+\item crudepipelines <- getGIS(url = "https://www.eia.gov/maps/map_data/CrudeOil_Pipelines_US_EIA.zip")
+\item refineries <- getGIS(url = "https://www.eia.gov/maps/map_data/Petroleum_Refineries_US_EIA.zip")
+\item from https://gis.energy.gov.ab.ca/Geoview/OSPNG
+\item AB <- getGIS(url = "https://gis.energy.gov.ab.ca/GeoviewData/OS_Agreements_Shape.zip")
 }
 }
 \examples{

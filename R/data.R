@@ -31,7 +31,7 @@
 #' Data for IR compounding exercises
 #' @description Planet metrics from NASA
 #' @format data frame
-#' @source \url{https://nssdc.gsfc.nasa.gov/planetary/factsheet/index.html}
+#' @source <https://nssdc.gsfc.nasa.gov/planetary/factsheet/index.html>
 "planets"
 
 #' Metadata for expiry of common commodity futures contract.
@@ -64,14 +64,14 @@
 #' Data for Canadian crude assays reported by Crude Monitor
 #' @description Data set with historical Canadian Crude Assays.
 #' @format data frame
-#' @source \url{https://crudemonitor.ca/}
+#' @source <https://crudemonitor.ca/>
 #' @import tsibble
 "cancrudeassays"
 
 #' Summarized data for Canadian crude assays
 #' @description Data set with historical Canadian Crude Assays Statistics.
 #' @format data frame
-#' @source \url{https://crudemonitor.ca/}
+#' @source <https://crudemonitor.ca/>
 #' @import tsibble
 "cancrudeassayssum"
 

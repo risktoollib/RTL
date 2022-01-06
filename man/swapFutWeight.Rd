@@ -22,7 +22,7 @@ swapFutWeight(
 }
 \value{
 What you defined in outputs.
-If first.fut.weight, to compute swap 1 - first.fut.weight = % applied to 2nd line contract.
+If first.fut.weight, to compute swap 1 - first.fut.weight = \% applied to 2nd line contract.
 }
 \description{
 Returns the percentage weight of the future in Calendar Month Average swaps

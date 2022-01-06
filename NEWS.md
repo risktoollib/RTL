@@ -1,3 +1,8 @@
+# RTL 1.0.0
+
++ Normalizing version control to first stable version.
++ Fixed a minor bug in `tradeCycle` dates for Canadian Crude.
+
 # RTL 0.1.9
 
 ## Updates

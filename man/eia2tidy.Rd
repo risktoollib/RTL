@@ -9,7 +9,7 @@ eia2tidy(ticker, key, name = " ")
 \arguments{
 \item{ticker}{EIA series name.}
 
-\item{key}{Your private EIA API token as character "<yourapikey>".}
+\item{key}{Your private EIA API token as character "yourapikey".}
 
 \item{name}{Name you want to give the series. Defaults to ticker if set to " "}
 }

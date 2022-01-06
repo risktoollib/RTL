@@ -33,21 +33,21 @@ You need your own credentials with Morningstar. In examples sourced locally.
 \section{Current Feeds Supported}{
 
 \itemize{
-  \item CME_CbotFuturesEOD and CME_CbotFuturesEOD_continuous
-  \item CME_NymexFutures_EOD and CME_NymexFutures_EOD_continuous
-  \item CME_NymexOptions_EOD
-  \item CME_CmeFutures_EOD and CME_CmeFutures_EOD_continuous
-  \item CME_Comex_FuturesSettlement_EOD and CME_Comex_FuturesSettlement_EOD_continuous
-  \item LME_AskBidPrices_Delayed
-  \item SHFE_FuturesSettlement_RT
-  \item ICE_EuroFutures and ICE_EuroFutures_continuous
-  \item ICE_NybotCoffeeSugarCocoaFutures and ICE_NybotCoffeeSugarCocoaFutures_continuous
-  \item CME_STLCPC_Futures
-  \item CFTC_CommitmentsOfTradersCombined. Requires multiple keys. Separate them by a space e.g. "N10 06765A NYME 01".
-  \item Morningstar_FX_Forwards. Requires multiple keys. Separate them by a space e.g. "USDCAD 2M".
-  \item ERCOT_LmpsByResourceNodeAndElectricalBus.
-  \item PJM_Rt_Hourly_Lmp.
-  \item AESO_ForecastAndActualPoolPrice.
+\item CME_CbotFuturesEOD and CME_CbotFuturesEOD_continuous
+\item CME_NymexFutures_EOD and CME_NymexFutures_EOD_continuous
+\item CME_NymexOptions_EOD
+\item CME_CmeFutures_EOD and CME_CmeFutures_EOD_continuous
+\item CME_Comex_FuturesSettlement_EOD and CME_Comex_FuturesSettlement_EOD_continuous
+\item LME_AskBidPrices_Delayed
+\item SHFE_FuturesSettlement_RT
+\item ICE_EuroFutures and ICE_EuroFutures_continuous
+\item ICE_NybotCoffeeSugarCocoaFutures and ICE_NybotCoffeeSugarCocoaFutures_continuous
+\item CME_STLCPC_Futures
+\item CFTC_CommitmentsOfTradersCombined. Requires multiple keys. Separate them by a space e.g. "N10 06765A NYME 01".
+\item Morningstar_FX_Forwards. Requires multiple keys. Separate them by a space e.g. "USDCAD 2M".
+\item ERCOT_LmpsByResourceNodeAndElectricalBus.
+\item PJM_Rt_Hourly_Lmp.
+\item AESO_ForecastAndActualPoolPrice.
 }
 }
 

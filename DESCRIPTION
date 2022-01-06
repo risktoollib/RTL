@@ -1,52 +1,54 @@
 Type: Package
 Package: RTL
 Title: Risk Tool Library - Trading, Risk, 'Analytics' for Commodities
-Version: 0.1.9
+Version: 1.0.0
 Date: 2022-01-06
-Authors@R: 
-  c(person(given = "Philippe",
-           family = "Cote",
-           role = c("aut", "cre"),
-           email = "pcote@ualberta.ca"),
-    person(given = "Nima",
-           family = "Safaian",
-           role = "aut",
-           email = "nima.safaian@gmail.com"))
-Description: A toolkit for Commodities 'analytics', risk management and trading professionals. Includes functions for API calls to 'Morningstar Commodities' and 'Genscape'.
+Authors@R: c(
+    person("Philippe", "Cote", , "pcote@ualberta.ca", role = c("aut", "cre")),
+    person("Nima", "Safaian", , "nima.safaian@gmail.com", role = "aut")
+  )
+Description: A toolkit for Commodities 'analytics', risk management and
+    trading professionals. Includes functions for API calls to
+    'Morningstar Commodities' and 'Genscape'.
+License: MIT + file LICENSE
+URL: https://github.com/risktoollib/RTL
 Depends: 
     R (>= 4.0)
-License: MIT + file LICENSE
+Imports: 
+    dplyr,
+    fabletools,
+    feasts,
+    ggplot2,
+    httr,
+    lifecycle,
+    jsonlite,
+    lubridate,
+    magrittr,
+    plotly,
+    purrr,
+    RCurl,
+    readr,
+    rlang,
+    stringr,
+    tibble,
+    tidyquant,
+    tidyr,
+    timetk,
+    tsibble,
+    xts,
+    zoo,
+    cli,
+    glue,
+    withr
+Suggests: 
+    covr,
+    lpSolve,
+    PerformanceAnalytics,
+    Quandl,
+    rgdal,
+    rugarch
 Encoding: UTF-8
 LazyData: true
 LazyDataCompression: xz
-URL: https://github.com/risktoollib/RTL
 RoxygenNote: 7.1.2
-Imports: 
-    stringr,
-    dplyr,
-    tidyr,
-    plotly,
-    lubridate,
-    xts,
-    readr,
-    ggplot2,
-    fabletools,
-    feasts,
-    httr,
-    jsonlite,
-    tidyquant,
-    forecast,
-    timetk,
-    magrittr,
-    rlang,
-    RCurl,
-    purrr,
-    zoo,
-    tibble,
-    tsibble
-Suggests: 
-    lpSolve,
-    rugarch,
-    Quandl,
-    rgdal,
-    PerformanceAnalytics
+Roxygen: list(markdown = TRUE)

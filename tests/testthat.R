@@ -1,7 +1,7 @@
 library(testthat)
 library(RTL)
 
-test_check("RTL")
+#test_check("RTL")
 
 test_that("tradeCycle Canadian",{
   x = tradeCycle %>% dplyr::mutate(diff = as.numeric(.[[3]]-.[[2]]))

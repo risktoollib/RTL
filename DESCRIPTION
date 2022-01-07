@@ -41,6 +41,7 @@ Imports:
     glue,
     withr
 Suggests: 
+    testthat (>= 3.0.0),
     covr,
     lpSolve,
     PerformanceAnalytics,
@@ -52,3 +53,4 @@ LazyData: true
 LazyDataCompression: xz
 RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
+Config/testthat/edition: 3

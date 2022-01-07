@@ -1,6 +1,13 @@
 # RTL 1.0.0
 
+## Package Structure
+
 + Normalizing version control to first stable version.
++ Tidy package documentation to standards.
++ `testthat` implemented for metadata checks.
+
+# RTL 0.1.91
+
 + Fixed a minor bug in `tradeCycle` dates for Canadian Crude.
 
 # RTL 0.1.9

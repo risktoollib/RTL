@@ -38,6 +38,7 @@
 # usethis::use_roxygen_md()
 # pkgdown::build_site()
 # usethis::use_github_action(url = "https://raw.githubusercontent.com/r-lib/actions/master/examples/pkgdown.yaml")
+#usethis::use_testthat()
 
 #
 library(RTL)

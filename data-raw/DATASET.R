@@ -911,7 +911,7 @@ usSwapCurves <- DiscountCurve(params, tsQuotes, times)
 tsQuotes <- list(flat = 0.03)
 usSwapCurvesPar <- DiscountCurve(params, tsQuotes, times)
 
-rm(r, x, rates, savepar, tsQuotes, params, mstar)
+rm(r, x, rates, savepar, tsQuotes, params)
 
 usethis::use_data(usSwapIR, overwrite = T)
 usethis::use_data(usSwapIRdef, overwrite = T)

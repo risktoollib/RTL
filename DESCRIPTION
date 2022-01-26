@@ -2,7 +2,7 @@ Type: Package
 Package: RTL
 Title: Risk Tool Library - Trading, Risk, 'Analytics' for Commodities
 Version: 1.0.0
-Date: 2022-01-11
+Date: 2022-01-26
 Authors@R: c(
     person("Philippe", "Cote", , "pcote@ualberta.ca", role = c("aut", "cre")),
     person("Nima", "Safaian", , "nima.safaian@gmail.com", role = "aut")

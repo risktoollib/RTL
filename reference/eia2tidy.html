@@ -90,7 +90,7 @@ Makes a clean wrapper for use with purrr for multiple series extraction. Query B
 <span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>key <span class="op">=</span> <span class="st">"EIAkey"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>df <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html" class="external-link">pmap</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">ticker</span>, <span class="va">key</span>, <span class="va">name</span><span class="op">)</span>, .f <span class="op">=</span> <span class="fu">RTL</span><span class="fu">::</span><span class="va">eia2tidy</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tidyr/man/nest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
     </div>
@@ -106,7 +106,7 @@ Makes a clean wrapper for use with purrr for multiple series extraction. Query B
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>

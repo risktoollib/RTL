@@ -26,7 +26,7 @@ eia2tidy <- function(ticker, key, name = " ") {
   if (nchar(name) == 1) {
     name <- ticker
   }
-  url <- paste0("http://api.eia.gov/series/?api_key=", key, "&series_id=", ticker, "&out=json")
+  url <- paste0("https://api.eia.gov/series/?api_key=", key, "&series_id=", ticker, "&out=json")
   x <- url %>% httr::GET()
   x <- jsonlite::fromJSON(httr::content(x, "text", encoding = "UTF-8"))
   # promises::promise(~print(x$data$error)) %>%

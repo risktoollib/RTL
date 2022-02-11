@@ -1,5 +1,9 @@
 # RTL 1.0.0
 
+## Bugs & Fixes
+
++ `eia2tidy()` makes requests over `https` instead of `http` as API now requires it.
+
 ## Package Structure
 
 + Normalizing version control to first stable version.

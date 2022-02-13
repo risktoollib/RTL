@@ -136,6 +136,11 @@
 #' @format data frame
 "tradeCycle"
 
+#' GIS Data for Crude Oil Trading Hubs
+#' @description Trading Hubs
+#' @format data frame
+"tradeHubs"
+
 #' Randomized data of physical crude differentials
 #' @description Randomized data set for education purpose of selected physical crude differentials to WTI.
 #' @format data frame

@@ -1,3 +1,12 @@
+# RTL 1.1.0
+
+## New
+
++ `tradeHubs` contains GIS coordinates for major crude oil trading hubs in North America.
+
+## Bugs & Fixes
+
+
 # RTL 1.0.0
 
 ## Bugs & Fixes

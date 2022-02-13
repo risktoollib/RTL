@@ -848,6 +848,10 @@ rm(html, tmp, urls, css, destfile, i)
 fizdiffs <- readRDS("fizdiffs.RDS")
 usethis::use_data(fizdiffs, overwrite = T)
 
+## Trading Hubs
+
+tradeHubs <- dplyr::tibble(lat = c(53.54623,52.6735,35.94068,30.00623), long = c(-113.34684,-111.3075,-96.74536,-93.96882), hub = c("Edmonton","Hardisty", "Cushing", "Nederland"))
+usethis::use_data(tradeHubs, overwrite = T)
 
 ## IR Curves for RQuantlib
 # Curves and Def - ICE

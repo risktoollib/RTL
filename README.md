@@ -10,14 +10,13 @@ downloads](https://cranlogs.r-pkg.org/badges/RTL)](https://cran.r-project.org/pa
 
 ## Overview
 
-RTL is purposely designed trading, trading analytics and risk
-practitioners in Commodities and Finance. It also supports delivery of
-Finance classes from one of the creator now also in Academics at the
-[Alberta School of
+RTL is a purposely designed for traders, analysts and risk practitioners
+in Commodities and Finance. It also supports delivery of Finance classes
+from one of the creator also in Academics at the [Alberta School of
 Business](https://www.ualberta.ca/business/index.html).
 
 Send feedback to `pcote@ualberta.ca`. We welcome feedback, suggestions
-and collaborators.
+and collaboration.
 
 ### Energy Markets Reference Data
 
@@ -115,6 +114,7 @@ API](https://mp.morningstarcommodity.com/marketplace/) functions:
     `getGIS(url = "https://www.eia.gov/maps/map_data/NaturalGas_TradingHubs_US_EIA.zip")`
 -   lngterminals \<-
     `getGIS(url = "https://www.eia.gov/maps/map_data/Lng_ImportExportTerminals_US_EIA.zip")`
+-   `tradeHubs` has North Americas crude oil trading hubs (WIP).
 
 #### Alberta Oil Sands, Petroleum and Natural Gas
 

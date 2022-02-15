@@ -12,9 +12,9 @@ output: github_document
 
 ## Overview
 
-RTL is purposely designed trading, trading analytics and risk practitioners in Commodities and Finance. It also supports delivery of Finance classes from one of the creator now also in Academics at the [Alberta School of Business](https://www.ualberta.ca/business/index.html).
+RTL is a purposely designed for traders, analysts and risk practitioners in Commodities and Finance. It also supports delivery of Finance classes from one of the creator also in Academics at the [Alberta School of Business](https://www.ualberta.ca/business/index.html).
 
-Send feedback to `pcote@ualberta.ca`. We welcome feedback, suggestions and collaborators.
+Send feedback to `pcote@ualberta.ca`. We welcome feedback, suggestions and collaboration.
 
 ### Energy Markets Reference Data
 
@@ -84,6 +84,7 @@ Valid credentials for commercial API services are required.
 + ngstorage <- `getGIS(url = "https://www.eia.gov/maps/map_data/PetroleumProduct_Terminals_US_EIA.zip")`
 + nghubs <- `getGIS(url = "https://www.eia.gov/maps/map_data/NaturalGas_TradingHubs_US_EIA.zip")`
 + lngterminals <- `getGIS(url = "https://www.eia.gov/maps/map_data/Lng_ImportExportTerminals_US_EIA.zip")`
++ `tradeHubs` has North Americas crude oil trading hubs (WIP).
 
 #### Alberta Oil Sands, Petroleum and Natural Gas
 

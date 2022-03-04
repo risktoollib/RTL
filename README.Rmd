@@ -92,7 +92,6 @@ Valid credentials for commercial API services are required.
 
 ### Interest Rates
 
-+ `usSwapIRDef`: Data frame of definitions for instruments to build a curve for use with `RQuantlib`. Use `getIRswapCurve()` to extract the latest data from `FRED` and `Morningstar`.
 + `usSwapIR`: Sample data set output of `getIRswapCurve`.
 + `usSwapCurves`: Sample data set output of `RQuantlib::DiscountCurve()`.
 

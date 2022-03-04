@@ -549,23 +549,36 @@ ALI <- read_excel("ALI.xls", col_types = c(
     Last.Delivery = as.Date(Last.Delivery, "%Y-%m-%d", tz = "UTC")
   )
 
-expiry_table <- rbind(expiry_table, LCO, LGO, CL, BZ, HO, RB, GC, SI, ALI) %>%
+LTH <- read_excel("LTH.xls") %>%
+  dplyr::as_tibble(.name_repair = "universal") %>%
+  dplyr::transmute(
+    cmdty = "comexlithium", tick.prefix = "LTH",
+    Last.Trade = as.Date(Last.Trade, "%Y-%m-%d", tz = "UTC"),
+    First.Notice = Last.Trade,
+    First.Delivery = Last.Trade,
+    Last.Delivery = Last.Trade
+  )
+
+HG <- read_excel("HG.xls", col_types = c(
+  "skip", "skip", "skip", "text", "skip", "skip",
+  "skip", "skip", "skip", "text", "skip", "text", "text"
+)) %>%
+  dplyr::as_tibble(.name_repair = "universal") %>%
+  dplyr::transmute(
+    cmdty = "comexcopper", tick.prefix = "HG",
+    Last.Trade = as.Date(Last.Trade, "%Y-%m-%d", tz = "UTC"),
+    First.Notice = as.Date(First.Notice, "%Y-%m-%d", tz = "UTC"),
+    First.Delivery = as.Date(First.Delivery, "%Y-%m-%d", tz = "UTC"),
+    Last.Delivery = as.Date(Last.Delivery, "%Y-%m-%d", tz = "UTC")
+  )
+
+
+expiry_table <- rbind(expiry_table, LCO, LGO, CL, BZ, HO, RB, GC, SI, ALI, LTH, HG) %>%
   dplyr::distinct() %>%
   dplyr::mutate(
     Year = year(First.Delivery),
     Month = month(First.Delivery),
-    Month.Letter = futmonths[Month],
-    yahoo.ticker = paste0(
-      tick.prefix,
-      Month.Letter,
-      str_sub(Year, start = 3L, end = 4L), ".",
-      dplyr::case_when(
-        tick.prefix %in% c("CL", "", "RB", "HO", "NG") ~ "NYM",
-        tick.prefix %in% c("GC", "SI", "ALI") ~ "CMX",
-        TRUE ~ "NA"
-      )
-    ),
-    yahoo.ticker = ifelse(grepl("NA", yahoo.ticker), NA, yahoo.ticker)
+    Month.Letter = futmonths[Month]
   ) %>%
   dplyr::filter(Year > 2003)
 usethis::use_data(expiry_table, overwrite = T)
@@ -854,59 +867,49 @@ tradeHubs <- dplyr::tibble(lat = c(53.54623,52.6735,35.94068,30.00623), long = c
 usethis::use_data(tradeHubs, overwrite = T)
 
 ## IR Curves for RQuantlib
-# Curves and Def - ICE
-fromDate <- Sys.Date() - months(1)
+# Curves and Def - barchart
 
-usSwapIR <- dplyr::tibble(
-  tickQL = c(
-    "d1d", "d1w", "d1m", "d3m", "d6m", "d1y",
-    paste0("fut", 1:8),
-    paste0("s", c(2, 3, 5, 7, 10, 15, 20, 30), "y")
-  ),
-  type = c(rep("ICE.LIBOR", 6), rep("EuroDollar", 8), rep("IRS", 8)),
-  source = c(rep("FRED", 6), rep("CME", 8), rep("FRED", 8)),
-  tickSource = c(
-    "USDONTD156N", "USD1WKD156N", "USD1MTD156N", "USD3MTD156N", "USD6MTD156N", "USD12MD156N",
-    paste0("GE_", sprintf("%0.3d", 1:8), "_Month"),
-    paste0("ICERATES1100USD", c(2, 3, 5, 7, 10, 15, 20, 30), "Y")
-  )
-)
-# c = usSwapIR %>% dplyr::filter(source == "Morningstar") %>% .$tickSource
-ed <- getPrices(
-  feed = "CME_CmeFutures_EOD_continuous",
-  contracts = c(paste0("GE_", sprintf("%0.3d", 1:8), "_Month")),
-  from = fromDate,
-  iuser = mstar[[1]],
-  ipassword = mstar[[2]]
-)
-# c = usSwapIR %>% dplyr::filter(source == "quandl") %>% .$tickSource
-c <- usSwapIR %>%
-  dplyr::filter(source == "FRED") %>%
-  .$tickSource
-x <- tidyquant::tq_get(c, get = "economic.data", from = fromDate, to = as.character(Sys.Date())) %>%
-  dplyr::mutate(price = price / 100) %>%
-  tidyr::pivot_wider(date, names_from = symbol, values_from = price)
-r <- dplyr::left_join(x, ed, by = c("date"))
-colnames(r) <- c("date", dplyr::tibble(tickSource = colnames(r)[-1]) %>% dplyr::left_join(usSwapIR, by = c("tickSource")) %>% .$tickQL)
-usSwapIRdef <- usSwapIR %>% tidyr::drop_na()
-usSwapIR <- r %>% stats::na.omit()
+library(RSelenium)
+library(rvest)
+library(tidyverse)
+rD <- rsDriver(port = 4567L, browser = "chrome",chromever = "latest", verbose = FALSE)
+remDr <- rD[["client"]]
+Sys.sleep(2)
+
+remDr$navigate("https://www.barchart.com/economy/interest-rates")
+Sys.sleep(2)
+remDr$findElement(using = 'class', value = "bc-datatable")$clickElement()
+page <- remDr$getPageSource()
+ameribor <- read_html(page[[1]]) %>% rvest::html_table() %>% .[[6]] %>%
+  dplyr::select(Name,Last) %>%
+  dplyr::filter(grepl("Ameribor 1-Week Spot Rate|Ameribor 1-Month Spot Rate|Ameribor 3-Month Spot Rate|Ameribor 6-Month Spot Rate|Ameribor 1-Year Spot Rate",Name)) %>%
+  dplyr::mutate(Name = c("d1w", "d1m", "d3m", "d6m", "d1y"), Last = as.numeric(Last)/100)
+irs <- read_html(page[[1]]) %>% rvest::html_table() %>% .[[3]] %>% dplyr::select(Name,Last) %>%
+  dplyr::slice(-1) %>%
+  dplyr::mutate(Name = paste0("s",c(2,3,5,7,10,15,30),"y"),
+                Last = readr::parse_number(Last)/100)
+
+remDr$navigate("https://www.barchart.com/futures/quotes/GE*0/futures-prices")
+page <- remDr$getPageSource()
+futs <- read_html(page[[1]]) %>%
+  rvest::html_table() %>%
+  .[[1]] %>%
+  dplyr::slice(1:8) %>%
+  dplyr::transmute(Name = paste0("fut", 1:8), Last)
+
+remDr$close()
+rD[["server"]]$stop()
 
 # Discount Objects
 
 library(RQuantLib)
-rates <- usSwapIR %>%
-  stats::na.omit() %>%
-  dplyr::filter(date == dplyr::last(date))
-tradeDate <- rates$date
-tsQuotes <- rates %>%
-  dplyr::select(contains("d"), contains("fut"), contains("s"), -date, -d1d) %>%
-  transpose() %>%
-  unlist() %>%
-  as.list()
-params <- list(
-  tradeDate = tradeDate, settleDate = tradeDate + 2, dt = 1 / 12,
-  interpWhat = "discount", interpHow = "spline"
-)
+tsQuotes <- rbind(ameribor,irs, futs) %>% as_tibble() %>%
+  dplyr::mutate(Last = readr::parse_number(Last)) %>%
+  tidyr::pivot_wider(names_from = Name, values_from = Last) %>%
+  transpose() %>% unlist() %>% as.list()
+tradeDate <- as.Date(Sys.Date())
+params <- list(tradeDate = tradeDate, settleDate = tradeDate + 2, dt = 1/12,
+               interpWhat = "discount", interpHow = "spline")
 setEvaluationDate(tradeDate)
 times <- seq(0, 20, 1 / 12)
 savepar <- par(mfrow = c(3, 3), mar = c(4, 4, 2, 0.5))
@@ -915,10 +918,6 @@ usSwapCurves <- DiscountCurve(params, tsQuotes, times)
 tsQuotes <- list(flat = 0.03)
 usSwapCurvesPar <- DiscountCurve(params, tsQuotes, times)
 
-rm(r, x, rates, savepar, tsQuotes, params)
-
-usethis::use_data(usSwapIR, overwrite = T)
-usethis::use_data(usSwapIRdef, overwrite = T)
 usethis::use_data(usSwapCurves, overwrite = T)
 usethis::use_data(usSwapCurvesPar, overwrite = T)
 

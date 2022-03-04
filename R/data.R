@@ -108,18 +108,6 @@
 #' @source Morningstar Commodities
 "dfwide"
 
-#' Data for bootstrapping US interest rate curve
-#' @description USD Interest Rate Swap Curve for RQuantlib bootstrapping. See usSwapIRdef for sources and tickers.
-#' @format data frame
-#' #' @source Morningstar and FRED
-"usSwapIR"
-
-#' Metadata to extract US interest rate curve data
-#' @description USD Interest Rate Swap Curve definitions with sources and tickers
-#' @format data frame
-#' #' @source Morningstar and FRED
-"usSwapIRdef"
-
 #' Data for US interest rate discounting using zero rates curve.
 #' @description USD IR Discount, Forward and Zero curves from RQuantlib::DiscountCurve
 #' @format List

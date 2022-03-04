@@ -6,6 +6,12 @@
 
 ## Bugs & Fixes
 
++ `chart_zscore()` time axis fixed.
+
+## Updates
+
++ `expiry_table` updated and now includes LTH and HG CME contracts.
++ Removed `usSwapIR` and `getIRswapCurve()` as data is no longer available after discontinuation of LIBOR fixes..
 
 # RTL 1.0.0
 

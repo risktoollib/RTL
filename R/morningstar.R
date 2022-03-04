@@ -262,54 +262,6 @@ getPrices <- function(feed = "CME_NymexFutures_EOD", contracts = c("CL9Z", "CL0F
   return(x)
 }
 
-#' Morningstar Commodities API single call for IR curves
-#' @description
-#' Extract historical data for tsQuotes in RQuantlib to bootstrap swap curve
-#' using Morningstar and FRED as data source.
-#' @param currency Currently only USD LIBOR implemented.
-#' @param from From date as character string
-#' @param iuser Morningstar user name as character - sourced locally in examples.
-#' @param ipassword Morningstar user password as character - sourced locally in examples.
-#' @return wide data frame
-#' @export getIRswapCurve
-#' @author Philippe Cote
-#' @examples
-#' \dontrun{
-#' getIRswapCurve(currency = "USD", from = "2019-08-26", iuser = username, ipassword = password)
-#' }
-#'
-getIRswapCurve <- function(currency = "USD", from = "2019-01-01", iuser = "x@xyz.com", ipassword = "pass") {
-  usSwapIR <- dplyr::tibble(
-    tickQL = c(
-      "d1d", "d1w", "d1m", "d3m", "d6m", "d1y",
-      paste0("fut", 1:8),
-      paste0("s", c(2, 3, 5, 7, 10, 15, 20, 30), "y")
-    ),
-    type = c(rep("ICE.LIBOR", 6), rep("EuroDollar", 8), rep("IRS", 8)),
-    source = c(rep("FRED", 6), rep("Morningstar", 8), rep("FRED", 8)),
-    tickSource = c(
-      "USDONTD156N", "USD1WKD156N", "USD1MTD156N", "USD3MTD156N", "USD6MTD156N", "USD12MD156N",
-      paste0("ED_", sprintf("%0.3d", 1:8), "_Month"),
-      paste0("ICERATES1100USD", c(2, 3, 5, 7, 10, 15, 20, 30), "Y")
-    )
-  )
-
-  c <- usSwapIR %>%
-    dplyr::filter(source == "Morningstar") %>%
-    .$tickSource
-  r <- getPrices(feed = "CME_CmeFutures_EOD_continuous", contracts = c, from = from, iuser = iuser, ipassword = ipassword)
-  c <- usSwapIR %>%
-    dplyr::filter(source == "FRED") %>%
-    .$tickSource
-  x <- tidyquant::tq_get(c, get = "economic.data", from = from, to = as.character(Sys.Date())) %>%
-    dplyr::mutate(price = price / 100) %>%
-    tidyr::pivot_wider(date, names_from = symbol, values_from = price)
-  r <- dplyr::left_join(x, r, by = c("date"))
-  colnames(r) <- c("date", dplyr::tibble(tickSource = colnames(r)[-1]) %>% dplyr::left_join(usSwapIR, by = c("tickSource")) %>% .$tickQL)
-  return(r)
-}
-
-
 #' Morningstar Commodities API forward curves
 #' @description
 #' Returns forward curves from Morningstar API. See below for current feeds supported.

@@ -115,9 +115,6 @@
     <loc>/reference/getGenscapeStorageOil.html</loc>
   </url>
   <url>
-    <loc>/reference/getIRswapCurve.html</loc>
-  </url>
-  <url>
     <loc>/reference/getPrice.html</loc>
   </url>
   <url>
@@ -206,12 +203,6 @@
   </url>
   <url>
     <loc>/reference/usSwapCurvesPar.html</loc>
-  </url>
-  <url>
-    <loc>/reference/usSwapIR.html</loc>
-  </url>
-  <url>
-    <loc>/reference/usSwapIRdef.html</loc>
   </url>
   <url>
     <loc>/reference/wtiSwap.html</loc>

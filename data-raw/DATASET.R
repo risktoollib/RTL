@@ -889,6 +889,19 @@ irs <- read_html(page[[1]]) %>% rvest::html_table() %>% .[[3]] %>% dplyr::select
   dplyr::mutate(Name = paste0("s",c(2,3,5,7,10,15,30),"y"),
                 Last = readr::parse_number(Last)/100)
 
+remDr$navigate("https://www.chathamfinancial.com/technology/us-market-rates")
+Sys.sleep(2)
+remDr$findElement(using = 'css', value = 'div.rates:nth-child(8) > div:nth-child(1) > div:nth-child(2) > table:nth-child(1)')$clickElement()  # Cross rates
+#remDr$findElement(using = 'class', value = 'bc-table-wrapper')$clickElement()
+page <- remDr$getPageSource()
+libor <- rvest::read_html(page[[1]]) %>%
+  rvest::html_table() %>% .[[5]] %>%
+  dplyr::rename(Name = 1, Last = 2) %>%
+  dplyr::select(1,2) %>%
+  dplyr::mutate(Name = c("d1m", "d3m", "d6m", "d1y"),
+                Last = readr::parse_number(Last)/100)
+libor <- rbind(dplyr::tibble(Name = "d1w", Last = libor$Last[1]),libor)
+
 remDr$navigate("https://www.barchart.com/futures/quotes/GE*0/futures-prices")
 page <- remDr$getPageSource()
 futs <- read_html(page[[1]]) %>%
@@ -903,7 +916,7 @@ rD[["server"]]$stop()
 # Discount Objects
 
 library(RQuantLib)
-tsQuotes <- rbind(ameribor,irs, futs) %>% as_tibble() %>%
+tsQuotes <- rbind(libor, irs, futs) %>% as_tibble() %>%
   dplyr::mutate(Last = readr::parse_number(Last)) %>%
   tidyr::pivot_wider(names_from = Name, values_from = Last) %>%
   transpose() %>% unlist() %>% as.list()

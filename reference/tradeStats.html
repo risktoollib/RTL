@@ -91,13 +91,14 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Registered S3 method overwritten by 'quantmod':</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   method            from</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   as.zoo.data.frame zoo </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>some methods for “zoo” objects do not work if the index entries in ‘order.by’ are not unique</span>
 <span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">ret</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">tradeStats</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, Rf <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Non-numeric columns being dropped: date</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $CumReturn</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2.478063</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2.478064</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Ret.Ann</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1305</span>
@@ -106,7 +107,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1628</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Sharpe</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.8019</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.8017</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Omega</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1783</span>
@@ -115,7 +116,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5582125</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`%.InMrkt`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.9964844</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.9960953</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $DD.Length</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 264</span>

@@ -3,6 +3,7 @@
 ## New
 
 + `tradeHubs` contains GIS coordinates for major crude oil trading hubs in North America.
++ `tsQuotes` dataset for use with `RQuantLib::DiscountCurve()`.
 
 ## Bugs & Fixes
 

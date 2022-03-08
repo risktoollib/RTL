@@ -872,7 +872,7 @@ usethis::use_data(tradeHubs, overwrite = T)
 library(RSelenium)
 library(rvest)
 library(tidyverse)
-rD <- rsDriver(port = 4567L, browser = "chrome",chromever = "latest", verbose = FALSE)
+rD <- rsDriver(port = 4444L, browser = "chrome",chromever = "latest", verbose = FALSE)
 remDr <- rD[["client"]]
 Sys.sleep(2)
 
@@ -916,9 +916,11 @@ rD[["server"]]$stop()
 # Discount Objects
 
 library(RQuantLib)
+# removing d1y fro LIBOR  and s2y - causes negative rates
 tsQuotes <- rbind(libor, irs, futs) %>% as_tibble() %>%
   dplyr::mutate(Last = readr::parse_number(Last)) %>%
   tidyr::pivot_wider(names_from = Name, values_from = Last) %>%
+  dplyr::select(-s2y,-d1y,-d6m,-d3m) %>%
   transpose() %>% unlist() %>% as.list()
 tradeDate <- as.Date(Sys.Date())
 params <- list(tradeDate = tradeDate, settleDate = tradeDate + 2, dt = 1/12,
@@ -928,6 +930,10 @@ times <- seq(0, 20, 1 / 12)
 savepar <- par(mfrow = c(3, 3), mar = c(4, 4, 2, 0.5))
 on.exit(par(savepar))
 usSwapCurves <- DiscountCurve(params, tsQuotes, times)
+# check your curve for negative forward rates
+usSwapCurves[1:4] %>% dplyr::as_tibble() %>% View()
+usethis::use_data(tsQuotes, overwrite = T)
+
 tsQuotes <- list(flat = 0.03)
 usSwapCurvesPar <- DiscountCurve(params, tsQuotes, times)
 

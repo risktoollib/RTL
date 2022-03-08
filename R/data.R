@@ -119,6 +119,11 @@
 #' @format data frame
 "usSwapCurvesPar"
 
+#' Interest Rate Curve Data for RQuantlib .
+#' @description USD IR curve input for RQuantlib::DiscountCurve
+#' @format data frame
+"tsQuotes"
+
 #' Data for Canadian and US physical crude trading calendars
 #' @description Crude Trading Trade Cycles
 #' @format data frame

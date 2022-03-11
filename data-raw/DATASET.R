@@ -168,7 +168,8 @@ crude <- c(
   paste0("CL_", sprintf("%0.3d", 1:36), "_Month"),
   paste0("NG_", sprintf("%0.3d", 1:36), "_Month")
 )
-crudecan <- c(paste0("WCW_", sprintf("%0.3d", 1:12), "_Month"))
+crudecan <- c(paste0("WCW_", sprintf("%0.3d", 1:12), "_Month"),
+              paste0("YV_", sprintf("%0.3d", 1:6), "_Month"))
 crudeICE <- c(paste0("BRN_", sprintf("%0.3d", 1:36), "_Month"))
 pdts <- c(paste0("HO_", sprintf("%0.3d", 1:18), "_Month"), paste0("RB_", sprintf("%0.3d", 1:18), "_Month"))
 
@@ -246,6 +247,7 @@ dflong %>% dplyr::filter(grepl("BRN",series)) %>% ggplot(aes(x = date, y = value
 dflong %>% dplyr::filter(grepl("HO",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("RB",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("WCW",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
+dflong %>% dplyr::filter(grepl("YV",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("ALI",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("NG",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("AUP",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
@@ -717,7 +719,7 @@ usethis::use_data(cancrudeprices, overwrite = T)
 # BP Assays
 ### capline https://cappl.com/Reports1.aspx
 library(rvest)
-url <- "https://www.bp.com/en/global/bp-global-energy-trading/features-and-updates/technical-downloads/crudes-assays.html"
+url <- "https://www.bp.com/en/global/bp-trading-and-shipping/documents-and-downloads/technical-downloads/crudes-assays.html"
 html <- xml2::read_html(url)
 
 ## Simplified tables
@@ -781,8 +783,9 @@ urls <- html %>%
   unique() %>%
   dplyr::mutate(cn = str_replace_all(
     xls,
-    c("https://www.bp.com/content/dam/bp/business-sites/en/global/bp-global-energy-trading/documents/what-we-do/crudes/" = "", ".xls" = "")
+    c("https://www.bp.com/content/dam/bp/business-sites/en/global/bp-trading-and-shipping/documents/technical-documents-and-downloads/crudes/" = "", ".xls" = "")
   ))
+
 
 crudeassaysBP <- list()
 for (i in 1:nrow(urls)) {

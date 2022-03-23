@@ -875,7 +875,8 @@ usethis::use_data(tradeHubs, overwrite = T)
 library(RSelenium)
 library(rvest)
 library(tidyverse)
-rD <- rsDriver(port = 4444L, browser = "chrome",chromever = "latest", verbose = FALSE)
+rD <- rsDriver(port = 4545L, browser = "firefox")
+#rD <- rsDriver(port = 4444L, browser = "chrome",chromever = "latest", verbose = FALSE)
 remDr <- rD[["client"]]
 Sys.sleep(2)
 
@@ -898,7 +899,7 @@ remDr$findElement(using = 'css', value = 'div.rates:nth-child(8) > div:nth-child
 #remDr$findElement(using = 'class', value = 'bc-table-wrapper')$clickElement()
 page <- remDr$getPageSource()
 libor <- rvest::read_html(page[[1]]) %>%
-  rvest::html_table() %>% .[[5]] %>%
+  rvest::html_table() %>% .[[7]] %>%
   dplyr::rename(Name = 1, Last = 2) %>%
   dplyr::select(1,2) %>%
   dplyr::mutate(Name = c("d1m", "d3m", "d6m", "d1y"),
@@ -937,7 +938,7 @@ usSwapCurves <- DiscountCurve(params, tsQuotes, times)
 usSwapCurves[1:4] %>% dplyr::as_tibble() %>% View()
 usethis::use_data(tsQuotes, overwrite = T)
 
-tsQuotes <- list(flat = 0.03)
+tsQuotes <- list(flat = 0.025)
 usSwapCurvesPar <- DiscountCurve(params, tsQuotes, times)
 
 usethis::use_data(usSwapCurves, overwrite = T)

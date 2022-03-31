@@ -50,7 +50,7 @@ library(rvest)
 library(readxl)
 library(readr)
 library(RSelenium)
-source("~/now/keys.R")
+source("~/now/packages.R")
 setwd(paste0(getwd(), "/data-raw"))
 
 ## spot2fut convergence
@@ -574,15 +574,51 @@ HG <- read_excel("HG.xls", col_types = c(
     Last.Delivery = as.Date(Last.Delivery, "%Y-%m-%d", tz = "UTC")
   )
 
+bbdate <- function(x){
+  tmp <- as.numeric(substring(x,7,8))
+  tmp <- ifelse(tmp >= 60, tmp + 1900, tmp + 2000)
+  paste0(substr(x,1,6),as.character(tmp))
+}
 
-expiry_table <- rbind(expiry_table, LCO, LGO, CL, BZ, HO, RB, GC, SI, ALI, LTH, HG) %>%
+W <- read_excel("W.xlsx") %>%
+  dplyr::as_tibble(.name_repair = "universal") %>%
+  dplyr::transmute(cmdty = "cmewheat",
+                   tick.prefix = Ticker,
+                   Last.Trade = as.Date(as.character(purrr::map(.x = Last.Trade, .f = bbdate)), "%m/%d/%Y", tz = "UTC"),
+                   First.Notice = as.Date(as.character(purrr::map(.x = First.Notice, .f = bbdate)), "%m/%d/%Y", tz = "UTC"),
+                   First.Delivery = as.Date(as.character(purrr::map(.x = First.Delivery, .f = bbdate)), "%m/%d/%Y", tz = "UTC"),
+                   Last.Delivery = as.Date(as.character(purrr::map(.x = Last.Delivery, .f = bbdate)), "%m/%d/%Y", tz = "UTC")
+                   )
+
+C <- read_excel("C.xlsx") %>%
+  dplyr::as_tibble(.name_repair = "universal") %>%
+  dplyr::transmute(cmdty = "cmecorn",
+                   tick.prefix = Ticker,
+                   Last.Trade = as.Date(as.character(purrr::map(.x = Last.Trade, .f = bbdate)), "%m/%d/%Y", tz = "UTC"),
+                   First.Notice = as.Date(as.character(purrr::map(.x = First.Notice, .f = bbdate)), "%m/%d/%Y", tz = "UTC"),
+                   First.Delivery = as.Date(as.character(purrr::map(.x = First.Delivery, .f = bbdate)), "%m/%d/%Y", tz = "UTC"),
+                   Last.Delivery = as.Date(as.character(purrr::map(.x = Last.Delivery, .f = bbdate)), "%m/%d/%Y", tz = "UTC")
+  )
+
+
+S <- read_excel("S.xlsx") %>%
+  dplyr::as_tibble(.name_repair = "universal") %>%
+  dplyr::transmute(cmdty = "cmesoybean",
+                   tick.prefix = Ticker,
+                   Last.Trade = as.Date(as.character(purrr::map(.x = Last.Trade, .f = bbdate)), "%m/%d/%Y", tz = "UTC"),
+                   First.Notice = as.Date(as.character(purrr::map(.x = First.Notice, .f = bbdate)), "%m/%d/%Y", tz = "UTC"),
+                   First.Delivery = as.Date(as.character(purrr::map(.x = First.Delivery, .f = bbdate)), "%m/%d/%Y", tz = "UTC"),
+                   Last.Delivery = as.Date(as.character(purrr::map(.x = Last.Delivery, .f = bbdate)), "%m/%d/%Y", tz = "UTC")
+  )
+
+
+expiry_table <- rbind(expiry_table, LCO, LGO, CL, BZ, HO, RB, GC, SI, ALI, LTH, HG, W, C ,S) %>%
   dplyr::distinct() %>%
   dplyr::mutate(
     Year = year(First.Delivery),
     Month = month(First.Delivery),
     Month.Letter = futmonths[Month]
-  ) %>%
-  dplyr::filter(Year > 2003)
+  ) #%>% dplyr::filter(Year > 2003)
 usethis::use_data(expiry_table, overwrite = T)
 
 ## tradeCycle

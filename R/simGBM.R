@@ -21,18 +21,3 @@ simGBM <- function(S0 = 10, drift = 0, sigma = 0.2, T2M = 1, dt = 1 / 12) {
   }
   return(S)
 }
-
-
-# simOUt <- function (S0 = 0, mu = dplyr::tibble(t = 0:20,mr = c(rep(0,7),rep(2,14))), theta = 12, sigma = 0.2, T2M = 1, dt = 1/12) 
-# {
-#   periods <- T2M/dt
-#   m <- dplyr::tibble(t = seq(0,T2M,dt),
-#                      mu.t = stats::approx(x = muT$t, y = muT$mr,xout = t)$y,
-#                      s = c(S0,rep(0,periods)))
-# 
-#   for (i in 2:(periods + 1)) {
-#     m[i,"s"] <- m[i - 1,"s"] + theta * (m[i,"mu.t"] - m[i - 1,"s"]) * dt + sigma * 
-#       stats::rnorm(n = 1, mean = 0, sd = sqrt(dt))
-#   }
-#   return(m$s)
-# }

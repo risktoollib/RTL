@@ -37,9 +37,7 @@ Imports:
     tsibble,
     xts,
     zoo,
-    cli,
     glue,
-    withr
 Suggests: 
     testthat (>= 3.0.0),
     covr,

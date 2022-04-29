@@ -12,7 +12,7 @@
 #' @examples
 #' mu = dplyr::tibble(t = 0:20,mr = c(rep(2,7),rep(4,14)))
 #' simOUt(S0 = 5, mu = mu, theta = .5, sigma = 0.2, T2M = 1, dt = 1 / 12)
-simOUt <- function (S0 = 0, mu =  dplyr::tibble(t = 0:20,mr = c(rep(2,7),rep(4,14))), theta = 12, sigma = 0.2, T2M = 1, dt = 1/12)
+simOUt <- function(S0 = 0, mu =  dplyr::tibble(t = 0:20,mr = c(rep(2,7),rep(4,14))), theta = 12, sigma = 0.2, T2M = 1, dt = 1/12)
 {
   periods <- T2M/dt
   m <- dplyr::tibble(t = seq(0,T2M,dt),

@@ -6,7 +6,7 @@
 \usage{
 simOUt(
   S0 = 0,
-  mu = dplyr::tibble(t = 0:20, mr = c(rep(0, 7), rep(2, 14))),
+  mu = dplyr::tibble(t = 0:20, mr = c(rep(2, 7), rep(4, 14))),
   theta = 12,
   sigma = 0.2,
   T2M = 1,
@@ -33,7 +33,7 @@ A numeric vector of simulated values
 Simulates a Ornstein–Uhlenbeck process with mu as a function of time
 }
 \examples{
-mu = dplyr::tibble(t = 0:20,mr = c(rep(0,7),rep(2,14)))
+mu = dplyr::tibble(t = 0:20,mr = c(rep(2,7),rep(4,14)))
 simOUt(S0 = 5, mu = mu, theta = .5, sigma = 0.2, T2M = 1, dt = 1 / 12)
 }
 \author{

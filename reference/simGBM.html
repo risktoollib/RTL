@@ -53,12 +53,22 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">simGBM</span><span class="op">(</span>S0 <span class="op">=</span> <span class="fl">10</span>, drift <span class="op">=</span> <span class="fl">0</span>, sigma <span class="op">=</span> <span class="fl">0.2</span>, T2M <span class="op">=</span> <span class="fl">1</span>, dt <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">12</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">simGBM</span><span class="op">(</span>
+  nsims <span class="op">=</span> <span class="fl">1</span>,
+  S0 <span class="op">=</span> <span class="fl">10</span>,
+  drift <span class="op">=</span> <span class="fl">0</span>,
+  sigma <span class="op">=</span> <span class="fl">0.2</span>,
+  T2M <span class="op">=</span> <span class="fl">1</span>,
+  dt <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">12</span>,
+  vec <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>S0</dt>
+    <dl><dt>nsims</dt>
+<dd><p>numble of simulations. Defaults to 1</p></dd>
+<dt>S0</dt>
 <dd><p>Spot price at t=0</p></dd>
 <dt>drift</dt>
 <dd><p>Drift term in percentage</p></dd>
@@ -68,10 +78,12 @@
 <dd><p>Maturity in years</p></dd>
 <dt>dt</dt>
 <dd><p>Time step in period e.g. 1/250 = 1 business day.</p></dd>
+<dt>vec</dt>
+<dd><p>Vectorized implementation. Defaults to TRUE</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A numeric vector of simulated values</p>
+    <p>A tibble of simulated values</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -80,9 +92,26 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">simGBM</span><span class="op">(</span>S0 <span class="op">=</span> <span class="fl">10</span>, drift <span class="op">=</span> <span class="fl">0</span>, sigma <span class="op">=</span> <span class="fl">0.2</span>, T2M <span class="op">=</span> <span class="fl">1</span>, dt <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">12</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 10.000000  9.860768  9.031891  9.584546 10.333551 10.658704 11.049069</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 11.219784 10.605446  9.871899 10.063493  9.947611</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">simGBM</span><span class="op">(</span>nsims <span class="op">=</span> <span class="fl">2</span>, S0 <span class="op">=</span> <span class="fl">10</span>, drift <span class="op">=</span> <span class="fl">0</span>, sigma <span class="op">=</span> <span class="fl">0.2</span>, T2M <span class="op">=</span> <span class="fl">1</span>, dt <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">12</span>, vec <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> New names:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `` -&gt; `...1`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `` -&gt; `...2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 13 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     sim1  sim2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 10    10   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>  9.74  9.76</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>  9.13  9.41</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>  9.70  9.13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 10.7   8.72</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 11.0   8.70</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 11.5   8.22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 11.9   7.90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 11.7   7.54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 12.6   8.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> 12.6   7.63</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> 12.4   7.10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 12.2   7.07</span>
 </code></pre></div>
     </div>
   </div>

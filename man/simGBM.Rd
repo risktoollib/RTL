@@ -4,9 +4,19 @@
 \alias{simGBM}
 \title{GBM process simulation}
 \usage{
-simGBM(S0 = 10, drift = 0, sigma = 0.2, T2M = 1, dt = 1/12)
+simGBM(
+  nsims = 1,
+  S0 = 10,
+  drift = 0,
+  sigma = 0.2,
+  T2M = 1,
+  dt = 1/12,
+  vec = TRUE
+)
 }
 \arguments{
+\item{nsims}{numble of simulations. Defaults to 1}
+
 \item{S0}{Spot price at t=0}
 
 \item{drift}{Drift term in percentage}
@@ -16,15 +26,17 @@ simGBM(S0 = 10, drift = 0, sigma = 0.2, T2M = 1, dt = 1/12)
 \item{T2M}{Maturity in years}
 
 \item{dt}{Time step in period e.g. 1/250 = 1 business day.}
+
+\item{vec}{Vectorized implementation. Defaults to TRUE}
 }
 \value{
-A numeric vector of simulated values
+A tibble of simulated values
 }
 \description{
 Simulates a Geometric Brownian Motion process
 }
 \examples{
-simGBM(S0 = 10, drift = 0, sigma = 0.2, T2M = 1, dt = 1 / 12)
+simGBM(nsims = 2, S0 = 10, drift = 0, sigma = 0.2, T2M = 1, dt = 1 / 12, vec = TRUE)
 }
 \author{
 Philippe Cote

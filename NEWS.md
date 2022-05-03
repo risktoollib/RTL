@@ -8,6 +8,7 @@
 ## Bugs & Fixes
 
 + `chart_zscore()` time axis fixed.
++ `simGBM` vectorized.
 
 ## Updates
 

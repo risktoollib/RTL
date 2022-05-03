@@ -5,6 +5,7 @@
 \title{OU process simulation}
 \usage{
 simOUt(
+  nsims = 2,
   S0 = 0,
   mu = dplyr::tibble(t = 0:20, mr = c(rep(2, 7), rep(4, 14))),
   theta = 12,
@@ -14,6 +15,8 @@ simOUt(
 )
 }
 \arguments{
+\item{nsims}{numble of simulations. Defaults to 1}
+
 \item{S0}{S at t=0}
 
 \item{mu}{data frame of mean reversion level as a function of time}
@@ -34,7 +37,7 @@ Simulates a Ornstein–Uhlenbeck process with mu as a function of time
 }
 \examples{
 mu = dplyr::tibble(t = 0:20,mr = c(rep(2,7),rep(4,14)))
-simOUt(S0 = 5, mu = mu, theta = .5, sigma = 0.2, T2M = 1, dt = 1 / 12)
+simOUt(nsims = 2, S0 = 5, mu = mu, theta = .5, sigma = 0.2, T2M = 1, dt = 1 / 12)
 }
 \author{
 Philippe Cote

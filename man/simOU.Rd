@@ -4,9 +4,11 @@
 \alias{simOU}
 \title{OU process simulation}
 \usage{
-simOU(S0 = 5, mu = 5, theta = 0.5, sigma = 0.2, T2M = 1, dt = 1/12)
+simOU(nsims = 2, S0 = 5, mu = 5, theta = 0.5, sigma = 0.2, T2M = 1, dt = 1/12)
 }
 \arguments{
+\item{nsims}{numble of simulations. Defaults to 1}
+
 \item{S0}{S at t=0}
 
 \item{mu}{Mean reversion level}
@@ -26,7 +28,7 @@ A numeric vector of simulated values
 Simulates a Ornstein–Uhlenbeck process
 }
 \examples{
-simOU(S0 = 5, mu = 5, theta = .5, sigma = 0.2, T2M = 1, dt = 1 / 12)
+simOU(nsims = 5, S0 = 5, mu = 5, theta = .5, sigma = 0.2, T2M = 1, dt = 1 / 12)
 }
 \author{
 Philippe Cote

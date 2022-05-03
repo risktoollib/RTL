@@ -28,6 +28,7 @@
 # usethis::use_package("RCurl")
 # usethis::use_package("purrr")
 # usethis::use_package("zoo")
+#usethis::use_package("Rcpp")
 
 # Setup RTL Webpage
 # usethis::use_pkgdown()

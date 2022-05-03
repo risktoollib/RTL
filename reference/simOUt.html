@@ -54,6 +54,7 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">simOUt</span><span class="op">(</span>
+  nsims <span class="op">=</span> <span class="fl">2</span>,
   S0 <span class="op">=</span> <span class="fl">0</span>,
   mu <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>t <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">20</span>, mr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">7</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">14</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
   theta <span class="op">=</span> <span class="fl">12</span>,
@@ -65,7 +66,9 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>S0</dt>
+    <dl><dt>nsims</dt>
+<dd><p>numble of simulations. Defaults to 1</p></dd>
+<dt>S0</dt>
 <dd><p>S at t=0</p></dd>
 <dt>mu</dt>
 <dd><p>data frame of mean reversion level as a function of time</p></dd>
@@ -90,9 +93,23 @@
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">mu</span> <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>t <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">20</span>,mr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">7</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">14</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">simOUt</span><span class="op">(</span>S0 <span class="op">=</span> <span class="fl">5</span>, mu <span class="op">=</span> <span class="va">mu</span>, theta <span class="op">=</span> <span class="fl">.5</span>, sigma <span class="op">=</span> <span class="fl">0.2</span>, T2M <span class="op">=</span> <span class="fl">1</span>, dt <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">12</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 5.000000 4.931651 4.784037 4.701685 4.547063 4.381168 4.482563 4.416544</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] 4.336020 4.171633 4.047321 3.920718 3.808039</span>
+<span class="r-in"><span class="fu">simOUt</span><span class="op">(</span>nsims <span class="op">=</span> <span class="fl">2</span>, S0 <span class="op">=</span> <span class="fl">5</span>, mu <span class="op">=</span> <span class="va">mu</span>, theta <span class="op">=</span> <span class="fl">.5</span>, sigma <span class="op">=</span> <span class="fl">0.2</span>, T2M <span class="op">=</span> <span class="fl">1</span>, dt <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">12</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 13 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     sim1  sim2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>  5     5   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>  4.70  4.82</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>  4.52  4.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>  4.36  4.49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>  4.48  5.08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>  3.98  4.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>  3.80  5.51</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  3.82  5.44</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  3.90  5.10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  4.05  5.04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span>  4.69  5.17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span>  4.85  5.32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span>  4.14  5.11</span>
 </code></pre></div>
     </div>
   </div>

@@ -53,3 +53,5 @@ LazyDataCompression: xz
 RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
+LinkingTo: 
+    Rcpp

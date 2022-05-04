@@ -9,7 +9,7 @@
 ## Enhancement
 
 + `simGBM()` vectorized.
-+ `simOU()` implemented in `Rcpp`.
++ `simOU()` and `simOUt()` implemented in `Rcpp` - see ./src/rcpp*.cpp
 
 ## Bugs & Fixes
 

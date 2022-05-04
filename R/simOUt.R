@@ -24,23 +24,28 @@ simOUt <- function(nsims = 2, S0 = 0, mu =  dplyr::tibble(t = 0:20,mr = c(rep(2,
   diffusion <- matrix(stats::rnorm(periods * nsims, mean = 0, sd = sqrt(dt)), ncol = nsims, nrow = periods)
   diffusion <- rbind(rep(S0,nsims),diffusion)
   diffusion <- cbind(m$mu.t, diffusion)
-  rcppOUt <- NULL
-  Rcpp::cppFunction("
-  NumericMatrix rcppOUt(NumericMatrix x, double theta, double dt, double sigma) {
-    for (int i = 1; i < x.nrow(); i++) {
-      for (int j = 1; j < x.ncol(); j++) {
-       x(i,j) =  x(i-1,j) + theta * (x(i,1) - x(i-1,j)) * dt + sigma * x(i,j) ;
-      }
-    }
-    return x;
-  }
-                    ")
+
+  # c++ implementation via ./src/rcppOUt.cpp
+    # rcppOUt <- NULL
+    # Rcpp::cppFunction("
+    # NumericMatrix rcppOUt(NumericMatrix x, double theta, double dt, double sigma) {
+    #   for (int i = 1; i < x.nrow(); i++) {
+    #     for (int j = 1; j < x.ncol(); j++) {
+    #      x(i,j) =  x(i-1,j) + theta * (x(i,1) - x(i-1,j)) * dt + sigma * x(i,j) ;
+    #     }
+    #   }
+    #   return x;
+    # }
+    #                  ")
   S <- rcppOUt(diffusion,theta,dt,sigma)
   S <- dplyr::as_tibble(S, .name_repair = "minimal")
   names(S) <- c("mu",paste0("sim",1:nsims))
-  S <- S %>% dplyr::select(-mu) %>% dplyr::mutate(t = seq(0,T2M,dt))
-  #S %>% tidyr::pivot_longer(-t,"sim","value") %>% ggplot2::ggplot(ggplot2::aes(t,value,col = sim)) + ggplot2::geom_line() + theme(legend.position = "none")
-  # old
+  S <- S %>% dplyr::select(-mu) %>% dplyr::mutate(t = seq(0,T2M,dt)) %>% dplyr::select(t, dplyr::everything())
+
+  # Check visual of diffusion
+  # S %>% tidyr::pivot_longer(-t,"sim","value") %>% ggplot2::ggplot(ggplot2::aes(t,value,col = sim)) + ggplot2::geom_line() + theme(legend.position = "none")
+
+  # R implementation
   # for (i in 2:(periods + 1)) {
   #   m[i,"s"] <- m[i - 1,"s"] + theta * (m[i,"mu.t"] - m[i - 1,"s"]) * dt + sigma *
   #     stats::rnorm(n = 1, mean = 0, sd = sqrt(dt))

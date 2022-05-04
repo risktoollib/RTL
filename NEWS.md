@@ -4,11 +4,16 @@
 
 + `tradeHubs` contains GIS coordinates for major crude oil trading hubs in North America.
 + `tsQuotes` dataset for use with `RQuantLib::DiscountCurve()`.
++ `simOUt()` implements `simOU()` with a mean reversion level as a function of time. 
+
+## Enhancement
+
++ `simGBM()` vectorized.
++ `simOU()` implemented in `Rcpp`.
 
 ## Bugs & Fixes
 
 + `chart_zscore()` time axis fixed.
-+ `simGBM` vectorized.
 
 ## Updates
 

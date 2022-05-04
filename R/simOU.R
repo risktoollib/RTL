@@ -23,7 +23,7 @@ simOU <- function(nsims = 2, S0 = 5, mu = 5, theta = .5, sigma = 0.2, T2M = 1, d
   NumericMatrix rcppOU(NumericMatrix x, double theta, double mu, double dt, double sigma) {
     for (int i = 1; i < x.nrow(); i++) {
       for (int j = 0; j < x.ncol(); j++) {
-       x(i,j) +=  x(i-1,j) + theta * (mu - x(i-1,j)) * dt + sigma * x(i,j) ;
+       x(i,j) =  x(i-1,j) + theta * (mu - x(i-1,j)) * dt + sigma * x(i,j) ;
       }
     }
     return x;
@@ -32,6 +32,8 @@ simOU <- function(nsims = 2, S0 = 5, mu = 5, theta = .5, sigma = 0.2, T2M = 1, d
   S <- rcppOU(diffusion,theta,mu,dt,sigma)
   S <- dplyr::as_tibble(S, .name_repair = "minimal")
   names(S) <- paste0("sim",1:nsims)
+  S <- S %>% dplyr::mutate(t = seq(0,T2M,dt))
+  #S %>% tidyr::pivot_longer(-t,"sim","value") %>% ggplot2::ggplot(ggplot2::aes(t,value,col = sim)) + ggplot2::geom_line() + theme(legend.position = "none")
   ## R version
   # S <- rep(S0, periods)
   # for (i in 2:periods) {

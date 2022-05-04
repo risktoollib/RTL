@@ -26,7 +26,7 @@ simGBM <- function(nsims = 1, S0 = 10, drift = 0, sigma = 0.2, T2M = 1, dt = 1 /
     S <- exp((drift - (sigma^2) / 2) * dt + sigma * diffusion)
     S <- apply(rbind(rep(S0,nsims),S),2,cumprod)
     S <- dplyr::as_tibble(S,.name_repair = "universal")
-    names(S) <- paste("sim",1:nsims,sep="")
+    names(S) <- paste("sim",1:nsims,sep = "")
   }
   return(S)
 }

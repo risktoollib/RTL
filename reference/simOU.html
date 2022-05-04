@@ -86,21 +86,21 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">simOU</span><span class="op">(</span>nsims <span class="op">=</span> <span class="fl">5</span>, S0 <span class="op">=</span> <span class="fl">5</span>, mu <span class="op">=</span> <span class="fl">5</span>, theta <span class="op">=</span> <span class="fl">.5</span>, sigma <span class="op">=</span> <span class="fl">0.2</span>, T2M <span class="op">=</span> <span class="fl">1</span>, dt <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">12</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 13 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     sim1  sim2  sim3  sim4  sim5      t</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>  5     5     5     5     5    0     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>  5.11  5.04  4.88  4.97  4.95 0.083<span style="text-decoration: underline;">3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>  5.12  5.09  4.93  4.88  4.92 0.167 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>  5.21  5.17  4.93  4.87  4.91 0.25  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>  5.27  5.15  4.90  4.85  4.86 0.333 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>  5.39  5.08  4.98  4.84  4.91 0.417 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>  5.39  5.07  4.88  4.87  4.89 0.5   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  5.33  5.07  4.85  4.84  4.91 0.583 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  5.39  5.25  4.84  4.80  4.91 0.667 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  5.39  5.23  4.90  4.81  4.91 0.75  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span>  5.26  5.27  4.78  4.82  4.88 0.833 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span>  5.30  5.22  4.75  4.80  4.93 0.917 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span>  5.33  5.23  4.74  4.89  4.98 1     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         t  sim1  sim2  sim3  sim4  sim5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 0       5     5     5     5     5   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 0.083<span style="text-decoration: underline;">3</span>  4.98  5.00  5.01  5.08  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 0.167   4.97  4.98  5.08  5.06  4.98</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 0.25    5.05  4.97  5.07  5.06  4.98</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 0.333   4.96  4.93  5.09  5.00  4.90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 0.417   4.99  4.94  5.16  4.95  4.96</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 0.5     5.11  4.99  5.16  4.96  4.83</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 0.583   5.11  4.95  5.06  4.93  4.69</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 0.667   5.11  4.83  4.94  4.91  4.79</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 0.75    5.14  4.83  5.04  5.06  4.76</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> 0.833   5.20  4.86  5.12  5.00  4.74</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> 0.917   5.14  4.80  5.04  5.02  4.81</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 1       5.04  4.74  5.09  5.08  4.83</span>
 </code></pre></div>
     </div>
   </div>

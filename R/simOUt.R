@@ -31,7 +31,7 @@ simOUt <- function(nsims = 2, S0 = 0, mu =  dplyr::tibble(t = 0:20,mr = c(rep(2,
     # NumericMatrix rcppOUt(NumericMatrix x, double theta, double dt, double sigma) {
     #   for (int i = 1; i < x.nrow(); i++) {
     #     for (int j = 1; j < x.ncol(); j++) {
-    #      x(i,j) =  x(i-1,j) + theta * (x(i,1) - x(i-1,j)) * dt + sigma * x(i,j) ;
+    #      x(i,j) =  x(i-1,j) + theta * (x(i,0) - x(i-1,j)) * dt + sigma * x(i,j) ;
     #     }
     #   }
     #   return x;
@@ -52,3 +52,12 @@ simOUt <- function(nsims = 2, S0 = 0, mu =  dplyr::tibble(t = 0:20,mr = c(rep(2,
   # }
   return(S)
 }
+
+
+nsims = 50
+S0 = 0
+mu =  dplyr::tibble(t = 0:20,mr = c(rep(2,7),rep(4,14)))
+theta = 12
+sigma = 0.2
+T2M = 10
+dt = 1/12

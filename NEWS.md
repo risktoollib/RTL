@@ -10,6 +10,7 @@
 
 + `simGBM()` vectorized.
 + `simOU()` and `simOUt()` implemented in `Rcpp` - see ./src/rcpp*.cpp
++ Added Mont Belvieu to `tradeHubs`.
 
 ## Bugs & Fixes
 

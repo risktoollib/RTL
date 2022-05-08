@@ -904,7 +904,12 @@ usethis::use_data(fizdiffs, overwrite = T)
 
 ## Trading Hubs
 
-tradeHubs <- dplyr::tibble(lat = c(53.54623,52.6735,35.94068,30.00623), long = c(-113.34684,-111.3075,-96.74536,-93.96882), hub = c("Edmonton","Hardisty", "Cushing", "Nederland"))
+tradeHubs <-
+  dplyr::tibble(
+    lat = c(53.54623, 52.6735, 35.94068, 30.00623, 29.73144),
+    long = c(-113.34684, -111.3075, -96.74536, -93.96882,-95.12680),
+    hub = c("Edmonton", "Hardisty", "Cushing", "Nederland","Mont Belvieu")
+  )
 usethis::use_data(tradeHubs, overwrite = T)
 
 ## IR Curves for RQuantlib

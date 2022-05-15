@@ -31,20 +31,19 @@ Imports:
     rlang,
     stringr,
     tibble,
-    tidyquant,
     tidyr,
     timetk,
     tsibble,
     xts,
     zoo,
     glue,
-    Rcpp
+    Rcpp,
+    tidyquant
 Suggests: 
     testthat (>= 3.0.0),
     covr,
     lpSolve,
     PerformanceAnalytics,
-    Quandl,
     rgdal,
     rugarch
 Encoding: UTF-8

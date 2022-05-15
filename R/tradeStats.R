@@ -3,6 +3,7 @@
 #' @param x Univariate xts object of returns OR dataframe with date and return variables.
 #' @param Rf Risk-free rate
 #' @return List of risk/reward metrics.
+#' @importFrom tidyquant tq_performance
 #' @export tradeStats
 #' @author Philippe Cote
 #' @examples

@@ -127,9 +127,6 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/ir_df_us.html</loc>
-  </url>
-  <url>
     <loc>/reference/npv.html</loc>
   </url>
   <url>
@@ -173,6 +170,9 @@
   </url>
   <url>
     <loc>/reference/spot2futCurve.html</loc>
+  </url>
+  <url>
+    <loc>/reference/spy.html</loc>
   </url>
   <url>
     <loc>/reference/swapCOM.html</loc>

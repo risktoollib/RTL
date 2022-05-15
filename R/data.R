@@ -1,3 +1,9 @@
+#' Sample SPY ETF data set
+#' @description Stock price and returns for SPY
+#' @format data frame
+#' @source {Yahoo Finance}
+"spy"
+
 #' Data for spot to futures convergence - historical data
 #' @description Cash and futures
 #' @format data frame

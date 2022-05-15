@@ -5,6 +5,7 @@
 #' @param betatype "all" "bull" "bear".
 #' @param output "betas" or "chart"
 #' @return betas data frame or plotly chart of betas
+#' @importFrom readr parse_number
 #' @export promptBeta
 #' @author Philippe Cote
 #' @examples

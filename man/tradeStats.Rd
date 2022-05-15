@@ -19,11 +19,7 @@ Compute list of risk reward metrics
 }
 \examples{
 library(PerformanceAnalytics)
-x <- tidyquant::tq_get("SPY") \%>\% dplyr::mutate(ret = log(adjusted / dplyr::lag(adjusted)))
-x <- x \%>\%
-  stats::na.omit() \%>\%
-  dplyr::select(date, ret)
-tradeStats(x = x, Rf = 0)
+tradeStats(x = RTL::spy, Rf = 0)
 }
 \author{
 Philippe Cote

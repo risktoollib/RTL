@@ -4,7 +4,6 @@
 # attachment::att_from_rscripts()
 # usethis::use_package("lpSolve", "suggests")
 # usethis::use_package("rugarch", "suggests")
-# usethis::use_package("Quandl","suggests")
 # usethis::use_package("rgdal","suggests")
 # usethis::use_package("PerformanceAnalytics","suggests")
 # usethis::use_package("dplyr")
@@ -41,6 +40,7 @@
 # pkgdown::build_site()
 # usethis::use_github_action(url = "https://raw.githubusercontent.com/r-lib/actions/master/examples/pkgdown.yaml")
 #usethis::use_testthat()
+devtools::check_win_release()
 
 #
 library(RTL)
@@ -54,6 +54,17 @@ library(readr)
 library(RSelenium)
 source("~/now/packages.R")
 setwd(paste0(getwd(), "/data-raw"))
+
+## tidyquant replacement
+
+spy <-
+  tidyquant::tq_get("SPY") %>%
+  dplyr::mutate(ret = log(adjusted / dplyr::lag(adjusted))) %>%
+  stats::na.omit() %>%
+  dplyr::select(date, ret)
+
+usethis::use_data(spy, overwrite = T)
+
 
 ## spot2fut convergence
 d <- "2020-03-25"

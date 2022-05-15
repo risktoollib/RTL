@@ -14,7 +14,12 @@
 
 ## Bugs & Fixes
 
++ Remove dependencies to `tidyquant::tq_get()`.
 + `chart_zscore()` time axis fixed.
+
+## Remove
+
++ 'ir_df_us()' removed as it uses `quandl` for interest rates. Use `RTL::ir_df_us` data set instead.
 
 ## Updates
 

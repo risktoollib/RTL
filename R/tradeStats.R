@@ -3,17 +3,13 @@
 #' @param x Univariate xts object of returns OR dataframe with date and return variables.
 #' @param Rf Risk-free rate
 #' @return List of risk/reward metrics.
-#' @importFrom tidyquant tq_performance
 #' @export tradeStats
 #' @author Philippe Cote
 #' @examples
 #' library(PerformanceAnalytics)
 #' tradeStats(x = RTL::spy, Rf = 0)
 tradeStats <- function(x, Rf = 0) {
-  # if (!requireNamespace("PerformanceAnalytics", quietly = TRUE)) {
-  #   stop("Package \"PerformanceAnalytics\" needed for this function to work. Please install it.",
-  #        call. = FALSE)
-  # }
+  if (!requireNamespace("tidyquant", quietly = TRUE)) {stop("Package \"tidyquant\" needed for this function to work. Please install it.", call. = FALSE)}
   x <- x %>% stats::na.omit(x)
   if (class(x)[1] %in% c("xts", "zoo")) {
     x <- timetk::tk_tbl(x, rename_index = "date")

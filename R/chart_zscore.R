@@ -34,6 +34,8 @@
 #' chart_zscore(df = df, title = " ", per = "yearweek", output = "seasonal", chart = "seasons")
 #' }
 chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek", output = "zscore", chart = "seasons") {
+  if (!requireNamespace("feasts", quietly = TRUE)) {stop("Package \"feasts\" needed for this function to work. Please install it.", call. = FALSE)}
+  if (!requireNamespace("fabletools", quietly = TRUE)) {stop("Package \"fabletools\" needed for this function to work. Please install it.", call. = FALSE)}
   if (nchar(title) == 0) {
     title <- unique(df$series)
   }

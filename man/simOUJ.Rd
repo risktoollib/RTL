@@ -5,6 +5,7 @@
 \title{OUJ process simulation}
 \usage{
 simOUJ(
+  nsims = 2,
   S0 = 5,
   mu = 5,
   theta = 10,
@@ -17,6 +18,8 @@ simOUJ(
 )
 }
 \arguments{
+\item{nsims}{numble of simulations. Defaults to 2}
+
 \item{S0}{S at t=0}
 
 \item{mu}{Mean reversion level}
@@ -42,7 +45,7 @@ A numeric vector of simulated values
 Simulates a Ornstein–Uhlenbeck process with Jumps
 }
 \examples{
-simOUJ(S0 = 5, mu = 5, theta = .5, sigma = 0.2,
+simOUJ(nsims = 2, S0 = 5, mu = 5, theta = .5, sigma = 0.2,
 jump_prob = 0.05, jump_avesize = 3, jump_stdv = 0.05,
 T2M = 1, dt = 1 / 12)
 }

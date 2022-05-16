@@ -5,6 +5,10 @@ rcppOU <- function(x, theta, mu, dt, sigma) {
     .Call(`_RTL_rcppOU`, x, theta, mu, dt, sigma)
 }
 
+rcppOUJ <- function(x, djump, theta, mu, dt, sigma, jump_prob, jump_avesize) {
+    .Call(`_RTL_rcppOUJ`, x, djump, theta, mu, dt, sigma, jump_prob, jump_avesize)
+}
+
 rcppOUt <- function(x, theta, dt, sigma) {
     .Call(`_RTL_rcppOUt`, x, theta, dt, sigma)
 }

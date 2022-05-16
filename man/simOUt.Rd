@@ -15,7 +15,7 @@ simOUt(
 )
 }
 \arguments{
-\item{nsims}{numble of simulations. Defaults to 1}
+\item{nsims}{numble of simulations. Defaults to 2}
 
 \item{S0}{S at t=0}
 

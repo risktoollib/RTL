@@ -179,11 +179,9 @@ startdate <- "2004-01-01"
 
 crude <- c(
   paste0("CL_", sprintf("%0.3d", 1:36), "_Month"),
-  paste0("NG_", sprintf("%0.3d", 1:36), "_Month"),
-  paste0("YX_", sprintf("%0.3d", 1:12), "_Month")
-)
-crudecan <- c(paste0("WCW_", sprintf("%0.3d", 1:12), "_Month"),
-              paste0("YV_", sprintf("%0.3d", 1:6), "_Month"))
+  paste0("NG_", sprintf("%0.3d", 1:36), "_Month")
+  )
+crudecan <- c(paste0("WCW_", sprintf("%0.3d", 1:12), "_Month"))
 crudeICE <- c(paste0("BRN_", sprintf("%0.3d", 1:36), "_Month"))
 pdts <- c(paste0("HO_", sprintf("%0.3d", 1:18), "_Month"),
           paste0("RB_", sprintf("%0.3d", 1:18), "_Month"))
@@ -262,8 +260,8 @@ dflong %>% dplyr::filter(grepl("BRN",series)) %>% ggplot(aes(x = date, y = value
 dflong %>% dplyr::filter(grepl("HO",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("RB",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("WCW",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
-dflong %>% dplyr::filter(grepl("YV",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
-dflong %>% dplyr::filter(grepl("YX",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
+#dflong %>% dplyr::filter(grepl("YV",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
+#dflong %>% dplyr::filter(grepl("YX",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("ALI",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("NG",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("AUP",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()

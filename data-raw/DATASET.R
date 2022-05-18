@@ -918,8 +918,8 @@ usethis::use_data(fizdiffs, overwrite = T)
 
 tradeHubs <-
   dplyr::tibble(
-    lat = c(53.54623, 52.6735, 35.94068, 30.00623, 29.73144, 49.28964),
-    long = c(-113.34684, -111.3075, -96.74536, -93.96882,-95.12680, -122.94499),
+    lat = c(53.54608, 52.64079, 35.94033, 29.99062, 29.73144, 49.28829),
+    long = c(-113.34786, -111.27061, -96.74633, -94.00553,-95.12680, -122.95403),
     hub = c("Edmonton", "Hardisty", "Cushing", "Nederland","Mont Belvieu", "Burnaby")
   )
 usethis::use_data(tradeHubs, overwrite = T)

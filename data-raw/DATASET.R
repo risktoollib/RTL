@@ -29,6 +29,9 @@
 # usethis::use_package("zoo")
 # usethis::use_package("Rcpp")
 # usethis::use_rcpp()
+spelling::spell_check_package()
+spelling::update_wordlist()
+devtools::document()
 
 # Setup RTL Webpage
 # usethis::use_pkgdown()

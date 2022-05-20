@@ -853,7 +853,8 @@ for (i in 1:nrow(urls)) {
     tidyr::drop_na("Specification") %>%
     dplyr::na_if("-") %>%
     dplyr::mutate_at(vars(!starts_with("Spec")), as.numeric) %>%
-    as_tibble()
+    as_tibble() %>%
+    dplyr::mutate(Specification = stringr::str_replace_all(Specification,c("°" = "", "%" = "perc")))
   crudeassaysBP[[destfile]] <- tmp
   file.remove(destfile)
 }
@@ -905,6 +906,8 @@ for (i in 1:nrow(urls)) {
   )
   tmp <- read_excel(destfile, skip = 4) %>%
     dplyr::rename_all(list(~ make.names(.)))
+  #tmp[,1] <- gsub("°","",tmp[,1])
+  #tmp[,1] <- gsub("%","perc",tmp[,1])
   colnames(tmp)[1] <- destfile
   crudeassaysXOM[[destfile]] <- tmp
   file.remove(destfile)

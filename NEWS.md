@@ -1,3 +1,21 @@
+# RTL 1.2.0
+
+## New
+
+
+## Enhancement
+
+
+## Bugs & Fixes
+
++ UTF characters in `crudeassaysBP`.
+
+## Remove
+
+
+## Updates
+
+
 # RTL 1.1.0
 
 ## New

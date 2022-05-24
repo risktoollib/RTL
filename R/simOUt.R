@@ -1,6 +1,6 @@
 #' OU process simulation
 #' @description Simulates a Ornstein–Uhlenbeck process with mu as a function of time
-#' @param nsims numble of simulations. Defaults to 2
+#' @param nsims number of simulations. Defaults to 2
 #' @param S0 S at t=0
 #' @param mu data frame of mean reversion level as a function of time
 #' @param theta Mean reversion speed

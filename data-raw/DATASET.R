@@ -9,6 +9,7 @@
 # usethis::use_package("tidyquant","suggests")
 # usethis::use_package("feasts","suggests")
 # usethis::use_package("fabletools","suggests")
+# usethis::use_package("MASS","suggests")
 # usethis::use_package("dplyr")
 # usethis::use_package("stringr")
 # usethis::use_package("tibble")

@@ -128,7 +128,6 @@ nghubs
 ngpipelines
 ngstorage
 numDaysFut
-numble
 nymex
 opendata
 parms
@@ -144,6 +143,7 @@ rcpp
 resid
 resids
 risktools
+sd
 src
 stl
 summarised

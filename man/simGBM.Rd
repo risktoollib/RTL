@@ -15,7 +15,7 @@ simGBM(
 )
 }
 \arguments{
-\item{nsims}{numble of simulations. Defaults to 1}
+\item{nsims}{number of simulations. Defaults to 1}
 
 \item{S0}{Spot price at t=0}
 

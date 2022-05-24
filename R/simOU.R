@@ -1,6 +1,6 @@
 #' OU process simulation
 #' @description Simulates a Ornstein–Uhlenbeck process
-#' @param nsims numble of simulations. Defaults to 2
+#' @param nsims number of simulations. Defaults to 2
 #' @param S0 S at t=0
 #' @param mu Mean reversion level
 #' @param theta Mean reversion speed

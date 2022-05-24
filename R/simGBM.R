@@ -1,6 +1,6 @@
 #' GBM process simulation
 #' @description Simulates a Geometric Brownian Motion process
-#' @param nsims numble of simulations. Defaults to 1
+#' @param nsims number of simulations. Defaults to 1
 #' @param S0 Spot price at t=0
 #' @param drift Drift term in percentage
 #' @param sigma Standard deviation

@@ -45,7 +45,8 @@ Suggests:
     rugarch,
     tidyquant,
     feasts,
-    fabletools
+    fabletools,
+    MASS
 Encoding: UTF-8
 LazyData: true
 LazyDataCompression: xz

@@ -2,6 +2,7 @@
 
 ## New
 
++ Added `simMultivariates()` to generate multivariate normal random epsilons from a a historical data set.
 
 ## Enhancement
 

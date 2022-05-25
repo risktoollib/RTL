@@ -14,7 +14,7 @@ simMultivariates(nsims = 10, x, s0 = NULL)
 \item{s0}{Vector of starting value for each variables. Defaults to NULL with zero.}
 }
 \value{
-List of sd, covariance matrix, correlation matrix and simulated values
+List of means, sds, covariance matrix, correlation matrix and simulated values
 }
 \description{
 Generates multivariate random epsilons using absolute returns.

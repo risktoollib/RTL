@@ -3,7 +3,7 @@
 #' @param nsims Number of simulations. Defaults to 10
 #' @param x Wide data frame of prices with date as first column.
 #' @param s0 Vector of starting value for each variables. Defaults to NULL with zero.
-#' @return List of sd, covariance matrix, correlation matrix and simulated values
+#' @return List of means, sds, covariance matrix, correlation matrix and simulated values
 #' @export simMultivariates
 #' @author Philippe Cote
 #' @examples
@@ -19,6 +19,7 @@ simMultivariates <- function(nsims = 10, x, s0 = NULL) {
     dplyr::select(-value) %>%
     tidyr::pivot_wider(names_from = series,values_from = ret)
 
+  aves <- ret %>% dplyr::summarise_if(is.numeric, mean)
   sds <- ret %>% dplyr::summarise_if(is.numeric, stats::sd)
   corMat <- stats::cor(ret[,-1])
   coVaR = diag(sds) %*% corMat %*% diag(sds)
@@ -34,6 +35,7 @@ simMultivariates <- function(nsims = 10, x, s0 = NULL) {
     dplyr::select(series,dplyr::everything())
 
   out <- list(
+    "ave" = aves,
     "sd" = sds,
     "corMat" = corMat,
     "coVaR" = coVaR,

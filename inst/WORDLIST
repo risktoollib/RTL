@@ -47,6 +47,7 @@ LME
 LTH
 Lmp
 LmpsByResourceNodeAndElectricalBus
+Markowitz
 Morningstar
 Morninstar
 NG
@@ -143,7 +144,8 @@ rcpp
 resid
 resids
 risktools
-sd
+sds
+simMultivariates
 src
 stl
 summarised

@@ -2,7 +2,8 @@
 
 ## New
 
-+ Added `simMultivariates()` to generate multivariate normal random epsilons from a a historical data set.
++ `simMultivariates()` generates multivariate normal random epsilons from a a historical data set.
++ `efficientFrontier()` generates Markowitz mean-variance portfolios for commodities assets i.e. risk and reward not in percentages. 
 
 ## Enhancement
 

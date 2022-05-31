@@ -6,13 +6,16 @@
 \usage{
 efficientFrontier(
   nsims = 5000,
-  x = RTL::fizdiffs \%>\% dplyr::select(date, dplyr::contains("WCS"))
+  x = RTL::fizdiffs \%>\% dplyr::select(date, dplyr::contains("WCS")),
+  expectedReturns = NULL
 )
 }
 \arguments{
 \item{nsims}{Number of portfolio simulations. Defaults to 5000}
 
 \item{x}{List as provided by output of RTL::simMultivariates().}
+
+\item{expectedReturns}{Defaults to NULL using periodic returns means.}
 }
 \value{
 List of portfolios and chart of efficient frontier
@@ -21,7 +24,9 @@ List of portfolios and chart of efficient frontier
 Generates random portfolio weights statistics based on absolute returns. Note returns are neither in percentages nor annualized. This function is used for commodities where returns are dollars per units for real assets e.g. storage tanks, pipelines...
 }
 \examples{
-efficientFrontier(nsims = 10, x =  RTL::fizdiffs \%>\% dplyr::select(date, dplyr::contains("WCS")))
+x =  RTL::fizdiffs \%>\% dplyr::select(date, dplyr::contains("WCS"))
+efficientFrontier(nsims = 10, x = x, expectedReturns = NULL)
+efficientFrontier(nsims = 10, x = x, expectedReturns = c(1,2,3))
 }
 \author{
 Philippe Cote

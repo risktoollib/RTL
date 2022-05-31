@@ -2,12 +2,15 @@
 #' @description Generates random portfolio weights statistics based on absolute returns. Note returns are neither in percentages nor annualized. This function is used for commodities where returns are dollars per units for real assets e.g. storage tanks, pipelines...
 #' @param nsims Number of portfolio simulations. Defaults to 5000
 #' @param x List as provided by output of RTL::simMultivariates().
+#' @param expectedReturns Defaults to NULL using periodic returns means.
 #' @return List of portfolios and chart of efficient frontier
 #' @export efficientFrontier
 #' @author Philippe Cote
 #' @examples
-#' efficientFrontier(nsims = 10, x =  RTL::fizdiffs %>% dplyr::select(date, dplyr::contains("WCS")))
-efficientFrontier <- function(nsims = 5000, x =  RTL::fizdiffs %>% dplyr::select(date, dplyr::contains("WCS"))) {
+#' x =  RTL::fizdiffs %>% dplyr::select(date, dplyr::contains("WCS"))
+#' efficientFrontier(nsims = 10, x = x, expectedReturns = NULL)
+#' efficientFrontier(nsims = 10, x = x, expectedReturns = c(0.5,0.8,0.9))
+efficientFrontier <- function(nsims = 5000, x =  RTL::fizdiffs %>% dplyr::select(date, dplyr::contains("WCS")), expectedReturns = NULL) {
 
   prices <- Risk <- Return <- SharpeRatio <- desc <-  NULL
   prices <- x
@@ -20,6 +23,11 @@ efficientFrontier <- function(nsims = 5000, x =  RTL::fizdiffs %>% dplyr::select
     tidyr::pivot_wider(names_from = series, values_from = ret)
 
   aves <- ret %>% dplyr::summarise_if(is.numeric, mean)
+
+  if (!is.null(expectedReturns)) {
+    for (i in 1:length(expectedReturns)) { aves[1,i] <- expectedReturns[i]}
+    }
+
   sds <- ret %>% dplyr::summarise_if(is.numeric, stats::sd)
   corMat <- stats::cor(ret[,-1])
   coVaR = diag(sds) %*% corMat %*% diag(sds)

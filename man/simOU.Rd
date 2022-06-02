@@ -4,7 +4,16 @@
 \alias{simOU}
 \title{OU process simulation}
 \usage{
-simOU(nsims = 2, S0 = 5, mu = 5, theta = 0.5, sigma = 0.2, T2M = 1, dt = 1/12)
+simOU(
+  nsims = 2,
+  S0 = 5,
+  mu = 5,
+  theta = 0.5,
+  sigma = 0.2,
+  T2M = 1,
+  dt = 1/12,
+  epsilon = NULL
+)
 }
 \arguments{
 \item{nsims}{number of simulations. Defaults to 2}
@@ -20,6 +29,9 @@ simOU(nsims = 2, S0 = 5, mu = 5, theta = 0.5, sigma = 0.2, T2M = 1, dt = 1/12)
 \item{T2M}{Maturity in years}
 
 \item{dt}{Time step size e.g. 1/250 = 1 business day.}
+
+\item{epsilon}{Defaults to NULL function generates its own.
+OPTIONAL: Array of epsilons for nsims = 1, if you want to feed your own e.g. in a multivariate context.}
 }
 \value{
 A numeric vector of simulated values
@@ -28,7 +40,11 @@ A numeric vector of simulated values
 Simulates a Ornstein–Uhlenbeck process
 }
 \examples{
-simOU(nsims = 5, S0 = 5, mu = 5, theta = .5, sigma = 0.2, T2M = 1, dt = 1 / 12)
+simOU(nsims = 5, S0 = 5, mu = 5, theta = .5, sigma = 0.2, T2M = 1, dt = 1 / 12, epsilon = NULL)
+simOU(nsims = 1, S0 = 5, mu = 5, theta = .5, sigma = 0.2, T2M = 1, dt = 1 / 12,
+epsilon = matrix(rnorm(12,0,sqrt(1/12))))
+simOU(nsims = 2, S0 = 5, mu = 5, theta = .5, sigma = 0.2, T2M = 1, dt = 1 / 12,
+epsilon = replicate(2,rnorm(12,0,sqrt(1/12))))
 }
 \author{
 Philippe Cote

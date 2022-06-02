@@ -26,7 +26,7 @@ Generates random portfolio weights statistics based on absolute returns. Note re
 \examples{
 x =  RTL::fizdiffs \%>\% dplyr::select(date, dplyr::contains("WCS"))
 efficientFrontier(nsims = 10, x = x, expectedReturns = NULL)
-efficientFrontier(nsims = 10, x = x, expectedReturns = c(1,2,3))
+efficientFrontier(nsims = 10, x = x, expectedReturns = c(0.5,0.8,0.9))
 }
 \author{
 Philippe Cote

@@ -7,15 +7,27 @@
 #' @param sigma Standard deviation
 #' @param T2M Maturity in years
 #' @param dt Time step size e.g. 1/250 = 1 business day.
+#' @param epsilon Defaults to NULL function generates its own.
+#' OPTIONAL: Array of epsilons for nsims = 1, if you want to feed your own e.g. in a multivariate context.
 #' @return A numeric vector of simulated values
 #' @export simOU
 #' @author Philippe Cote
 #' @examples
-#' simOU(nsims = 5, S0 = 5, mu = 5, theta = .5, sigma = 0.2, T2M = 1, dt = 1 / 12)
-simOU <- function(nsims = 2, S0 = 5, mu = 5, theta = .5, sigma = 0.2, T2M = 1, dt = 1 / 12) {
+#' simOU(nsims = 5, S0 = 5, mu = 5, theta = .5, sigma = 0.2, T2M = 1, dt = 1 / 12, epsilon = NULL)
+#' simOU(nsims = 1, S0 = 5, mu = 5, theta = .5, sigma = 0.2, T2M = 1, dt = 1 / 12,
+#' epsilon = matrix(rnorm(12,0,sqrt(1/12))))
+#' simOU(nsims = 2, S0 = 5, mu = 5, theta = .5, sigma = 0.2, T2M = 1, dt = 1 / 12,
+#' epsilon = replicate(2,rnorm(12,0,sqrt(1/12))))
+simOU <- function(nsims = 2, S0 = 5, mu = 5, theta = .5, sigma = 0.2, T2M = 1, dt = 1 / 12, epsilon = NULL) {
   periods <- T2M / dt
   diffusion <- NULL
-  diffusion <- matrix(stats::rnorm(periods * nsims, mean = 0, sd = sqrt(dt)), ncol = nsims, nrow = periods)
+  if (is.null(epsilon)) {
+    diffusion <- matrix(stats::rnorm(periods * nsims, mean = 0, sd = sqrt(dt)), ncol = nsims, nrow = periods)
+  } else {
+    if (nsims != dim(epsilon)[2]) {stop("nsims must correspond to number of columns in epsilon")}
+    diffusion <- epsilon
+    }
+
   diffusion <- rbind(rep(S0,nsims),diffusion)
 
   # c++ implementation via ./src/rcppOUt.cpp

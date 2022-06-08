@@ -1,5 +1,20 @@
 #' Markowitz Efficient Frontier
-#' @description Generates random portfolio weights statistics based on absolute returns. Note returns are neither in percentages nor annualized. This function is used for commodities where returns are dollars per units for real assets e.g. storage tanks, pipelines...
+#' @description Generates random portfolio weights statistics based on absolute returns.
+#' @details
+#' ## Commodities
+#' Unlike traditional portfolio management, in commodities many transactions are
+#' with derivatives (futures and swaps) and have zero or low initial investments.
+#' ## Return types
+#' This function is used for commodities where returns are dollars per units
+#' for real assets e.g. storage tanks, pipelines...Here we measure directly
+#' the periodic return in dollars per contract unit.
+#' ## Empirical Finance
+#' I would encourage you to pick a commodity futures contract of your choice and draw
+#' a scatter plot of price level versus the daily dollar per unit change as measure
+#' of risk. As a trading analyst or risk manager, then ask yourself about the
+#' implications of using log returns that you then re-apply to current forward
+#' curve level to arrive at a dollar risk measure per units instead of measuring
+#' directly risk in dollars per unit.
 #' @param nsims Number of portfolio simulations. Defaults to 5000
 #' @param x List as provided by output of RTL::simMultivariates().
 #' @param expectedReturns Defaults to NULL using periodic returns means.

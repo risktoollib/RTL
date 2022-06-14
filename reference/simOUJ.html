@@ -71,28 +71,49 @@
     <h2>Arguments</h2>
     <dl><dt>nsims</dt>
 <dd><p>number of simulations. Defaults to 2</p></dd>
+
+
 <dt>S0</dt>
 <dd><p>S at t=0</p></dd>
+
+
 <dt>mu</dt>
 <dd><p>Mean reversion level</p></dd>
+
+
 <dt>theta</dt>
 <dd><p>Mean reversion speed</p></dd>
+
+
 <dt>sigma</dt>
 <dd><p>Standard deviation</p></dd>
+
+
 <dt>jump_prob</dt>
 <dd><p>Probability of jumps</p></dd>
+
+
 <dt>jump_avesize</dt>
 <dd><p>Average size of jumps</p></dd>
+
+
 <dt>jump_stdv</dt>
 <dd><p>Standard deviation of jump average size</p></dd>
+
+
 <dt>T2M</dt>
 <dd><p>Maturity in years</p></dd>
+
+
 <dt>dt</dt>
 <dd><p>Time step size e.g. 1/250 = 1 business day.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A numeric vector of simulated values</p>
+    
+
+<p>A numeric vector of simulated values</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -108,18 +129,18 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>         t  sim1  sim2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 0       5     5   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 0.083<span style="text-decoration: underline;">3</span>  5.00  4.99</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 0.167   4.92  4.88</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 0.25    4.96  5.02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 0.333   4.99  4.90</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 0.417   4.97  4.85</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 0.5     5.00  4.87</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 0.583   4.99  4.98</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 0.667   4.99  4.91</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 0.75    5.02  4.99</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> 0.833   4.92  5.02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> 0.917   4.93  5.09</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 1       4.89  5.13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 0.083<span style="text-decoration: underline;">3</span>  5.00  4.97</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 0.167   4.96  5.09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 0.25    4.94  5.06</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 0.333   5.02  5.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 0.417   5.04  4.97</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 0.5     5.00  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 0.583   4.99  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 0.667   5.04  4.99</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 0.75    5.04  4.97</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> 0.833   5.01  5.03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> 0.917   5.01  4.92</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 1       5.07  4.99</span>
 </code></pre></div>
     </div>
   </div>
@@ -134,7 +155,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

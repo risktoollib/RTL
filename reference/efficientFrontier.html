@@ -64,14 +64,21 @@
     <h2>Arguments</h2>
     <dl><dt>nsims</dt>
 <dd><p>Number of portfolio simulations. Defaults to 5000</p></dd>
+
+
 <dt>x</dt>
 <dd><p>List as provided by output of RTL::simMultivariates().</p></dd>
+
+
 <dt>expectedReturns</dt>
 <dd><p>Defaults to NULL using periodic returns means.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>List of portfolios and chart of efficient frontier</p>
+    
+
+<p>List of portfolios and chart of efficient frontier</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -119,19 +126,19 @@ directly risk in dollars per unit.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 13 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        Return  Risk SharpeRatio data             desc                           </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">251</span>  0.463   -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">541</span> <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 1, WCS.HOU = 0, WCS.…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">086</span><span style="color: #BB0000;">2</span> 0.482   -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">179</span> <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0, WCS.HOU = 1, WCS.…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>  0.001<span style="text-decoration: underline;">28</span>   1.06     0.001<span style="text-decoration: underline;">20</span>  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0, WCS.HOU = 0, WCS.…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>  0.000<span style="text-decoration: underline;">190</span>  0.451    0.000<span style="text-decoration: underline;">421</span> <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.235, WCS.HOU = 0.5…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>  0.000<span style="text-decoration: underline;">493</span>  0.560    0.000<span style="text-decoration: underline;">881</span> <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.109, WCS.HOU = 0.4…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>  0.000<span style="text-decoration: underline;">562</span>  0.591    0.000<span style="text-decoration: underline;">952</span> <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.026, WCS.HOU = 0.4…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">110</span>  0.435   -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">253</span> <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.531, WCS.HOU = 0.4…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  0.000<span style="text-decoration: underline;">056</span>3 0.431    0.000<span style="text-decoration: underline;">131</span> <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.447, WCS.HOU = 0.3…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  0.000<span style="text-decoration: underline;">198</span>  0.454    0.000<span style="text-decoration: underline;">437</span> <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.345, WCS.HOU = 0.4…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  0.000<span style="text-decoration: underline;">514</span>  0.576    0.000<span style="text-decoration: underline;">894</span> <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.188, WCS.HOU = 0.3…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span>  0.000<span style="text-decoration: underline;">372</span>  0.516    0.000<span style="text-decoration: underline;">721</span> <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.331, WCS.HOU = 0.2…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span>  0.000<span style="text-decoration: underline;">166</span>  0.447    0.000<span style="text-decoration: underline;">372</span> <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.331, WCS.HOU = 0.4…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">062</span><span style="color: #BB0000;">2</span> 0.430   -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">145</span> <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.498, WCS.HOU = 0.4…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">251</span>  0.463  -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">541</span>  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 1, WCS.HOU = 0, WCS.…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">086</span><span style="color: #BB0000;">2</span> 0.482  -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">179</span>  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0, WCS.HOU = 1, WCS.…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>  0.001<span style="text-decoration: underline;">28</span>   1.06    0.001<span style="text-decoration: underline;">20</span>   <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0, WCS.HOU = 0, WCS.…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>  0.000<span style="text-decoration: underline;">321</span>  0.492   0.000<span style="text-decoration: underline;">652</span>  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.289, WCS.HOU = 0.3…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">151</span>  0.438  -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">345</span>  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.663, WCS.HOU = 0.3…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>  0.000<span style="text-decoration: underline;">560</span>  0.596   0.000<span style="text-decoration: underline;">939</span>  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.134, WCS.HOU = 0.3…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">012</span><span style="color: #BB0000;">9</span> 0.428  -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">030</span><span style="color: #BB0000;">2</span> <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.537, WCS.HOU = 0.3…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  0.000<span style="text-decoration: underline;">317</span>  0.499   0.000<span style="text-decoration: underline;">635</span>  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.418, WCS.HOU = 0.2…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  0.000<span style="text-decoration: underline;">616</span>  0.623   0.000<span style="text-decoration: underline;">990</span>  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.064, WCS.HOU = 0.4…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  0.000<span style="text-decoration: underline;">495</span>  0.580   0.000<span style="text-decoration: underline;">854</span>  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.352, WCS.HOU = 0.1…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span>  0.000<span style="text-decoration: underline;">550</span>  0.599   0.000<span style="text-decoration: underline;">918</span>  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.239, WCS.HOU = 0.2…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span>  0.000<span style="text-decoration: underline;">575</span>  0.597   0.000<span style="text-decoration: underline;">963</span>  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.017, WCS.HOU = 0.4…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span>  0.000<span style="text-decoration: underline;">873</span>  0.777   0.001<span style="text-decoration: underline;">12</span>   <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.001, WCS.HOU = 0.2…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $plot</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -143,16 +150,16 @@ directly risk in dollars per unit.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>  0.5   0.463       1.08  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 1, WCS.HOU = 0, WCS.HDY …</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>  0.8   0.482       1.66  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0, WCS.HOU = 1, WCS.HDY …</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>  0.9   1.06        0.846 <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0, WCS.HOU = 0, WCS.HDY …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>  0.867 0.904       0.959 <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.057, WCS.HOU = 0.105, …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>  0.633 0.439       1.44  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.568, WCS.HOU = 0.404, …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>  0.679 0.436       1.56  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.421, WCS.HOU = 0.527, …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>  0.676 0.456       1.48  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.499, WCS.HOU = 0.248, …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  0.705 0.496       1.42  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.431, WCS.HOU = 0.228, …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  0.737 0.453       1.63  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.289, WCS.HOU = 0.469, …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  0.792 0.518       1.53  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.15, WCS.HOU = 0.476, W…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span>  0.642 0.482       1.33  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.627, WCS.HOU = 0.07, W…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span>  0.716 0.453       1.58  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.361, WCS.HOU = 0.393, …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span>  0.765 0.532       1.44  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.248, WCS.HOU = 0.352, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>  0.798 0.481       1.66  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.105, WCS.HOU = 0.598, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>  0.823 0.531       1.55  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.055, WCS.HOU = 0.555, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>  0.838 0.836       1.00  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.13, WCS.HOU = 0.103, W…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>  0.870 0.913       0.954 <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.048, WCS.HOU = 0.105, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  0.723 0.543       1.33  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.396, WCS.HOU = 0.188, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  0.705 0.435       1.62  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.342, WCS.HOU = 0.585, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  0.677 0.462       1.46  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.5, WCS.HOU = 0.23, WCS…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span>  0.757 0.671       1.13  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.338, WCS.HOU = 0.081, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span>  0.729 0.488       1.49  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.346, WCS.HOU = 0.327, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span>  0.753 0.552       1.37  <span style="color: #949494;">&lt;tibble [1 × 3]&gt;</span> WCS.CUS = 0.299, WCS.HOU = 0.271, …</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $plot</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -170,7 +177,7 @@ directly risk in dollars per unit.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

@@ -50,11 +50,6 @@ efficientFrontier <- function(nsims = 5000, x =  RTL::fizdiffs %>% dplyr::select
   # means, ret, covar
   #aves <- x$ave
   #coVaR <- as.matrix(x$coVaR[,-1])
-  wts <- stats::runif(n = length(aves))
-  wts <- wts/sum(wts)
-  port_returns <- sum(wts * aves)
-  port_risk <- sqrt(t(wts) %*% (coVaR %*% wts))
-  sharpe_ratio <- port_returns/port_risk
 
   # weights
   wts <- stats::runif(n = length(aves))

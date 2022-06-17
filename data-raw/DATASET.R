@@ -945,39 +945,33 @@ rD <- rsDriver(port = 4545L, browser = "firefox")
 remDr <- rD[["client"]]
 Sys.sleep(2)
 
-remDr$navigate("https://www.barchart.com/economy/interest-rates")
-Sys.sleep(2)
-remDr$findElement(using = 'class', value = "bc-datatable")$clickElement()
-page <- remDr$getPageSource()
-ameribor <- read_html(page[[1]]) %>% rvest::html_table() %>% .[[6]] %>%
-  dplyr::select(Name,Last) %>%
-  dplyr::filter(grepl("Ameribor 1-Week Spot Rate|Ameribor 1-Month Spot Rate|Ameribor 3-Month Spot Rate|Ameribor 6-Month Spot Rate|Ameribor 1-Year Spot Rate",Name)) %>%
-  dplyr::mutate(Name = c("d1w", "d1m", "d3m", "d6m", "d1y"), Last = as.numeric(Last)/100)
-irs <- read_html(page[[1]]) %>% rvest::html_table() %>% .[[3]] %>% dplyr::select(Name,Last) %>%
-  dplyr::slice(-1) %>%
-  dplyr::mutate(Name = paste0("s",c(2,3,5,7,10,15,30),"y"),
-                Last = readr::parse_number(Last)/100)
-
 remDr$navigate("https://www.chathamfinancial.com/technology/us-market-rates")
 Sys.sleep(2)
 remDr$findElement(using = 'css', value = 'div.rates:nth-child(8) > div:nth-child(1) > div:nth-child(2) > table:nth-child(1)')$clickElement()  # Cross rates
 #remDr$findElement(using = 'class', value = 'bc-table-wrapper')$clickElement()
 page <- remDr$getPageSource()
-libor <- rvest::read_html(page[[1]]) %>%
-  rvest::html_table() %>% .[[7]] %>%
+chat <-  rvest::read_html(page[[1]]) %>%
+  rvest::html_table()
+libor <- chat %>% .[[7]] %>%
   dplyr::rename(Name = 1, Last = 2) %>%
   dplyr::select(1,2) %>%
   dplyr::mutate(Name = c("d1m", "d3m", "d6m", "d1y"),
                 Last = readr::parse_number(Last)/100)
 libor <- rbind(dplyr::tibble(Name = "d1w", Last = libor$Last[1]),libor)
-
-remDr$navigate("https://www.barchart.com/futures/quotes/GE*0/futures-prices")
+irs <- chat %>% .[[4]] %>%
+  dplyr::rename(Name = 1, Last = 3) %>%
+  dplyr::select(Name,Last) %>%
+  dplyr::slice(-1) %>%
+  dplyr::mutate(Name = paste0("s",c(2,3,5,7,10,15,30),"y"),
+                Last = readr::parse_number(Last)/100)
+remDr$navigate("https://www.cmegroup.com/markets/interest-rates/stirs/eurodollar.settlements.html")
 page <- remDr$getPageSource()
 futs <- read_html(page[[1]]) %>%
   rvest::html_table() %>%
   .[[1]] %>%
+  dplyr::slice(-1) %>%
   dplyr::slice(1:8) %>%
-  dplyr::transmute(Name = paste0("fut", 1:8), Last)
+  dplyr::transmute(Name = paste0("fut", 1:8), Last = Settle)
 
 remDr$close()
 rD[["server"]]$stop()

@@ -45,6 +45,8 @@ devtools::document()
 # usethis::use_github_action(url = "https://raw.githubusercontent.com/r-lib/actions/master/examples/pkgdown.yaml")
 #usethis::use_testthat()
 devtools::check_win_release()
+devtools::check_win_devel()
+devtools::check_mac_release()
 
 #
 library(RTL)

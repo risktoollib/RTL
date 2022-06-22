@@ -21,7 +21,7 @@ simMultivariates <- function(nsims = 10, x, s0 = NULL) {
 
   aves <- ret %>% dplyr::summarise_if(is.numeric, mean)
   sds <- ret %>% dplyr::summarise_if(is.numeric, stats::sd)
-  corMat <- stats::cor(ret[,-1])
+  corMat <- stats::cor(ret[,-1], method = "kendall")
   coVaR = diag(sds) %*% corMat %*% diag(sds)
   if (is.null(s0)) {s0 <- rep(0,times = length(sds))} else {s0 <- x[,-1] %>% dplyr::slice_tail() %>% as.numeric(.)}
   sims <- MASS::mvrnorm(n = nsims, mu = s0, Sigma = coVaR) %>%

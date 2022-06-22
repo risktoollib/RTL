@@ -44,7 +44,7 @@ efficientFrontier <- function(nsims = 5000, x =  RTL::fizdiffs %>% dplyr::select
     }
 
   sds <- ret %>% dplyr::summarise_if(is.numeric, stats::sd)
-  corMat <- stats::cor(ret[,-1])
+  corMat <- stats::cor(ret[,-1], method = "kendall")
   coVaR = diag(sds) %*% corMat %*% diag(sds)
 
   # means, ret, covar

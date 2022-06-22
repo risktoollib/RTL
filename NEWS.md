@@ -1,3 +1,15 @@
+# RTL 1.3.0
+
+## New
+
+## Enhancement
+
++ `simMultivariates()` and `efficientFrontier()` correlation method moved to "kendall".
+
+## Bugs & Fixes
+
+## Remove
+
 # RTL 1.2.0
 
 ## New
@@ -6,18 +18,9 @@
 + `efficientFrontier()` generates Markowitz mean-variance portfolios for commodities assets i.e. risk and reward not in percentages. 
 + `simOU()` augmented with an extra parameter `epsilon` in case your simulation is part of a multivariate simulation.
 
-## Enhancement
-
-
 ## Bugs & Fixes
 
 + UTF characters in `crudeassaysBP`.
-
-## Remove
-
-
-## Updates
-
 
 # RTL 1.1.0
 

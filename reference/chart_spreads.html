@@ -53,18 +53,18 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">chart_spreads</span><span class="op">(</span>
-  cpairs <span class="op">=</span> <span class="va">cpairs</span>,
-  daysFromExpiry <span class="op">=</span> <span class="fl">200</span>,
-  from <span class="op">=</span> <span class="st">"2012-01-01"</span>,
-  conversion <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,
-  feed <span class="op">=</span> <span class="st">"CME_NymexFutures_EOD"</span>,
-  iuser <span class="op">=</span> <span class="st">"x@xyz.com"</span>,
-  ipassword <span class="op">=</span> <span class="st">"pass"</span>,
-  title <span class="op">=</span> <span class="st">"March/April ULSD Nymex Spreads"</span>,
-  yaxis <span class="op">=</span> <span class="st">"$ per bbl"</span>,
-  output <span class="op">=</span> <span class="st">"chart"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">chart_spreads</span><span class="op">(</span></span>
+<span>  cpairs <span class="op">=</span> <span class="va">cpairs</span>,</span>
+<span>  daysFromExpiry <span class="op">=</span> <span class="fl">200</span>,</span>
+<span>  from <span class="op">=</span> <span class="st">"2012-01-01"</span>,</span>
+<span>  conversion <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  feed <span class="op">=</span> <span class="st">"CME_NymexFutures_EOD"</span>,</span>
+<span>  iuser <span class="op">=</span> <span class="st">"x@xyz.com"</span>,</span>
+<span>  ipassword <span class="op">=</span> <span class="st">"pass"</span>,</span>
+<span>  title <span class="op">=</span> <span class="st">"March/April ULSD Nymex Spreads"</span>,</span>
+<span>  yaxis <span class="op">=</span> <span class="st">"$ per bbl"</span>,</span>
+<span>  output <span class="op">=</span> <span class="st">"chart"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -122,22 +122,22 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">cpairs</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
-<span class="r-in">  year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2014"</span>, <span class="st">"2019"</span>, <span class="st">"2020"</span><span class="op">)</span>,</span>
-<span class="r-in">  first <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"@HO4H"</span>, <span class="st">"@HO9H"</span>, <span class="st">"@HO0H"</span><span class="op">)</span>,</span>
-<span class="r-in">  second <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"@CL4J"</span>, <span class="st">"@CL9J"</span>, <span class="st">"@CL0J"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="fu">chart_spreads</span><span class="op">(</span></span>
-<span class="r-in">  cpairs <span class="op">=</span> <span class="va">cpairs</span>, daysFromExpiry <span class="op">=</span> <span class="fl">200</span>, from <span class="op">=</span> <span class="st">"2012-01-01"</span>,</span>
-<span class="r-in">  conversion <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">42</span>, <span class="fl">1</span><span class="op">)</span>, feed <span class="op">=</span> <span class="st">"CME_NymexFutures_EOD"</span>,</span>
-<span class="r-in">  iuser <span class="op">=</span> <span class="st">"x@xyz.com"</span>, ipassword <span class="op">=</span> <span class="st">"pass"</span>,</span>
-<span class="r-in">  title <span class="op">=</span> <span class="st">"March/April ULSD Nymex Spreads"</span>,</span>
-<span class="r-in">  yaxis <span class="op">=</span> <span class="st">"$ per bbl"</span>,</span>
-<span class="r-in">  output <span class="op">=</span> <span class="st">"data"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">cpairs</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2014"</span>, <span class="st">"2019"</span>, <span class="st">"2020"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  first <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"@HO4H"</span>, <span class="st">"@HO9H"</span>, <span class="st">"@HO0H"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  second <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"@CL4J"</span>, <span class="st">"@CL9J"</span>, <span class="st">"@CL0J"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">chart_spreads</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  cpairs <span class="op">=</span> <span class="va">cpairs</span>, daysFromExpiry <span class="op">=</span> <span class="fl">200</span>, from <span class="op">=</span> <span class="st">"2012-01-01"</span>,</span></span>
+<span class="r-in"><span>  conversion <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">42</span>, <span class="fl">1</span><span class="op">)</span>, feed <span class="op">=</span> <span class="st">"CME_NymexFutures_EOD"</span>,</span></span>
+<span class="r-in"><span>  iuser <span class="op">=</span> <span class="st">"x@xyz.com"</span>, ipassword <span class="op">=</span> <span class="st">"pass"</span>,</span></span>
+<span class="r-in"><span>  title <span class="op">=</span> <span class="st">"March/April ULSD Nymex Spreads"</span>,</span></span>
+<span class="r-in"><span>  yaxis <span class="op">=</span> <span class="st">"$ per bbl"</span>,</span></span>
+<span class="r-in"><span>  output <span class="op">=</span> <span class="st">"data"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -152,7 +152,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

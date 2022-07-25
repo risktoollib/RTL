@@ -53,20 +53,20 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">swapIRS</span><span class="op">(</span>
-  trade.date <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">today</a></span><span class="op">(</span><span class="op">)</span>,
-  eff.date <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">today</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fl">2</span>,
-  mat.date <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">today</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">+</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/period.html" class="external-link">years</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>,
-  notional <span class="op">=</span> <span class="fl">1e+06</span>,
-  PayRec <span class="op">=</span> <span class="st">"Rec"</span>,
-  fixed.rate <span class="op">=</span> <span class="fl">0.05</span>,
-  float.curve <span class="op">=</span> <span class="va">usSwapCurves</span>,
-  reset.freq <span class="op">=</span> <span class="fl">3</span>,
-  disc.curve <span class="op">=</span> <span class="va">usSwapCurves</span>,
-  convention <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"act"</span>, <span class="fl">360</span><span class="op">)</span>,
-  bus.calendar <span class="op">=</span> <span class="st">"NY"</span>,
-  output <span class="op">=</span> <span class="st">"price"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">swapIRS</span><span class="op">(</span></span>
+<span>  trade.date <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">today</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  eff.date <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">today</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fl">2</span>,</span>
+<span>  mat.date <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">today</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">+</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/period.html" class="external-link">years</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>,</span>
+<span>  notional <span class="op">=</span> <span class="fl">1e+06</span>,</span>
+<span>  PayRec <span class="op">=</span> <span class="st">"Rec"</span>,</span>
+<span>  fixed.rate <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  float.curve <span class="op">=</span> <span class="va">usSwapCurves</span>,</span>
+<span>  reset.freq <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  disc.curve <span class="op">=</span> <span class="va">usSwapCurves</span>,</span>
+<span>  convention <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"act"</span>, <span class="fl">360</span><span class="op">)</span>,</span>
+<span>  bus.calendar <span class="op">=</span> <span class="st">"NY"</span>,</span>
+<span>  output <span class="op">=</span> <span class="st">"price"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -132,14 +132,14 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"usSwapCurves"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">swapIRS</span><span class="op">(</span></span>
-<span class="r-in">  trade.date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2020-01-04"</span><span class="op">)</span>, eff.date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2020-01-06"</span><span class="op">)</span>,</span>
-<span class="r-in">  mat.date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2022-01-06"</span><span class="op">)</span>, notional <span class="op">=</span> <span class="fl">1000000</span>,</span>
-<span class="r-in">  PayRec <span class="op">=</span> <span class="st">"Rec"</span>, fixed.rate <span class="op">=</span> <span class="fl">0.05</span>, float.curve <span class="op">=</span> <span class="va">usSwapCurves</span>, reset.freq <span class="op">=</span> <span class="fl">3</span>,</span>
-<span class="r-in">  disc.curve <span class="op">=</span> <span class="va">usSwapCurves</span>, convention <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"act"</span>, <span class="fl">360</span><span class="op">)</span>,</span>
-<span class="r-in">  bus.calendar <span class="op">=</span> <span class="st">"NY"</span>, output <span class="op">=</span> <span class="st">"all"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"usSwapCurves"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">swapIRS</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  trade.date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2020-01-04"</span><span class="op">)</span>, eff.date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2020-01-06"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  mat.date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2022-01-06"</span><span class="op">)</span>, notional <span class="op">=</span> <span class="fl">1000000</span>,</span></span>
+<span class="r-in"><span>  PayRec <span class="op">=</span> <span class="st">"Rec"</span>, fixed.rate <span class="op">=</span> <span class="fl">0.05</span>, float.curve <span class="op">=</span> <span class="va">usSwapCurves</span>, reset.freq <span class="op">=</span> <span class="fl">3</span>,</span></span>
+<span class="r-in"><span>  disc.curve <span class="op">=</span> <span class="va">usSwapCurves</span>, convention <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"act"</span>, <span class="fl">360</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  bus.calendar <span class="op">=</span> <span class="st">"NY"</span>, output <span class="op">=</span> <span class="st">"all"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 34392.43</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -175,7 +175,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -55,16 +55,16 @@ This function is used for teaching NPV and NPV at Risk and needs to be customize
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">npv</span><span class="op">(</span>
-  init.cost <span class="op">=</span> <span class="op">-</span><span class="fl">375</span>,
-  C <span class="op">=</span> <span class="fl">50</span>,
-  cf.freq <span class="op">=</span> <span class="fl">0.25</span>,
-  TV <span class="op">=</span> <span class="fl">250</span>,
-  T2M <span class="op">=</span> <span class="fl">2</span>,
-  disc.factors <span class="op">=</span> <span class="va">us.df</span>,
-  BreakEven <span class="op">=</span> <span class="cn">FALSE</span>,
-  BE.yield <span class="op">=</span> <span class="fl">0.01</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">npv</span><span class="op">(</span></span>
+<span>  init.cost <span class="op">=</span> <span class="op">-</span><span class="fl">375</span>,</span>
+<span>  C <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  cf.freq <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>  TV <span class="op">=</span> <span class="fl">250</span>,</span>
+<span>  T2M <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  disc.factors <span class="op">=</span> <span class="va">us.df</span>,</span>
+<span>  BreakEven <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  BE.yield <span class="op">=</span> <span class="fl">0.01</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -114,15 +114,15 @@ This function is used for teaching NPV and NPV at Risk and needs to be customize
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">npv</span><span class="op">(</span></span>
-<span class="r-in">  init.cost <span class="op">=</span> <span class="op">-</span><span class="fl">375</span>, C <span class="op">=</span> <span class="fl">50</span>, cf.freq <span class="op">=</span> <span class="fl">.5</span>, TV <span class="op">=</span> <span class="fl">250</span>, T2M <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">  disc.factors <span class="op">=</span> <span class="fu">RTL</span><span class="fu">::</span><span class="va"><a href="usSwapCurves.html">usSwapCurves</a></span>, BreakEven <span class="op">=</span> <span class="cn">FALSE</span>, BE.yield <span class="op">=</span> <span class="fl">.0399</span></span>
-<span class="r-in"><span class="op">)</span><span class="op">$</span><span class="va">npv</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">npv</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  init.cost <span class="op">=</span> <span class="op">-</span><span class="fl">375</span>, C <span class="op">=</span> <span class="fl">50</span>, cf.freq <span class="op">=</span> <span class="fl">.5</span>, TV <span class="op">=</span> <span class="fl">250</span>, T2M <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  disc.factors <span class="op">=</span> <span class="fu">RTL</span><span class="fu">::</span><span class="va"><a href="usSwapCurves.html">usSwapCurves</a></span>, BreakEven <span class="op">=</span> <span class="cn">FALSE</span>, BE.yield <span class="op">=</span> <span class="fl">.0399</span></span></span>
+<span class="r-in"><span><span class="op">)</span><span class="op">$</span><span class="va">npv</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 4.994537</span>
-<span class="r-in"><span class="fu">npv</span><span class="op">(</span></span>
-<span class="r-in">  init.cost <span class="op">=</span> <span class="op">-</span><span class="fl">375</span>, C <span class="op">=</span> <span class="fl">50</span>, cf.freq <span class="op">=</span> <span class="fl">.5</span>, TV <span class="op">=</span> <span class="fl">250</span>, T2M <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">  disc.factors <span class="op">=</span> <span class="fu">RTL</span><span class="fu">::</span><span class="va"><a href="usSwapCurves.html">usSwapCurves</a></span>, BreakEven <span class="op">=</span> <span class="cn">FALSE</span>, BE.yield <span class="op">=</span> <span class="fl">.0399</span></span>
-<span class="r-in"><span class="op">)</span><span class="op">$</span><span class="va">df</span></span>
+<span class="r-in"><span><span class="fu">npv</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  init.cost <span class="op">=</span> <span class="op">-</span><span class="fl">375</span>, C <span class="op">=</span> <span class="fl">50</span>, cf.freq <span class="op">=</span> <span class="fl">.5</span>, TV <span class="op">=</span> <span class="fl">250</span>, T2M <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  disc.factors <span class="op">=</span> <span class="fu">RTL</span><span class="fu">::</span><span class="va"><a href="usSwapCurves.html">usSwapCurves</a></span>, BreakEven <span class="op">=</span> <span class="cn">FALSE</span>, BE.yield <span class="op">=</span> <span class="fl">.0399</span></span></span>
+<span class="r-in"><span><span class="op">)</span><span class="op">$</span><span class="va">df</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       t    cf    df     pv</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -145,7 +145,7 @@ This function is used for teaching NPV and NPV at Risk and needs to be customize
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

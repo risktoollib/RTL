@@ -53,12 +53,12 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">chart_PerfSummary</span><span class="op">(</span>
-  ret <span class="op">=</span> <span class="va">ret</span>,
-  geometric <span class="op">=</span> <span class="cn">TRUE</span>,
-  main <span class="op">=</span> <span class="st">"Cumulative Returns and Drawdowns"</span>,
-  linesize <span class="op">=</span> <span class="fl">1.25</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">chart_PerfSummary</span><span class="op">(</span></span>
+<span>  ret <span class="op">=</span> <span class="va">ret</span>,</span>
+<span>  geometric <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  main <span class="op">=</span> <span class="st">"Cumulative Returns and Drawdowns"</span>,</span>
+<span>  linesize <span class="op">=</span> <span class="fl">1.25</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -92,14 +92,14 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">ret</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span class="r-in">  date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.Date.html" class="external-link">seq.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">60</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span class="r-in">  CL01 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">61</span>, <span class="fl">0</span>, <span class="fl">.01</span><span class="op">)</span>, RB01 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">61</span>, <span class="fl">0</span>, <span class="fl">0.02</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="fu">chart_PerfSummary</span><span class="op">(</span>ret <span class="op">=</span> <span class="va">ret</span>,</span>
-<span class="r-in">geometric <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">main <span class="op">=</span> <span class="st">"Cumulative Returns and Drawdowns"</span>,</span>
-<span class="r-in">linesize <span class="op">=</span> <span class="fl">1.25</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ret</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.Date.html" class="external-link">seq.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">60</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  CL01 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">61</span>, <span class="fl">0</span>, <span class="fl">.01</span><span class="op">)</span>, RB01 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">61</span>, <span class="fl">0</span>, <span class="fl">0.02</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">chart_PerfSummary</span><span class="op">(</span>ret <span class="op">=</span> <span class="va">ret</span>,</span></span>
+<span class="r-in"><span>geometric <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>main <span class="op">=</span> <span class="st">"Cumulative Returns and Drawdowns"</span>,</span></span>
+<span class="r-in"><span>linesize <span class="op">=</span> <span class="fl">1.25</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="chart_PerfSummary-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -115,7 +115,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

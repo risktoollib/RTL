@@ -55,14 +55,14 @@ You need your own credentials with Morningstar.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">getCurve</span><span class="op">(</span>
-  feed <span class="op">=</span> <span class="st">"Crb_Futures_Price_Volume_And_Open_Interest"</span>,
-  contract <span class="op">=</span> <span class="st">"CL"</span>,
-  date <span class="op">=</span> <span class="st">"2020-08-10"</span>,
-  fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Open, High, Low, Close"</span><span class="op">)</span>,
-  iuser <span class="op">=</span> <span class="st">"x@xyz.com"</span>,
-  ipassword <span class="op">=</span> <span class="st">"pass"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">getCurve</span><span class="op">(</span></span>
+<span>  feed <span class="op">=</span> <span class="st">"Crb_Futures_Price_Volume_And_Open_Interest"</span>,</span>
+<span>  contract <span class="op">=</span> <span class="st">"CL"</span>,</span>
+<span>  date <span class="op">=</span> <span class="st">"2020-08-10"</span>,</span>
+<span>  fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Open, High, Low, Close"</span><span class="op">)</span>,</span>
+<span>  iuser <span class="op">=</span> <span class="st">"x@xyz.com"</span>,</span>
+<span>  ipassword <span class="op">=</span> <span class="st">"pass"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -112,27 +112,27 @@ You need your own credentials with Morningstar.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># CME WTI Futures</span></span>
-<span class="r-in"><span class="fu">getCurve</span><span class="op">(</span></span>
-<span class="r-in">  feed <span class="op">=</span> <span class="st">"Crb_Futures_Price_Volume_And_Open_Interest"</span>, contract <span class="op">=</span> <span class="st">"CL"</span>,</span>
-<span class="r-in">  date <span class="op">=</span> <span class="st">"2020-07-13"</span>, fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Open, High, Low, Close"</span><span class="op">)</span>,</span>
-<span class="r-in">  iuser <span class="op">=</span> <span class="st">"x@xyz.com"</span>, ipassword <span class="op">=</span> <span class="st">"pass"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">getCurve</span><span class="op">(</span></span>
-<span class="r-in">  feed <span class="op">=</span> <span class="st">"Crb_Futures_Price_Volume_And_Open_Interest"</span>, contract <span class="op">=</span> <span class="st">"BG"</span>,</span>
-<span class="r-in">  date <span class="op">=</span> <span class="st">"2020-07-13"</span>, fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Open, High, Low, Close"</span><span class="op">)</span>,</span>
-<span class="r-in">  iuser <span class="op">=</span> <span class="st">"x@xyz.com"</span>, ipassword <span class="op">=</span> <span class="st">"pass"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">getCurve</span><span class="op">(</span></span>
-<span class="r-in">  feed <span class="op">=</span> <span class="st">"LME_ClosingPriceDelayed"</span>, contract <span class="op">=</span> <span class="st">"AHD"</span>,</span>
-<span class="r-in">  date <span class="op">=</span> <span class="st">"2021-06-25"</span>, fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Last_Price"</span><span class="op">)</span>,</span>
-<span class="r-in">  iuser <span class="op">=</span> <span class="st">"x@xyz.com"</span>, ipassword <span class="op">=</span> <span class="st">"pass"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># CME WTI Futures</span></span></span>
+<span class="r-in"><span><span class="fu">getCurve</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  feed <span class="op">=</span> <span class="st">"Crb_Futures_Price_Volume_And_Open_Interest"</span>, contract <span class="op">=</span> <span class="st">"CL"</span>,</span></span>
+<span class="r-in"><span>  date <span class="op">=</span> <span class="st">"2020-07-13"</span>, fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Open, High, Low, Close"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  iuser <span class="op">=</span> <span class="st">"x@xyz.com"</span>, ipassword <span class="op">=</span> <span class="st">"pass"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">getCurve</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  feed <span class="op">=</span> <span class="st">"Crb_Futures_Price_Volume_And_Open_Interest"</span>, contract <span class="op">=</span> <span class="st">"BG"</span>,</span></span>
+<span class="r-in"><span>  date <span class="op">=</span> <span class="st">"2020-07-13"</span>, fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Open, High, Low, Close"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  iuser <span class="op">=</span> <span class="st">"x@xyz.com"</span>, ipassword <span class="op">=</span> <span class="st">"pass"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">getCurve</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  feed <span class="op">=</span> <span class="st">"LME_ClosingPriceDelayed"</span>, contract <span class="op">=</span> <span class="st">"AHD"</span>,</span></span>
+<span class="r-in"><span>  date <span class="op">=</span> <span class="st">"2021-06-25"</span>, fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Last_Price"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  iuser <span class="op">=</span> <span class="st">"x@xyz.com"</span>, ipassword <span class="op">=</span> <span class="st">"pass"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -147,7 +147,7 @@ You need your own credentials with Morningstar.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

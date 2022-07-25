@@ -9,6 +9,7 @@ Belvieu
 BreakEven
 Burnaby
 CFTC
+CLc
 CMA
 CMD
 CME
@@ -86,6 +87,7 @@ WCB
 WCW
 WIP
 WTI
+algo
 analytics
 annualised
 annum
@@ -121,6 +123,7 @@ holidaysOil
 https
 ir
 kbs
+kendall
 lngterminals
 metacran
 mogas
@@ -131,6 +134,7 @@ ngstorage
 nsims
 numDaysFut
 nymex
+ohlc
 opendata
 parms
 php

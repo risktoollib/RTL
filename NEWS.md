@@ -2,6 +2,8 @@
 
 ## New
 
++ New functions for algorithmic trading at the experimental stage.
+
 ## Enhancement
 
 + `simMultivariates()` and `efficientFrontier()` correlation method moved to "kendall".

@@ -1,8 +1,38 @@
+#' CLc1
+#' @description Historical CL 1st Contract OHLC set for algo trading example.
+#' @format data frame
+#' @source {CME}
+"CLc1"
+
+#' CLc2
+#' @description Historical CL 2nd Contract Close adjusted using ohlc object.
+#' @format data frame
+#' @source {CME}
+"CLc2"
+
+#' CLc1c2
+#' @description Historical CL 1st vs 2nd Contract spread.
+#' @format data frame
+#' @source {CME}
+"CLc1c2"
+
+#' ohlc
+#' @description OHLC profile using historical CL 1st Contract OHLC
+#' @format data frame
+#' @source {CME}
+"ohlc"
+
 #' Sample SPY ETF data set
 #' @description Stock price and returns for SPY
 #' @format data frame
 #' @source {Yahoo Finance}
 "spy"
+
+#' Sample USO ETF data set
+#' @description Stock price and returns for US Crude Oil ETF
+#' @format data frame
+#' @source {Yahoo Finance}
+"uso"
 
 #' Data for spot to futures convergence - historical data
 #' @description Cash and futures

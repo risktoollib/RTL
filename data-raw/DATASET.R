@@ -839,7 +839,11 @@ crudes <- rbind(x, y) %>%
   tibble::add_row(Crude = "Tapis", Country = "Malaysia", API = 42.7, Sulphur = .044, TAN = 0.215) %>%
   tibble::add_row(Crude = "Maya", Country = "Mexico", API = 22, Sulphur = 3.3, TAN = 0.3) %>%
   tibble::add_row(Crude = "Light Louisiana Sweet", Country = "US", API = 38.5, Sulphur = .40, TAN = 0.25) %>%
-  tibble::add_row(Crude = "West Texas Intermediate", Country = "US", API = 40.6, Sulphur = .22, TAN = 0.1)
+  tibble::add_row(Crude = "West Texas Intermediate", Country = "US", API = 40.6, Sulphur = .22, TAN = 0.1) %>%
+  tibble::add_row(Crude = "Napo", Country = "Ecuador", API = 17, Sulphur = 2.30, TAN = 0.5) %>%
+  tibble::add_row(Crude = "Oriente", Country = "Ecuador", API = 23, Sulphur = 1.60, TAN = 0.25) %>%
+  tibble::add_row(Crude = "Urals", Country = "Russia", API = 31.75, Sulphur = 1.35, TAN = 0.05)
+
 
 crudes <- crudes %>%
   dplyr::mutate(

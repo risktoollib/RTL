@@ -61,43 +61,6 @@ library(RSelenium)
 source("~/now/packages.R")
 setwd(paste0(getwd(), "/data-raw"))
 
-uso <- tidyquant::tq_get("USO", adjust = TRUE) %>%
-  dplyr::rename_all(tools::toTitleCase) %>%
-  timetk::tk_xts(date_var = Date) %>%
-  quantmod::adjustOHLC(.,use.Adjusted = TRUE) %>%
-  timetk::tk_tbl(rename_index = "Date") %>%
-  dplyr::select(-Adjusted)
-usethis::use_data(uso, overwrite = T)
-
-
-
-CLc2 <- dfwide %>% dplyr::select(date,CL02) %>% tidyr::drop_na()
-CLc1 <- tidyquant::tq_get("CL=F", adjust = TRUE) %>%
-    dplyr::rename_all(tools::toTitleCase) %>%
-   dplyr::mutate(symbol = "CLc1") %>%
-    timetk::tk_xts(date_var = Date) %>%
-    quantmod::adjustOHLC(.,use.Adjusted = TRUE) %>%
-    timetk::tk_tbl(rename_index = "Date") %>%
-  dplyr::select(-Adjusted, - Volume)  %>%
-  dplyr::filter(Date %in% c(CLc2$date))
-
-ohlc <- CLc1 %>%
-  dplyr::transmute(date = Date,
-                   Open = Open / Close,
-                   High = High / Close,
-                   Low = Low / Close,
-                   Close = 1)
-
-CLc2 <- CLc2 %>% dplyr::left_join(ohlc) %>% tidyr::drop_na()
-CLc2 <- cbind(Date = CLc2 %>% dplyr::pull(date),CLc2 %>% dplyr::select(-date,-CL02) * CLc2$CL02) %>% dplyr::as_tibble()
-CLc1c2 <- cbind(Date = CLc1$Date,CLc1 %>% dplyr::select(-Date) - CLc2 %>% dplyr::select(-Date)) %>%
-  dplyr::as_tibble()
-
-usethis::use_data(CLc1, overwrite = T)
-usethis::use_data(CLc2, overwrite = T)
-usethis::use_data(CLc1c2, overwrite = T)
-usethis::use_data(ohlc, overwrite = T)
-
 
 ## tidyquant replacement
 
@@ -315,6 +278,41 @@ dflong %>% dplyr::filter(grepl("MJP",series)) %>% ggplot(aes(x = date, y = value
 usethis::use_data(dflong, overwrite = T)
 usethis::use_data(dfwide, overwrite = T)
 rm(crude, crudecan, crudeICE, pdts, alu)
+
+uso <- tidyquant::tq_get("USO", adjust = TRUE) %>%
+  dplyr::rename_all(tools::toTitleCase) %>%
+  timetk::tk_xts(date_var = Date) %>%
+  quantmod::adjustOHLC(.,use.Adjusted = TRUE) %>%
+  timetk::tk_tbl(rename_index = "Date") %>%
+  dplyr::select(-Adjusted)
+usethis::use_data(uso, overwrite = T)
+
+CLc2 <- dfwide %>% dplyr::select(date,CL02) %>% tidyr::drop_na()
+CLc1 <- tidyquant::tq_get("CL=F", adjust = TRUE) %>%
+  dplyr::rename_all(tools::toTitleCase) %>%
+  dplyr::mutate(symbol = "CLc1") %>%
+  timetk::tk_xts(date_var = Date) %>%
+  quantmod::adjustOHLC(.,use.Adjusted = TRUE) %>%
+  timetk::tk_tbl(rename_index = "Date") %>%
+  dplyr::select(-Adjusted, - Volume)  %>%
+  dplyr::filter(Date %in% c(CLc2$date))
+
+ohlc <- CLc1 %>%
+  dplyr::transmute(date = Date,
+                   Open = Open / Close,
+                   High = High / Close,
+                   Low = Low / Close,
+                   Close = 1)
+
+CLc2 <- CLc2 %>% dplyr::left_join(ohlc) %>% tidyr::drop_na()
+CLc2 <- cbind(Date = CLc2 %>% dplyr::pull(date),CLc2 %>% dplyr::select(-date,-CL02) * CLc2$CL02) %>% dplyr::as_tibble()
+CLc1c2 <- cbind(Date = CLc1$Date,CLc1 %>% dplyr::select(-Date) - CLc2 %>% dplyr::select(-Date)) %>%
+  dplyr::as_tibble()
+
+usethis::use_data(CLc1, overwrite = T)
+usethis::use_data(CLc2, overwrite = T)
+usethis::use_data(CLc1c2, overwrite = T)
+usethis::use_data(ohlc, overwrite = T)
 
 ## Sample EIA dataset
 eiaStocks <- tibble::tribble(
@@ -1039,7 +1037,7 @@ usSwapCurves <- DiscountCurve(params, tsQuotes, times)
 usSwapCurves[1:4] %>% dplyr::as_tibble() %>% View()
 usethis::use_data(tsQuotes, overwrite = T)
 
-tsQuotes <- list(flat = 0.025)
+tsQuotes <- list(flat = 0.03)
 usSwapCurvesPar <- DiscountCurve(params, tsQuotes, times)
 
 usethis::use_data(usSwapCurves, overwrite = T)

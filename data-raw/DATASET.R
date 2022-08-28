@@ -1005,6 +1005,7 @@ irs <- chat %>% .[[4]] %>%
   dplyr::mutate(Name = paste0("s",c(2,3,5,7,10,15,30),"y"),
                 Last = readr::parse_number(Last)/100)
 remDr$navigate("https://www.cmegroup.com/markets/interest-rates/stirs/eurodollar.settlements.html")
+Sys.sleep(3)
 page <- remDr$getPageSource()
 futs <- read_html(page[[1]]) %>%
   rvest::html_table() %>%

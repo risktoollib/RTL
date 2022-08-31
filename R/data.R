@@ -1,3 +1,9 @@
+#' steo
+#' @description Short Term Energy Outlook from the EIA.
+#' @format plotly object
+#' @source {eia}
+"steo"
+
 #' CLc1
 #' @description Historical CL 1st Contract OHLC set for algo trading example.
 #' @format data frame

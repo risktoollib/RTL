@@ -62,6 +62,11 @@ source("~/now/packages.R")
 setwd(paste0(getwd(), "/data-raw"))
 
 
+## steo for RTLappWTI
+
+steo <- RTL::chart_eia_steo(key = EIAkey)
+usethis::use_data(steo, overwrite = T)
+
 ## tidyquant replacement
 
 spy <-

@@ -25,8 +25,9 @@ simGBM <- function(nsims = 1, S0 = 10, drift = 0, sigma = 0.2, T2M = 1, dt = 1 /
     diffusion <- matrix(stats::rnorm(periods * nsims, mean = 0, sd = sqrt(dt)), ncol = nsims, nrow = periods)
     S <- exp((drift - (sigma^2) / 2) * dt + sigma * diffusion)
     S <- apply(rbind(rep(S0,nsims),S),2,cumprod)
-    S <- dplyr::as_tibble(S,.name_repair = "universal")
+    S <- dplyr::as_tibble(S,.name_repair = "minimal")
     names(S) <- paste("sim",1:nsims,sep = "")
+    S <- S %>% dplyr::mutate(t = seq(0,T2M,dt)) %>% dplyr::select(t, dplyr::everything())
   }
   return(S)
 }

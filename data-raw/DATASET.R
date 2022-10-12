@@ -190,8 +190,8 @@ ipassword <- mstar[["ipassword"]]
 startdate <- "2004-01-01"
 
 crude <- c(
-  paste0("CL_", sprintf("%0.3d", 1:36), "_Month"),
-  paste0("NG_", sprintf("%0.3d", 1:36), "_Month")
+  paste0("CL_", sprintf("%0.3d", 1:24), "_Month"),
+  paste0("NG_", sprintf("%0.3d", 1:24), "_Month")
   )
 crudecan <- c(paste0("WCW_", sprintf("%0.3d", 1:12), "_Month"),
               paste0("LSW_", sprintf("%0.3d", 1:12), "_Month"))

@@ -722,66 +722,9 @@ usethis::use_data(tradeCycle, overwrite = T)
 
 ## Canadian Crude Data
 
-url <- "https://crudemonitor.ca/crudes/index.php?acr=MSW"
-html <- xml2::read_html(url)
+url = "https://beta.crudemonitor.ca/api/json.php?condensates%5B0%5D=Cochin+Condensate&condensates%5B1%5D=Condensate+Blend&condensates%5B2%5D=Fort+Saskatchewan+Condensate&condensates%5B3%5D=Peace+Condensate&condensates%5B4%5D=Pembina+Condensate&condensates%5B5%5D=Rangeland+Condensate&condensates%5B6%5D=Southern+Lights+Diluent&crudes%5B0%5D=Federated&crudes%5B1%5D=Light+Smiley&crudes%5B2%5D=Peace&crudes%5B3%5D=Pembina&crudes%5B4%5D=Secure+Sask+Light&crudes%5B5%5D=Mixed+Sweet+Blend&crudes%5B6%5D=Midale&crudes%5B7%5D=Light+Sour+Blend&crudes%5B8%5D=Syncrude+Sweet+Premium&crudes%5B9%5D=Bow+River+North&crudes%5B10%5D=Lloyd+Blend&crudes%5B11%5D=Lloyd+Kerrobert&crudes%5B12%5D=Access+Western+Blend&crudes%5B13%5D=Christina+Dilbit+Blend&crudes%5B14%5D=Cold+Lake&crudes%5B15%5D=Kearl+Lake&crudes%5B16%5D=Western+Canadian+Select&crudes%5B17%5D=Surmont+Heavy+Blend&condensateProperties%5B0%5D=condensates-BA&crudeProperties%5B0%5D=crudes-BA&date%5Bstart%5D=2010-01-01&date%5Bend%5D=2022-10-24"
 
-get_all_assays <- function(x) {
-  print(x)
-  t <- try(read_html(paste0("http://www.crudemonitor.ca/", x)) %>% html_nodes("a") %>% rvest::html_attr("href") %>%
-    data.frame(baselocation = .) %>% dplyr::filter(grepl("date=", baselocation)))
-  if (!class(t) == "try-error") {
-    return(read_html(paste0("http://www.crudemonitor.ca/", x)) %>% html_nodes("a") %>% rvest::html_attr("href") %>%
-      data.frame(baselocation = .) %>% dplyr::filter(grepl("date=", baselocation)))
-  } else {
-    return(data.frame(baselocation = character()))
-  }
-}
-# x<-"sampledata.php?name=Cochin+Condensate&batch=CHN-010&date=2016-10-05"
-get_assay_values <- function(x) {
-  print(x)
-  tmp <- read_html(paste0("http://www.crudemonitor.ca/", x)) %>%
-    html_nodes("#datatables") %>%
-    html_text() %>%
-    stringr::str_split("\\n", simplify = T)
-  out <- data.frame(measure = tmp[1, grep("\\S+\\s\\(", tmp[1, ])], value = tmp[1, grep("\\S+\\s\\(", tmp[1, ]) + 1])
-  return(out)
-}
-
-assay_id <- read_html("http://www.crudemonitor.ca/report.php") %>%
-  rvest::html_nodes("a") %>%
-  rvest::html_attr("href") %>%
-  data.frame(baselocation = .) %>%
-  dplyr::filter(grepl("report.php\\?acr=", baselocation)) %>%
-  setNames("shortname") %>%
-  dplyr::filter(grepl("=AWB|=BRN|=CDB|=CL|=LLB|=LLK|=MSW|=WCS|=WH", shortname)) %>%
-  arrange() %>%
-  dplyr::mutate(longname = purrr::map(shortname, get_all_assays)) %>%
-  tidyr::unnest(longname) %>%
-  tidyr::separate(shortname, into = c("j1", "Ticker"), sep = "acr=") %>%
-  dplyr::mutate(filelocation = baselocation) %>%
-  tidyr::separate(baselocation, into = c("j2", "j3", "Batch", "Date", "junk"), sep = "=") %>%
-  dplyr::mutate(Crude = gsub("&batch", "", j3)) %>%
-  dplyr::mutate(Crude = gsub("\\+", " ", Crude)) %>%
-  dplyr::select(Ticker, Date, Batch, filelocation, Crude)
-
-# Scrape Assay Content by ID
-assays <- assay_id %>%
-  na.omit() %>%
-  dplyr::mutate(data = purrr::map(filelocation, get_assay_values)) %>%
-  unnest(data)
-
-# Tidying Data
-cancrudeassays <- assays %>%
-  dplyr::mutate(
-    Ticker = gsub("\\&.*", "", Ticker),
-    Date = as.Date(str_remove(Date, "&PHPSESSID")),
-    Batch = gsub("\\&.*", "", Batch),
-    Measurement = gsub("\\s\\(.*", "", measure),
-    Value = parse_number(as.character(value), na = c("", "NA", "ND"))
-  ) %>%
-  dplyr::select(Date, Batch, Ticker, Crude, Measurement, Value) %>%
-  stats::na.omit() %>%
-  dplyr::filter(Ticker != "MSW(S)")
+samples <- httr::GET(url) %>% httr::content(.,as="text") %>% jsonlite::fromJSON(.) %>% dplyr::as_tibble()
 
 # Computing Monthly Measurements Averages
 

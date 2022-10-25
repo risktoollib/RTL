@@ -13,6 +13,8 @@
 
 ## Remove
 
++ `cancrudeassayssum` removed and replaced by existing `cancrudeassays`.
+
 # RTL 1.2.0
 
 ## New

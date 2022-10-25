@@ -110,13 +110,6 @@
 #' @import tsibble
 "cancrudeassays"
 
-#' Summarized data for Canadian crude assays
-#' @description Data set with historical Canadian Crude Assays Statistics.
-#' @format data frame
-#' @source <https://crudemonitor.ca/>
-#' @import tsibble
-"cancrudeassayssum"
-
 #' Data for crude assays of 50+ types of crude oil.
 #' @description Crude oil qualities.
 #' @format data frame

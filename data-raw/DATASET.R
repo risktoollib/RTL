@@ -726,45 +726,42 @@ url = "https://beta.crudemonitor.ca/api/json.php?condensates%5B0%5D=Cochin+Conde
 
 samples <- httr::GET(url) %>% httr::content(.,as="text") %>% jsonlite::fromJSON(.) %>% dplyr::as_tibble()
 
+names(samples) <- c("Name", "Batch","date","Density","Gravity","Sulphur","MCR","Viscosity", "Sediment","Olefins","OrganoPhosphorus","Oxygenates","TAN","Salt","Nickel","Vanadium")
+cancrudeassays <- samples %>%
+  dplyr::mutate(date = as.Date(date),
+                Grade = gsub("-.*$","",Batch),
+                Location = case_when(grepl("AHS|AWB|CAL|KDB|MSW|PSO|WDB|WH|KDB|CL\\(E\\)|SHB|P|SSP|SW|MPR|FD", Grade) ~ "Edmonton",
+                                     grepl("CHN|CRW|CFT|CPR|CPM|CRL|SLD", Grade) ~ "Edmonton",
+                                     grepl("BRN|CDB|LLB|LLK|WCS|CL|CL\\(H\\)", Grade) ~ "Hardisty",
+                                     grepl("MSM|LSB", Grade) ~ "Cromer",
+                                     grepl("MSY|MSE", Grade) ~ "Kerrobert",
+                                     TRUE ~ "unknown"),
+                Grade = case_when(grepl("CL", Grade) ~ "CL", TRUE ~ Grade)
+                ) %>%
+  dplyr::select(-Name) %>%
+  dplyr::select(Grade,Location, date,Batch, everything()) %>%
+  dplyr::group_by(Grade,Location,date) %>%
+  dplyr::mutate(date = tsibble::yearmonth(date)) %>%
+  #dplyr::filter(Grade == "WCS") %>%
+  dplyr::mutate(across(Density:Vanadium,as.numeric)) %>%
+  dplyr::summarise_if(is.numeric, mean, na.rm = TRUE)
+  #dplyr::summarise(across(Density:Vanadium, mean, .names = "{.col}"))
+
 # Computing Monthly Measurements Averages
 
-cancrudeassays <- cancrudeassays %>%
-  pivot_wider(names_from = "Measurement", values_from = "Value") %>%
-  dplyr::mutate(
-    date = tsibble::yearmonth(Date),
-    Location = case_when(
-      grepl("AHS|AWB|C5|CAL|MSW|PSO|WDB|WH|KDB", Ticker) ~ "Edmonton",
-      grepl("BRN|CDB|CL|LLB|LLK|WCS", Ticker) ~ "Hardisty",
-      TRUE ~ "unknown"
-    )
-  ) %>%
-  dplyr::select(date, Location, everything(), -contains("%")) %>%
-  group_by(Ticker, Crude, date, Location) %>%
-  summarise_if(is.numeric, mean, na.rm = TRUE)
-
-cancrudeassays <- cancrudeassays %>%
-  dplyr::ungroup() %>%
-  dplyr::arrange(Ticker, date) %>%
-  dplyr::mutate(
-    TAN = replace(TAN, is.nan(TAN), NA),
-    TAN = case_when(
-      (is.na(TAN) & Ticker %in% c("MSW", "SYN")) ~ 0,
-      TRUE ~ TAN
-    )
-  ) %>%
-  tidyr::fill(TAN)
+# cancrudeassays <- cancrudeassays %>%
+#   dplyr::ungroup() %>%
+#   dplyr::arrange(Ticker, date) %>%
+#   dplyr::mutate(
+#     TAN = replace(TAN, is.nan(TAN), NA),
+#     TAN = case_when(
+#       (is.na(TAN) & Ticker %in% c("MSW", "SYN")) ~ 0,
+#       TRUE ~ TAN
+#     )
+#   ) %>%
+#   tidyr::fill(TAN)
 
 usethis::use_data(cancrudeassays, overwrite = T)
-
-cancrudeassayssum <- cancrudeassays %>%
-  dplyr::group_by(Ticker, Crude) %>%
-  # dplyr::filter(YM > "2015-01-01", Ticker != "MSW(S)") %>%
-  dplyr::select(-Location, -Sediment, -Salt, -Olefins, -Viscosity) %>%
-  dplyr::mutate(TAN = case_when(Ticker == "MSW" ~ 0, TRUE ~ TAN)) %>%
-  na.omit() %>%
-  summarise_all(list(mean))
-
-usethis::use_data(cancrudeassayssum, overwrite = T)
 
 cancrudeprices <- readRDS("crude_prices.RDS") %>%
   dplyr::transmute(Ticker = Ticker, date = tsibble::yearmonth(YM), Value = Value)

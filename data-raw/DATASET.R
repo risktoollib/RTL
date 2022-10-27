@@ -28,6 +28,7 @@
 # usethis::use_package("RCurl")
 # usethis::use_package("purrr")
 # usethis::use_package("zoo")
+# usethis::use_package("TTR")
 # usethis::use_package("Rcpp")
 # usethis::use_rcpp()
 spelling::spell_check_package()
@@ -290,7 +291,8 @@ uso <- tidyquant::tq_get("USO", adjust = TRUE) %>%
   timetk::tk_xts(date_var = Date) %>%
   quantmod::adjustOHLC(.,use.Adjusted = TRUE) %>%
   timetk::tk_tbl(rename_index = "Date") %>%
-  dplyr::select(-Adjusted)
+  dplyr::select(-Adjusted) %>%
+  dplyr::mutate(across(where(is.numeric), round, 2))
 usethis::use_data(uso, overwrite = T)
 
 CLc2 <- dfwide %>% dplyr::select(date,CL02) %>% tidyr::drop_na()

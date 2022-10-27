@@ -2,7 +2,7 @@ Type: Package
 Package: RTL
 Title: Risk Tool Library - Trading, Risk, 'Analytics' for Commodities
 Version: 1.3.0
-Date: 2022-10-25
+Date: 2022-10-27
 Authors@R: c(
     person("Philippe", "Cote", , "pcote@ualberta.ca", role = c("aut", "cre")),
     person("Nima", "Safaian", , "nima.safaian@gmail.com", role = "aut")
@@ -36,6 +36,7 @@ Imports:
     glue,
     Rcpp,
     lifecycle,
+    TTR
 Suggests: 
     testthat (>= 3.0.0),
     covr,

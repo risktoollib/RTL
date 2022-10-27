@@ -4,6 +4,8 @@
 
 + New functions for algorithmic trading at the experimental stage.
 
+  + `tradeStrategy()` is an example of a Moving Average crossover strategy.
+
 ## Enhancement
 
 + `simMultivariates()` and `efficientFrontier()` correlation method moved to "kendall".

@@ -1,14 +1,14 @@
 #' Sample Quantitative Trading strategy
-#' @description Moving average crossover strategy
+#' @description Based on dividend yield
 #' @param data Dataframe of OHLC data e.g. RTL::uso
 #' @param par1value Value of first parameter e.g. short MA
 #' @param par2value Value of second parameter e.g. long MA
 #' @return Dataframe with indicators, signals, trades and profit and loss.
-#' @export tradeStrategy
+#' @export tradeStrategyDY
 #' @author Philippe Cote
 #' @examples
-#' tradeStrategy(data = RTL::uso, par1value = 50, par2value = 200)
-tradeStrategy <- function(data = RTL::uso,
+#' tradeStrategyDY(data = RTL::uso, par1value = 50, par2value = 200)
+tradeStrategyDY <- function(data = RTL::uso,
                      par1value = 50,
                      par2value = 200) {
   Open <- trade <- pos <- retOpCl <- retClCl <- retClCl <- ret_new <- ret_exist <- ret_others <- NULL

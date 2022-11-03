@@ -8,6 +8,7 @@
 
 ## Enhancement
 
++ `eia2tidy()` upgraded to version 2 EIA API.
 + `simMultivariates()` and `efficientFrontier()` correlation method moved to "kendall".
 + `simGBM()` output with added variable `t` for time and performance improved.
 

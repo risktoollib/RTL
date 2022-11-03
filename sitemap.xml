@@ -217,7 +217,10 @@
     <loc>/reference/tradeStats.html</loc>
   </url>
   <url>
-    <loc>/reference/tradeStrategy.html</loc>
+    <loc>/reference/tradeStrategyDY.html</loc>
+  </url>
+  <url>
+    <loc>/reference/tradeStrategySMA.html</loc>
   </url>
   <url>
     <loc>/reference/tradeprocess.html</loc>

@@ -192,7 +192,8 @@ startdate <- "2004-01-01"
 
 crude <- c(
   paste0("CL_", sprintf("%0.3d", 1:36), "_Month"),
-  paste0("NG_", sprintf("%0.3d", 1:36), "_Month")
+  paste0("NG_", sprintf("%0.3d", 1:36), "_Month"),
+  paste0("HTT_", sprintf("%0.3d", 1:12), "_Month")
   )
 crudecan <- c(paste0("WCW_", sprintf("%0.3d", 1:12), "_Month"),
               paste0("LSW_", sprintf("%0.3d", 1:12), "_Month"))
@@ -271,12 +272,12 @@ dfwide <- dflong %>% tidyr::pivot_wider(names_from = series, values_from = value
 
 # test for data gaps
 dflong %>% dplyr::filter(grepl("CL",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
+dflong %>% dplyr::filter(grepl("HTT",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("BRN",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("HO",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("RB",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("WCW",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("LSW",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
-#dflong %>% dplyr::filter(grepl("YX",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("ALI",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("NG",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("AUP",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
@@ -986,7 +987,7 @@ tsQuotes <- rbind(libor, irs, futs) %>% as_tibble() %>%
   tidyr::pivot_wider(names_from = Name, values_from = Last) %>%
   dplyr::select(-s2y,-d1y,-d6m,-d3m) %>%
   transpose() %>% unlist() %>% as.list()
-tradeDate <- as.Date(Sys.Date())
+tradeDate <- as.Date(Sys.Date() - 1)
 params <- list(tradeDate = tradeDate, settleDate = tradeDate + 2, dt = 1/12,
                interpWhat = "discount", interpHow = "spline")
 setEvaluationDate(tradeDate)
@@ -995,7 +996,10 @@ savepar <- par(mfrow = c(3, 3), mar = c(4, 4, 2, 0.5))
 on.exit(par(savepar))
 usSwapCurves <- DiscountCurve(params, tsQuotes, times)
 # check your curve for negative forward rates
-usSwapCurves[1:4] %>% dplyr::as_tibble() %>% View()
+usSwapCurves[1:4] %>% dplyr::as_tibble() %>% dplyr::select(-discounts) %>%
+  tidyr::pivot_longer(-times, names_to = "ir",values_to = "rate") %>%
+  plotly::plot_ly(x = ~times, y = ~rate,name = ~ir,type = "scatter", mode = "lines")
+#usSwapCurves[1:4] %>% dplyr::as_tibble() %>% View()
 usethis::use_data(tsQuotes, overwrite = T)
 
 tsQuotes <- list(flat = 0.03)

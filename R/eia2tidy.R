@@ -32,13 +32,16 @@ eia2tidy <- function(ticker, key, name = " ") {
   if (x$status_code == "404") {stop(print("http 404 :: Ticker not found."))}
   if (x$status_code == "503") {stop(print("http 503 response :: the EIA server is temporarily unavailable. Try later."))}
   x <- jsonlite::fromJSON(httr::content(x, "text", encoding = "UTF-8"))
-  out <- x$response$data %>% dplyr::as_tibble() %>% dplyr::transmute(date = period, value) %>% dplyr::rename({{name}} := value)
+  #out <- x$response$data %>% dplyr::as_tibble() %>% dplyr::transmute(date = period, value) %>% dplyr::rename({{name}} := value)
+  out <- x$response$data %>% dplyr::as_tibble() %>% dplyr::select(date = period,tidyselect::where(is.numeric))
+  if (ncol(out) > 2) {out <- out %>% dplyr::select(date,dplyr::last(names(.)))}
+  names(out)[ncol(out)] <- name
   freq <- x$response$frequency
   tmp <- out$date
-  if (freq == "monthly") {out$date <- as.Date(paste(substr(tmp, 1, 4), substr(tmp, 6, 7), "01", sep = "-"), format = "%Y-%m-%d")} # working
-  if (freq == "annual") {out$date <- as.Date(paste0(tmp, "-01-01"), format = "%Y-%m-%d")} # PET.MCRFPTX2.A
-  if (freq == "quarterly") {out$date <- zoo::as.Date(zoo::as.yearqtr(tmp, format = "%YQ%q"), frac = 1)}
-  if (freq %in% c("daily","weekly")) {out$date <- as.Date(tmp, format = "%Y%m%d")} # PET.WCREXUS2.W
+  if (freq == "monthly") {out$date <- as.Date(paste(substr(tmp, 1, 4), substr(tmp, 6, 7), "01", sep = "-"), format = "%Y-%m-%d")} # working PET.MCRFPTX2.M
+  if (freq == "annual") {out$date <- as.Date(paste0(tmp, "-01-01"), format = "%Y-%m-%d")} # working PET.MCRFPTX2.A
+  if (freq == "quarterly") {out$date <- zoo::as.Date(zoo::as.yearqtr(tmp, format = "%Y-Q%q"), frac = 1)} # ELEC.PLANT.CONS_EG_BTU.2522-ALL-ALL.Q
+  if (freq %in% c("daily","weekly")) {out$date <- as.Date(tmp, format = "%Y-%m-%d")} # working PET.WCREXUS2.W
   if (freq == "hourly") {out$date <- lubridate::parse_date_time(tmp, c("'%Y%m%d%h"))}
 
   return(out)

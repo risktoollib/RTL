@@ -36,7 +36,8 @@ Imports:
     glue,
     Rcpp,
     lifecycle,
-    TTR
+    TTR,
+    tidyselect
 Suggests: 
     testthat (>= 3.0.0),
     covr,

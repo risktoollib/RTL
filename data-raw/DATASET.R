@@ -31,6 +31,7 @@
 # usethis::use_package("TTR")
 # usethis::use_package("Rcpp")
 # usethis::use_rcpp()
+# usethis::use_package("tidyselect")
 spelling::spell_check_package()
 spelling::update_wordlist()
 devtools::document()

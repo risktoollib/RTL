@@ -50,6 +50,12 @@
 #' @source {Yahoo Finance}
 "uso"
 
+#' Sample RBC stock price data set
+#' @description Adjusted RBC stock price on NYSE with dividend yield.
+#' @format data frame
+#' @source {Yahoo Finance}
+"ry"
+
 #' Data for spot to futures convergence - historical data
 #' @description Cash and futures
 #' @format data frame

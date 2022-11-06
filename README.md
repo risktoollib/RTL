@@ -28,7 +28,7 @@ and collaboration.
 -   `eiaStorageCap`: Historical EIA crude storage capacity by PADD.
 -   `eiaStocks`: Sample data set of EIA.gov stocks for key commodities.
 -   `cancrudeassays` contains historical Canadian crude assays by batch
-    from [Crudemonitor](https://crudemonitor.ca/home.php).
+    from [Crudemonitor](https://beta.crudemonitor.ca/).
     `cancrudeassayssum` is a summarised average assays version.
 -   `crudeassaysXOM` for all publicly available complete assays in Excel
     format from
@@ -123,9 +123,6 @@ API](https://mp.morningstarcommodity.com/marketplace/) functions:
 
 ### Interest Rates
 
--   `usSwapIRDef`: Data frame of definitions for instruments to build a
-    curve for use with `RQuantlib`. Use `getIRswapCurve()` to extract
-    the latest data from `FRED` and `Morningstar`.
 -   `usSwapIR`: Sample data set output of `getIRswapCurve`.
 -   `usSwapCurves`: Sample data set output of
     `RQuantlib::DiscountCurve()`.

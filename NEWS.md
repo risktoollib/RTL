@@ -4,10 +4,11 @@
 
 + New functions for algorithmic trading at the experimental stage.
 
-  + `tradeStrategy()` is an example of a Moving Average crossover strategy.
   + `futuresMonths` data set for futures contract month codes.
   + `futuresSpecs` data set for futures contract specifications example.
-
+  + `tradeStrategySMA()` is an example of a Moving Average crossover strategy.
+  + `tradeStrategyDY()` is an example of a dividend yield based strategy. The example is based on the `ry` data set for Royal Bank of Canada shares on NYSE. 
+  
 ## Enhancement
 
 + `eia2tidy()` upgraded to version 2 EIA API.

@@ -33,7 +33,9 @@ eia_df <- tibble::tribble(
   dplyr::mutate(key = "EIAkey") \%>\%
   dplyr::mutate(df = purrr::pmap(list(ticker, key, name), .f = RTL::eia2tidy)) \%>\%
   dplyr::select(df) \%>\%
-  tidyr::unnest(df)
+  tidyr::unnest(df) \%>\%
+  tidyr::pivot_longer(-date, names_to = "series", values_to = "value") \%>\%
+  tidyr::drop_na()
 }
 }
 \author{

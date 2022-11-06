@@ -24,7 +24,7 @@ Send feedback to `pcote@ualberta.ca`. We welcome feedback, suggestions and colla
 + `tickers_eia`: Mapping of EIA tickers to crude and refined products markets for building supply demand balances.
 + `eiaStorageCap`: Historical EIA crude storage capacity by PADD.
 + `eiaStocks`: Sample data set of EIA.gov stocks for key commodities.
-+ `cancrudeassays` contains historical Canadian crude assays by batch from [Crudemonitor](https://crudemonitor.ca/home.php). `cancrudeassayssum` is a summarised average assays version.
++ `cancrudeassays` contains historical Canadian crude assays by batch from [Crudemonitor](https://beta.crudemonitor.ca/). `cancrudeassayssum` is a summarised average assays version.
 + `crudeassaysXOM` for all publicly available complete assays in Excel format from [ExxonMobil](https://corporate.exxonmobil.com/Crude-oils/Crude-trading/Crude-oil-blends-by-API-gravity-and-by-sulfur-content#APIgravity)
 + `crudeassaysBP` for all publicly available complete assays in Excel format from [BP](https://www.bp.com/en/global/bp-trading-and-shipping/documents-and-downloads/technical-downloads/crudes-assays.html)
 

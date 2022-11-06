@@ -34,6 +34,8 @@ chart_eia_steo <- function(market = "globalOil",
       dplyr::mutate(df = purrr::pmap(list(ticker, key, name), .f = RTL::eia2tidy)) %>%
       dplyr::select(df) %>%
       tidyr::unnest(df) %>%
+      tidyr::pivot_longer(-date, names_to = "series", values_to = "value") %>%
+      tidyr::drop_na() %>%
       tidyr::pivot_wider(id_cols = date, names_from = series, values_from = value) %>%
       dplyr::transmute(date,
         Supply = SupplyNOPEC + SupplyOPEC, Demand,

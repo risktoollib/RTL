@@ -317,6 +317,22 @@ uso <- tidyquant::tq_get("USO", adjust = TRUE) %>%
   dplyr::mutate(across(where(is.numeric), round, 2))
 usethis::use_data(uso, overwrite = T)
 
+ry <- tidyquant::tq_get("RY", adjust = TRUE, from = "2000-01-01") %>%
+  dplyr::rename_all(tools::toTitleCase) %>%
+  timetk::tk_xts(date_var = Date) %>%
+  quantmod::adjustOHLC(.,use.Adjusted = TRUE) %>%
+  timetk::tk_tbl(rename_index = "Date") %>%
+  dplyr::select(-Adjusted) %>%
+  dplyr::mutate(across(where(is.numeric), round, 2))
+
+dividends <- tidyquant::tq_get("RY", get = "dividends" , from = "2000-01-01",adjust = TRUE)
+ry <- ry %>%
+  dplyr::left_join(dividends %>% dplyr::transmute(Date = date, Dividend = value), by = c("Date")) %>%
+  tidyr::fill(Dividend) %>%
+  tidyr::drop_na() %>%
+  dplyr::mutate(Dividend = (1 + Dividend / Close)^4-1)
+usethis::use_data(ry, overwrite = T)
+
 CLc2 <- dfwide %>% dplyr::select(date,CL02) %>% tidyr::drop_na()
 CLc1 <- tidyquant::tq_get("CL=F", adjust = TRUE) %>%
   dplyr::rename_all(tools::toTitleCase) %>%

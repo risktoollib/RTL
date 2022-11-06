@@ -111,6 +111,7 @@ fGarch
 fOptions
 funtion
 futuresMonths
+futuresSpecs
 garch
 genscape
 getCurve

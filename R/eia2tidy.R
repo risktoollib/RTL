@@ -20,9 +20,12 @@
 #'   dplyr::mutate(key = "EIAkey") %>%
 #'   dplyr::mutate(df = purrr::pmap(list(ticker, key, name), .f = RTL::eia2tidy)) %>%
 #'   dplyr::select(df) %>%
-#'   tidyr::unnest(df)
+#'   tidyr::unnest(df) %>%
+#'   tidyr::pivot_longer(-date, names_to = "series", values_to = "value") %>%
+#'   tidyr::drop_na()
 #' }
 eia2tidy <- function(ticker, key, name = " ") {
+  print("if using with multiple tickers check the revised example. Code changed after the EIA API migrated to v2. There is now a need to pivot_longer and back to pivot_wider to ensure series are not appended.")
   period <- NULL
   if (nchar(name) == 1) {
     name <- ticker
@@ -33,7 +36,9 @@ eia2tidy <- function(ticker, key, name = " ") {
   if (x$status_code == "503") {stop(print("http 503 response :: the EIA server is temporarily unavailable. Try later."))}
   x <- jsonlite::fromJSON(httr::content(x, "text", encoding = "UTF-8"))
   #out <- x$response$data %>% dplyr::as_tibble() %>% dplyr::transmute(date = period, value) %>% dplyr::rename({{name}} := value)
-  out <- x$response$data %>% dplyr::as_tibble() %>% dplyr::select(date = period,tidyselect::where(is.numeric))
+  out <- x$response$data %>% dplyr::as_tibble() %>%
+    dplyr::select(date = period,tidyselect::where(is.numeric)) %>%
+    dplyr::mutate(dplyr::across(tidyselect::where(is.numeric),as.double))
   if (ncol(out) > 2) {out <- out %>% dplyr::select(date,dplyr::last(names(.)))}
   names(out)[ncol(out)] <- name
   freq <- x$response$frequency

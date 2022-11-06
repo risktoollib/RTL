@@ -6,6 +6,7 @@
 
   + `tradeStrategy()` is an example of a Moving Average crossover strategy.
   + `futuresMonths` data set for futures contract month codes.
+  + `futuresSpecs` data set for futures contract specifications example.
 
 ## Enhancement
 

@@ -3,6 +3,11 @@
 #' @format data frame
 "futuresMonths"
 
+#' futuresSpecs
+#' @description Sample futures specifications for NYMEX crude oil.
+#' @format data frame
+"futuresSpecs"
+
 #' steo
 #' @description Short Term Energy Outlook from the EIA.
 #' @format plotly object
@@ -111,7 +116,7 @@
 #' Data for Canadian crude assays reported by Crude Monitor
 #' @description Data set with historical Canadian Crude Assays.
 #' @format data frame
-#' @source <https://crudemonitor.ca/>
+#' @source <https://beta.crudemonitor.ca/>
 #' @import tsibble
 "cancrudeassays"
 

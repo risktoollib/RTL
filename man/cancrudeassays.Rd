@@ -8,7 +8,7 @@
 data frame
 }
 \source{
-\url{https://crudemonitor.ca/}
+\url{https://beta.crudemonitor.ca/}
 }
 \usage{
 cancrudeassays

@@ -1,3 +1,8 @@
+#' futuresMonths
+#' @description Exchange-traded contract month codes.
+#' @format data frame
+"futuresMonths"
+
 #' steo
 #' @description Short Term Energy Outlook from the EIA.
 #' @format plotly object

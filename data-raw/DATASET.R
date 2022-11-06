@@ -64,6 +64,11 @@ source("~/now/packages.R")
 setwd(paste0(getwd(), "/data-raw"))
 
 
+# Futures contract months
+futuresMonths <- dplyr::tibble(Month = seq.Date(as.Date("2022-01-01"),as.Date("2022-12-01"),by="months") %>% lubridate::month(label = TRUE, abbr = FALSE) %>% as.character(.),
+                               Code = c("F","G","H","J","K","M","N","Q","U","V","X","Z"))
+usethis::use_data(futuresMonths, overwrite = T)
+
 ## steo for RTLappWTI
 
 steo <- RTL::chart_eia_steo(key = EIAkey)

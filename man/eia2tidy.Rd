@@ -35,7 +35,8 @@ eia_df <- tibble::tribble(
   dplyr::select(df) \%>\%
   tidyr::unnest(df) \%>\%
   tidyr::pivot_longer(-date, names_to = "series", values_to = "value") \%>\%
-  tidyr::drop_na()
+  tidyr::drop_na() \%>\%
+  tidyr::pivot_wider(names_from = "series", values_from = "value")
 }
 }
 \author{

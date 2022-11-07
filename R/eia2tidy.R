@@ -22,10 +22,11 @@
 #'   dplyr::select(df) %>%
 #'   tidyr::unnest(df) %>%
 #'   tidyr::pivot_longer(-date, names_to = "series", values_to = "value") %>%
-#'   tidyr::drop_na()
+#'   tidyr::drop_na() %>%
+#'   tidyr::pivot_wider(names_from = "series", values_from = "value")
 #' }
 eia2tidy <- function(ticker, key, name = " ") {
-  print("if using with multiple tickers check the revised example. Code changed after the EIA API migrated to v2. There is now a need to pivot_longer and back to pivot_wider to ensure series are not appended.")
+  message("if using with multiple tickers check the revised example. Code changed after the EIA API migrated to v2.")
   period <- NULL
   if (nchar(name) == 1) {
     name <- ticker

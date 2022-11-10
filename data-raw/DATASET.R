@@ -70,16 +70,52 @@ futuresMonths <- dplyr::tibble(Month = seq.Date(as.Date("2022-01-01"),as.Date("2
 usethis::use_data(futuresMonths, overwrite = T)
 
 # Futures specifications
+futuresSpecs <- list()
 library(rvest)
 rD <- rsDriver(browser = "firefox", port = 4545L, verbose = F)
 remDr <- rD[["client"]]
 Sys.sleep(2)
+  # CL
 remDr$navigate("https://www.cmegroup.com/trading/energy/crude-oil/light-sweet-crude_contract_specifications.html")
 Sys.sleep(2)
-#remDr$findElement(using = 'class', value = 'productTemplate')$clickElement()
 remDr$findElement(using = 'class', value = 'section')$clickElement()
 page <- remDr$getPageSource()
-futuresSpecs <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
+futuresSpecs$CL <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
+  dplyr::select(Specification = X1, Description = X2)
+  # CS
+remDr$navigate("https://www.cmegroup.com/markets/energy/crude-oil/west-texas-intermediate-wti-crude-oil-calendar-swap-futures.contractSpecs.html")
+Sys.sleep(2)
+remDr$findElement(using = 'class', value = 'section')$clickElement()
+page <- remDr$getPageSource()
+futuresSpecs$CS <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
+  dplyr::select(Specification = X1, Description = X2)
+  # HH
+remDr$navigate("https://www.cmegroup.com/markets/energy/natural-gas/natural-gas.contractSpecs.html")
+Sys.sleep(2)
+remDr$findElement(using = 'class', value = 'section')$clickElement()
+page <- remDr$getPageSource()
+futuresSpecs$HH <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
+  dplyr::select(Specification = X1, Description = X2)
+  # RB
+remDr$navigate("https://www.cmegroup.com/markets/energy/refined-products/rbob-gasoline.contractSpecs.html")
+Sys.sleep(2)
+remDr$findElement(using = 'class', value = 'section')$clickElement()
+page <- remDr$getPageSource()
+futuresSpecs$RB <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
+  dplyr::select(Specification = X1, Description = X2)
+  # HO
+remDr$navigate("https://www.cmegroup.com/markets/energy/refined-products/heating-oil.contractSpecs.html")
+Sys.sleep(2)
+remDr$findElement(using = 'class', value = 'section')$clickElement()
+page <- remDr$getPageSource()
+futuresSpecs$HO <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
+  dplyr::select(Specification = X1, Description = X2)
+  # HTT
+remDr$navigate("https://www.cmegroup.com/markets/energy/crude-oil/wti-houston-argus-vs-wti-trade-month.contractSpecs.html")
+Sys.sleep(2)
+remDr$findElement(using = 'class', value = 'section')$clickElement()
+page <- remDr$getPageSource()
+futuresSpecs$HTT <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
   dplyr::select(Specification = X1, Description = X2)
 remDr$close()
 usethis::use_data(futuresSpecs, overwrite = T)
@@ -1071,6 +1107,7 @@ tradeprocess <- RTL::getPrices(
   from = "2018-01-01", iuser = mstar[[1]], ipassword = mstar[[2]]
 ) %>% stats::na.omit()
 usethis::use_data(tradeprocess, overwrite = T)
+
 
 # Global
 devtools::document()

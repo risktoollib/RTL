@@ -117,6 +117,13 @@ remDr$findElement(using = 'class', value = 'section')$clickElement()
 page <- remDr$getPageSource()
 futuresSpecs$HTT <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
   dplyr::select(Specification = X1, Description = X2)
+  # ZN UST 10 year
+remDr$navigate("https://www.cmegroup.com/markets/interest-rates/us-treasury/10-year-us-treasury-note.contractSpecs.html")
+Sys.sleep(2)
+remDr$findElement(using = 'class', value = 'section')$clickElement()
+page <- remDr$getPageSource()
+futuresSpecs$ZN <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
+  dplyr::select(Specification = X1, Description = X2)
 remDr$close()
 usethis::use_data(futuresSpecs, overwrite = T)
 

@@ -6,6 +6,7 @@
 
   + `futuresMonths` data set for futures contract month codes.
   + `futuresSpecs` data set for futures contract specifications example.
+  + `cushingStorage` data set for storage spreads analytics example.
   + `tradeStrategySMA()` is an example of a Moving Average crossover strategy.
   + `tradeStrategyDY()` is an example of a dividend yield based strategy. The example is based on the `ry` data set for Royal Bank of Canada shares on NYSE. 
   

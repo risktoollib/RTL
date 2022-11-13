@@ -1,4 +1,4 @@
-#' Sample Quantitative Trading strategy
+#' Sample quantitative trading strategy
 #' @description Based on dividend yield
 #' @param data Dataframe of OHLC data e.g. RTL::uso
 #' @param par1value Value of first parameter e.g. short MA

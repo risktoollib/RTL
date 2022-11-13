@@ -1,4 +1,4 @@
-#' Multivariate Normal from historical dataset
+#' Multivariate normal from historical dataset
 #' @description Generates multivariate random epsilons using absolute returns.
 #' @param nsims Number of simulations. Defaults to 10
 #' @param x Wide data frame of prices with date as first column.

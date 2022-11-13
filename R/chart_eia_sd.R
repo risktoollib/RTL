@@ -1,4 +1,4 @@
-#' EIA weekly Supply Demand information by product group
+#' EIA weekly supply-demand information by product group
 #' @description Given a product group extracts all information to create SD Balances.
 #' @param market "mogas", "dist", "jet" or "resid".
 #' @param key Your private EIA API token.

@@ -152,10 +152,9 @@ usethis::use_data(spy, overwrite = T)
 
 ## spot2fut convergence
 d <- "2020-03-25"
+tick = "PET.RWTC.D"
 cash <-
-  RTL::eia2tidy(ticker = "PET.RWTC.D", key = EIAkey, name = "cash") %>%
-  dplyr::select(-series) %>%
-  dplyr::rename(cash = value) %>%
+  RTL::eia2tidy(ticker = tick, key = EIAkey, name = "cash") %>%
   dplyr::arrange(date)
 c <- cash %>% dplyr::filter(date == d)
 f <-
@@ -173,6 +172,7 @@ f <-
 spot2futCurve <- f %>%
   dplyr::add_row(
     contract = "cash",
+    code = tick,
     expirationDate = c$date,
     Close = c$cash
   ) %>%
@@ -421,7 +421,10 @@ eiaStocks <- tibble::tribble(
   dplyr::mutate(key = EIAkey) %>%
   dplyr::mutate(df = purrr::pmap(list(ticker, key, name), .f = RTL::eia2tidy)) %>%
   dplyr::select(df) %>%
-  tidyr::unnest(df)
+  tidyr::unnest(df) %>%
+  tidyr::pivot_longer(-date, names_to = "series", values_to = "value") %>%
+  tidyr::drop_na() %>%
+  dplyr::group_by(series)
 usethis::use_data(eiaStocks, overwrite = T)
 
 ## EIA Storage Capacity
@@ -1122,6 +1125,34 @@ tradeprocess <- RTL::getPrices(
 ) %>% stats::na.omit()
 usethis::use_data(tradeprocess, overwrite = T)
 
+# cushing storage
+
+storage <- rbind(eiaStocks %>% dplyr::filter(series == "CrudeCushing"),
+                 eiaStorageCap %>% dplyr::filter(series == "Cushing") %>% dplyr::select(-product))
+
+spreads <- dflong %>%
+  dplyr::filter(grepl("CL01|CL02", series)) %>%
+  tidyr::pivot_wider(names_from = series, values_from = value) %>%
+  dplyr::transmute(date, c1c2 = .[[2]] - .[[3]]) %>%
+  tidyr::drop_na()
+
+spreads <- RTL::rolladjust(x = spreads,commodityname = "cmewti",
+                           rolltype = c("Last.Trade"))
+
+spreads <- spreads %>% dplyr::filter(abs(c1c2) < 10)
+
+cushingStorage <- storage %>%
+  tidyr::pivot_wider(names_from = series, values_from = value) %>%
+  dplyr::arrange(date) %>%
+  dplyr::rename(stocks = 2, capacity = 3) %>%
+  tidyr::fill(capacity) %>%
+  tidyr::drop_na() %>%
+  dplyr::mutate(utilization = stocks / capacity,
+                year = lubridate::year(date)) %>%
+  dplyr::left_join(spreads %>% dplyr::select(date, c1c2)) %>%
+  tidyr::drop_na()
+
+usethis::use_data(cushingStorage, overwrite = T)
 
 # Global
 devtools::document()

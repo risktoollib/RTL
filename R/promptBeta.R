@@ -9,18 +9,16 @@
 #' @export promptBeta
 #' @author Philippe Cote
 #' @examples
-#' \dontrun{
-#' x <- dflong %>% dplyr::filter(grepl("CL", series))
-#' x <- x %>%
-#'   dplyr::mutate(series = readr::parse_number(series)) %>%
-#'   dplyr::group_by(series)
-#' x <- RTL::returns(df = x, retType = "abs", period.return = 1, spread = TRUE)
-#' x <- RTL::rolladjust(x = x, commodityname = c("cmewti"), rolltype = c("Last.Trade"))
-#' x <- x %>% dplyr::filter(!grepl("2020-04-20|2020-04-21", date))
+#'x <- dflong %>%
+#'  dplyr::filter(grepl("CL",series)) %>%
+#'  dplyr::mutate(series = readr::parse_number(series)) %>% dplyr::group_by(series) %>%
+#'  RTL::returns(df = ., retType = "abs",period.return = 1,spread = TRUE) %>%
+#'  RTL::rolladjust(x = .,commodityname = c("cmewti"),rolltype = c("Last.Trade")) %>%
+#'  # removing the day it prices went negative...
+#'  dplyr::filter(!date %in% c(as.Date("2020-04-20"),as.Date("2020-04-21")))
 #' promptBeta(x = x, period = "all", betatype = "all", output = "chart")
 #' promptBeta(x = x, period = "all", betatype = "all", output = "betas")
 #' promptBeta(x = x, period = "100", betatype = "all", output = "betas")
-#' }
 promptBeta <- function(x = x, period = "all", betatype = "all", output = "chart") {
 
   # if (!requireNamespace("PerformanceAnalytics", quietly = TRUE)) {

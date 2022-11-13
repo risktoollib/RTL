@@ -3,7 +3,7 @@
 \docType{data}
 \name{steo}
 \alias{steo}
-\title{steo}
+\title{dataset: EIA Short Term Energy Outlook}
 \format{
 plotly object
 }

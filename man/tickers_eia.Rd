@@ -3,7 +3,7 @@
 \docType{data}
 \name{tickers_eia}
 \alias{tickers_eia}
-\title{Metadata of key EIA tickers grouped by products.}
+\title{datasest: metadata of key EIA tickers grouped by products.}
 \format{
 data frame
 }

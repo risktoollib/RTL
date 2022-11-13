@@ -3,7 +3,7 @@
 \docType{data}
 \name{ry}
 \alias{ry}
-\title{Sample RBC stock price data set}
+\title{dataset: RY share price}
 \format{
 data frame
 }

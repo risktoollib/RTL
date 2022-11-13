@@ -2,7 +2,7 @@
 % Please edit documentation in R/chart_eia_sd.R
 \name{chart_eia_sd}
 \alias{chart_eia_sd}
-\title{EIA weekly Supply Demand information by product group}
+\title{EIA weekly supply-demand information by product group}
 \usage{
 chart_eia_sd(
   market = "mogas",

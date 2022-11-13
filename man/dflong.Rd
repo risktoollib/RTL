@@ -3,7 +3,7 @@
 \docType{data}
 \name{dflong}
 \alias{dflong}
-\title{Data for commodity prices in a long dataframe format}
+\title{dataset: commodity prices in a long dataframe format}
 \format{
 data frame
 }

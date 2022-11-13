@@ -3,7 +3,7 @@
 \docType{data}
 \name{tsQuotes}
 \alias{tsQuotes}
-\title{Interest Rate Curve Data for RQuantlib .}
+\title{dataset: interest rate curve data for RQuantlib .}
 \format{
 data frame
 }

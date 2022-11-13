@@ -3,7 +3,7 @@
 \docType{data}
 \name{futuresSpecs}
 \alias{futuresSpecs}
-\title{futuresSpecs}
+\title{dataset: CL contract specifications}
 \format{
 data frame
 }

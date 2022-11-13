@@ -2,7 +2,7 @@
 % Please edit documentation in R/tradeStrategySMA.R
 \name{tradeStrategySMA}
 \alias{tradeStrategySMA}
-\title{Sample Quantitative Trading strategy}
+\title{Sample quantitative trading strategy}
 \usage{
 tradeStrategySMA(data = RTL::uso, par1value = 50, par2value = 200)
 }

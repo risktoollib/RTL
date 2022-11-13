@@ -3,7 +3,7 @@
 \docType{data}
 \name{spot2futCurve}
 \alias{spot2futCurve}
-\title{Data for spot to futures convergence - forward curve}
+\title{dataset: spot to futures convergence curve}
 \format{
 data frame
 }

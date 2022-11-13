@@ -3,7 +3,7 @@
 \docType{data}
 \name{cancrudeprices}
 \alias{cancrudeprices}
-\title{Randomized data for Canadian crude pricing.}
+\title{dataset: randomised Canadian crude pricing.}
 \format{
 data frame
 }

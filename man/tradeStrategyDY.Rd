@@ -2,7 +2,7 @@
 % Please edit documentation in R/tradeStrategyDY.R
 \name{tradeStrategyDY}
 \alias{tradeStrategyDY}
-\title{Sample Quantitative Trading strategy}
+\title{Sample quantitative trading strategy}
 \usage{
 tradeStrategyDY(data = RTL::uso, par1value = 50, par2value = 200)
 }

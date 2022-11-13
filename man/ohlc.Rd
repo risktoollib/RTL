@@ -3,7 +3,7 @@
 \docType{data}
 \name{ohlc}
 \alias{ohlc}
-\title{ohlc}
+\title{dataset: randomiser to convert settlement into OHLC}
 \format{
 data frame
 }

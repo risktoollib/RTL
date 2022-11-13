@@ -3,7 +3,7 @@
 \docType{data}
 \name{usSwapCurvesPar}
 \alias{usSwapCurvesPar}
-\title{Data for US interest rate discounting using zero rates parallel curve.}
+\title{dataset: US bootstrapped interest rate curve parallel sample.}
 \format{
 data frame
 }

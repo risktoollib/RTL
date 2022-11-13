@@ -3,7 +3,7 @@
 \docType{data}
 \name{spy}
 \alias{spy}
-\title{Sample SPY ETF data set}
+\title{dataset: SPY ETF}
 \format{
 data frame
 }

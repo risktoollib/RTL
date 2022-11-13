@@ -3,7 +3,7 @@
 \docType{data}
 \name{spot2futConvergence}
 \alias{spot2futConvergence}
-\title{Data for spot to futures convergence - historical data}
+\title{dataset: spot to futures convergence}
 \format{
 data frame
 }

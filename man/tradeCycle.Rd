@@ -3,7 +3,7 @@
 \docType{data}
 \name{tradeCycle}
 \alias{tradeCycle}
-\title{Data for Canadian and US physical crude trading calendars}
+\title{dataset: Canadian and US physical crude trading calendars}
 \format{
 data frame
 }

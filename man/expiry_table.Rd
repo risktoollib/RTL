@@ -3,7 +3,7 @@
 \docType{data}
 \name{expiry_table}
 \alias{expiry_table}
-\title{Metadata for expiry of common commodity futures contract.}
+\title{dataset: expiry of common commodity futures contract.}
 \format{
 data frame
 }

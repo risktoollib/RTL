@@ -3,7 +3,7 @@
 \docType{data}
 \name{dfwide}
 \alias{dfwide}
-\title{Data for commodity prices in a wide dataframe format}
+\title{dataset: commodity prices in a wide dataframe format}
 \format{
 data frame
 }

@@ -3,7 +3,7 @@
 \docType{data}
 \name{CLc2}
 \alias{CLc2}
-\title{CLc2}
+\title{dataset: second line WTI contract OHLC}
 \format{
 data frame
 }

@@ -3,7 +3,7 @@
 \docType{data}
 \name{eurodollar}
 \alias{eurodollar}
-\title{Data for Eurodollar futures contracts}
+\title{dataset: Eurodollar futures contracts}
 \format{
 data frame
 }

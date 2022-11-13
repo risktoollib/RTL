@@ -3,7 +3,7 @@
 \docType{data}
 \name{eiaStocks}
 \alias{eiaStocks}
-\title{Data for EIA weekly stocks}
+\title{dataset: EIA weekly stocks}
 \format{
 data frame
 }

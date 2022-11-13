@@ -3,7 +3,7 @@
 \docType{data}
 \name{ref.opt.inputs}
 \alias{ref.opt.inputs}
-\title{Metadata for teaching refinery optimization using a LP model - INPUTS}
+\title{dataset: refinery optimization using a LP model - inputs}
 \format{
 data frame
 }

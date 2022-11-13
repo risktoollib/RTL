@@ -3,7 +3,7 @@
 \docType{data}
 \name{crudeassaysBP}
 \alias{crudeassaysBP}
-\title{Data for BP crude assays}
+\title{dataset: BP crude assays}
 \format{
 data frame
 }
@@ -11,6 +11,6 @@ data frame
 crudeassaysBP
 }
 \description{
-Crude Assays from BP.
+data: Crude Assays from BP.
 }
 \keyword{datasets}

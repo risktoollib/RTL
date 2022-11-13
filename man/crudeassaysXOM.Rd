@@ -3,7 +3,7 @@
 \docType{data}
 \name{crudeassaysXOM}
 \alias{crudeassaysXOM}
-\title{Data for ExxonMobil crude assays}
+\title{dataset: ExxonMobil crude assays}
 \format{
 data frame
 }

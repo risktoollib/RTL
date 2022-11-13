@@ -3,7 +3,7 @@
 \docType{data}
 \name{fizdiffs}
 \alias{fizdiffs}
-\title{Randomized data of physical crude differentials}
+\title{dataset: randomised physical crude differentials}
 \format{
 data frame
 }

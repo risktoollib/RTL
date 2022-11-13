@@ -3,7 +3,7 @@
 \docType{data}
 \name{futuresMonths}
 \alias{futuresMonths}
-\title{futuresMonths}
+\title{dataset: futures contract codes}
 \format{
 data frame
 }

@@ -3,7 +3,7 @@
 \docType{data}
 \name{tradeHubs}
 \alias{tradeHubs}
-\title{GIS Data for Crude Oil Trading Hubs}
+\title{dataset: GIS locations for crude oil trading hubs}
 \format{
 data frame
 }

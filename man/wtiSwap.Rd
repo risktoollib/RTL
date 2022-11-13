@@ -3,7 +3,7 @@
 \docType{data}
 \name{wtiSwap}
 \alias{wtiSwap}
-\title{Data for WTI Calendar Month Average Swap pricing}
+\title{dataset: WTI Calendar Month Average Swap pricing data}
 \format{
 data frame
 }

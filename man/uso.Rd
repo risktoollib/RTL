@@ -3,7 +3,7 @@
 \docType{data}
 \name{uso}
 \alias{uso}
-\title{Sample USO ETF data set}
+\title{dataset: USO ETF}
 \format{
 data frame
 }

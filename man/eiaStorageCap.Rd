@@ -3,7 +3,7 @@
 \docType{data}
 \name{eiaStorageCap}
 \alias{eiaStorageCap}
-\title{Data for working storage capacity in the US}
+\title{dataset: EIA working storage capacity}
 \format{
 data frame
 }

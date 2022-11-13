@@ -2,7 +2,7 @@
 % Please edit documentation in R/simMultivariates.R
 \name{simMultivariates}
 \alias{simMultivariates}
-\title{Multivariate Normal from historical dataset}
+\title{Multivariate normal from historical dataset}
 \usage{
 simMultivariates(nsims = 10, x, s0 = NULL)
 }

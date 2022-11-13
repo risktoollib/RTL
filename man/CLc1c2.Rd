@@ -3,7 +3,7 @@
 \docType{data}
 \name{CLc1c2}
 \alias{CLc1c2}
-\title{CLc1c2}
+\title{dataset: WTI c1c2 OHLC}
 \format{
 data frame
 }

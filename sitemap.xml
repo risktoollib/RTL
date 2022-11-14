@@ -19,15 +19,6 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/CLc1.html</loc>
-  </url>
-  <url>
-    <loc>/reference/CLc1c2.html</loc>
-  </url>
-  <url>
-    <loc>/reference/CLc2.html</loc>
-  </url>
-  <url>
     <loc>/reference/CRReuro.html</loc>
   </url>
   <url>
@@ -35,12 +26,6 @@
   </url>
   <url>
     <loc>/reference/bond.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cancrudeassays.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cancrudeprices.html</loc>
   </url>
   <url>
     <loc>/reference/chart_PerfSummary.html</loc>
@@ -64,16 +49,10 @@
     <loc>/reference/chart_zscore.html</loc>
   </url>
   <url>
-    <loc>/reference/crudeassaysBP.html</loc>
+    <loc>/reference/crudeOil.html</loc>
   </url>
   <url>
-    <loc>/reference/crudeassaysXOM.html</loc>
-  </url>
-  <url>
-    <loc>/reference/crudes.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cushingStorage.html</loc>
+    <loc>/reference/cushing.html</loc>
   </url>
   <url>
     <loc>/reference/dflong.html</loc>
@@ -89,6 +68,9 @@
   </url>
   <url>
     <loc>/reference/eia2tidy.html</loc>
+  </url>
+  <url>
+    <loc>/reference/eia2tidy_all.html</loc>
   </url>
   <url>
     <loc>/reference/eiaStocks.html</loc>
@@ -109,10 +91,7 @@
     <loc>/reference/fizdiffs.html</loc>
   </url>
   <url>
-    <loc>/reference/futuresMonths.html</loc>
-  </url>
-  <url>
-    <loc>/reference/futuresSpecs.html</loc>
+    <loc>/reference/futuresRef.html</loc>
   </url>
   <url>
     <loc>/reference/fxfwd.html</loc>
@@ -160,22 +139,16 @@
     <loc>/reference/promptBeta.html</loc>
   </url>
   <url>
-    <loc>/reference/ref.opt.inputs.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ref.opt.outputs.html</loc>
-  </url>
-  <url>
     <loc>/reference/refineryLP.html</loc>
+  </url>
+  <url>
+    <loc>/reference/refineryLPdata.html</loc>
   </url>
   <url>
     <loc>/reference/returns.html</loc>
   </url>
   <url>
     <loc>/reference/rolladjust.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ry.html</loc>
   </url>
   <url>
     <loc>/reference/simGBM.html</loc>
@@ -199,10 +172,10 @@
     <loc>/reference/spot2futCurve.html</loc>
   </url>
   <url>
-    <loc>/reference/spy.html</loc>
+    <loc>/reference/steo.html</loc>
   </url>
   <url>
-    <loc>/reference/steo.html</loc>
+    <loc>/reference/stocks.html</loc>
   </url>
   <url>
     <loc>/reference/swapCOM.html</loc>
@@ -245,9 +218,6 @@
   </url>
   <url>
     <loc>/reference/usSwapCurvesPar.html</loc>
-  </url>
-  <url>
-    <loc>/reference/uso.html</loc>
   </url>
   <url>
     <loc>/reference/wtiSwap.html</loc>

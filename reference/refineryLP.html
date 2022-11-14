@@ -53,7 +53,10 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">refineryLP</span><span class="op">(</span>crudes <span class="op">=</span> <span class="va">ref.opt.inputs</span>, products <span class="op">=</span> <span class="va">ref.opt.outputs</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">refineryLP</span><span class="op">(</span></span>
+<span>  crudes <span class="op">=</span> <span class="fu">RTL</span><span class="fu">::</span><span class="va"><a href="refineryLPdata.html">refineryLPdata</a></span><span class="op">$</span><span class="va">inputs</span>,</span>
+<span>  products <span class="op">=</span> <span class="fu">RTL</span><span class="fu">::</span><span class="va"><a href="refineryLPdata.html">refineryLPdata</a></span><span class="op">$</span><span class="va">outputs</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -79,7 +82,7 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">refineryLP</span><span class="op">(</span>crudes <span class="op">=</span> <span class="va">ref.opt.inputs</span>, products <span class="op">=</span> <span class="va">ref.opt.outputs</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">refineryLP</span><span class="op">(</span>crudes <span class="op">=</span> <span class="fu">RTL</span><span class="fu">::</span><span class="va"><a href="refineryLPdata.html">refineryLPdata</a></span><span class="op">$</span><span class="va">inputs</span>, products <span class="op">=</span> <span class="fu">RTL</span><span class="fu">::</span><span class="va"><a href="refineryLPdata.html">refineryLPdata</a></span><span class="op">$</span><span class="va">outputs</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $profit</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1545161</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

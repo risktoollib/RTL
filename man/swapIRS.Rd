@@ -8,7 +8,7 @@ swapIRS(
   trade.date = lubridate::today(),
   eff.date = lubridate::today() + 2,
   mat.date = lubridate::today() + 2 + lubridate::years(2),
-  notional = 1e+06,
+  notional = 1000000,
   PayRec = "Rec",
   fixed.rate = 0.05,
   float.curve = usSwapCurves,

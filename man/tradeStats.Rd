@@ -19,7 +19,7 @@ Compute list of risk reward metrics
 }
 \examples{
 library(PerformanceAnalytics)
-tradeStats(x = RTL::spy, Rf = 0)
+tradeStats(x = stocks$spy, Rf = 0)
 }
 \author{
 Philippe Cote

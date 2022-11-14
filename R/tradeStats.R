@@ -7,7 +7,7 @@
 #' @author Philippe Cote
 #' @examples
 #' library(PerformanceAnalytics)
-#' tradeStats(x = RTL::spy, Rf = 0)
+#' tradeStats(x = stocks$spy, Rf = 0)
 tradeStats <- function(x, Rf = 0) {
   if (!requireNamespace("tidyquant", quietly = TRUE)) {stop("Package \"tidyquant\" needed for this function to work. Please install it.", call. = FALSE)}
   x <- x %>% stats::na.omit(x)

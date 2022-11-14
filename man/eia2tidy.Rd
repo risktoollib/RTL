@@ -25,18 +25,7 @@ Makes a clean wrapper for use with purrr for multiple series extraction. Query B
 # Single Series
 RTL::eia2tidy(ticker = "PET.MCRFPTX2.M", key = "yourapikey", name = "TexasProd")
 # Multiple Series
-eia_df <- tibble::tribble(
-  ~ticker, ~name,
-  "PET.W_EPC0_SAX_YCUOK_MBBL.W", "CrudeCushing",
-  "NG.NW2_EPG0_SWO_R48_BCF.W", "NGLower48"
-) \%>\%
-  dplyr::mutate(key = "EIAkey") \%>\%
-  dplyr::mutate(df = purrr::pmap(list(ticker, key, name), .f = RTL::eia2tidy)) \%>\%
-  dplyr::select(df) \%>\%
-  tidyr::unnest(df) \%>\%
-  tidyr::pivot_longer(-date, names_to = "series", values_to = "value") \%>\%
-  tidyr::drop_na() \%>\%
-  tidyr::pivot_wider(names_from = "series", values_from = "value")
+# Use eia2tidy_all() or pivot_longer, drop_na and then pivot_wider to wrangled results.
 }
 }
 \author{

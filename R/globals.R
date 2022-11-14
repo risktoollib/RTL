@@ -1,4 +1,5 @@
 utils::globalVariables(c(
+  "crudes",
   "dflong", "dfwide", "expiry_table", "holidaysOil", "EIAkey",
   "a", "x", "df", "value", "series", "symbol", ".", "price",
   "cmdty", "Date", "expiry", "V1", "yield", "maturity", "contract", "us.df", "cf",

@@ -7,8 +7,8 @@
 #' @export tradeStrategyDY
 #' @author Philippe Cote
 #' @examples
-#' tradeStrategyDY(data = RTL::uso, par1value = 50, par2value = 200)
-tradeStrategyDY <- function(data = RTL::uso,
+#' tradeStrategyDY(data = RTL::stocks$ry, par1value = 50, par2value = 200)
+tradeStrategyDY <- function(data,
                      par1value = 50,
                      par2value = 200) {
   Open <- trade <- pos <- retOpCl <- retClCl <- retClCl <- ret_new <- ret_exist <- ret_others <- NULL

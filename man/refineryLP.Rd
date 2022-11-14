@@ -4,7 +4,10 @@
 \alias{refineryLP}
 \title{LP model for refinery optimization}
 \usage{
-refineryLP(crudes = ref.opt.inputs, products = ref.opt.outputs)
+refineryLP(
+  crudes = RTL::refineryLPdata$inputs,
+  products = RTL::refineryLPdata$outputs
+)
 }
 \arguments{
 \item{crudes}{Data frame of crude inputs}
@@ -18,7 +21,7 @@ Optimal crude slate and profits
 Plain vanilla refinery optimization LP model.
 }
 \examples{
-refineryLP(crudes = ref.opt.inputs, products = ref.opt.outputs)
+refineryLP(crudes = RTL::refineryLPdata$inputs, products = RTL::refineryLPdata$outputs)
 }
 \author{
 Philippe Cote

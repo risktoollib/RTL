@@ -6,8 +6,8 @@
 #' @export refineryLP
 #' @author Philippe Cote
 #' @examples
-#' refineryLP(crudes = ref.opt.inputs, products = ref.opt.outputs)
-refineryLP <- function(crudes = ref.opt.inputs, products = ref.opt.outputs) {
+#' refineryLP(crudes = RTL::refineryLPdata$inputs, products = RTL::refineryLPdata$outputs)
+refineryLP <- function(crudes = RTL::refineryLPdata$inputs, products = RTL::refineryLPdata$outputs) {
   if (!requireNamespace("lpSolve", quietly = TRUE)) {
     stop("Package \"lpSolve\" needed for this function to work. Please install it.",
       call. = FALSE

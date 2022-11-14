@@ -1,17 +1,7 @@
-#' dataset: Cushing c1c2 and storage utilization
-#' @description Sample dataset for time spreads vs storage utilization.
+#' dataset: futures contracts metadata
+#' @description Exchange-traded contract month codes and specifications.
 #' @format data frame
-"cushingStorage"
-
-#' dataset: futures contract codes
-#' @description Exchange-traded contract month codes.
-#' @format data frame
-"futuresMonths"
-
-#' dataset: CL contract specifications
-#' @description Sample futures specifications for NYMEX crude oil.
-#' @format data frame
-"futuresSpecs"
+"futuresRef"
 
 #' dataset: EIA Short Term Energy Outlook
 #' @description Short Term Energy Outlook from the EIA.
@@ -19,23 +9,11 @@
 #' @source {eia}
 "steo"
 
-#' dataset: front line WTI contract OHLC
-#' @description Historical CL 1st Contract OHLC set for algo trading example.
-#' @format data frame
-#' @source {CME}
-"CLc1"
-
-#' dataset: second line WTI contract OHLC
-#' @description Historical CL 2nd Contract Close adjusted using ohlc object.
-#' @format data frame
-#' @source {CME}
-"CLc2"
-
-#' dataset: WTI c1c2 OHLC
-#' @description Historical CL 1st vs 2nd Contract spread.
-#' @format data frame
-#' @source {CME}
-"CLc1c2"
+#' dataset: WTI Cushing Futures and storage utilization
+#' @description c1, c2, c1c2 and Cushing storage utilization
+#' @format list
+#' @source {CME and EIA}
+"cushing"
 
 #' dataset: randomiser to convert settlement into OHLC
 #' @description OHLC profile using historical CL 1st Contract OHLC
@@ -43,23 +21,11 @@
 #' @source {CME}
 "ohlc"
 
-#' dataset: SPY ETF
-#' @description Stock price and returns for SPY
-#' @format data frame
+#' dataset: Yahoo Finance data sets
+#' @description Traded equity prices and returns
+#' @format list
 #' @source {Yahoo Finance}
-"spy"
-
-#' dataset: USO ETF
-#' @description Stock price and returns for US Crude Oil ETF
-#' @format data frame
-#' @source {Yahoo Finance}
-"uso"
-
-#' dataset: RY share price
-#' @description Adjusted RBC stock price on NYSE with dividend yield.
-#' @format data frame
-#' @source {Yahoo Finance}
-"ry"
+"stocks"
 
 #' dataset: spot to futures convergence
 #' @description Cash and futures
@@ -124,33 +90,10 @@
 #' @format data frame
 "eiaStorageCap"
 
-#' dataset: Canadian crude assays reported by Crude Monitor
-#' @description Data set with historical Canadian Crude Assays.
-#' @format data frame
-#' @source <https://beta.crudemonitor.ca/>
-#' @import tsibble
-"cancrudeassays"
-
-#' dataset: Crude assays of 50+ types of crude oil
-#' @description Crude oil qualities.
-#' @format data frame
-#' @source Canadian Crude Monitor and BP Crude Assays
-"crudes"
-
-#' dataset: BP crude assays
-#' @description data: Crude Assays from BP.
-#' @format data frame
-"crudeassaysBP"
-
-#' dataset: ExxonMobil crude assays
-#' @description Crude Assays from ExxonMobil.
-#' @format data frame
-"crudeassaysXOM"
-
-#' dataset: randomised Canadian crude pricing.
-#' @description Randomized data of Canadian Crude monthly prices versus WTI Calendar Month Average.
-#' @format data frame
-"cancrudeprices"
+#' dataset: crude assays
+#' @description crude assays
+#' @format list
+"crudeOil"
 
 #' dataset: commodity prices in a long dataframe format
 #' @description Futures settlement data set.
@@ -195,15 +138,10 @@
 #' @format data frame
 "fizdiffs"
 
-#' dataset: refinery optimization using a LP model - inputs
-#' @description Simple refinery input to be used in running LP modeling for education purposes.
-#' @format data frame
-"ref.opt.inputs"
-
-#' dataset: refinery optimization using a LP model - outputs
-#' @description Simple refinery outputs and constraints to be used in running LP modeling for education purposes.
-#' @format data frame
-"ref.opt.outputs"
+#' dataset: refinery LP model sample inputs and outputs
+#' @description Simple refinery  to be used in running LP modeling for education purposes.
+#' @format list
+"refineryLPdata"
 
 #' dataset: data for teaching the various ways to monetize a market call.
 #' @description Data set for explaining the various ways to monetize a market view.

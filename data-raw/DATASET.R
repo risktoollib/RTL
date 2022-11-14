@@ -63,14 +63,12 @@ library(RSelenium)
 source("~/now/packages.R")
 setwd(paste0(getwd(), "/data-raw"))
 
-
-# Futures contract months
-futuresMonths <- dplyr::tibble(Month = seq.Date(as.Date("2022-01-01"),as.Date("2022-12-01"),by="months") %>% lubridate::month(label = TRUE, abbr = FALSE) %>% as.character(.),
+# futures metadata
+futuresRef <- list()
+futuresRef$ContractMonths <- dplyr::tibble(Month = seq.Date(as.Date("2022-01-01"),as.Date("2022-12-01"),by="months") %>% lubridate::month(label = TRUE, abbr = FALSE) %>% as.character(.),
                                Code = c("F","G","H","J","K","M","N","Q","U","V","X","Z"))
-usethis::use_data(futuresMonths, overwrite = T)
-
-# Futures specifications
-futuresSpecs <- list()
+  # Futures specifications
+futuresRef$Specifications <- list()
 library(rvest)
 rD <- rsDriver(browser = "firefox", port = 4545L, verbose = F)
 remDr <- rD[["client"]]
@@ -80,75 +78,98 @@ remDr$navigate("https://www.cmegroup.com/trading/energy/crude-oil/light-sweet-cr
 Sys.sleep(2)
 remDr$findElement(using = 'class', value = 'section')$clickElement()
 page <- remDr$getPageSource()
-futuresSpecs$CL <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
+futuresRef$Specifications$CL <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
   dplyr::select(Specification = X1, Description = X2)
   # CS
 remDr$navigate("https://www.cmegroup.com/markets/energy/crude-oil/west-texas-intermediate-wti-crude-oil-calendar-swap-futures.contractSpecs.html")
 Sys.sleep(2)
 remDr$findElement(using = 'class', value = 'section')$clickElement()
 page <- remDr$getPageSource()
-futuresSpecs$CS <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
+futuresRef$Specifications$CS <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
   dplyr::select(Specification = X1, Description = X2)
   # HH
 remDr$navigate("https://www.cmegroup.com/markets/energy/natural-gas/natural-gas.contractSpecs.html")
 Sys.sleep(2)
 remDr$findElement(using = 'class', value = 'section')$clickElement()
 page <- remDr$getPageSource()
-futuresSpecs$HH <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
+futuresRef$Specifications$HH <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
   dplyr::select(Specification = X1, Description = X2)
   # RB
 remDr$navigate("https://www.cmegroup.com/markets/energy/refined-products/rbob-gasoline.contractSpecs.html")
 Sys.sleep(2)
 remDr$findElement(using = 'class', value = 'section')$clickElement()
 page <- remDr$getPageSource()
-futuresSpecs$RB <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
+futuresRef$Specifications$RB <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
   dplyr::select(Specification = X1, Description = X2)
   # HO
 remDr$navigate("https://www.cmegroup.com/markets/energy/refined-products/heating-oil.contractSpecs.html")
 Sys.sleep(2)
 remDr$findElement(using = 'class', value = 'section')$clickElement()
 page <- remDr$getPageSource()
-futuresSpecs$HO <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
+futuresRef$Specifications$HO <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
   dplyr::select(Specification = X1, Description = X2)
   # HTT
 remDr$navigate("https://www.cmegroup.com/markets/energy/crude-oil/wti-houston-argus-vs-wti-trade-month.contractSpecs.html")
 Sys.sleep(2)
 remDr$findElement(using = 'class', value = 'section')$clickElement()
 page <- remDr$getPageSource()
-futuresSpecs$HTT <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
+futuresRef$Specifications$HTT <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
   dplyr::select(Specification = X1, Description = X2)
   # ZN UST 10 year
 remDr$navigate("https://www.cmegroup.com/markets/interest-rates/us-treasury/10-year-us-treasury-note.contractSpecs.html")
 Sys.sleep(2)
 remDr$findElement(using = 'class', value = 'section')$clickElement()
 page <- remDr$getPageSource()
-futuresSpecs$ZN <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
+futuresRef$Specifications$ZN <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
   dplyr::select(Specification = X1, Description = X2)
   # ED
 remDr$navigate("https://www.cmegroup.com/markets/interest-rates/stirs/eurodollar.contractSpecs.html")
 Sys.sleep(2)
 remDr$findElement(using = 'class', value = 'section')$clickElement()
 page <- remDr$getPageSource()
-futuresSpecs$ED <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
+futuresRef$Specifications$ED <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
   dplyr::select(Specification = X1, Description = X2)
 remDr$close()
-usethis::use_data(futuresSpecs, overwrite = T)
+usethis::use_data(futuresRef, overwrite = T)
 
 ## steo for RTLappWTI
 
 steo <- RTL::chart_eia_steo(key = EIAkey)
 usethis::use_data(steo, overwrite = T)
 
-## tidyquant replacement
+## stocks
+stocks <- list()
 
-spy <-
+stocks$spy <-
   tidyquant::tq_get("SPY") %>%
   dplyr::mutate(ret = log(adjusted / dplyr::lag(adjusted))) %>%
   stats::na.omit() %>%
   dplyr::select(date, ret)
 
-usethis::use_data(spy, overwrite = T)
+stocks$uso <- tidyquant::tq_get("USO", adjust = TRUE) %>%
+  dplyr::rename_all(tools::toTitleCase) %>%
+  timetk::tk_xts(date_var = Date) %>%
+  quantmod::adjustOHLC(.,use.Adjusted = TRUE) %>%
+  timetk::tk_tbl(rename_index = "Date") %>%
+  dplyr::select(-Adjusted) %>%
+  dplyr::mutate(across(where(is.numeric), round, 2))
 
+ry <- tidyquant::tq_get("RY", adjust = TRUE, from = "2000-01-01") %>%
+  dplyr::rename_all(tools::toTitleCase) %>%
+  timetk::tk_xts(date_var = Date) %>%
+  quantmod::adjustOHLC(.,use.Adjusted = TRUE) %>%
+  timetk::tk_tbl(rename_index = "Date") %>%
+  dplyr::select(-Adjusted) %>%
+  dplyr::mutate(across(where(is.numeric), round, 2))
+
+dividends <- tidyquant::tq_get("RY", get = "dividends" , from = "2000-01-01",adjust = TRUE)
+stocks$ry <- ry %>%
+  dplyr::left_join(dividends %>% dplyr::transmute(Date = date, Dividend = value), by = c("Date")) %>%
+  tidyr::fill(Dividend) %>%
+  tidyr::drop_na() %>%
+  dplyr::mutate(Dividend = (1 + Dividend / Close)^4-1)
+
+usethis::use_data(stocks, overwrite = T)
 
 ## spot2fut convergence
 d <- "2020-03-25"
@@ -358,58 +379,6 @@ usethis::use_data(dflong, overwrite = T)
 usethis::use_data(dfwide, overwrite = T)
 rm(crude, crudecan, crudeICE, pdts, alu)
 
-uso <- tidyquant::tq_get("USO", adjust = TRUE) %>%
-  dplyr::rename_all(tools::toTitleCase) %>%
-  timetk::tk_xts(date_var = Date) %>%
-  quantmod::adjustOHLC(.,use.Adjusted = TRUE) %>%
-  timetk::tk_tbl(rename_index = "Date") %>%
-  dplyr::select(-Adjusted) %>%
-  dplyr::mutate(across(where(is.numeric), round, 2))
-usethis::use_data(uso, overwrite = T)
-
-ry <- tidyquant::tq_get("RY", adjust = TRUE, from = "2000-01-01") %>%
-  dplyr::rename_all(tools::toTitleCase) %>%
-  timetk::tk_xts(date_var = Date) %>%
-  quantmod::adjustOHLC(.,use.Adjusted = TRUE) %>%
-  timetk::tk_tbl(rename_index = "Date") %>%
-  dplyr::select(-Adjusted) %>%
-  dplyr::mutate(across(where(is.numeric), round, 2))
-
-dividends <- tidyquant::tq_get("RY", get = "dividends" , from = "2000-01-01",adjust = TRUE)
-ry <- ry %>%
-  dplyr::left_join(dividends %>% dplyr::transmute(Date = date, Dividend = value), by = c("Date")) %>%
-  tidyr::fill(Dividend) %>%
-  tidyr::drop_na() %>%
-  dplyr::mutate(Dividend = (1 + Dividend / Close)^4-1)
-usethis::use_data(ry, overwrite = T)
-
-CLc2 <- dfwide %>% dplyr::select(date,CL02) %>% tidyr::drop_na()
-CLc1 <- tidyquant::tq_get("CL=F", adjust = TRUE) %>%
-  dplyr::rename_all(tools::toTitleCase) %>%
-  dplyr::mutate(symbol = "CLc1") %>%
-  timetk::tk_xts(date_var = Date) %>%
-  quantmod::adjustOHLC(.,use.Adjusted = TRUE) %>%
-  timetk::tk_tbl(rename_index = "Date") %>%
-  dplyr::select(-Adjusted, - Volume)  %>%
-  dplyr::filter(Date %in% c(CLc2$date))
-
-ohlc <- CLc1 %>%
-  dplyr::transmute(date = Date,
-                   Open = Open / Close,
-                   High = High / Close,
-                   Low = Low / Close,
-                   Close = 1)
-
-CLc2 <- CLc2 %>% dplyr::left_join(ohlc) %>% tidyr::drop_na()
-CLc2 <- cbind(Date = CLc2 %>% dplyr::pull(date),CLc2 %>% dplyr::select(-date,-CL02) * CLc2$CL02) %>% dplyr::as_tibble()
-CLc1c2 <- cbind(Date = CLc1$Date,CLc1 %>% dplyr::select(-Date) - CLc2 %>% dplyr::select(-Date)) %>%
-  dplyr::as_tibble()
-
-usethis::use_data(CLc1, overwrite = T)
-usethis::use_data(CLc2, overwrite = T)
-usethis::use_data(CLc1c2, overwrite = T)
-usethis::use_data(ohlc, overwrite = T)
-
 ## Sample EIA dataset
 eiaStocks <- tibble::tribble(
   ~ticker, ~name,
@@ -520,6 +489,62 @@ ng <- RTL::eia2tidy(
 eiaStorageCap <- rbind(eiaStorageCap, dist1b, ng)
 file.remove(destfile)
 usethis::use_data(eiaStorageCap, overwrite = T)
+
+# cushing dataset
+
+cushing = list()
+c2 <- dfwide %>% dplyr::select(date,CL02) %>% tidyr::drop_na()
+c1 <- tidyquant::tq_get("CL=F", adjust = TRUE) %>%
+  dplyr::rename_all(tools::toTitleCase) %>%
+  dplyr::mutate(symbol = "c1") %>%
+  timetk::tk_xts(date_var = Date) %>%
+  quantmod::adjustOHLC(.,use.Adjusted = TRUE) %>%
+  timetk::tk_tbl(rename_index = "Date") %>%
+  dplyr::select(-Adjusted, - Volume)  %>%
+  dplyr::filter(Date %in% c(c2$date))
+
+ohlc <- c1 %>%
+  dplyr::transmute(date = Date,
+                   Open = Open / Close,
+                   High = High / Close,
+                   Low = Low / Close,
+                   Close = 1)
+
+c2 <- c2 %>% dplyr::left_join(ohlc) %>% tidyr::drop_na()
+c2 <- cbind(Date = c2 %>% dplyr::pull(date),CLc2 %>% dplyr::select(-date,-CL02) * CLc2$CL02) %>% dplyr::as_tibble()
+c1c2 <- cbind(Date = CLc1$Date,CLc1 %>% dplyr::select(-Date) - CLc2 %>% dplyr::select(-Date)) %>%
+  dplyr::as_tibble()
+
+storage <- rbind(eiaStocks %>% dplyr::filter(series == "CrudeCushing"),
+                 eiaStorageCap %>% dplyr::filter(series == "Cushing") %>% dplyr::select(-product))
+spreads <- dflong %>%
+  dplyr::filter(grepl("CL01|CL02", series)) %>%
+  tidyr::pivot_wider(names_from = series, values_from = value) %>%
+  dplyr::transmute(date, c1c2 = .[[2]] - .[[3]]) %>%
+  tidyr::drop_na()
+
+spreads <- RTL::rolladjust(x = spreads,commodityname = "cmewti",
+                           rolltype = c("Last.Trade"))
+
+spreads <- spreads %>% dplyr::filter(abs(c1c2) < 10)
+
+storage <- storage %>%
+  tidyr::pivot_wider(names_from = series, values_from = value) %>%
+  dplyr::arrange(date) %>%
+  dplyr::rename(stocks = 2, capacity = 3) %>%
+  tidyr::fill(capacity) %>%
+  tidyr::drop_na() %>%
+  dplyr::mutate(utilization = stocks / capacity,
+                year = lubridate::year(date)) %>%
+  dplyr::left_join(spreads %>% dplyr::select(date, c1c2)) %>%
+  tidyr::drop_na()
+
+cushing$c1 <- c1
+cushing$c2 <- c2
+cushing$c1c2 <- c1c2
+cushing$storage <- storage
+usethis::use_data(cushing, overwrite = T)
+
 
 ## Sample GIS Mapping
 # library(rgdal)
@@ -813,14 +838,18 @@ tradeCycle <- expiry_table %>%
   dplyr::as_tibble()
 usethis::use_data(tradeCycle, overwrite = T)
 
-## Canadian Crude Data
+# crudeOil dataset
+
+crudeOil <- list()
+
+  ## Canadian Crude Data
 
 url = "https://beta.crudemonitor.ca/api/json.php?condensates%5B0%5D=Cochin+Condensate&condensates%5B1%5D=Condensate+Blend&condensates%5B2%5D=Fort+Saskatchewan+Condensate&condensates%5B3%5D=Peace+Condensate&condensates%5B4%5D=Pembina+Condensate&condensates%5B5%5D=Rangeland+Condensate&condensates%5B6%5D=Southern+Lights+Diluent&crudes%5B0%5D=Federated&crudes%5B1%5D=Light+Smiley&crudes%5B2%5D=Peace&crudes%5B3%5D=Pembina&crudes%5B4%5D=Secure+Sask+Light&crudes%5B5%5D=Mixed+Sweet+Blend&crudes%5B6%5D=Midale&crudes%5B7%5D=Light+Sour+Blend&crudes%5B8%5D=Syncrude+Sweet+Premium&crudes%5B9%5D=Bow+River+North&crudes%5B10%5D=Lloyd+Blend&crudes%5B11%5D=Lloyd+Kerrobert&crudes%5B12%5D=Access+Western+Blend&crudes%5B13%5D=Christina+Dilbit+Blend&crudes%5B14%5D=Cold+Lake&crudes%5B15%5D=Kearl+Lake&crudes%5B16%5D=Western+Canadian+Select&crudes%5B17%5D=Surmont+Heavy+Blend&condensateProperties%5B0%5D=condensates-BA&crudeProperties%5B0%5D=crudes-BA&date%5Bstart%5D=2010-01-01&date%5Bend%5D=2022-10-24"
 
 samples <- httr::GET(url) %>% httr::content(.,as="text") %>% jsonlite::fromJSON(.) %>% dplyr::as_tibble()
 
 names(samples) <- c("Name", "Batch","date","Density","Gravity","Sulphur","MCR","Viscosity", "Sediment","Olefins","OrganoPhosphorus","Oxygenates","TAN","Salt","Nickel","Vanadium")
-cancrudeassays <- samples %>%
+CanadaAssays <- samples %>%
   dplyr::mutate(date = as.Date(date),
                 Grade = gsub("-.*$","",Batch),
                 Location = case_when(grepl("AHS|AWB|CAL|KDB|MSW|PSO|WDB|WH|KDB|CL\\(E\\)|SHB|P|SSP|SW|MPR|FD", Grade) ~ "Edmonton",
@@ -835,38 +864,21 @@ cancrudeassays <- samples %>%
   dplyr::select(Grade,Location, date,Batch, everything()) %>%
   dplyr::group_by(Grade,Location,date) %>%
   dplyr::mutate(date = tsibble::yearmonth(date)) %>%
-  #dplyr::filter(Grade == "WCS") %>%
   dplyr::mutate(across(Density:Vanadium,as.numeric)) %>%
   dplyr::summarise_if(is.numeric, mean, na.rm = TRUE)
-  #dplyr::summarise(across(Density:Vanadium, mean, .names = "{.col}"))
 
-# Computing Monthly Measurements Averages
+crudeOil$CanadianAssays <- CanadaAssays
 
-# cancrudeassays <- cancrudeassays %>%
-#   dplyr::ungroup() %>%
-#   dplyr::arrange(Ticker, date) %>%
-#   dplyr::mutate(
-#     TAN = replace(TAN, is.nan(TAN), NA),
-#     TAN = case_when(
-#       (is.na(TAN) & Ticker %in% c("MSW", "SYN")) ~ 0,
-#       TRUE ~ TAN
-#     )
-#   ) %>%
-#   tidyr::fill(TAN)
-
-usethis::use_data(cancrudeassays, overwrite = T)
-
-cancrudeprices <- readRDS("crude_prices.RDS") %>%
+crudeOil$CanadaPrices <- readRDS("crude_prices.RDS") %>%
   dplyr::transmute(Ticker = Ticker, date = tsibble::yearmonth(YM), Value = Value)
-usethis::use_data(cancrudeprices, overwrite = T)
 
-# BP Assays
-### capline https://cappl.com/Reports1.aspx
+  ## BP Assays
+    ### capline https://cappl.com/Reports1.aspx
 library(rvest)
 url <- "https://www.bp.com/en/global/bp-trading-and-shipping/documents-and-downloads/technical-downloads/crudes-assays.html"
 html <- xml2::read_html(url)
 
-## Simplified tables
+  ## Simplified tables
 x <- html %>%
   rvest::html_nodes("table") %>%
   rvest::html_table(fill = T) %>%
@@ -876,13 +888,14 @@ x <- html %>%
   dplyr::select(1:5) %>%
   dplyr::transmute(Crude = X1, Country = X2, API = as.numeric(X3), Sulphur = as.numeric(X4), TAN = as.numeric(X5))
 
-y <- cancrudeassayssum %>%
-  dplyr::transmute(Crude,
-    Country = "Canada",
-    API = Gravity, Sulphur, TAN
+y <- CanadaAssays %>%
+  dplyr::filter(date == dplyr::last(date)) %>%
+  dplyr::transmute(Grade,
+                   Country = "Canada",API = Gravity, Sulphur, TAN
   ) %>%
   dplyr::ungroup() %>%
-  dplyr::select(-Ticker)
+  dplyr::rename(Crude = Grade) %>%
+  dplyr::select(-Location)
 
 crudes <- rbind(x, y) %>%
   tibble::add_row(Crude = "Tapis", Country = "Malaysia", API = 42.7, Sulphur = .044, TAN = 0.215) %>%
@@ -917,8 +930,7 @@ crudes <- crudes %>%
 
 crudes$LightMedHeavy <- factor(crudes$LightMedHeavy, levels = c("Light", "Medium", "Heavy"))
 crudes$SweetSour <- factor(crudes$SweetSour, levels = c("Sweet", "Sour"))
-usethis::use_data(crudes, overwrite = T)
-rm(x, y)
+crudesl$crudes <- crudes
 
 ## xls assays
 css <- "body > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div:nth-child(3) > div > div > div.nr-table-component.nr-component.aem-GridColumn.aem-GridColumn--default--12"
@@ -954,9 +966,9 @@ for (i in 1:nrow(urls)) {
   file.remove(destfile)
 }
 
-usethis::use_data(crudeassaysBP, overwrite = T)
+crudeOil$bpAssays <- crudeassaysBP
 
-# Exxon Assays
+  # Exxon Assays
 
 url <- "https://corporate.exxonmobil.com/Crude-oils/Crude-trading/Crude-oil-blends-by-API-gravity-and-by-sulfur-content#APIgravity"
 html <- xml2::read_html(url)
@@ -967,7 +979,7 @@ urls <- html %>%
   html_nodes("a") %>%
   rvest::html_attr("href") %>%
   as_tibble() %>%
-  dplyr::filter(grepl("/Crude-oils/", value)) %>%
+  dplyr::filter(grepl("/crude-oils/crude-trading/", value)) %>%
   dplyr::transmute(site = paste0("https://corporate.exxonmobil.com", value)) %>%
   unique()
 
@@ -1008,8 +1020,11 @@ for (i in 1:nrow(urls)) {
   file.remove(destfile)
 }
 
-usethis::use_data(crudeassaysXOM, overwrite = T)
+crudeOil$xomAssays <- crudeassaysXOM
+
 rm(html, tmp, urls, css, destfile, i)
+
+usethis::use_data(crudeOil, overwrite = T)
 
 ## Physical Diffs
 fizdiffs <- readRDS("fizdiffs.RDS")
@@ -1100,13 +1115,15 @@ usethis::use_data(usSwapCurvesPar, overwrite = T)
 
 # Refinery Optimization
 
-ref.opt.inputs <- data.frame(
+refineryLPdata <- list()
+
+refineryLPdata$inputs <- data.frame(
   info = c("price", "processing.fee"),
   LightSweet = c(-50, -1),
   HeavySour = c(-30, -4)
 )
 
-ref.opt.outputs <- data.frame(
+refineryLPdata$outputs <- data.frame(
   product = c("mogas", "distillate", "fo", "resid"),
   prices = c(70, 70, 30, 20),
   max.prod = c(50000, 40000, 20000, 10000),
@@ -1114,8 +1131,8 @@ ref.opt.outputs <- data.frame(
   HeavySour.yield = c(0.40, 0.20, .30, .1)
 )
 
-usethis::use_data(ref.opt.inputs, overwrite = T)
-usethis::use_data(ref.opt.outputs, overwrite = T)
+usethis::use_data(refineryLPdata, overwrite = T)
+
 
 # Educational Dataset
 
@@ -1124,35 +1141,6 @@ tradeprocess <- RTL::getPrices(
   from = "2018-01-01", iuser = mstar[[1]], ipassword = mstar[[2]]
 ) %>% stats::na.omit()
 usethis::use_data(tradeprocess, overwrite = T)
-
-# cushing storage
-
-storage <- rbind(eiaStocks %>% dplyr::filter(series == "CrudeCushing"),
-                 eiaStorageCap %>% dplyr::filter(series == "Cushing") %>% dplyr::select(-product))
-
-spreads <- dflong %>%
-  dplyr::filter(grepl("CL01|CL02", series)) %>%
-  tidyr::pivot_wider(names_from = series, values_from = value) %>%
-  dplyr::transmute(date, c1c2 = .[[2]] - .[[3]]) %>%
-  tidyr::drop_na()
-
-spreads <- RTL::rolladjust(x = spreads,commodityname = "cmewti",
-                           rolltype = c("Last.Trade"))
-
-spreads <- spreads %>% dplyr::filter(abs(c1c2) < 10)
-
-cushingStorage <- storage %>%
-  tidyr::pivot_wider(names_from = series, values_from = value) %>%
-  dplyr::arrange(date) %>%
-  dplyr::rename(stocks = 2, capacity = 3) %>%
-  tidyr::fill(capacity) %>%
-  tidyr::drop_na() %>%
-  dplyr::mutate(utilization = stocks / capacity,
-                year = lubridate::year(date)) %>%
-  dplyr::left_join(spreads %>% dplyr::select(date, c1c2)) %>%
-  tidyr::drop_na()
-
-usethis::use_data(cushingStorage, overwrite = T)
 
 # Global
 devtools::document()

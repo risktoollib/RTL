@@ -7,8 +7,8 @@
 #' @export tradeStrategySMA
 #' @author Philippe Cote
 #' @examples
-#' tradeStrategySMA(data = RTL::uso, par1value = 50, par2value = 200)
-tradeStrategySMA <- function(data = RTL::uso,
+#' tradeStrategySMA(data = RTL::stocks$uso, par1value = 50, par2value = 200)
+tradeStrategySMA <- function(data = RTL::stocks$uso,
                      par1value = 50,
                      par2value = 200) {
   Open <- trade <- pos <- retOpCl <- retClCl <- retClCl <- ret_new <- ret_exist <- ret_others <- NULL

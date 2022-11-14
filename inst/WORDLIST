@@ -9,7 +9,6 @@ Belvieu
 BreakEven
 Burnaby
 CFTC
-CLc
 CMA
 CMD
 CME
@@ -28,9 +27,9 @@ Drawdowns
 EIA
 EOD
 ERCOT
-ETF
 EuroFutures
 ExxonMobil
+FASLE
 FX
 ForecastAndActualPoolPrice
 FuturesSettlement
@@ -69,7 +68,6 @@ Ornstein
 PADD
 PJM
 POSIXct
-RBC
 RBOB
 RQuantlib
 SHFE
@@ -88,7 +86,6 @@ WCB
 WCW
 WIP
 WTI
-algo
 analytics
 annualised
 annum
@@ -100,6 +97,7 @@ cmecan
 cpp
 crudemonitor
 crudepipelines
+datasest
 de
 df
 drawdown
@@ -111,8 +109,6 @@ expiries
 fGarch
 fOptions
 funtion
-futuresMonths
-futuresSpecs
 garch
 genscape
 getCurve
@@ -137,7 +133,6 @@ ngstorage
 nsims
 numDaysFut
 nymex
-ohlc
 opendata
 parms
 php
@@ -148,6 +143,8 @@ purrr
 pypi
 qb
 quant
+randomised
+randomiser
 rcpp
 resid
 resids
@@ -155,11 +152,11 @@ risktools
 sds
 simMultivariates
 src
-steo
 stl
 summarised
 tibble
 timeseries
+tribble
 unajusted
 usSwapCurves
 uso

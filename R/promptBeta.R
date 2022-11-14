@@ -9,7 +9,8 @@
 #' @export promptBeta
 #' @author Philippe Cote
 #' @examples
-#'x <- dflong %>%
+#' \dontrun{
+#'  x <- dflong %>%
 #'  dplyr::filter(grepl("CL",series)) %>%
 #'  dplyr::mutate(series = readr::parse_number(series)) %>% dplyr::group_by(series) %>%
 #'  RTL::returns(df = ., retType = "abs",period.return = 1,spread = TRUE) %>%
@@ -17,8 +18,9 @@
 #'  # removing the day it prices went negative...
 #'  dplyr::filter(!date %in% c(as.Date("2020-04-20"),as.Date("2020-04-21")))
 #' promptBeta(x = x, period = "all", betatype = "all", output = "chart")
-#' promptBeta(x = x, period = "all", betatype = "all", output = "betas")
-#' promptBeta(x = x, period = "100", betatype = "all", output = "betas")
+#' promptBeta(x = x, period = "all", betatype = "bull", output = "betas")
+#' promptBeta(x = x, period = "100", betatype = "bear", output = "betas")
+#' }
 promptBeta <- function(x = x, period = "all", betatype = "all", output = "chart") {
 
   # if (!requireNamespace("PerformanceAnalytics", quietly = TRUE)) {

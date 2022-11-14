@@ -20,7 +20,6 @@ Comex
 CommitmentsOfTradersCombined
 Crb
 CrudeOil
-Crudemonitor
 Cushing
 DiscountCurve
 Drawdowns
@@ -153,7 +152,6 @@ sds
 simMultivariates
 src
 stl
-summarised
 tibble
 timeseries
 tribble

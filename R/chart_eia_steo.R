@@ -29,14 +29,8 @@ chart_eia_steo <- function(market = "globalOil",
       "STEO.PAPR_OPEC.M", "SupplyOPEC",
       "STEO.PATC_WORLD.M", "Demand",
       "STEO.T3_STCHANGE_WORLD.M", "Inv_Change"
-    ) %>%
-      dplyr::mutate(key = key) %>%
-      dplyr::mutate(df = purrr::pmap(list(ticker, key, name), .f = RTL::eia2tidy)) %>%
-      dplyr::select(df) %>%
-      tidyr::unnest(df) %>%
-      tidyr::pivot_longer(-date, names_to = "series", values_to = "value") %>%
-      tidyr::drop_na() %>%
-      tidyr::pivot_wider(id_cols = date, names_from = series, values_from = value) %>%
+    )
+    eia_df <- RTL::eia2tidy_all(tickers = eia_df, key = key, long = FALSE) %>%
       dplyr::transmute(date,
         Supply = SupplyNOPEC + SupplyOPEC, Demand,
         Inv_Change = Inv_Change * -1

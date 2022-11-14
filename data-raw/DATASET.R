@@ -930,7 +930,7 @@ crudes <- crudes %>%
 
 crudes$LightMedHeavy <- factor(crudes$LightMedHeavy, levels = c("Light", "Medium", "Heavy"))
 crudes$SweetSour <- factor(crudes$SweetSour, levels = c("Sweet", "Sour"))
-crudesl$crudes <- crudes
+crudeOil$crudes <- crudes
 
 ## xls assays
 css <- "body > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div:nth-child(3) > div > div > div.nr-table-component.nr-component.aem-GridColumn.aem-GridColumn--default--12"

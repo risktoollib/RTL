@@ -18,7 +18,7 @@ chart_spreads(
 )
 }
 \arguments{
-\item{cpairs}{Data frame of contract pairs - see example.}
+\item{cpairs}{Tibble of contract pairs - see example for expiry when not expired yet.}
 
 \item{daysFromExpiry}{Number of days (numeric) from expiry to compute spreads.}
 
@@ -47,9 +47,10 @@ Plots specific contract pairs across years with time being days from expiry.
 \examples{
 \dontrun{
 cpairs <- dplyr::tibble(
-  year = c("2014", "2019", "2020"),
-  first = c("@HO4H", "@HO9H", "@HO0H"),
-  second = c("@CL4J", "@CL9J", "@CL0J")
+ year = c("2018", "2019", "2020","2021","2022","2023"),
+ first = c("@HO8H", "@HO9H", "@HO0H","@HO21H","@HO22H","@HO23H"),
+ second = c("@CL8H", "@CL9H", "@CL0H","@CL21H","@CL22H","@CL23H"),
+ expiry = c(NA,NA,NA,NA,NA,"2023-02-23")
 )
 chart_spreads(
   cpairs = cpairs, daysFromExpiry = 200, from = "2012-01-01",

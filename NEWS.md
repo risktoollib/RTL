@@ -1,19 +1,20 @@
 # RTL 1.3.1
 
-Consolidated many datasets into `list` types.
+Consolidated many data sets into `list` types.
 
 ## New
 
 + `eia2tidy()` upgraded to version 2 EIA API and `eia2tidy_all()` added for multiple series extractions.
-+ `futuresRef` dataset for futures contract month codes and specifications.
-+ `cushingStorage` dataset for storage spreads analytics example.
-+ All Yahoo Finance datasets moved to `stocks` dataset as a list.
++ `futuresRef` data set for futures contract month codes and specifications.
++ `cushingStorage` data set for storage spreads analytics example.
++ All Yahoo Finance data sets moved to `stocks` dataset as a list.
 + `tradeStrategySMA()` is an example of a Moving Average crossover strategy.
 + `tradeStrategyDY()` is an example of a dividend yield based strategy. The example is based on the `ry` data set for Royal Bank of Canada shares on NYSE. 
-+ All crude oil assays consolidated into `crudeOil` dataset as a list item.
++ All crude oil assays consolidated into `crudeOil` data set as a list item.
 
 ## Enhancement
 
++ `chart_spreads()` amended to show properly contract pairs that have not expired.
 + `simMultivariates()` and `efficientFrontier()` correlation method moved to "kendall".
 + `simGBM()` output with added variable `t` for time and performance improved.
 

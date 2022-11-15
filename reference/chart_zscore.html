@@ -21,7 +21,7 @@ will vary from the unajusted seasonal plot."><!-- mathjax --><script src="https:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RTL</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
       </span>
     </div>
 
@@ -112,7 +112,7 @@ standard seasonal chart with feast package.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">eiaStocks</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">series</span> <span class="op">==</span> <span class="st">"NGLower48"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">eiaStocks</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">series</span> <span class="op">==</span> <span class="st">"NGLower48"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">title</span> <span class="op">&lt;-</span> <span class="st">"NGLower48"</span></span></span>
 <span class="r-in"><span><span class="fu">chart_zscore</span><span class="op">(</span>df <span class="op">=</span> <span class="va">df</span>, title <span class="op">=</span> <span class="st">" "</span>, per <span class="op">=</span> <span class="st">"yearweek"</span>, output <span class="op">=</span> <span class="st">"stl"</span>, chart <span class="op">=</span> <span class="st">"seasons"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">chart_zscore</span><span class="op">(</span>df <span class="op">=</span> <span class="va">df</span>, title <span class="op">=</span> <span class="st">" "</span>, per <span class="op">=</span> <span class="st">"yearweek"</span>, output <span class="op">=</span> <span class="st">"stats"</span>, chart <span class="op">=</span> <span class="st">"seasons"</span><span class="op">)</span></span></span>

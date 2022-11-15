@@ -23,13 +23,7 @@ chart_eia_sd <- function(market = "mogas",
     dplyr::mutate(tick.r = stringr::str_replace_all(tick.r, paste0("eia.", market, "."), ""))
   eia_df <- tibble::tribble(~ticker, ~name) %>%
     dplyr::add_row(ticker = df$tick.eia[1:nrow(df)], name = df$category[1:nrow(df)]) %>%
-    dplyr::mutate(key = key) %>%
-    dplyr::mutate(df = purrr::pmap(list(ticker, key, name), .f = RTL::eia2tidy)) %>%
-    dplyr::select(df) %>%
-    tidyr::unnest(df)
-
-  eia_df <- eia_df %>%
-    tidyr::pivot_wider(date, names_from = series, values_from = value) %>%
+    RTL::eia2tidy_all(key = key, long = FALSE) %>%
     dplyr::mutate(balance = imports + supply - exports - demand)
   if (!is.null(from)) {
     eia_df <- eia_df %>% dplyr::filter(date >= from)

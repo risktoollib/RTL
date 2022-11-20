@@ -4,6 +4,8 @@ Consolidated many data sets into `list` types.
 
 ## New
 
++ `getBoC()` to access the Bank of Canada Valet API.
+
 ## Enhancement
 
 ## Bugs & Fixes

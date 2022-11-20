@@ -7,7 +7,7 @@
 getBoC(series)
 }
 \arguments{
-\item{series}{Array of series name. For example c("FXCADUSD")}
+\item{series}{Array of series name: c("FXCADUSD","BD.CDN.2YR.DQ.YLD").}
 }
 \value{
 A long data frame.

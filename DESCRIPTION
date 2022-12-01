@@ -37,7 +37,8 @@ Imports:
     Rcpp,
     lifecycle,
     TTR,
-    tidyselect
+    tidyselect,
+    PerformanceAnalytics
 Suggests: 
     testthat (>= 3.0.0),
     covr,

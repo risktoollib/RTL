@@ -72,7 +72,9 @@ futuresRef$ContractMonths <- dplyr::tibble(Month = seq.Date(as.Date("2022-01-01"
   # Futures specifications
 futuresRef$Specifications <- list()
 library(rvest)
-rD <- rsDriver(browser = "firefox", port = 4545L, verbose = F)
+#rD <- rsDriver(browser = "firefox", port = 4545L, verbose = F)
+rD <- rsDriver(browser = "firefox", chromever = NULL)
+
 remDr <- rD[["client"]]
 Sys.sleep(2)
   # CL
@@ -1048,7 +1050,7 @@ usethis::use_data(tradeHubs, overwrite = T)
 library(RSelenium)
 library(rvest)
 library(tidyverse)
-rD <- rsDriver(port = 4545L, browser = "firefox")
+rD <- rsDriver(port = 4545L, browser = "firefox", chromever = NULL)
 #rD <- rsDriver(port = 4444L, browser = "chrome",chromever = "latest", verbose = FALSE)
 remDr <- rD[["client"]]
 Sys.sleep(2)
@@ -1109,7 +1111,7 @@ usSwapCurves[1:4] %>% dplyr::as_tibble() %>% dplyr::select(-discounts) %>%
 #usSwapCurves[1:4] %>% dplyr::as_tibble() %>% View()
 usethis::use_data(tsQuotes, overwrite = T)
 
-tsQuotes <- list(flat = 0.03)
+tsQuotes <- list(flat = 0.09)
 usSwapCurvesPar <- DiscountCurve(params, tsQuotes, times)
 
 usethis::use_data(usSwapCurves, overwrite = T)

@@ -258,6 +258,31 @@ fxfwd <-
 
 usethis::use_data(fxfwd, overwrite = T)
 
+rD <- rsDriver(browser = "firefox", chromever = NULL)
+remDr <- rD[["client"]]
+Sys.sleep(2)
+remDr$navigate("https://ca.investing.com/rates-bonds/forward-rates")
+Sys.sleep(2)
+elem <- remDr$findElement(using = 'class', value = 'selectBox')
+elem$findChildElements("css","option")[[7]]$clickElement()
+page <- remDr$getPageSource()
+remDr$close()
+fxfwdPoints <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[3]] %>%
+  dplyr::select(maturity = Name, bid = Bid,ask = Ask) %>%
+  dplyr::filter(!grepl("TN|SN",maturity)) %>%
+  dplyr::mutate(maturity = gsub("USDCAD|FWD","",maturity),
+                maturity = gsub("SW","1W",maturity),
+                mid = (bid + ask)/2) %>%
+  dplyr::mutate(term = dplyr::case_when(grepl("ON",maturity) ~ 1/365,
+                                        grepl("M",maturity) ~ readr::parse_number(maturity)/12,
+                                        grepl("Y",maturity) ~ readr::parse_number(maturity),
+                                        grepl("W",maturity) ~ readr::parse_number(maturity)/52,
+                                        TRUE ~ 0
+                                        ))
+usethis::use_data(fxfwdPoints, overwrite = T)
+
+
+
 ## Orbital
 
 url <- "https://nssdc.gsfc.nasa.gov/planetary/factsheet/index.html"

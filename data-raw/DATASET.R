@@ -37,7 +37,7 @@
 spelling::spell_check_package()
 spelling::update_wordlist()
 devtools::document()
-
+# usethis::use_github_links()
 # Setup RTL Webpage
 # usethis::use_pkgdown()
 # usethis::use_github_actions("pkgdown")
@@ -243,44 +243,6 @@ eurodollar <- RTL::getPrices(
   tidyr::pivot_longer(-date, names_to = "series", values_to = "price")
 
 usethis::use_data(eurodollar, overwrite = T)
-
-## FX forwards
-
-fromDate <- Sys.Date() - lubridate::years(1)
-fxfwd <-
-  RTL::getPrices(
-    feed = "Morningstar_FX_Forwards",
-    contracts = c("USDCAD 1Y", "USDCAD 5Y"),
-    from = fromDate,
-    iuser = mstar[[1]],
-    ipassword = mstar[[2]]
-  )
-
-usethis::use_data(fxfwd, overwrite = T)
-
-rD <- rsDriver(browser = "firefox", chromever = NULL)
-remDr <- rD[["client"]]
-Sys.sleep(2)
-remDr$navigate("https://ca.investing.com/rates-bonds/forward-rates")
-Sys.sleep(2)
-elem <- remDr$findElement(using = 'class', value = 'selectBox')
-elem$findChildElements("css","option")[[7]]$clickElement()
-page <- remDr$getPageSource()
-remDr$close()
-fxfwdPoints <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[3]] %>%
-  dplyr::select(maturity = Name, bid = Bid,ask = Ask) %>%
-  dplyr::filter(!grepl("TN|SN",maturity)) %>%
-  dplyr::mutate(maturity = gsub("USDCAD|FWD","",maturity),
-                maturity = gsub("SW","1W",maturity),
-                mid = (bid + ask)/2) %>%
-  dplyr::mutate(term = dplyr::case_when(grepl("ON",maturity) ~ 1/365,
-                                        grepl("M",maturity) ~ readr::parse_number(maturity)/12,
-                                        grepl("Y",maturity) ~ readr::parse_number(maturity),
-                                        grepl("W",maturity) ~ readr::parse_number(maturity)/52,
-                                        TRUE ~ 0
-                                        ))
-usethis::use_data(fxfwdPoints, overwrite = T)
-
 
 
 ## Orbital
@@ -1068,6 +1030,49 @@ tradeHubs <-
     hub = c("Edmonton", "Hardisty", "Cushing", "Nederland","Mont Belvieu", "Burnaby")
   )
 usethis::use_data(tradeHubs, overwrite = T)
+
+
+## FX forwards
+
+fxfwd <- list()
+
+fromDate <- Sys.Date() - lubridate::years(1)
+fxfwd$historical <-
+  RTL::getPrices(
+    feed = "Morningstar_FX_Forwards",
+    contracts = c("USDCAD 1Y", "USDCAD 5Y"),
+    from = fromDate,
+    iuser = mstar[[1]],
+    ipassword = mstar[[2]]
+  )
+
+rD <- rsDriver(browser = "firefox", chromever = NULL)
+remDr <- rD[["client"]]
+Sys.sleep(2)
+remDr$navigate("https://ca.investing.com/rates-bonds/forward-rates")
+Sys.sleep(2)
+elem <- remDr$findElement(using = 'class', value = 'selectBox')
+elem$findChildElements("css","option")[[7]]$clickElement()
+page <- remDr$getPageSource()
+remDr$close()
+fxfwd$curve <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[3]] %>%
+  dplyr::select(maturity = Name, bid = Bid,ask = Ask) %>%
+  dplyr::filter(!grepl("TN|SN",maturity)) %>%
+  dplyr::mutate(maturity = gsub("USDCAD|FWD","",maturity),
+                maturity = gsub("SW","1W",maturity),
+                mid = (bid + ask)/2) %>%
+  dplyr::mutate(term = dplyr::case_when(grepl("ON",maturity) ~ 1/365,
+                                        grepl("M",maturity) ~ readr::parse_number(maturity)/12,
+                                        grepl("Y",maturity) ~ readr::parse_number(maturity),
+                                        grepl("W",maturity) ~ readr::parse_number(maturity)/52,
+                                        TRUE ~ 0
+  ))
+
+usethis::use_data(fxfwd, overwrite = T)
+
+
+
+
 
 ## IR Curves for RQuantlib
 # Curves and Def - barchart

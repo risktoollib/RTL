@@ -12,6 +12,7 @@ A toolkit for Commodities 'analytics', risk management and trading professionals
 Useful links:
 \itemize{
   \item \url{https://github.com/risktoollib/RTL}
+  \item Report bugs at \url{https://github.com/risktoollib/RTL/issues}
 }
 
 }

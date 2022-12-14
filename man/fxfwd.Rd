@@ -5,15 +5,15 @@
 \alias{fxfwd}
 \title{dataset: USDCAD FX forward rates}
 \format{
-data frame
+list
 }
 \source{
-{Morningstar}
+{Morningstar and https://ca.investing.com/rates-bonds/forward-rates}
 }
 \usage{
 fxfwd
 }
 \description{
-USDCAD historical 1-year and 5-year forward points
+USDCAD historicals and forward curve
 }
 \keyword{datasets}

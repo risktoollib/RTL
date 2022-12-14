@@ -46,16 +46,10 @@
 "wtiSwap"
 
 #' dataset: USDCAD FX forward rates
-#' @description USDCAD historical 1-year and 5-year forward points
-#' @format data frame
-#' @source {Morningstar}
+#' @description USDCAD historicals and forward curve
+#' @format list
+#' @source {Morningstar and https://ca.investing.com/rates-bonds/forward-rates}
 "fxfwd"
-
-#' dataset: USDCAD FX forward rates
-#' @description USDCAD forward points
-#' @format data frame
-#' @source {https://ca.investing.com/rates-bonds/forward-rates}
-"fxfwdPoints"
 
 #' dataset: Eurodollar futures contracts
 #' @description ED futures contract for December 2024

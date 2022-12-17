@@ -839,7 +839,7 @@ url = "https://beta.crudemonitor.ca/api/json.php?condensates%5B0%5D=Cochin+Conde
 
 samples <- httr::GET(url) %>% httr::content(.,as="text") %>% jsonlite::fromJSON(.) %>% dplyr::as_tibble()
 
-names(samples) <- c("Name", "Batch","date","Density","Gravity","Sulphur","MCR","Viscosity", "Sediment","Olefins","OrganoPhosphorus","Oxygenates","TAN","Salt","Nickel","Vanadium")
+names(samples) <- c("Name", "Batch","date","Location","Density","Gravity","Sulphur","MCR","Viscosity", "Sediment","RVP","Olefins","OrganoPhosphorus","Oxygenates","TAN","Salt","Nickel","Vanadium")
 CanadaAssays <- samples %>%
   dplyr::mutate(date = as.Date(date),
                 Grade = gsub("-.*$","",Batch),

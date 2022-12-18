@@ -851,14 +851,14 @@ CanadaAssays <- samples %>%
                                      TRUE ~ "unknown"),
                 Grade = case_when(grepl("CL", Grade) ~ "CL", TRUE ~ Grade)
                 ) %>%
-  dplyr::select(-Name) %>%
-  dplyr::select(Grade,Location, date,Batch, everything()) %>%
-  dplyr::group_by(Grade,Location,date) %>%
+  #dplyr::select(-Name) %>%
+  dplyr::select(Name, Grade,Location, date,Batch, everything()) %>%
+  dplyr::group_by(Name,Grade,Location,date) %>%
   dplyr::mutate(date = tsibble::yearmonth(date)) %>%
   dplyr::mutate(across(Density:Vanadium,as.numeric)) %>%
   dplyr::summarise_if(is.numeric, mean, na.rm = TRUE)
 
-crudeOil$CanadianAssays <- CanadaAssays
+crudeOil$CanadianAssays <- CanadaAssays %>% dplyr::select(-Name)
 
 crudeOil$CanadaPrices <- readRDS("crude_prices.RDS") %>%
   dplyr::transmute(Ticker = Ticker, date = tsibble::yearmonth(YM), Value = Value)
@@ -881,12 +881,12 @@ x <- html %>%
 
 y <- CanadaAssays %>%
   dplyr::filter(date == dplyr::last(date)) %>%
-  dplyr::transmute(Grade,
+  dplyr::ungroup() %>%
+  dplyr::transmute(Name,
                    Country = "Canada",API = Gravity, Sulphur, TAN
   ) %>%
   dplyr::ungroup() %>%
-  dplyr::rename(Crude = Grade) %>%
-  dplyr::select(-Location)
+  dplyr::rename(Crude = Name)
 
 crudes <- rbind(x, y) %>%
   tibble::add_row(Crude = "Tapis", Country = "Malaysia", API = 42.7, Sulphur = .044, TAN = 0.215) %>%
@@ -921,7 +921,7 @@ crudes <- crudes %>%
 
 crudes$LightMedHeavy <- factor(crudes$LightMedHeavy, levels = c("Light", "Medium", "Heavy"))
 crudes$SweetSour <- factor(crudes$SweetSour, levels = c("Sweet", "Sour"))
-crudeOil$crudes <- crudes
+crudeOil$crudes <- crudes %>% dplyr::arrange(Crude)
 
 ## xls assays
 css <- "body > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div:nth-child(3) > div > div > div.nr-table-component.nr-component.aem-GridColumn.aem-GridColumn--default--12"

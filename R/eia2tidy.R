@@ -15,7 +15,7 @@
 #' # Use eia2tidy_all() or pivot_longer, drop_na and then pivot_wider to wrangled results.
 #' }
 eia2tidy <- function(ticker, key, name = " ") {
-  message("if using with multiple tickers use eia2tidy_all(). Code changed after the EIA API migrated to v2.")
+  #message("if using with multiple tickers use eia2tidy_all(). Code changed after the EIA API migrated to v2.")
   period <- NULL
   if (nchar(name) == 1) {
     name <- ticker

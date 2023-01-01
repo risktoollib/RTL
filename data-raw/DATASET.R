@@ -492,18 +492,19 @@ c1 <- tidyquant::tq_get("CL=F", adjust = TRUE) %>%
   quantmod::adjustOHLC(.,use.Adjusted = TRUE) %>%
   timetk::tk_tbl(rename_index = "Date") %>%
   dplyr::select(-Adjusted, - Volume)  %>%
-  dplyr::filter(Date %in% c(c2$date))
+  dplyr::filter(Date %in% c(c2$date)) %>%
+  dplyr::rename(date = Date)
 
 ohlc <- c1 %>%
-  dplyr::transmute(date = Date,
+  dplyr::transmute(date = date,
                    Open = Open / Close,
                    High = High / Close,
                    Low = Low / Close,
                    Close = 1)
 
 c2 <- c2 %>% dplyr::left_join(ohlc) %>% tidyr::drop_na()
-c2 <- cbind(Date = c2 %>% dplyr::pull(date),CLc2 %>% dplyr::select(-date,-CL02) * CLc2$CL02) %>% dplyr::as_tibble()
-c1c2 <- cbind(Date = CLc1$Date,CLc1 %>% dplyr::select(-Date) - CLc2 %>% dplyr::select(-Date)) %>%
+c2 <- cbind(date = c2 %>% dplyr::pull(date),c2 %>% dplyr::select(-date,-CL02) * c2$CL02) %>% dplyr::as_tibble()
+c1c2 <- cbind(date = c1$date,c1 %>% dplyr::select(-date) - c2 %>% dplyr::select(-date)) %>%
   dplyr::as_tibble()
 
 storage <- rbind(eiaStocks %>% dplyr::filter(series == "CrudeCushing"),
@@ -535,7 +536,6 @@ cushing$c2 <- c2
 cushing$c1c2 <- c1c2
 cushing$storage <- storage
 usethis::use_data(cushing, overwrite = T)
-
 
 ## Sample GIS Mapping
 # library(rgdal)

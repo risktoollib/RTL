@@ -207,7 +207,7 @@ usethis::use_data(spot2futCurve, overwrite = T)
 fut <- RTL::getPrice(
   feed = "CME_NymexFutures_EOD",
   contract = "CL0M",
-  from = paste(lubridate::year(Sys.Date()) - 2, "01", "01", sep = "-"),
+  from = "2019-01-01",
   iuser = mstar[[1]],
   ipassword = mstar[[2]]
 )

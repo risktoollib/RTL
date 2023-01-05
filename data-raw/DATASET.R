@@ -576,7 +576,9 @@ holidaysOil <-
     ice = as.Date(as.character(ice), "%Y-%m-%d", tz = "UTC")
   ) %>%
   tidyr::gather()
-holidaysOil <- holidaysOil[complete.cases(holidaysOil), ] %>% dplyr::as_tibble()
+holidaysOil <- holidaysOil[complete.cases(holidaysOil), ] %>%
+  dplyr::as_tibble() %>%
+  dplyr::arrange(key,value)
 usethis::use_data(holidaysOil, overwrite = T)
 
 # Expiry table
@@ -826,7 +828,9 @@ tradeCycle <- expiry_table %>%
   ) %>%
   tidyr::drop_na() %>%
   rbind(tradeCycle, .) %>%
-  dplyr::as_tibble()
+  dplyr::as_tibble() %>%
+  dplyr::mutate(trade.cycle.end = dplyr::case_when(trade.cycle.end == as.Date("2023-11-24") ~ as.Date("2023-11-22"), # us domestic Argus holiday
+                                                   TRUE ~ trade.cycle.end))
 usethis::use_data(tradeCycle, overwrite = T)
 
 # crudeOil dataset

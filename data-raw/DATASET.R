@@ -1074,10 +1074,6 @@ fxfwd$curve <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[3]
 
 usethis::use_data(fxfwd, overwrite = T)
 
-
-
-
-
 ## IR Curves for RQuantlib
 # Curves and Def - barchart
 

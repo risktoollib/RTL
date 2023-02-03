@@ -1,6 +1,10 @@
-# RTL 1.3.2
+# RTL 1.3.3
 
-Consolidated many data sets into `list` types.
+## Bugs & Fixes
+
++ `eia2tidy()` amended when EIA data returns partial "Not Available" - the EIA returns the value as type character in that case.  
+
+# RTL 1.3.2
 
 ## New
 
@@ -8,14 +12,11 @@ Consolidated many data sets into `list` types.
 
 ## Enhancement
 
++ Consolidated many data sets into `list` types.
+
 ## Bugs & Fixes
 
 + `chart_eia_sd()` fixed for new EIA API.
-
-## Remove
-
-
-
 
 # RTL 1.3.1
 

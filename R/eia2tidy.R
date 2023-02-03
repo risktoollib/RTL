@@ -27,6 +27,8 @@ eia2tidy <- function(ticker, key, name = " ") {
   if (x$status_code == "503") {stop(print("http 503 response :: the EIA server is temporarily unavailable. Try later."))}
   x <- jsonlite::fromJSON(httr::content(x, "text", encoding = "UTF-8"))
   #out <- x$response$data %>% dplyr::as_tibble() %>% dplyr::transmute(date = period, value) %>% dplyr::rename({{name}} := value)
+  if (is.numeric(x$response$data$value) == FALSE) {x$response$data$value <- as.numeric(x$response$data$value)}
+
   out <- x$response$data %>% dplyr::as_tibble() %>%
     dplyr::select(date = period,tidyselect::where(is.numeric)) %>%
     dplyr::mutate(dplyr::across(tidyselect::where(is.numeric),as.double))

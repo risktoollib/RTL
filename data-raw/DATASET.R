@@ -785,28 +785,6 @@ S <- read_excel("S.xlsx") %>%
                    Last.Delivery = as.Date(as.character(purrr::map(.x = Last.Delivery, .f = bbdate)), "%m/%d/%Y", tz = "UTC")
   )
 
-# CME WTi MEH
-meh <- RTL::tradeCycle %>%
-  dplyr::filter(market == "usdomestic",
-                flowmonth > "2018-01-01") %>%
-  dplyr::transmute(cmdty = "cmewtihou",
-                   tick.prefix = "HTT",
-                   Last.Trade = trade.cycle.end,
-                   First.Notice = Last.Trade,
-                   First.Delivery = lubridate::rollback(Last.Trade, roll_to_first = TRUE) + months(1),
-                   Last.Delivery = First.Delivery + months(1) - 1)
-
-
-expiry_table <- rbind(expiry_table, LCO, LGO, CL, BZ, HO, RB, GC, SI, ALI, LTH, HG, W, C ,S,meh) %>%
-  dplyr::distinct() %>%
-  dplyr::mutate(
-    Year = year(First.Delivery),
-    Month = month(First.Delivery),
-    Month.Letter = futmonths[Month]
-  ) #%>% dplyr::filter(Year > 2003)
-
-usethis::use_data(expiry_table, overwrite = T)
-
 ## tradeCycle
 tradeCycle <- read.csv("tradeCycle.csv", sep = ",", header = TRUE, na.strings = "NA", stringsAsFactors = FALSE) %>%
   dplyr::mutate(
@@ -831,7 +809,33 @@ tradeCycle <- expiry_table %>%
   dplyr::as_tibble() %>%
   dplyr::mutate(trade.cycle.end = dplyr::case_when(trade.cycle.end == as.Date("2023-11-24") ~ as.Date("2023-11-22"), # us domestic Argus holiday
                                                    TRUE ~ trade.cycle.end))
+tradeCycle
+
 usethis::use_data(tradeCycle, overwrite = T)
+
+
+# CME WTi MEH
+meh <- RTL::tradeCycle %>%
+  dplyr::filter(market == "usdomestic",
+                flowmonth > "2018-01-01") %>%
+  dplyr::transmute(cmdty = "cmewtihou",
+                   tick.prefix = "HTT",
+                   Last.Trade = trade.cycle.end,
+                   First.Notice = Last.Trade,
+                   First.Delivery = lubridate::rollback(Last.Trade, roll_to_first = TRUE) + months(1),
+                   Last.Delivery = First.Delivery + months(1) - 1)
+
+
+expiry_table <- rbind(expiry_table, LCO, LGO, CL, BZ, HO, RB, GC, SI, ALI, LTH, HG, W, C ,S,meh) %>%
+  dplyr::distinct() %>%
+  dplyr::mutate(
+    Year = year(First.Delivery),
+    Month = month(First.Delivery),
+    Month.Letter = futmonths[Month]
+  ) #%>% dplyr::filter(Year > 2003)
+
+usethis::use_data(expiry_table, overwrite = T)
+
 
 # crudeOil dataset
 

@@ -627,6 +627,114 @@ LCO <- read_csv("https://www.theice.com/api/productguide/spec/219/expiry/csv",
     Last.Delivery = lubridate::rollback(First.Delivery + months(1))
   )
 
+TMW <- read_csv("https://www.theice.com/api/productguide/spec/27066814/expiry/csv",
+                col_types = cols(
+                  `CONTRACT SYMBOL` = col_skip(),
+                  FTD = col_skip(), LTD = col_date(format = "%m/%d/%Y"),
+                  FND = col_date(format = "%m/%d/%Y"),
+                  LND = col_skip(), FDD = col_date(format = "%m/%d/%Y"),
+                  LDD = col_date(format = "%m/%d/%Y"),
+                  FSD = col_skip(), `OPTIONS FTD` = col_skip(),
+                  `OPTIONS LTD` = col_skip()
+                )
+) %>%
+  dplyr::transmute(
+    cmdty = "icecancrude", tick.prefix = "TMW", Last.Trade = LTD,
+    First.Notice = FND,
+    First.Delivery = lubridate::rollback(First.Notice, roll_to_first = TRUE) + months(1),
+    Last.Delivery = lubridate::rollback(First.Delivery + months(1))
+  )
+
+TMR <- read_csv("https://www.theice.com/api/productguide/spec/31687075/expiry/csv",
+                col_types = cols(
+                  `CONTRACT SYMBOL` = col_skip(),
+                  FTD = col_skip(), LTD = col_date(format = "%m/%d/%Y"),
+                  FND = col_date(format = "%m/%d/%Y"),
+                  LND = col_skip(), FDD = col_date(format = "%m/%d/%Y"),
+                  LDD = col_date(format = "%m/%d/%Y"),
+                  FSD = col_skip(), `OPTIONS FTD` = col_skip(),
+                  `OPTIONS LTD` = col_skip()
+                )
+) %>%
+  dplyr::transmute(
+    cmdty = "icecancrude", tick.prefix = "TMR", Last.Trade = LTD,
+    First.Notice = FND,
+    First.Delivery = lubridate::rollback(First.Notice, roll_to_first = TRUE) + months(1),
+    Last.Delivery = lubridate::rollback(First.Delivery + months(1))
+  )
+
+TMS <- read_csv("https://www.theice.com/api/productguide/spec/27066815/expiry/csv",
+                col_types = cols(
+                  `CONTRACT SYMBOL` = col_skip(),
+                  FTD = col_skip(), LTD = col_date(format = "%m/%d/%Y"),
+                  FND = col_date(format = "%m/%d/%Y"),
+                  LND = col_skip(), FDD = col_date(format = "%m/%d/%Y"),
+                  LDD = col_date(format = "%m/%d/%Y"),
+                  FSD = col_skip(), `OPTIONS FTD` = col_skip(),
+                  `OPTIONS LTD` = col_skip()
+                )
+) %>%
+  dplyr::transmute(
+    cmdty = "icecancrude", tick.prefix = "TMS", Last.Trade = LTD,
+    First.Notice = FND,
+    First.Delivery = lubridate::rollback(First.Notice, roll_to_first = TRUE) + months(1),
+    Last.Delivery = lubridate::rollback(First.Delivery + months(1))
+  )
+
+TMF <- read_csv("https://www.theice.com/api/productguide/spec/27066813/expiry/csv",
+                col_types = cols(
+                  `CONTRACT SYMBOL` = col_skip(),
+                  FTD = col_skip(), LTD = col_date(format = "%m/%d/%Y"),
+                  FND = col_date(format = "%m/%d/%Y"),
+                  LND = col_skip(), FDD = col_date(format = "%m/%d/%Y"),
+                  LDD = col_date(format = "%m/%d/%Y"),
+                  FSD = col_skip(), `OPTIONS FTD` = col_skip(),
+                  `OPTIONS LTD` = col_skip()
+                )
+) %>%
+  dplyr::transmute(
+    cmdty = "icecancrude", tick.prefix = "TMF", Last.Trade = LTD,
+    First.Notice = FND,
+    First.Delivery = lubridate::rollback(First.Notice, roll_to_first = TRUE) + months(1),
+    Last.Delivery = lubridate::rollback(First.Delivery + months(1))
+  )
+
+ARV <- read_csv("https://www.ice.com/api/productguide/spec/67689141/expiry/csv",
+                col_types = cols(
+                  `CONTRACT SYMBOL` = col_skip(),
+                  FTD = col_skip(), LTD = col_date(format = "%m/%d/%Y"),
+                  FND = col_date(format = "%m/%d/%Y"),
+                  LND = col_skip(), FDD = col_date(format = "%m/%d/%Y"),
+                  LDD = col_date(format = "%m/%d/%Y"),
+                  FSD = col_skip(), `OPTIONS FTD` = col_skip(),
+                  `OPTIONS LTD` = col_skip()
+                )
+) %>%
+  dplyr::transmute(
+    cmdty = "icecancrude", tick.prefix = "ARV", Last.Trade = LTD,
+    First.Notice = FND,
+    First.Delivery = lubridate::rollback(First.Notice, roll_to_first = TRUE) + months(1),
+    Last.Delivery = lubridate::rollback(First.Delivery + months(1))
+  )
+
+TI <- read_csv("https://www.theice.com/api/productguide/spec/213/expiry/csv",
+                col_types = cols(
+                  `CONTRACT SYMBOL` = col_skip(),
+                  FTD = col_skip(), LTD = col_date(format = "%m/%d/%Y"),
+                  FND = col_date(format = "%m/%d/%Y"),
+                  LND = col_skip(), FDD = col_date(format = "%m/%d/%Y"),
+                  LDD = col_date(format = "%m/%d/%Y"),
+                  FSD = col_skip(), `OPTIONS FTD` = col_skip(),
+                  `OPTIONS LTD` = col_skip()
+                )
+) %>%
+  dplyr::transmute(
+    cmdty = "icewti", tick.prefix = "T", Last.Trade = LTD,
+    First.Notice = FND,
+    First.Delivery = lubridate::rollback(First.Notice, roll_to_first = TRUE) + months(1),
+    Last.Delivery = lubridate::rollback(First.Delivery + months(1))
+  )
+
 # destfile <- "Download.xls"
 # curl::curl_download(url = "https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/Download.xls?productId=425",destfile)
 CL <- read_excel("CL.xls", col_types = c(
@@ -787,21 +895,27 @@ S <- read_excel("S.xlsx") %>%
 
 ## tradeCycle
 tradeCycle <- read.csv("tradeCycle.csv", sep = ",", header = TRUE, na.strings = "NA", stringsAsFactors = FALSE) %>%
-  dplyr::mutate(
+  dplyr::transmute(
+    market = market,
     flowmonth = as.Date(flowmonth),
+    trade.cycle.start = lubridate::rollback(dates = as.Date(trade.cycle.end), roll_to_first = TRUE),
     trade.cycle.end = as.Date(trade.cycle.end)
   )
 nymex <- holidaysOil %>%
   dplyr::filter(key == "nymex") %>%
   dplyr::select(value) %>%
   .[[1]]
+
 bizdays::create.calendar(name = "nymex", holidays = nymex, weekdays = c("saturday", "sunday"))
 tradeCycle <- expiry_table %>%
   dplyr::filter(cmdty == "cmewti") %>%
-  dplyr::select(Last.Trade) %>%
+  dplyr::mutate(trade.cycle.start = bizdays::offset(dplyr::lag(Last.Trade), 4, "nymex")) %>%
+  tidyr::drop_na() %>%
+  #dplyr::select(Last.Trade) %>%
   dplyr::transmute(
     market = "usdomestic",
     flowmonth = lubridate::rollback(dates = Last.Trade + months(1), roll_to_first = TRUE),
+    trade.cycle.start = trade.cycle.start,
     trade.cycle.end = bizdays::offset(Last.Trade, 3, "nymex")
   ) %>%
   tidyr::drop_na() %>%
@@ -809,9 +923,29 @@ tradeCycle <- expiry_table %>%
   dplyr::as_tibble() %>%
   dplyr::mutate(trade.cycle.end = dplyr::case_when(trade.cycle.end == as.Date("2023-11-24") ~ as.Date("2023-11-22"), # us domestic Argus holiday
                                                    TRUE ~ trade.cycle.end))
-tradeCycle
 
-usethis::use_data(tradeCycle, overwrite = T)
+bizDays <- function(from = as.Date("2023-02-01"), to = as.Date("2023-02-13"), calendar = "nymex", output = "tradingDays") {
+  calDays <- seq(from = as.Date(from), to = as.Date(to), by = "day")
+  hol <- RTL::holidaysOil %>% dplyr::filter(key == calendar)
+  out <- list()
+  dates <- calDays[!(calDays %in% hol$value)]
+  out$dates <- dates[!(base::weekdays(dates) %in% c("Saturday", "Sunday"))]
+  out$tradingDays <- length(out$dates)
+  if (output == "tradingDays") {return(out$tradingDays)} else {return(out$dates)}
+}
+
+
+tradeCycle <- tradeCycle %>%
+  dplyr::mutate(
+    daysInCycle = purrr::pmap(.l = list(from = trade.cycle.start,
+                                        to = trade.cycle.end,
+                                        calendar = "nymex"),
+                                        .f=bizDays),
+    daysInCycle = as.numeric(daysInCycle),
+    dailyWt = 1/ daysInCycle)
+
+
+usethis::use_data(tradeCycle, overwrite = TRUE)
 
 
 # CME WTi MEH
@@ -826,7 +960,7 @@ meh <- RTL::tradeCycle %>%
                    Last.Delivery = First.Delivery + months(1) - 1)
 
 
-expiry_table <- rbind(expiry_table, LCO, LGO, CL, BZ, HO, RB, GC, SI, ALI, LTH, HG, W, C ,S,meh) %>%
+expiry_table <- rbind(expiry_table, LCO, LGO, CL, BZ, HO, RB, GC, SI, ALI, LTH, HG, W, C ,S,meh,ARV,TI,TMW,TMF,TMR,TMS) %>%
   dplyr::distinct() %>%
   dplyr::mutate(
     Year = year(First.Delivery),

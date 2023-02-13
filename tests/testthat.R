@@ -4,13 +4,13 @@ library(RTL)
 #test_check("RTL")
 
 test_that("tradeCycle Canadian",{
-  x = tradeCycle %>% dplyr::mutate(diff = as.numeric(.[[3]]-.[[2]]))
+  x = tradeCycle %>% dplyr::mutate(diff = as.numeric(trade.cycle.end-.[[2]]))
   expect_lt(x %>% dplyr::filter(market == "canada") %>% dplyr::select(diff) %>% min(.),-10)
   expect_gt(x %>% dplyr::filter(market == "canada") %>% dplyr::select(diff) %>% min(.),-21)
 })
 
 test_that("tradeCycle US Domestic",{
-  x = tradeCycle %>% dplyr::mutate(diff = as.numeric(.[[3]]-.[[2]]))
+  x = tradeCycle %>% dplyr::mutate(diff = as.numeric(trade.cycle.end-.[[2]]))
   expect_lt(x %>% dplyr::filter(market == "usdomestic") %>% dplyr::select(diff) %>% min(.),-5)
   expect_gt(x %>% dplyr::filter(market == "usdomestic") %>% dplyr::select(diff) %>% min(.),-15)
 })

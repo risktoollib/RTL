@@ -4,6 +4,11 @@
 
 + `eia2tidy()` amended when EIA data returns partial "Not Available" - the EIA returns the value as type character in that case.  
 
+## Enhancement
+
++ `tradeCycle` includes number of business days in trade cycles based on Nymex calendar.
++ Added Canadian crude ICE contracts expiry in `expiry_table`.
+
 # RTL 1.3.2
 
 ## New

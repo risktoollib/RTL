@@ -1273,9 +1273,17 @@ savepar <- par(mfrow = c(3, 3), mar = c(4, 4, 2, 0.5))
 on.exit(par(savepar))
 usSwapCurves <- DiscountCurve(params, tsQuotes, times)
 # check your curve for negative forward rates
-usSwapCurves[1:4] %>% dplyr::as_tibble() %>% dplyr::select(-discounts) %>%
-  tidyr::pivot_longer(-times, names_to = "ir",values_to = "rate") %>%
-  plotly::plot_ly(x = ~times, y = ~rate,name = ~ir,type = "scatter", mode = "lines")
+RTL::usSwapCurves[1:4] %>%
+  dplyr::as_tibble() %>%
+  dplyr::select(-discounts) %>%
+  tidyr::pivot_longer(-times, names_to = "ir", values_to = "rate") %>%
+  plotly::plot_ly(
+    x = ~ times,
+    y = ~ rate,
+    name = ~ ir,
+    type = "scatter",
+    mode = "lines"
+  )
 #usSwapCurves[1:4] %>% dplyr::as_tibble() %>% View()
 usethis::use_data(tsQuotes, overwrite = T)
 

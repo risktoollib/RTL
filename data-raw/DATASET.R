@@ -475,7 +475,7 @@ ng <- RTL::eia2tidy(
   key = EIAkey,
   name = "lower48"
 ) %>%
-  dplyr::mutate(product = "ng", value = value / 1000)
+  dplyr::mutate(product = "ng", value = lower48 / 1000)
 
 eiaStorageCap <- rbind(eiaStorageCap, dist1b, ng)
 file.remove(destfile)
@@ -862,7 +862,7 @@ bbdate <- function(x){
   paste0(substr(x,1,6),as.character(tmp))
 }
 
-W <- read_excel("W.xlsx") %>%
+W <- read_excel("W.xls") %>%
   dplyr::as_tibble(.name_repair = "universal") %>%
   dplyr::transmute(cmdty = "cmewheat",
                    tick.prefix = Ticker,
@@ -872,7 +872,7 @@ W <- read_excel("W.xlsx") %>%
                    Last.Delivery = as.Date(as.character(purrr::map(.x = Last.Delivery, .f = bbdate)), "%m/%d/%Y", tz = "UTC")
                    )
 
-C <- read_excel("C.xlsx") %>%
+C <- read_excel("C.xls") %>%
   dplyr::as_tibble(.name_repair = "universal") %>%
   dplyr::transmute(cmdty = "cmecorn",
                    tick.prefix = Ticker,
@@ -883,7 +883,7 @@ C <- read_excel("C.xlsx") %>%
   )
 
 
-S <- read_excel("S.xlsx") %>%
+S <- read_excel("S.xls") %>%
   dplyr::as_tibble(.name_repair = "universal") %>%
   dplyr::transmute(cmdty = "cmesoybean",
                    tick.prefix = Ticker,

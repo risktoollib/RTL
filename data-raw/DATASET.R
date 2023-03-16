@@ -947,7 +947,6 @@ tradeCycle <- tradeCycle %>%
 
 usethis::use_data(tradeCycle, overwrite = TRUE)
 
-
 # CME WTi MEH
 meh <- RTL::tradeCycle %>%
   dplyr::filter(market == "usdomestic",
@@ -969,6 +968,53 @@ expiry_table <- rbind(expiry_table, LCO, LGO, CL, BZ, HO, RB, GC, SI, ALI, LTH, 
   ) #%>% dplyr::filter(Year > 2003)
 
 usethis::use_data(expiry_table, overwrite = T)
+
+
+# cma ---------------------------------------------------------------------
+
+swp <- function(Month = "2023-01-01",
+                          contract = "cmewti",
+                          exchange = "nymex") {
+  # Pricing days
+  m <- as.Date(Month)
+  m1 <- lubridate::rollback(m + months(1))
+  calDays <- seq(as.Date(m), m1, by = "day")
+  hol <- RTL::holidaysOil %>% dplyr::filter(key == exchange)
+  bizDays <- calDays[!(calDays %in% hol$value)]
+  bizDays <- bizDays[!(weekdays(bizDays) %in% c("Saturday", "Sunday"))]
+  pricedIn <- cumsum(base::rep(x = 1/length(bizDays),length(bizDays)))
+
+  # Expiries
+  expiry <- RTL::expiry_table %>%
+    dplyr::filter(
+      cmdty == contract,
+      Last.Trade >= m,
+      Last.Trade <= m1
+    ) %>%
+    dplyr::pull(Last.Trade)
+
+  x <- dplyr::tibble(date = bizDays, Up2expiry = ifelse(date <= expiry, 1, 0))
+  numDaysFut1 <- sum(x$Up2expiry)
+  numDaysFut2 <- nrow(x) - sum(x$Up2expiry)
+  first.fut.weight <- sum(x$Up2expiry) / nrow(x)
+
+  out <- list()
+  out[["bizDays"]] <- bizDays
+  out[["pricedIn"]] <- pricedIn
+  out[["expiry"]] <- expiry
+  out[["numDaysFut1"]] <- numDaysFut1
+  out[["numDaysFut2"]] <- numDaysFut2
+  out[["percentFut1"]] <- first.fut.weight
+  return(out)
+}
+
+
+cma <-  dplyr::tibble(swapMonth = seq.Date(from = as.Date("2015-01-01"), to = as.Date("2030-12-01"), by = "month")) %>%
+  dplyr::mutate(swp = purrr::pmap(.l = list(Month = swapMonth), .f = swp)) %>%
+  tidyr::unnest_wider(col = swp)
+
+usethis::use_data(cma, overwrite = T)
+
 
 
 # crudeOil dataset

@@ -9,6 +9,12 @@
 #' @source {eia}
 "steo"
 
+#' metadata for WTI CMA
+#' @description CME WTI Calendar Month Average swap information
+#' @format data frame
+#' @source {cme}
+"cma"
+
 #' dataset: WTI Cushing Futures and storage utilization
 #' @description c1, c2, c1c2 and Cushing storage utilization
 #' @format list

@@ -130,7 +130,7 @@
 "tsQuotes"
 
 #' dataset: Canadian and US physical crude trading calendars
-#' @description Crude Trading Trade Cycles
+#' @description Crude Trading Trade Cycles. Note that is uses NYMEX calendar (WIP)
 #' @format data frame
 "tradeCycle"
 

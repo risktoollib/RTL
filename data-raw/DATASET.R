@@ -926,14 +926,13 @@ tradeCycle <- expiry_table %>%
 
 bizDays <- function(from = as.Date("2023-02-01"), to = as.Date("2023-02-13"), calendar = "nymex", output = "tradingDays") {
   calDays <- seq(from = as.Date(from), to = as.Date(to), by = "day")
-  hol <- RTL::holidaysOil %>% dplyr::filter(key == calendar)
+  hol <- RTL::holidaysOil %>% dplyr::filter(key == "calendar")
   out <- list()
   dates <- calDays[!(calDays %in% hol$value)]
   out$dates <- dates[!(base::weekdays(dates) %in% c("Saturday", "Sunday"))]
   out$tradingDays <- length(out$dates)
   if (output == "tradingDays") {return(out$tradingDays)} else {return(out$dates)}
 }
-
 
 tradeCycle <- tradeCycle %>%
   dplyr::mutate(
@@ -944,6 +943,23 @@ tradeCycle <- tradeCycle %>%
     daysInCycle = as.numeric(daysInCycle),
     dailyWt = 1/ daysInCycle)
 
+tcycle <- function(trade.cycle.start = as.Date("2016-11-01"),
+                trade.cycle.end = as.Date("2016-11-17")) {
+  # Pricing days
+  calDays <- seq(from = trade.cycle.start, to = trade.cycle.end, by = "day")
+  hol <- RTL::holidaysOil %>% dplyr::filter(key == "nymex")
+  bizDays <- calDays[!(calDays %in% hol$value)]
+  bizDays <- bizDays[!(weekdays(bizDays) %in% c("Saturday", "Sunday"))]
+  pricedIn <- cumsum(base::rep(x = 1/length(bizDays),length(bizDays)))
+  out <- list()
+  out[["bizDays"]] <- bizDays
+  out[["pricedIn"]] <- pricedIn
+  return(out)
+  }
+
+tradeCycle <- tradeCycle %>%
+  dplyr::mutate(x = purrr::pmap(.l = list(trade.cycle.start, trade.cycle.end), .f = tcycle)) %>%
+  tidyr::unnest_wider(col = x)
 
 usethis::use_data(tradeCycle, overwrite = TRUE)
 

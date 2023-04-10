@@ -11,6 +11,6 @@ data frame
 tradeCycle
 }
 \description{
-Crude Trading Trade Cycles
+Crude Trading Trade Cycles. Note that is uses NYMEX calendar (WIP)
 }
 \keyword{datasets}

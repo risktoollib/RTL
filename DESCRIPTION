@@ -10,7 +10,7 @@ Authors@R: c(
 Description: A toolkit for Commodities 'analytics', risk management and
     trading professionals. Includes functions for API calls to
     <https://commodities.morningstar.com/#/>, <https://developer.genscape.com/>,
-    <https://www.bankofcanada.ca/valet/docs>, and <https://www.eia.gov/opendata/documentation.php>.
+    <https://www.bankofcanada.ca/valet/docs>, and <https://www.eia.gov/>.
 License: MIT + file LICENSE
 URL: https://github.com/risktoollib/RTL
 Depends: 

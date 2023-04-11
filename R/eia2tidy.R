@@ -22,9 +22,9 @@ eia2tidy <- function(ticker, key, name = " ") {
   }
   url <- paste0("https://api.eia.gov/v2/seriesid/",ticker,"?&api_key=",key)
   x <- url %>% httr::GET()
-  if (x$status_code == "403") {stop(print("http 403 :: Invalid API key."))}
-  if (x$status_code == "404") {stop(print("http 404 :: Ticker not found."))}
-  if (x$status_code == "503") {stop(print("http 503 response :: the EIA server is temporarily unavailable. Try later."))}
+  if (x$status_code == "403") {stop("http 403 :: Invalid API key.")}
+  if (x$status_code == "404") {stop("http 404 :: Ticker not found.")}
+  if (x$status_code == "503") {stop("http 503 response :: the EIA server is temporarily unavailable. Try later.")}
   x <- jsonlite::fromJSON(httr::content(x, "text", encoding = "UTF-8"))
   #out <- x$response$data %>% dplyr::as_tibble() %>% dplyr::transmute(date = period, value) %>% dplyr::rename({{name}} := value)
   if (is.numeric(x$response$data$value) == FALSE) {x$response$data$value <- as.numeric(x$response$data$value)}

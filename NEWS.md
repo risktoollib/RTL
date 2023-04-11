@@ -10,6 +10,10 @@
 + Added Canadian crude ICE contracts expiry in `expiry_table`.
 + `cma` contains metadata for computation of CME WTI Calendar Month Average swap.
 
+## Archived
+
++ `discdescplot` was archived. Please contact the maintainer if you still require it.
+
 # RTL 1.3.2
 
 ## New

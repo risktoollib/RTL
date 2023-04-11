@@ -40,10 +40,10 @@ chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek"
     title <- unique(df$series)
   }
   if (!output %in% c("zscore", "seasonal", "stats", "stl", "res")) {
-    stop(print("Incorrect output parameter"))
+    stop("Incorrect output parameter")
   }
   if (!per %in% c("yearweek", "yearmonth", "yearquarter")) {
-    stop(print("Incorrect period parameter"))
+    stop("Incorrect period parameter")
   }
   if (per %in% c("yearweek", "yearquarter")) {
     s <- 7

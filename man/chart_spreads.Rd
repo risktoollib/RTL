@@ -18,25 +18,25 @@ chart_spreads(
 )
 }
 \arguments{
-\item{cpairs}{Tibble of contract pairs - see example for expiry when not expired yet.}
+\item{cpairs}{Tibble of contract pairs - see example for expiry when not expired yet. \code{tibble}}
 
-\item{daysFromExpiry}{Number of days (numeric) from expiry to compute spreads.}
+\item{daysFromExpiry}{Number of days from expiry to compute spreads. \code{numeric}}
 
-\item{from}{From date as character string}
+\item{from}{From date \code{character}}
 
-\item{conversion}{Defaults to c(1,1) first and second contracts. 42 from $ per gallons to bbls.}
+\item{conversion}{Defaults to c(1,1) first and second contracts. 42 from $ per gallons to bbls. \code{numeric}}
 
-\item{feed}{Morningstar Feed Table.}
+\item{feed}{Morningstar Feed Table. \code{character}}
 
-\item{iuser}{Morningstar user name as character - sourced locally in examples.}
+\item{iuser}{Morningstar user name as character - sourced locally in examples. \code{character}}
 
-\item{ipassword}{Morningstar user password as character - sourced locally in examples.}
+\item{ipassword}{Morningstar user password as character - sourced locally in examples. \code{character}}
 
-\item{title}{Title for chart.}
+\item{title}{Title for chart. \code{character}}
 
-\item{yaxis}{y-axis label.}
+\item{yaxis}{y-axis label. \code{character}}
 
-\item{output}{"chart" for plotly object or "data" for dataframe.}
+\item{output}{"chart" for \code{htmlwidget} or "data" for \code{tibble}.}
 }
 \value{
 A plotly object or a dataframe

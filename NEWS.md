@@ -6,6 +6,7 @@
 
 ## Enhancement
 
++ All function documentation of input and output types completed.
 + `tradeCycle` includes number of business days in trade cycles based on Nymex calendar.
 + Added Canadian crude ICE contracts expiry in `expiry_table`.
 + `cma` contains metadata for computation of CME WTI Calendar Month Average swap.

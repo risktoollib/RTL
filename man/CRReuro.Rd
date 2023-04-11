@@ -7,22 +7,22 @@
 CRReuro(S, X, sigma, r, T2M, N, type)
 }
 \arguments{
-\item{S}{Stock price.}
+\item{S}{Stock price. \code{numeric}}
 
-\item{X}{Strike price.}
+\item{X}{Strike price. \code{numeric}}
 
-\item{sigma}{Implied volatility e.g. 0.20}
+\item{sigma}{Implied volatility e.g. 0.20 \code{numeric}}
 
-\item{r}{Risk-free rate.}
+\item{r}{Risk-free rate. \code{numeric}}
 
-\item{T2M}{Time to maturity in years}
+\item{T2M}{Time to maturity in years \code{numeric}}
 
-\item{N}{Number of time steps. Internally dt = T2M/N.}
+\item{N}{Number of time steps. Internally dt = T2M/N. \code{numeric}}
 
-\item{type}{"call" or "put"}
+\item{type}{"call" or "put" \code{character}}
 }
 \value{
-List of asset price tree, option value tree and option price.
+List of asset price tree, option value tree and option price. \code{list}
 }
 \description{
 European option binomial model on a stock without dividends.For academic purpose only.

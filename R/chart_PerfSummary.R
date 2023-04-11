@@ -1,10 +1,10 @@
 #' Cumulative performance and drawdown summary.
 #' @description Multi Asset Display of Cumulative Performance and Drawdowns
-#' @param ret Wide dataframe univariate or multivariate of percentage returns.
-#' @param main Chart title.
-#' @param geometric Use geometric returns TRUE or FALSE.
-#' @param linesize Size of lines in chart and legend.
-#' @return Cumulative performance and drawdown charts.
+#' @param ret Wide dataframe univariate or multivariate of percentage returns. `tibble`
+#' @param main Chart title. `character`
+#' @param geometric Use geometric returns TRUE or FALSE. `logical`
+#' @param linesize Size of lines in chart and legend. `numeric`
+#' @returns Cumulative performance and drawdown charts. `ggplot`
 #' @export chart_PerfSummary
 #' @author Philippe Cote
 #' @examples

@@ -12,14 +12,14 @@ eia2tidy_all(
 )
 }
 \arguments{
-\item{tickers}{tribble of EIA series and names you want to assign.}
+\item{tickers}{tribble of EIA series and names you want to assign. \code{character}}
 
-\item{key}{Your private EIA API token as character "yourapikey".}
+\item{key}{Your private EIA API token as character "yourapikey". \code{character}}
 
-\item{long}{TRUE (default) to return a long data frame or FASLE for wide}
+\item{long}{TRUE (default) to return a long data frame or FASLE for wide. \code{logical}}
 }
 \value{
-A tibble object with class date for weekly, monthly, quarterly or annual data and class POSIXct for hourly.
+A tibble object with class date for weekly, monthly, quarterly or annual data and class POSIXct for hourly. \code{tibble}
 }
 \description{
 Extracts data from the Energy Information Administration (EIA) API to tibble format with optional custom series name.

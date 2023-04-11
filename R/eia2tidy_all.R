@@ -1,10 +1,10 @@
 #' EIA API multiple calls with tidy output
 #' @description Extracts data from the Energy Information Administration (EIA) API to tibble format with optional custom series name.
 #' Makes a clean wrapper for use with purrr for multiple series extraction. Query Browser at https://www.eia.gov/opendata/qb.php.
-#' @param tickers tribble of EIA series and names you want to assign.
-#' @param key Your private EIA API token as character "yourapikey".
-#' @param long TRUE (default) to return a long data frame or FASLE for wide
-#' @return A tibble object with class date for weekly, monthly, quarterly or annual data and class POSIXct for hourly.
+#' @param tickers tribble of EIA series and names you want to assign. `character`
+#' @param key Your private EIA API token as character "yourapikey". `character`
+#' @param long TRUE (default) to return a long data frame or FASLE for wide. `logical`
+#' @returns A tibble object with class date for weekly, monthly, quarterly or annual data and class POSIXct for hourly. `tibble`
 #' @export eia2tidy_all
 #' @author Philippe Cote
 #' @examples

@@ -13,6 +13,9 @@ list
 \usage{
 cushing
 }
+\value{
+\code{list}
+}
 \description{
 c1, c2, c1c2 and Cushing storage utilization
 }

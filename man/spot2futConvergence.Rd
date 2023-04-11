@@ -13,6 +13,9 @@ data frame
 \usage{
 spot2futConvergence
 }
+\value{
+\code{tibble}
+}
 \description{
 Cash and futures
 }

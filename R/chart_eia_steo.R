@@ -1,13 +1,13 @@
 #' EIA Short Term Energy Outlook
 #' @description Extract data and either plots or renders dataframe.
-#' @param key Your private EIA API token.
-#' @param from Date as character "2020-07-01". Default to all dates available.
-#' @param market "globalOil" only currently implemented.
-#' @param fig.title Defaults to "EIA STEO Global Liquids SD Balance".
-#' @param fig.units Defaults to "million barrels per day"
-#' @param legend.pos Defaults to list(x = 0.4, y = 0.53)
+#' @param key Your private EIA API token. `character`
+#' @param from Date as character "2020-07-01". Default to all dates available. `character`
+#' @param market "globalOil" only currently implemented. `character`
+#' @param fig.title Defaults to "EIA STEO Global Liquids SD Balance". `character`
+#' @param fig.units Defaults to "million barrels per day" `character`
+#' @param legend.pos Defaults to list(x = 0.4, y = 0.53)  `list`
 #' @param output "chart" for plotly object or "data" for dataframe.
-#' @return A plotly object or a dataframe
+#' @returns A plotly chart `htmlwidget` or a `tibble`.
 #' @export chart_eia_steo
 #' @author Philippe Cote
 #' @examples

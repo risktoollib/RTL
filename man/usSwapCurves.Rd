@@ -6,10 +6,15 @@
 \title{dataset: US bootstrapped interest rate curve.}
 \format{
 List
-#' @source Morningstar and FRED
+}
+\source{
+Morningstar and FRED
 }
 \usage{
 usSwapCurves
+}
+\value{
+\code{list}
 }
 \description{
 USD IR Discount, Forward and Zero curves from RQuantlib::DiscountCurve

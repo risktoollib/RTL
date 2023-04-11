@@ -1,11 +1,11 @@
 #' EIA weekly supply-demand information by product group
 #' @description Given a product group extracts all information to create SD Balances.
-#' @param market "mogas", "dist", "jet" or "resid".
-#' @param key Your private EIA API token.
-#' @param from Date as character "2020-07-01". Default to all dates available.
-#' @param legend.pos Defaults to list(x = 0.4, y = 0.53)
+#' @param market "mogas", "dist", "jet" or "resid". `character`
+#' @param key Your private EIA API token. `character`
+#' @param from Date as character "2020-07-01". Default to all dates available. `character`
+#' @param legend.pos Defaults to list(x = 0.4, y = 0.53). `list`
 #' @param output "chart" for plotly object or "data" for dataframe.
-#' @return A plotly object or a dataframe
+#' @returns A plotly chart `htmlwidget` or a `tibble`.
 #' @export chart_eia_sd
 #' @author Philippe Cote
 #' @examples

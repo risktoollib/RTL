@@ -10,6 +10,9 @@ data frame
 \usage{
 holidaysOil
 }
+\value{
+\code{tibble}
+}
 \description{
 Holiday calendars for NYMEX and ICE Brent
 }

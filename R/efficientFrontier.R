@@ -15,10 +15,10 @@
 #' implications of using log returns that you then re-apply to current forward
 #' curve level to arrive at a dollar risk measure per units instead of measuring
 #' directly risk in dollars per unit.
-#' @param nsims Number of portfolio simulations. Defaults to 5000
-#' @param x List as provided by output of RTL::simMultivariates().
-#' @param expectedReturns Defaults to NULL using periodic returns means.
-#' @return List of portfolios and chart of efficient frontier
+#' @param nsims Number of portfolio simulations. Defaults to 5000 `numeric`
+#' @param x List as provided by output of RTL::simMultivariates(). `list`
+#' @param expectedReturns Defaults to NULL using periodic returns means. `numeric`
+#' @returns List of portfolios and chart of efficient frontier `list`
 #' @export efficientFrontier
 #' @author Philippe Cote
 #' @examples

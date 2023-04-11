@@ -13,6 +13,9 @@ list
 \usage{
 stocks
 }
+\value{
+\code{list}
+}
 \description{
 Traded equity prices and returns
 }

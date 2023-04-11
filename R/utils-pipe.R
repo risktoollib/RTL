@@ -4,6 +4,7 @@
 #'
 #' @name %>%
 #' @rdname pipe
+#' @return Internal for use of pipe operator. No return value.
 #' @keywords internal
 #' @export
 #' @importFrom magrittr %>%

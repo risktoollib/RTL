@@ -1,11 +1,11 @@
 #' Bond pricing
-#' @description Compute bond price, cash flow table and duration
-#' @param ytm Yield to Maturity
-#' @param C Coupon rate per annum
-#' @param T2M Time to maturity in years
-#' @param m Periods per year for coupon payments e.g semi-annual = 2.
-#' @param output "price", "df" or "duration"
-#' @return Price, cash flows data frame and/or duration
+#' @description Compute bond price, cash flow table or duration
+#' @param ytm Yield to Maturity. `numeric`
+#' @param C Coupon rate per annum. `numeric`
+#' @param T2M Time to maturity in years. `numeric`
+#' @param m Periods per year for coupon payments e.g semi-annual = 2. `numeric`
+#' @param output "price", "df" or "duration". `character`
+#' @returns  Returns price `numeric`, cash flows `tibble`, or duration `numeric`
 #' @export bond
 #' @author Philippe Cote
 #' @examples

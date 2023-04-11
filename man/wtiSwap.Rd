@@ -13,6 +13,9 @@ data frame
 \usage{
 wtiSwap
 }
+\value{
+\code{tibble}
+}
 \description{
 WTI Crude futures
 }

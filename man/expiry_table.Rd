@@ -10,6 +10,9 @@ data frame
 \usage{
 expiry_table
 }
+\value{
+\code{tibble}
+}
 \description{
 This dataframe provides detailed information on major futures contracts specifications
 pertaining to last settlement, notices and delivery dates. It also provides tickers in some data service.

@@ -10,6 +10,9 @@ data frame
 \usage{
 tradeHubs
 }
+\value{
+\code{tibble}
+}
 \description{
 Trading Hubs
 }

@@ -7,12 +7,12 @@
 garch(x = x, out = TRUE)
 }
 \arguments{
-\item{x}{Wide dataframe with date column and single series (univariate).}
+\item{x}{Wide dataframe with date column and single series (univariate). \code{tibble}}
 
-\item{out}{"chart" to return chart, "data" to return data or "fit" for garch fit output}
+\item{out}{"chart" to return \code{replot_xts} chart, "data" to return \code{xts} data or "fit" for \code{uGARCHfit} fit output}
 }
 \value{
-plot.xts object or xts series
+\code{replot_xts} chart, \code{xts} data, or \code{uGARCHfit} fit
 }
 \description{
 Computes annualised Garch(1,1) volatilities using fGarch package.

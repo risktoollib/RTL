@@ -13,6 +13,9 @@ Morningstar Commodities
 \usage{
 dfwide
 }
+\value{
+\code{tibble}
+}
 \description{
 Futures settlement data set.
 }

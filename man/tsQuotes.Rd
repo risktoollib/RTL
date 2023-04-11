@@ -10,6 +10,9 @@ data frame
 \usage{
 tsQuotes
 }
+\value{
+\code{tibble}
+}
 \description{
 USD IR curve input for RQuantlib::DiscountCurve
 }

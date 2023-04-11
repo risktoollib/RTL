@@ -13,6 +13,9 @@ data frame
 \usage{
 spot2futCurve
 }
+\value{
+\code{tibble}
+}
 \description{
 Forward Curve
 }

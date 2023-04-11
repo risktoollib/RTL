@@ -10,6 +10,9 @@ data frame
 \usage{
 eiaStorageCap
 }
+\value{
+\code{tibble}
+}
 \description{
 EIA working storage capacity in kbs except NG in bcf.
 }

@@ -1,9 +1,9 @@
 #' Pairwise scatter plots for timeseries
 #' @description Plots pairwise scatter plots with the time dimension.
 #' Useful when exploring structural changes in timeseries properties for modeling.
-#' @param df Wide data frame
-#' @param title Chart title
-#' @return A plotly object
+#' @param df Wide data frame. `tibble`
+#' @param title Chart title. `character`
+#' @returns A plotly object. `htmlwidget`
 #' @importFrom plotly plot_ly layout
 #' @importFrom purrr map2
 #' @export chart_pairs

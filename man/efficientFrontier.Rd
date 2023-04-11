@@ -11,14 +11,14 @@ efficientFrontier(
 )
 }
 \arguments{
-\item{nsims}{Number of portfolio simulations. Defaults to 5000}
+\item{nsims}{Number of portfolio simulations. Defaults to 5000 \code{numeric}}
 
-\item{x}{List as provided by output of RTL::simMultivariates().}
+\item{x}{List as provided by output of RTL::simMultivariates(). \code{list}}
 
-\item{expectedReturns}{Defaults to NULL using periodic returns means.}
+\item{expectedReturns}{Defaults to NULL using periodic returns means. \code{numeric}}
 }
 \value{
-List of portfolios and chart of efficient frontier
+List of portfolios and chart of efficient frontier \code{list}
 }
 \description{
 Generates random portfolio weights statistics based on absolute returns.

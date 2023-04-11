@@ -1,10 +1,10 @@
 #' Plots historical forward curves
 #' @description Returns a plot of forward curves through time
-#' @param df Wide dataframe with date column and multiple series columns (multivariate)
-#' @param cmdty Futures contract code in expiry_table object: unique(expiry_table$cmdty)
-#' @param weekly Defaults to TRUE for weekly forward curves
+#' @param df Wide dataframe with date column and multiple series columns (multivariate). `tibble`
+#' @param cmdty Futures contract code in expiry_table object: unique(expiry_table$cmdty). `character`
+#' @param weekly Defaults to TRUE for weekly forward curves. `logical`
 #' @param ... other graphical parameters
-#' @return plot of forward curves through time
+#' @returns plot of forward curves through time. `NULL`
 #' @export chart_fwd_curves
 #' @author Philippe Cote
 #' @examples

@@ -13,18 +13,18 @@ chart_eia_sd(
 )
 }
 \arguments{
-\item{market}{"mogas", "dist", "jet" or "resid".}
+\item{market}{"mogas", "dist", "jet" or "resid". \code{character}}
 
-\item{key}{Your private EIA API token.}
+\item{key}{Your private EIA API token. \code{character}}
 
-\item{from}{Date as character "2020-07-01". Default to all dates available.}
+\item{from}{Date as character "2020-07-01". Default to all dates available. \code{character}}
 
-\item{legend.pos}{Defaults to list(x = 0.4, y = 0.53)}
+\item{legend.pos}{Defaults to list(x = 0.4, y = 0.53). \code{list}}
 
 \item{output}{"chart" for plotly object or "data" for dataframe.}
 }
 \value{
-A plotly object or a dataframe
+A plotly chart \code{htmlwidget} or a \code{tibble}.
 }
 \description{
 Given a product group extracts all information to create SD Balances.

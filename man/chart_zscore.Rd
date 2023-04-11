@@ -13,11 +13,11 @@ chart_zscore(
 )
 }
 \arguments{
-\item{df}{Long data frame with columns series, date and value}
+\item{df}{Long data frame with columns series, date and value. \code{tibble}}
 
-\item{title}{Default is a blank space returning the unique value in df$series.}
+\item{title}{Default is a blank space returning the unique value in df$series. \code{character}}
 
-\item{per}{Frequency of seasonality "yearweek" (DEFAULT). "yearmonth", "yearquarter"}
+\item{per}{Frequency of seasonality "yearweek" (DEFAULT). "yearmonth", "yearquarter" \code{character}}
 
 \item{output}{"stl" for STL decomposition chart,
 "stats" for STL fitted statistics.

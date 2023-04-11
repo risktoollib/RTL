@@ -13,6 +13,9 @@ plotly object
 \usage{
 steo
 }
+\value{
+\code{htmlwidget}
+}
 \description{
 Short Term Energy Outlook from the EIA.
 }

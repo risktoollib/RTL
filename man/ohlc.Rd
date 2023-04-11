@@ -13,6 +13,9 @@ data frame
 \usage{
 ohlc
 }
+\value{
+\code{tibble}
+}
 \description{
 OHLC profile using historical CL 1st Contract OHLC
 }

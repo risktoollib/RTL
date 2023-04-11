@@ -10,6 +10,9 @@ data frame
 \usage{
 eiaStocks
 }
+\value{
+\code{tibble}
+}
 \description{
 EIA weekly crude, NG, ULSD and RBOB stocks.
 }

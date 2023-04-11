@@ -7,12 +7,12 @@
 chart_pairs(df = df, title = "Time Series Pairs Plot")
 }
 \arguments{
-\item{df}{Wide data frame}
+\item{df}{Wide data frame. \code{tibble}}
 
-\item{title}{Chart title}
+\item{title}{Chart title. \code{character}}
 }
 \value{
-A plotly object
+A plotly object. \code{htmlwidget}
 }
 \description{
 Plots pairwise scatter plots with the time dimension.

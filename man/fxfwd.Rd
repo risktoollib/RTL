@@ -13,6 +13,9 @@ list
 \usage{
 fxfwd
 }
+\value{
+\code{list}
+}
 \description{
 USDCAD historicals and forward curve
 }

@@ -1,10 +1,10 @@
 #' EIA API call with tidy output
 #' @description Extracts data from the Energy Information Administration (EIA) API to tibble format with optional custom series name.
 #' Makes a clean wrapper for use with purrr for multiple series extraction. Query Browser at https://www.eia.gov/opendata/qb.php.
-#' @param ticker EIA series name.
-#' @param key Your private EIA API token as character "yourapikey".
-#' @param name Name you want to give the series. Defaults to ticker if set to " "
-#' @return A tibble object with class date for weekly, monthly, quarterly or annual data and class POSIXct for hourly.
+#' @param ticker EIA series name. `character`
+#' @param key Your private EIA API token as character "yourapikey". `character`
+#' @param name Name you want to give the series. Defaults to ticker if set to " " `character`
+#' @returns A tibble object with class date for weekly, monthly, quarterly or annual data and class POSIXct for hourly. `tibble`
 #' @export eia2tidy
 #' @author Philippe Cote
 #' @examples

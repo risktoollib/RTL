@@ -10,6 +10,9 @@ list
 \usage{
 crudeOil
 }
+\value{
+\code{list}
+}
 \description{
 crude assays
 }

@@ -10,6 +10,9 @@ data frame
 \usage{
 usSwapCurvesPar
 }
+\value{
+\code{tibble}
+}
 \description{
 USD IR Discount, Forward and Zero curves from RQuantlib::DiscountCurve - Parallel toy data set
 }

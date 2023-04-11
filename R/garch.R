@@ -1,8 +1,8 @@
 #' Wrapper for a Garch(1,1) returning either a plot or data.
 #' @description Computes annualised Garch(1,1) volatilities using fGarch package.
-#' @param x Wide dataframe with date column and single series (univariate).
-#' @param out "chart" to return chart, "data" to return data or "fit" for garch fit output
-#' @return plot.xts object or xts series
+#' @param x Wide dataframe with date column and single series (univariate). `tibble`
+#' @param out "chart" to return `replot_xts` chart, "data" to return `xts` data or "fit" for `uGARCHfit` fit output
+#' @returns `replot_xts` chart, `xts` data, or `uGARCHfit` fit
 #' @export garch
 #' @author Philippe Cote
 #' @examples

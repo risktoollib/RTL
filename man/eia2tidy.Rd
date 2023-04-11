@@ -7,14 +7,14 @@
 eia2tidy(ticker, key, name = " ")
 }
 \arguments{
-\item{ticker}{EIA series name.}
+\item{ticker}{EIA series name. \code{character}}
 
-\item{key}{Your private EIA API token as character "yourapikey".}
+\item{key}{Your private EIA API token as character "yourapikey". \code{character}}
 
-\item{name}{Name you want to give the series. Defaults to ticker if set to " "}
+\item{name}{Name you want to give the series. Defaults to ticker if set to " " \code{character}}
 }
 \value{
-A tibble object with class date for weekly, monthly, quarterly or annual data and class POSIXct for hourly.
+A tibble object with class date for weekly, monthly, quarterly or annual data and class POSIXct for hourly. \code{tibble}
 }
 \description{
 Extracts data from the Energy Information Administration (EIA) API to tibble format with optional custom series name.

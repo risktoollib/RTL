@@ -1,7 +1,7 @@
 #' Fits a Ornstein–Uhlenbeck process to a dataset
 #' @description Parameter estimation for Ornstein–Uhlenbeck process
-#' @param spread Spread time series.
-#' @return List of alpha, mu and sigma estimates
+#' @param spread Spread time series. `tibble`
+#' @returns List of alpha, mu and sigma estimates. `list`
 #' @export fitOU
 #' @author Philippe Cote
 #' @examples

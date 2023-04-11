@@ -2,14 +2,14 @@
 #' @description
 #' European option binomial model on a stock without dividends.For academic purpose only.
 #' Use fOptions::CRRBinomialTreeOptions for real-life usage.
-#' @param S Stock price.
-#' @param X Strike price.
-#' @param sigma Implied volatility e.g. 0.20
-#' @param r Risk-free rate.
-#' @param T2M Time to maturity in years
-#' @param N Number of time steps. Internally dt = T2M/N.
-#' @param type "call" or "put"
-#' @return List of asset price tree, option value tree and option price.
+#' @param S Stock price. `numeric`
+#' @param X Strike price. `numeric`
+#' @param sigma Implied volatility e.g. 0.20 `numeric`
+#' @param r Risk-free rate. `numeric`
+#' @param T2M Time to maturity in years `numeric`
+#' @param N Number of time steps. Internally dt = T2M/N. `numeric`
+#' @param type "call" or "put" `character`
+#' @returns List of asset price tree, option value tree and option price. `list`
 #' @export CRReuro
 #' @author Philippe Cote
 #' @examples

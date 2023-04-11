@@ -15,22 +15,22 @@ chart_eia_steo(
 )
 }
 \arguments{
-\item{market}{"globalOil" only currently implemented.}
+\item{market}{"globalOil" only currently implemented. \code{character}}
 
-\item{key}{Your private EIA API token.}
+\item{key}{Your private EIA API token. \code{character}}
 
-\item{from}{Date as character "2020-07-01". Default to all dates available.}
+\item{from}{Date as character "2020-07-01". Default to all dates available. \code{character}}
 
-\item{fig.title}{Defaults to "EIA STEO Global Liquids SD Balance".}
+\item{fig.title}{Defaults to "EIA STEO Global Liquids SD Balance". \code{character}}
 
-\item{fig.units}{Defaults to "million barrels per day"}
+\item{fig.units}{Defaults to "million barrels per day" \code{character}}
 
-\item{legend.pos}{Defaults to list(x = 0.4, y = 0.53)}
+\item{legend.pos}{Defaults to list(x = 0.4, y = 0.53)  \code{list}}
 
 \item{output}{"chart" for plotly object or "data" for dataframe.}
 }
 \value{
-A plotly object or a dataframe
+A plotly chart \code{htmlwidget} or a \code{tibble}.
 }
 \description{
 Extract data and either plots or renders dataframe.

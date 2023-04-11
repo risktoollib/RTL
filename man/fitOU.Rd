@@ -7,10 +7,10 @@
 fitOU(spread)
 }
 \arguments{
-\item{spread}{Spread time series.}
+\item{spread}{Spread time series. \code{tibble}}
 }
 \value{
-List of alpha, mu and sigma estimates
+List of alpha, mu and sigma estimates. \code{list}
 }
 \description{
 Parameter estimation for Ornstein–Uhlenbeck process

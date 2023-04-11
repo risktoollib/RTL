@@ -1,16 +1,16 @@
 #' Futures contract spreads comparison across years
 #' @description Plots specific contract pairs across years with time being days from expiry.
-#' @param cpairs Tibble of contract pairs - see example for expiry when not expired yet.
-#' @param daysFromExpiry Number of days (numeric) from expiry to compute spreads.
-#' @param conversion Defaults to c(1,1) first and second contracts. 42 from $ per gallons to bbls.
-#' @param feed Morningstar Feed Table.
-#' @param from From date as character string
-#' @param iuser Morningstar user name as character - sourced locally in examples.
-#' @param ipassword Morningstar user password as character - sourced locally in examples.
-#' @param title Title for chart.
-#' @param yaxis y-axis label.
-#' @param output "chart" for plotly object or "data" for dataframe.
-#' @return A plotly object or a dataframe
+#' @param cpairs Tibble of contract pairs - see example for expiry when not expired yet. `tibble`
+#' @param daysFromExpiry Number of days from expiry to compute spreads. `numeric`
+#' @param conversion Defaults to c(1,1) first and second contracts. 42 from $ per gallons to bbls. `numeric`
+#' @param feed Morningstar Feed Table. `character`
+#' @param from From date `character`
+#' @param iuser Morningstar user name as character - sourced locally in examples. `character`
+#' @param ipassword Morningstar user password as character - sourced locally in examples. `character`
+#' @param title Title for chart. `character`
+#' @param yaxis y-axis label. `character`
+#' @param output "chart" for `htmlwidget` or "data" for `tibble`.
+#' @returns A plotly object or a dataframe
 #' @importFrom rlang :=
 #' @export chart_spreads
 #' @author Philippe Cote

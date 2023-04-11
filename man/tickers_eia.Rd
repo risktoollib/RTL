@@ -10,6 +10,9 @@ data frame
 \usage{
 tickers_eia
 }
+\value{
+\code{tibble}
+}
 \description{
 Supports automated upload of EIA data through its API by categories.
 Data frame organized by Supply Demand categories and products.

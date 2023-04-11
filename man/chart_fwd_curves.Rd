@@ -7,16 +7,16 @@
 chart_fwd_curves(df = dfwide, cmdty = "cmewti", weekly = TRUE, ...)
 }
 \arguments{
-\item{df}{Wide dataframe with date column and multiple series columns (multivariate)}
+\item{df}{Wide dataframe with date column and multiple series columns (multivariate). \code{tibble}}
 
-\item{cmdty}{Futures contract code in expiry_table object: unique(expiry_table$cmdty)}
+\item{cmdty}{Futures contract code in expiry_table object: unique(expiry_table$cmdty). \code{character}}
 
-\item{weekly}{Defaults to TRUE for weekly forward curves}
+\item{weekly}{Defaults to TRUE for weekly forward curves. \code{logical}}
 
 \item{...}{other graphical parameters}
 }
 \value{
-plot of forward curves through time
+plot of forward curves through time. \code{NULL}
 }
 \description{
 Returns a plot of forward curves through time

@@ -12,16 +12,16 @@ chart_PerfSummary(
 )
 }
 \arguments{
-\item{ret}{Wide dataframe univariate or multivariate of percentage returns.}
+\item{ret}{Wide dataframe univariate or multivariate of percentage returns. \code{tibble}}
 
-\item{geometric}{Use geometric returns TRUE or FALSE.}
+\item{geometric}{Use geometric returns TRUE or FALSE. \code{logical}}
 
-\item{main}{Chart title.}
+\item{main}{Chart title. \code{character}}
 
-\item{linesize}{Size of lines in chart and legend.}
+\item{linesize}{Size of lines in chart and legend. \code{numeric}}
 }
 \value{
-Cumulative performance and drawdown charts.
+Cumulative performance and drawdown charts. \code{ggplot}
 }
 \description{
 Multi Asset Display of Cumulative Performance and Drawdowns

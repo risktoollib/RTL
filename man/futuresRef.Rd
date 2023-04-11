@@ -10,6 +10,9 @@ data frame
 \usage{
 futuresRef
 }
+\value{
+\code{tibble}
+}
 \description{
 Exchange-traded contract month codes and specifications.
 }

@@ -10,6 +10,9 @@ list
 \usage{
 refineryLPdata
 }
+\value{
+\code{list}
+}
 \description{
 Simple refinery  to be used in running LP modeling for education purposes.
 }

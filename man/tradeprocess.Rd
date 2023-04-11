@@ -10,6 +10,9 @@ data frame
 \usage{
 tradeprocess
 }
+\value{
+\code{tibble}
+}
 \description{
 Data set for explaining the various ways to monetize a market view.
 }

@@ -13,6 +13,9 @@ data frame
 \usage{
 planets
 }
+\value{
+\code{tibble}
+}
 \description{
 Planet metrics from NASA
 }

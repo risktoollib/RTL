@@ -13,6 +13,9 @@ data frame
 \usage{
 eurodollar
 }
+\value{
+\code{tibble}
+}
 \description{
 ED futures contract for December 2024
 }

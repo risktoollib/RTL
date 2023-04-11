@@ -10,6 +10,9 @@ data frame
 \usage{
 fizdiffs
 }
+\value{
+\code{tibble}
+}
 \description{
 Randomized data set for education purpose of selected physical crude differentials to WTI.
 }

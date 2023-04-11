@@ -7,21 +7,21 @@
 bond(ytm = 0.05, C = 0.05, T2M = 1, m = 2, output = "price")
 }
 \arguments{
-\item{ytm}{Yield to Maturity}
+\item{ytm}{Yield to Maturity. \code{numeric}}
 
-\item{C}{Coupon rate per annum}
+\item{C}{Coupon rate per annum. \code{numeric}}
 
-\item{T2M}{Time to maturity in years}
+\item{T2M}{Time to maturity in years. \code{numeric}}
 
-\item{m}{Periods per year for coupon payments e.g semi-annual = 2.}
+\item{m}{Periods per year for coupon payments e.g semi-annual = 2. \code{numeric}}
 
-\item{output}{"price", "df" or "duration"}
+\item{output}{"price", "df" or "duration". \code{character}}
 }
 \value{
-Price, cash flows data frame and/or duration
+Returns price \code{numeric}, cash flows \code{tibble}, or duration \code{numeric}
 }
 \description{
-Compute bond price, cash flow table and duration
+Compute bond price, cash flow table or duration
 }
 \examples{
 bond(ytm = 0.05, C = 0.05, T2M = 1, m = 2, output = "price")

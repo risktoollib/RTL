@@ -13,6 +13,9 @@ data frame
 \usage{
 cma
 }
+\value{
+\code{tibble}
+}
 \description{
 CME WTI Calendar Month Average swap information
 }

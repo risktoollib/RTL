@@ -1,9 +1,9 @@
 #' Sample quantitative trading strategy
 #' @description Moving average crossover strategy
-#' @param data Dataframe of OHLC data e.g. RTL::uso
-#' @param par1value Value of first parameter e.g. short MA
-#' @param par2value Value of second parameter e.g. long MA
-#' @return Dataframe with indicators, signals, trades and profit and loss.
+#' @param data Dataframe of OHLC data e.g. RTL::uso. `tibble`
+#' @param par1value Value of first parameter e.g. short MA. `numeric`
+#' @param par2value Value of second parameter e.g. long MA. `numeric`
+#' @returns Dataframe with indicators, signals, trades and profit and loss. `tibble`
 #' @export tradeStrategySMA
 #' @author Philippe Cote
 #' @examples

@@ -14,20 +14,20 @@ getCurve(
 )
 }
 \arguments{
-\item{feed}{Morningstar Feed Table e.g "Crb_Futures_Price_Volume_And_Open_Interest".}
+\item{feed}{Morningstar Feed Table e.g "Crb_Futures_Price_Volume_And_Open_Interest". \code{character}}
 
-\item{contract}{Morningstar contract root e.g. "CL" for CME WTI and "BG" for ICE Brent.}
+\item{contract}{Morningstar contract root e.g. "CL" for CME WTI and "BG" for ICE Brent. \code{character}}
 
-\item{date}{From date as character string.}
+\item{date}{From date yyyy-mm-dd. \code{character}}
 
-\item{fields}{Defaults to c("Open, High, Low, Close").}
+\item{fields}{Defaults to c("Open, High, Low, Close"). \code{character}}
 
-\item{iuser}{Morningstar user name as character - sourced locally in examples.}
+\item{iuser}{Morningstar user name as character - sourced locally in examples. \code{character}}
 
-\item{ipassword}{Morningstar user password as character - sourced locally in examples.}
+\item{ipassword}{Morningstar user password as character - sourced locally in examples. \code{character}}
 }
 \value{
-wide data frame
+wide data frame. \code{tibble}
 }
 \description{
 Returns forward curves from Morningstar API. See below for current feeds supported.

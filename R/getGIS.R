@@ -8,8 +8,8 @@
 #'   \item from https://gis.energy.gov.ab.ca/Geoview/OSPNG
 #'   \item AB <- getGIS(url = "https://gis.energy.gov.ab.ca/GeoviewData/OS_Agreements_Shape.zip")
 #' }
-#' @param url URL of the zipped shapefile
-#' @return SpatialPointsDataFrame
+#' @param url URL of the zipped shapefile. `character`
+#' @returns SpatialPointsDataFrame. `SpatialPolygonsDataFrame`
 #' @export getGIS
 #' @author Philippe Cote
 #' @examples

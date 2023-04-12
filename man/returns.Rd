@@ -7,16 +7,16 @@
 returns(df = dflong, retType = "abs", period.return = 1, spread = FALSE)
 }
 \arguments{
-\item{df}{Long dataframe with colnames = c("date","value","series")}
+\item{df}{Long dataframe with colnames = c("date","value","series"). \code{character}}
 
-\item{retType}{"abs" for absolute, "rel" for relative, or "log" for log returns.}
+\item{retType}{"abs" for absolute, "rel" for relative, or "log" for log returns. \code{character}}
 
-\item{period.return}{Number of rows over which to compute returns.}
+\item{period.return}{Number of rows over which to compute returns. \code{numeric}}
 
-\item{spread}{TRUE if you want to spread into a long dataframe.}
+\item{spread}{TRUE if you want to spread into a long dataframe. \code{logical}}
 }
 \value{
-A dataframe object of returns.
+A dataframe object of returns. \code{tibble}
 }
 \description{
 Computes periodic returns from a dataframe ordered by date

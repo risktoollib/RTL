@@ -16,25 +16,25 @@ simOU(
 )
 }
 \arguments{
-\item{nsims}{number of simulations. Defaults to 2}
+\item{nsims}{number of simulations. Defaults to 2. \code{numeric}}
 
-\item{S0}{S at t=0}
+\item{S0}{S at t=0. \code{numeric}}
 
-\item{mu}{Mean reversion level}
+\item{mu}{Mean reversion level. \code{numeric}}
 
-\item{theta}{Mean reversion speed}
+\item{theta}{Mean reversion speed. \code{numeric}}
 
-\item{sigma}{Standard deviation}
+\item{sigma}{Standard deviation. \code{numeric}}
 
-\item{T2M}{Maturity in years}
+\item{T2M}{Maturity in years. \code{numeric}}
 
-\item{dt}{Time step size e.g. 1/250 = 1 business day.}
+\item{dt}{Time step size e.g. 1/250 = 1 business day. \code{numeric}}
 
-\item{epsilon}{Defaults to NULL function generates its own.
+\item{epsilon}{Defaults to NULL function generates its own. \code{numeric}
 OPTIONAL: Array of epsilons for nsims = 1, if you want to feed your own e.g. in a multivariate context.}
 }
 \value{
-A numeric vector of simulated values
+Simulated values. \code{tibble}
 }
 \description{
 Simulates a Ornstein–Uhlenbeck process

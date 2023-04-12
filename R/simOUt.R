@@ -1,13 +1,13 @@
 #' OU process simulation
 #' @description Simulates a Ornstein–Uhlenbeck process with mu as a function of time
-#' @param nsims number of simulations. Defaults to 2
-#' @param S0 S at t=0
-#' @param mu data frame of mean reversion level as a function of time
-#' @param theta Mean reversion speed
-#' @param sigma Standard deviation
-#' @param T2M Maturity in years
-#' @param dt Time step size e.g. 1/250 = 1 business day.
-#' @return A numeric vector of simulated values
+#' @param nsims number of simulations. Defaults to 2. `numeric`
+#' @param S0 S at t=0. `numeric`
+#' @param mu data frame of mean reversion level as a function of time. `tibble`
+#' @param theta Mean reversion speed. `numeric`
+#' @param sigma Standard deviation. `numeric`
+#' @param T2M Maturity in years. `numeric`
+#' @param dt Time step size e.g. 1/250 = 1 business day. `numeric`
+#' @returns Simulated values. `tibble`
 #' @export simOUt
 #' @author Philippe Cote
 #' @examples

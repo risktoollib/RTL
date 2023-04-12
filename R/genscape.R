@@ -4,16 +4,16 @@
 #' Refer to API documentation for argument values.
 #' https://developer.genscape.com/docs/services/oil-storage/operations/StorageVolumeByOwnerGet
 #'
-#' @param feed "owner-volumes" DEFAULT or "tank-volumes"
-#' @param regions See API webpage. Multiple values separated by commas e.g. "Canada, Cushing").
-#' @param products See API webpage. Multiple values separated by commas e.g. "Crude, JetFuel").
-#' @param revision See API webpage.
-#' @param limit See API webpage. Max 5000
-#' @param offset See API webpage.
-#' @param startDate "yyyy-mm-dd" as character string
-#' @param endDate "yyyy-mm-dd" as character string
-#' @param apikey Your API key as a character string.
-#' @return wide data frame
+#' @param feed "owner-volumes" DEFAULT or "tank-volumes". `character`
+#' @param regions See API webpage. Multiple values separated by commas e.g. "Canada, Cushing"). `character`
+#' @param products See API webpage. Multiple values separated by commas e.g. "Crude, JetFuel"). `character`
+#' @param revision See API webpage. `character`
+#' @param limit See API webpage. Max 5000. `numeric`
+#' @param offset See API webpage. `numeric`
+#' @param startDate "yyyy-mm-dd". `character`
+#' @param endDate "yyyy-mm-dd". `character`
+#' @param apikey Your API key as a character string. `character`
+#' @returns wide data frame `tibble`
 #' @export getGenscapeStorageOil
 #' @author Philippe Cote
 #' @examples
@@ -90,16 +90,16 @@ getGenscapeStorageOil <- function(feed = "owner-volumes", regions = "Canada", pr
 #' Use the online API to identify the pipeline IDs.
 #' https://developer.genscape.com/docs/services/oil-transportation/operations/GetPipelineFlowValuesV2/
 #'
-#' @param frequency "daily" DEFAULT.
-#' @param regions See API webpage. Multiple values separated by commas e.g. "Canada", "GulfCoast").
-#' @param pipelineIDs See API webpage. c(98,54...) for specific pipes.
-#' @param revision See API webpage.
-#' @param limit See API webpage. Max 5000
-#' @param offset See API webpage.
-#' @param startDate "yyyy-mm-dd" as character string
-#' @param endDate "yyyy-mm-dd" as character string
-#' @param apikey Your API key as a character string.
-#' @return wide data frame
+#' @param frequency "daily" DEFAULT. `character`
+#' @param regions See API webpage. Multiple values separated by commas e.g. "Canada", "GulfCoast"). `character`
+#' @param pipelineIDs See API webpage. c(98,54...) for specific pipes. `numeric`
+#' @param revision See API webpage. `character`
+#' @param limit See API webpage. Max 5000. `numeric`
+#' @param offset See API webpage. `numeric`
+#' @param startDate "yyyy-mm-dd". `character`
+#' @param endDate "yyyy-mm-dd". `character`
+#' @param apikey Your API key. `character`
+#' @returns wide data frame. `tibble`
 #' @export getGenscapePipeOil
 #' @author Philippe Cote
 #' @examples

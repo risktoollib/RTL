@@ -1,10 +1,10 @@
 #' Computes betas of futures contracts with respect to the 1st line contract
 #' @description Returns betas of futures contracts versus front futures contract.
-#' @param x Wide dataframe with date column and multiple series columns (multivariate).
-#' @param period "all" or numeric period of time in last n periods as character eg "100".
-#' @param betatype "all" "bull" "bear".
-#' @param output "betas" or "chart"
-#' @return betas data frame or plotly chart of betas
+#' @param x Wide dataframe with date column and multiple series columns (multivariate). `tibble`
+#' @param period "all" or numeric period of time in last n periods as character eg "100". `character`
+#' @param betatype "all" "bull" "bear". `character`
+#' @param output "betas" or "chart". `character`
+#' @returns betas data frame `tibble` or plotly chart of betas `htmlwidgets`
 #' @importFrom readr parse_number
 #' @export promptBeta
 #' @author Philippe Cote

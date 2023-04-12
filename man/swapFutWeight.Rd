@@ -12,16 +12,16 @@ swapFutWeight(
 )
 }
 \arguments{
-\item{Month}{First calendar day of the month.}
+\item{Month}{First calendar day of the month. \code{character}}
 
-\item{contract}{Contract code in data(expiry_table). sort(unique(expiry_table$cmdty)) for options.}
+\item{contract}{Contract code in data(expiry_table). sort(unique(expiry_table$cmdty)) for options. \code{character}}
 
-\item{exchange}{Exchange code in data(holidaysOil). Currently only "nymex" and "ice" supported.}
+\item{exchange}{Exchange code in data(holidaysOil). Currently only "nymex" and "ice" supported. \code{character}}
 
-\item{output}{Either "numDaysFut1", "numDaysFut2" or "first.fut.weight"}
+\item{output}{Either "numDaysFut1", "numDaysFut2" or "first.fut.weight". \code{character}}
 }
 \value{
-What you defined in outputs.
+Depending on output setting. \code{numeric}
 If first.fut.weight, to compute swap 1 - first.fut.weight = \% applied to 2nd line contract.
 }
 \description{

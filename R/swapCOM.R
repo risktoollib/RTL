@@ -1,11 +1,11 @@
 #' Commodity Calendar Month Average Swaps
 #' @description Commodity swap pricing from exchange settlement
-#' @param futures Wide data frame of futures prices for the given swap pricing dates
-#' @param futuresNames Tickers of relevant futures contracts
-#' @param pricingDates Vector of start and end pricing dates as character. See example.
-#' @param exchange Exchange code in data(holidaysOil). Currently only "nymex" and "ice" supported.
-#' @param contract Contract code in data(expiry_table). sort(unique(expiry_table$cmdty)) for options.
-#' @return Data frame of histocial swap prices.
+#' @param futures Wide data frame of futures prices for the given swap pricing dates. `tibble`
+#' @param futuresNames Tickers of relevant futures contracts. `character`
+#' @param pricingDates Vector of start and end pricing dates. See example. `character`
+#' @param exchange Exchange code in data(holidaysOil). Currently only "nymex" and "ice" supported. `character`
+#' @param contract Contract code in data(expiry_table). sort(unique(expiry_table$cmdty)) for options. `character`
+#' @returns Data frame of histocial swap prices. `tibble`
 #' @export swapCOM
 #' @author Philippe Cote
 #' @examples

@@ -1,8 +1,8 @@
 #' Risk-reward statistics for quant trading
 #' @description Compute list of risk reward metrics
-#' @param x Univariate xts object of returns OR dataframe with date and return variables.
-#' @param Rf Risk-free rate
-#' @return List of risk/reward metrics.
+#' @param x Univariate xts object of returns OR dataframe with date and return variables. `xts`
+#' @param Rf Risk-free rate. `numeric`
+#' @returns List of risk/reward metrics. `list`
 #' @export tradeStats
 #' @author Philippe Cote
 #' @examples

@@ -16,24 +16,24 @@ npv(
 )
 }
 \arguments{
-\item{init.cost}{Initial investment cost}
+\item{init.cost}{Initial investment cost. \code{numeric}}
 
-\item{C}{Periodic cash flow}
+\item{C}{Periodic cash flow. \code{numeric}}
 
-\item{cf.freq}{Cash flow frequency in year fraction e.g. quarterly = 0.25}
+\item{cf.freq}{Cash flow frequency in year fraction e.g. quarterly = 0.25. \code{numeric}}
 
-\item{TV}{Terminal Value}
+\item{TV}{Terminal Value. \code{numeric}}
 
-\item{T2M}{Time to Maturity in years}
+\item{T2M}{Time to Maturity in years. \code{numeric}}
 
-\item{disc.factors}{Data frame of discount factors using ir.df.us() function.}
+\item{disc.factors}{Data frame of discount factors using ir.df.us() function. \code{numeric}}
 
-\item{BreakEven}{TRUE when using a flat discount rate assumption.}
+\item{BreakEven}{TRUE when using a flat discount rate assumption. \code{logical}}
 
-\item{BE.yield}{Set the flat IR rate when BreakEven = TRUE.}
+\item{BE.yield}{Set the flat IR rate when BreakEven = TRUE. \code{logical}}
 }
 \value{
-List of NPV and NPV Data frame
+List of NPV and NPV Data frame. \code{list}
 }
 \description{
 Computes NPV with discount factor interpolation.

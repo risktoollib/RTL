@@ -1,10 +1,10 @@
 #' Commodity Calendar Month Average Swap futures weights
 #' @description Returns the percentage weight of the future in Calendar Month Average swaps
-#' @param Month First calendar day of the month.
-#' @param exchange Exchange code in data(holidaysOil). Currently only "nymex" and "ice" supported.
-#' @param contract Contract code in data(expiry_table). sort(unique(expiry_table$cmdty)) for options.
-#' @param output Either "numDaysFut1", "numDaysFut2" or "first.fut.weight"
-#' @return What you defined in outputs.
+#' @param Month First calendar day of the month. `character`
+#' @param exchange Exchange code in data(holidaysOil). Currently only "nymex" and "ice" supported. `character`
+#' @param contract Contract code in data(expiry_table). sort(unique(expiry_table$cmdty)) for options. `character`
+#' @param output Either "numDaysFut1", "numDaysFut2" or "first.fut.weight". `character`
+#' @returns Depending on output setting. `numeric`
 #' If first.fut.weight, to compute swap 1 - first.fut.weight = % applied to 2nd line contract.
 #' @export swapFutWeight
 #' @author Philippe Cote

@@ -1,18 +1,18 @@
 #' Interest Rate Swap
 #' @description Computes the mark to market of an IRS
-#' @param trade.date Date object. Defaults to today().
-#' @param eff.date Date object. Defaults to today() + 2 days.
-#' @param mat.date Date object. Defaults to today() + 2 years.
-#' @param notional Numeric value of notional. Defaults to 1,000,000.
-#' @param PayRec "Pay" or "Rec" fixed.
-#' @param fixed.rate Numeric fixed interest rate. Defaults to 0.05.
-#' @param float.curve List of interest rate curves. Defaults to data("usSwapCurves").
-#' @param reset.freq Numeric where 1 = "monthly", 3 = quarterly, 6 = Semi annual 12 = yearly.
-#' @param disc.curve List of interest rate curves. Defaults to data("usSwapCurves").
-#' @param convention Vector of convention e.g. c("act",360) c(30,360),...
+#' @param trade.date Date object. Defaults to today(). `Date`
+#' @param eff.date Date object. Defaults to today() + 2 days. `Date`
+#' @param mat.date Date object. Defaults to today() + 2 years. `Date`
+#' @param notional Numeric value of notional. Defaults to 1,000,000. `numeric`
+#' @param PayRec "Pay" or "Rec" fixed. `character`
+#' @param fixed.rate Numeric fixed interest rate. Defaults to 0.05. `Date`
+#' @param float.curve List of interest rate curves. Defaults to data("usSwapCurves"). `list`
+#' @param reset.freq Numeric where 1 = "monthly", 3 = quarterly, 6 = Semi annual 12 = yearly. `character`
+#' @param disc.curve List of interest rate curves. Defaults to data("usSwapCurves"). `list`
+#' @param convention Vector of convention e.g. c("act",360) c(30,360),... `character`
 #' @param bus.calendar Banking day calendar. Not implemented.
-#' @param output "price" for swap price or "all" for price, cash flow data frame, duration.
-#' @return List of swap price, cash flow data frame, duration.
+#' @param output "price" for swap price or "all" for price, cash flow data frame, duration. `character`
+#' @returns List of swap price, cash flow data frame, duration. `list`
 #' @export swapIRS
 #' @author Philippe Cote
 #' @examples

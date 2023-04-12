@@ -7,10 +7,10 @@
 getBoC(series)
 }
 \arguments{
-\item{series}{Array of series name: c("FXCADUSD","BD.CDN.2YR.DQ.YLD").}
+\item{series}{Array of series name: c("FXCADUSD","BD.CDN.2YR.DQ.YLD"). \code{character}}
 }
 \value{
-A long data frame.
+A long data frame. \code{tibble}
 }
 \description{
 Extracts series from the Bank of Canada's Valet API.

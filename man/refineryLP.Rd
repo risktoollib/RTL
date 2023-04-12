@@ -10,12 +10,12 @@ refineryLP(
 )
 }
 \arguments{
-\item{crudes}{Data frame of crude inputs}
+\item{crudes}{Data frame of crude inputs. \code{tibble}}
 
-\item{products}{Data frame of product outputs and max outputs.}
+\item{products}{Data frame of product outputs and max outputs. \code{tibble}}
 }
 \value{
-Optimal crude slate and profits
+Optimal crude slate and profits. \code{tibble}
 }
 \description{
 Plain vanilla refinery optimization LP model.

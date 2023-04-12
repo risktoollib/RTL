@@ -1,13 +1,13 @@
 #' GBM process simulation
 #' @description Simulates a Geometric Brownian Motion process
-#' @param nsims number of simulations. Defaults to 1
-#' @param S0 Spot price at t=0
-#' @param drift Drift term in percentage
-#' @param sigma Standard deviation
-#' @param T2M Maturity in years
-#' @param dt Time step in period e.g. 1/250 = 1 business day.
-#' @param vec Vectorized implementation. Defaults to TRUE
-#' @return A tibble of simulated values
+#' @param nsims number of simulations. Defaults to 1. `numeric`
+#' @param S0 Spot price at t=0. `numeric`
+#' @param drift Drift term in percentage. `numeric`
+#' @param sigma Standard deviation. `numeric`
+#' @param T2M Maturity in years. `numeric`
+#' @param dt Time step in period e.g. 1/250 = 1 business day. `numeric`
+#' @param vec Vectorized implementation. Defaults to TRUE. `logical`
+#' @returns A tibble of simulated values. `tibble`
 #' @export simGBM
 #' @author Philippe Cote
 #' @examples

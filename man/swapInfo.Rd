@@ -16,22 +16,22 @@ swapInfo(
 )
 }
 \arguments{
-\item{date}{Character date as of which you want to extract daily settlement and forward values.}
+\item{date}{Character date as of which you want to extract daily settlement and forward values. \code{character}}
 
-\item{feeds}{Feeds for Morningstar getCurve() and getPrice().}
+\item{feeds}{Feeds for Morningstar getCurve() and getPrice(). \code{character}}
 
-\item{contract}{Contract code in data(expiry_table). sort(unique(expiry_table$cmdty)) for options.}
+\item{contract}{Contract code in data(expiry_table). sort(unique(expiry_table$cmdty)) for options. \code{character}}
 
-\item{exchange}{Exchange code in data(holidaysOil). Defaults to "nymex".}
+\item{exchange}{Exchange code in data(holidaysOil). Defaults to "nymex". \code{character}}
 
-\item{iuser}{Morningstar user name as character - sourced locally in examples.}
+\item{iuser}{Morningstar user name as character - sourced locally in examples. \code{character}}
 
-\item{ipassword}{Morningstar user password as character - sourced locally in examples.}
+\item{ipassword}{Morningstar user password as character - sourced locally in examples. \code{character}}
 
-\item{output}{"chart" or "all"}
+\item{output}{"chart" or "all". \code{character}}
 }
 \value{
-Plot or a list of data frame and plot if output = "all".
+Plot or a list of data frame and plot if output = "all". \code{htmlwidget} or \code{list}
 }
 \description{
 Returns dataframe required to price a WTI averaging instrument based on first line settlements.

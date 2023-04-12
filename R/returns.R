@@ -1,10 +1,10 @@
 #' Compute absolute, relative or log returns.
 #' @description Computes periodic returns from a dataframe ordered by date
-#' @param df Long dataframe with colnames = c("date","value","series")
-#' @param retType "abs" for absolute, "rel" for relative, or "log" for log returns.
-#' @param period.return Number of rows over which to compute returns.
-#' @param spread TRUE if you want to spread into a long dataframe.
-#' @return A dataframe object of returns.
+#' @param df Long dataframe with colnames = c("date","value","series"). `character`
+#' @param retType "abs" for absolute, "rel" for relative, or "log" for log returns. `character`
+#' @param period.return Number of rows over which to compute returns. `numeric`
+#' @param spread TRUE if you want to spread into a long dataframe. `logical`
+#' @return A dataframe object of returns. `tibble`
 #' @export returns
 #' @author Philippe Cote
 #' @examples

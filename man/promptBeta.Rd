@@ -7,16 +7,16 @@
 promptBeta(x = x, period = "all", betatype = "all", output = "chart")
 }
 \arguments{
-\item{x}{Wide dataframe with date column and multiple series columns (multivariate).}
+\item{x}{Wide dataframe with date column and multiple series columns (multivariate). \code{tibble}}
 
-\item{period}{"all" or numeric period of time in last n periods as character eg "100".}
+\item{period}{"all" or numeric period of time in last n periods as character eg "100". \code{character}}
 
-\item{betatype}{"all" "bull" "bear".}
+\item{betatype}{"all" "bull" "bear". \code{character}}
 
-\item{output}{"betas" or "chart"}
+\item{output}{"betas" or "chart". \code{character}}
 }
 \value{
-betas data frame or plotly chart of betas
+betas data frame \code{tibble} or plotly chart of betas \code{htmlwidgets}
 }
 \description{
 Returns betas of futures contracts versus front futures contract.

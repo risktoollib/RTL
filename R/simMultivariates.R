@@ -1,9 +1,9 @@
 #' Multivariate normal from historical dataset
 #' @description Generates multivariate random epsilons using absolute returns.
-#' @param nsims Number of simulations. Defaults to 10
-#' @param x Wide data frame of prices with date as first column.
-#' @param s0 Vector of starting value for each variables. Defaults to NULL with zero.
-#' @return List of means, sds, covariance matrix, correlation matrix and simulated values
+#' @param nsims Number of simulations. Defaults to 10. `numeric`
+#' @param x Wide data frame of prices with date as first column. `tibble`
+#' @param s0 Vector of starting value for each variables. Defaults to NULL with zero. `numeric`
+#' @returns List of means, sds, covariance matrix, correlation matrix and simulated values. `list`
 #' @export simMultivariates
 #' @author Philippe Cote
 #' @examples

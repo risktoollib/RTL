@@ -7,12 +7,12 @@
 tradeStats(x, Rf = 0)
 }
 \arguments{
-\item{x}{Univariate xts object of returns OR dataframe with date and return variables.}
+\item{x}{Univariate xts object of returns OR dataframe with date and return variables. \code{xts}}
 
-\item{Rf}{Risk-free rate}
+\item{Rf}{Risk-free rate. \code{numeric}}
 }
 \value{
-List of risk/reward metrics.
+List of risk/reward metrics. \code{list}
 }
 \description{
 Compute list of risk reward metrics

@@ -22,12 +22,12 @@
 #'   \item AESO_ForecastAndActualPoolPrice.
 #' }
 #'
-#' @param feed Morningstar Feed Table.
-#' @param contract Morningstar key.
-#' @param from From date as character string
-#' @param iuser Morningstar user name as character - sourced locally in examples.
-#' @param ipassword Morningstar user password as character - sourced locally in examples.
-#' @return wide data frame
+#' @param feed Morningstar Feed Table. `character`
+#' @param contract Morningstar key. `character`
+#' @param from From date yyyy-mm-dd. `character`
+#' @param iuser Morningstar user name as character - sourced locally in examples. `character`
+#' @param ipassword Morningstar user password as character - sourced locally in examples. `character`
+#' @returns wide data frame. `tibble`
 #' @export getPrice
 #' @author Philippe Cote
 #' @examples
@@ -234,12 +234,12 @@ getPrice <- function(feed = "CME_NymexFutures_EOD", contract = "@CL21Z",
 #' @description
 #' Multiple Morningstar API calls using getPrice functions.
 #' Refer to `getPrices()` for list of currently supported data feeds.
-#' @param feed Morningstar Feed Table
-#' @param contracts Symbols vector
-#' @param from From date as character string
-#' @param iuser Morningstar user name as character - sourced locally in examples.
-#' @param ipassword Morningstar user password as character - sourced locally in examples.
-#' @return wide data frame
+#' @param feed Morningstar Feed Table. `character`
+#' @param contracts Symbols vector. `character`
+#' @param from From date yyyy-mm-dd. `character`
+#' @param iuser Morningstar user name as character - sourced locally in examples. `character`
+#' @param ipassword Morningstar user password as character - sourced locally in examples. `character`
+#' @returns wide data frame. `tibble`
 #' @export getPrices
 #' @author Philippe Cote
 #' @examples
@@ -274,13 +274,13 @@ getPrices <- function(feed = "CME_NymexFutures_EOD", contracts = c("CL9Z", "CL0F
 #'   \item ICE_EuroFutures and ICE_EuroFutures_continuous
 #' }
 #'
-#' @param feed Morningstar Feed Table e.g "Crb_Futures_Price_Volume_And_Open_Interest".
-#' @param contract Morningstar contract root e.g. "CL" for CME WTI and "BG" for ICE Brent.
-#' @param date From date as character string.
-#' @param fields Defaults to c("Open, High, Low, Close").
-#' @param iuser Morningstar user name as character - sourced locally in examples.
-#' @param ipassword Morningstar user password as character - sourced locally in examples.
-#' @return wide data frame
+#' @param feed Morningstar Feed Table e.g "Crb_Futures_Price_Volume_And_Open_Interest". `character`
+#' @param contract Morningstar contract root e.g. "CL" for CME WTI and "BG" for ICE Brent. `character`
+#' @param date From date yyyy-mm-dd. `character`
+#' @param fields Defaults to c("Open, High, Low, Close"). `character`
+#' @param iuser Morningstar user name as character - sourced locally in examples. `character`
+#' @param ipassword Morningstar user password as character - sourced locally in examples. `character`
+#' @returns wide data frame. `tibble`
 #' @export getCurve
 #' @author Philippe Cote
 #' @examples

@@ -15,22 +15,22 @@ simOUt(
 )
 }
 \arguments{
-\item{nsims}{number of simulations. Defaults to 2}
+\item{nsims}{number of simulations. Defaults to 2. \code{numeric}}
 
-\item{S0}{S at t=0}
+\item{S0}{S at t=0. \code{numeric}}
 
-\item{mu}{data frame of mean reversion level as a function of time}
+\item{mu}{data frame of mean reversion level as a function of time. \code{tibble}}
 
-\item{theta}{Mean reversion speed}
+\item{theta}{Mean reversion speed. \code{numeric}}
 
-\item{sigma}{Standard deviation}
+\item{sigma}{Standard deviation. \code{numeric}}
 
-\item{T2M}{Maturity in years}
+\item{T2M}{Maturity in years. \code{numeric}}
 
-\item{dt}{Time step size e.g. 1/250 = 1 business day.}
+\item{dt}{Time step size e.g. 1/250 = 1 business day. \code{numeric}}
 }
 \value{
-A numeric vector of simulated values
+Simulated values. \code{tibble}
 }
 \description{
 Simulates a Ornstein–Uhlenbeck process with mu as a function of time

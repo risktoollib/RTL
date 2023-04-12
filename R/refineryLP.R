@@ -1,8 +1,8 @@
 #' LP model for refinery optimization
 #' @description Plain vanilla refinery optimization LP model.
-#' @param crudes Data frame of crude inputs
-#' @param products Data frame of product outputs and max outputs.
-#' @return Optimal crude slate and profits
+#' @param crudes Data frame of crude inputs. `tibble`
+#' @param products Data frame of product outputs and max outputs. `tibble`
+#' @returns Optimal crude slate and profits. `tibble`
 #' @export refineryLP
 #' @author Philippe Cote
 #' @examples

@@ -1,8 +1,8 @@
 #' Bank of Canada Valet API
 #' @description Extracts series from the Bank of Canada's Valet API.
 #' API documentation at https://www.bankofcanada.ca/valet/docs.
-#' @param series Array of series name: c("FXCADUSD","BD.CDN.2YR.DQ.YLD").
-#' @return A long data frame.
+#' @param series Array of series name: c("FXCADUSD","BD.CDN.2YR.DQ.YLD"). `character`
+#' @returns A long data frame. `tibble`
 #' @export getBoC
 #' @author Philippe Cote
 #' @examples

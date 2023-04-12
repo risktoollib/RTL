@@ -7,14 +7,14 @@
 simMultivariates(nsims = 10, x, s0 = NULL)
 }
 \arguments{
-\item{nsims}{Number of simulations. Defaults to 10}
+\item{nsims}{Number of simulations. Defaults to 10. \code{numeric}}
 
-\item{x}{Wide data frame of prices with date as first column.}
+\item{x}{Wide data frame of prices with date as first column. \code{tibble}}
 
-\item{s0}{Vector of starting value for each variables. Defaults to NULL with zero.}
+\item{s0}{Vector of starting value for each variables. Defaults to NULL with zero. \code{numeric}}
 }
 \value{
-List of means, sds, covariance matrix, correlation matrix and simulated values
+List of means, sds, covariance matrix, correlation matrix and simulated values. \code{list}
 }
 \description{
 Generates multivariate random epsilons using absolute returns.

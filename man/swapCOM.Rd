@@ -13,18 +13,18 @@ swapCOM(
 )
 }
 \arguments{
-\item{futures}{Wide data frame of futures prices for the given swap pricing dates}
+\item{futures}{Wide data frame of futures prices for the given swap pricing dates. \code{tibble}}
 
-\item{futuresNames}{Tickers of relevant futures contracts}
+\item{futuresNames}{Tickers of relevant futures contracts. \code{character}}
 
-\item{pricingDates}{Vector of start and end pricing dates as character. See example.}
+\item{pricingDates}{Vector of start and end pricing dates. See example. \code{character}}
 
-\item{contract}{Contract code in data(expiry_table). sort(unique(expiry_table$cmdty)) for options.}
+\item{contract}{Contract code in data(expiry_table). sort(unique(expiry_table$cmdty)) for options. \code{character}}
 
-\item{exchange}{Exchange code in data(holidaysOil). Currently only "nymex" and "ice" supported.}
+\item{exchange}{Exchange code in data(holidaysOil). Currently only "nymex" and "ice" supported. \code{character}}
 }
 \value{
-Data frame of histocial swap prices.
+Data frame of histocial swap prices. \code{tibble}
 }
 \description{
 Commodity swap pricing from exchange settlement

@@ -20,32 +20,32 @@ swapIRS(
 )
 }
 \arguments{
-\item{trade.date}{Date object. Defaults to today().}
+\item{trade.date}{Date object. Defaults to today(). \code{Date}}
 
-\item{eff.date}{Date object. Defaults to today() + 2 days.}
+\item{eff.date}{Date object. Defaults to today() + 2 days. \code{Date}}
 
-\item{mat.date}{Date object. Defaults to today() + 2 years.}
+\item{mat.date}{Date object. Defaults to today() + 2 years. \code{Date}}
 
-\item{notional}{Numeric value of notional. Defaults to 1,000,000.}
+\item{notional}{Numeric value of notional. Defaults to 1,000,000. \code{numeric}}
 
-\item{PayRec}{"Pay" or "Rec" fixed.}
+\item{PayRec}{"Pay" or "Rec" fixed. \code{character}}
 
-\item{fixed.rate}{Numeric fixed interest rate. Defaults to 0.05.}
+\item{fixed.rate}{Numeric fixed interest rate. Defaults to 0.05. \code{Date}}
 
-\item{float.curve}{List of interest rate curves. Defaults to data("usSwapCurves").}
+\item{float.curve}{List of interest rate curves. Defaults to data("usSwapCurves"). \code{list}}
 
-\item{reset.freq}{Numeric where 1 = "monthly", 3 = quarterly, 6 = Semi annual 12 = yearly.}
+\item{reset.freq}{Numeric where 1 = "monthly", 3 = quarterly, 6 = Semi annual 12 = yearly. \code{character}}
 
-\item{disc.curve}{List of interest rate curves. Defaults to data("usSwapCurves").}
+\item{disc.curve}{List of interest rate curves. Defaults to data("usSwapCurves"). \code{list}}
 
-\item{convention}{Vector of convention e.g. c("act",360) c(30,360),...}
+\item{convention}{Vector of convention e.g. c("act",360) c(30,360),... \code{character}}
 
 \item{bus.calendar}{Banking day calendar. Not implemented.}
 
-\item{output}{"price" for swap price or "all" for price, cash flow data frame, duration.}
+\item{output}{"price" for swap price or "all" for price, cash flow data frame, duration. \code{character}}
 }
 \value{
-List of swap price, cash flow data frame, duration.
+List of swap price, cash flow data frame, duration. \code{list}
 }
 \description{
 Computes the mark to market of an IRS

@@ -18,28 +18,28 @@ simOUJ(
 )
 }
 \arguments{
-\item{nsims}{number of simulations. Defaults to 2}
+\item{nsims}{number of simulations. Defaults to 2. \code{numeric}}
 
-\item{S0}{S at t=0}
+\item{S0}{S at t=0. \code{numeric}}
 
-\item{mu}{Mean reversion level}
+\item{mu}{Mean reversion level. \code{numeric}}
 
-\item{theta}{Mean reversion speed}
+\item{theta}{Mean reversion speed. \code{numeric}}
 
-\item{sigma}{Standard deviation}
+\item{sigma}{Standard deviation. \code{numeric}}
 
-\item{jump_prob}{Probability of jumps}
+\item{jump_prob}{Probability of jumps. \code{numeric}}
 
-\item{jump_avesize}{Average size of jumps}
+\item{jump_avesize}{Average size of jumps. \code{numeric}}
 
-\item{jump_stdv}{Standard deviation of jump average size}
+\item{jump_stdv}{Standard deviation of jump average size. \code{numeric}}
 
-\item{T2M}{Maturity in years}
+\item{T2M}{Maturity in years. \code{numeric}}
 
-\item{dt}{Time step size e.g. 1/250 = 1 business day.}
+\item{dt}{Time step size e.g. 1/250 = 1 business day. \code{numeric}}
 }
 \value{
-A numeric vector of simulated values
+Simulated values. \code{tibble}
 }
 \description{
 Simulates a Ornstein–Uhlenbeck process with Jumps

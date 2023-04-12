@@ -9,10 +9,10 @@ getGIS(
 )
 }
 \arguments{
-\item{url}{URL of the zipped shapefile}
+\item{url}{URL of the zipped shapefile. \code{character}}
 }
 \value{
-SpatialPointsDataFrame
+SpatialPointsDataFrame. \code{SpatialPolygonsDataFrame}
 }
 \description{
 Returns a SpatialPointsDataFrame from a shapefile URL.

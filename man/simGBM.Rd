@@ -15,22 +15,22 @@ simGBM(
 )
 }
 \arguments{
-\item{nsims}{number of simulations. Defaults to 1}
+\item{nsims}{number of simulations. Defaults to 1. \code{numeric}}
 
-\item{S0}{Spot price at t=0}
+\item{S0}{Spot price at t=0. \code{numeric}}
 
-\item{drift}{Drift term in percentage}
+\item{drift}{Drift term in percentage. \code{numeric}}
 
-\item{sigma}{Standard deviation}
+\item{sigma}{Standard deviation. \code{numeric}}
 
-\item{T2M}{Maturity in years}
+\item{T2M}{Maturity in years. \code{numeric}}
 
-\item{dt}{Time step in period e.g. 1/250 = 1 business day.}
+\item{dt}{Time step in period e.g. 1/250 = 1 business day. \code{numeric}}
 
-\item{vec}{Vectorized implementation. Defaults to TRUE}
+\item{vec}{Vectorized implementation. Defaults to TRUE. \code{logical}}
 }
 \value{
-A tibble of simulated values
+A tibble of simulated values. \code{tibble}
 }
 \description{
 Simulates a Geometric Brownian Motion process

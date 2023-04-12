@@ -13,18 +13,18 @@ getPrices(
 )
 }
 \arguments{
-\item{feed}{Morningstar Feed Table}
+\item{feed}{Morningstar Feed Table. \code{character}}
 
-\item{contracts}{Symbols vector}
+\item{contracts}{Symbols vector. \code{character}}
 
-\item{from}{From date as character string}
+\item{from}{From date yyyy-mm-dd. \code{character}}
 
-\item{iuser}{Morningstar user name as character - sourced locally in examples.}
+\item{iuser}{Morningstar user name as character - sourced locally in examples. \code{character}}
 
-\item{ipassword}{Morningstar user password as character - sourced locally in examples.}
+\item{ipassword}{Morningstar user password as character - sourced locally in examples. \code{character}}
 }
 \value{
-wide data frame
+wide data frame. \code{tibble}
 }
 \description{
 Multiple Morningstar API calls using getPrice functions.

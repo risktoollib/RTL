@@ -7,17 +7,17 @@
 tradeStrategyDY(data, par1value = 50, par2value = 200)
 }
 \arguments{
-\item{data}{Dataframe of OHLC data e.g. RTL::uso}
+\item{data}{Dataframe of OHLC data e.g. RTL::uso. \code{tibble}}
 
-\item{par1value}{Value of first parameter e.g. short MA}
+\item{par1value}{Value of first parameter e.g. short MA. \code{numeric}}
 
-\item{par2value}{Value of second parameter e.g. long MA}
+\item{par2value}{Value of second parameter e.g. long MA. \code{numeric}}
 }
 \value{
-Dataframe with indicators, signals, trades and profit and loss.
+Dataframe with indicators, signals, trades and profit and loss. \code{tibble}
 }
 \description{
-Based on dividend yield
+Based on dividend yield.
 }
 \examples{
 tradeStrategyDY(data = RTL::stocks$ry, par1value = 50, par2value = 200)

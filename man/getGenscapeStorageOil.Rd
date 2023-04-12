@@ -17,26 +17,26 @@ getGenscapeStorageOil(
 )
 }
 \arguments{
-\item{feed}{"owner-volumes" DEFAULT or "tank-volumes"}
+\item{feed}{"owner-volumes" DEFAULT or "tank-volumes". \code{character}}
 
-\item{regions}{See API webpage. Multiple values separated by commas e.g. "Canada, Cushing").}
+\item{regions}{See API webpage. Multiple values separated by commas e.g. "Canada, Cushing"). \code{character}}
 
-\item{products}{See API webpage. Multiple values separated by commas e.g. "Crude, JetFuel").}
+\item{products}{See API webpage. Multiple values separated by commas e.g. "Crude, JetFuel"). \code{character}}
 
-\item{revision}{See API webpage.}
+\item{revision}{See API webpage. \code{character}}
 
-\item{limit}{See API webpage. Max 5000}
+\item{limit}{See API webpage. Max 5000. \code{numeric}}
 
-\item{offset}{See API webpage.}
+\item{offset}{See API webpage. \code{numeric}}
 
-\item{startDate}{"yyyy-mm-dd" as character string}
+\item{startDate}{"yyyy-mm-dd". \code{character}}
 
-\item{endDate}{"yyyy-mm-dd" as character string}
+\item{endDate}{"yyyy-mm-dd". \code{character}}
 
-\item{apikey}{Your API key as a character string.}
+\item{apikey}{Your API key as a character string. \code{character}}
 }
 \value{
-wide data frame
+wide data frame \code{tibble}
 }
 \description{
 Returns oil storage data from Genscape API.You need your own credentials.

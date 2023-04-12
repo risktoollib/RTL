@@ -1,16 +1,16 @@
 #' OUJ process simulation
 #' @description Simulates a Ornstein–Uhlenbeck process with Jumps
-#' @param nsims number of simulations. Defaults to 2
-#' @param S0 S at t=0
-#' @param mu Mean reversion level
-#' @param theta Mean reversion speed
-#' @param sigma Standard deviation
-#' @param jump_prob Probability of jumps
-#' @param jump_avesize Average size of jumps
-#' @param jump_stdv Standard deviation of jump average size
-#' @param T2M Maturity in years
-#' @param dt Time step size e.g. 1/250 = 1 business day.
-#' @return A numeric vector of simulated values
+#' @param nsims number of simulations. Defaults to 2. `numeric`
+#' @param S0 S at t=0. `numeric`
+#' @param mu Mean reversion level. `numeric`
+#' @param theta Mean reversion speed. `numeric`
+#' @param sigma Standard deviation. `numeric`
+#' @param jump_prob Probability of jumps. `numeric`
+#' @param jump_avesize Average size of jumps. `numeric`
+#' @param jump_stdv Standard deviation of jump average size. `numeric`
+#' @param T2M Maturity in years. `numeric`
+#' @param dt Time step size e.g. 1/250 = 1 business day. `numeric`
+#' @returns Simulated values. `tibble`
 #' @export simOUJ
 #' @author Philippe Cote
 #' @examples

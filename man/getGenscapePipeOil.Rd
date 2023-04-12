@@ -17,26 +17,26 @@ getGenscapePipeOil(
 )
 }
 \arguments{
-\item{frequency}{"daily" DEFAULT.}
+\item{frequency}{"daily" DEFAULT. \code{character}}
 
-\item{regions}{See API webpage. Multiple values separated by commas e.g. "Canada", "GulfCoast").}
+\item{regions}{See API webpage. Multiple values separated by commas e.g. "Canada", "GulfCoast"). \code{character}}
 
-\item{pipelineIDs}{See API webpage. c(98,54...) for specific pipes.}
+\item{pipelineIDs}{See API webpage. c(98,54...) for specific pipes. \code{numeric}}
 
-\item{revision}{See API webpage.}
+\item{revision}{See API webpage. \code{character}}
 
-\item{limit}{See API webpage. Max 5000}
+\item{limit}{See API webpage. Max 5000. \code{numeric}}
 
-\item{offset}{See API webpage.}
+\item{offset}{See API webpage. \code{numeric}}
 
-\item{startDate}{"yyyy-mm-dd" as character string}
+\item{startDate}{"yyyy-mm-dd". \code{character}}
 
-\item{endDate}{"yyyy-mm-dd" as character string}
+\item{endDate}{"yyyy-mm-dd". \code{character}}
 
-\item{apikey}{Your API key as a character string.}
+\item{apikey}{Your API key. \code{character}}
 }
 \value{
-wide data frame
+wide data frame. \code{tibble}
 }
 \description{
 Returns oil pipeline flows in barrels per day data from Genscape API.You need your own credentials.

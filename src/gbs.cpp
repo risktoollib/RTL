@@ -23,12 +23,11 @@ double CND(double x) {
 }
 
 // [[Rcpp::export]]
-double gbs(char CallPutFlag, double S, double X, double T, double r, double v)
-{
+double gbs(char CallPutFlag, double S, double X, double T, double r, double v) {
   double d1, d2;
 
-  d1=(log(S/X)+(r+v*v/2)*T)/(v*sqrt(T));
-  d2=d1-v*sqrt(T);
+  d1 = (log(S/X) + (r + v * v/2) * T) / (v * sqrt(T));
+  d2 = d1 - v * sqrt(T);
 
   if (CallPutFlag == 'c')
     return S *CND(d1)-X * exp(-r*T)*CND(d2);

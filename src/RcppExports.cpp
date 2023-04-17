@@ -10,6 +10,33 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// CND
+double CND(double x);
+RcppExport SEXP _RTL_CND(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(CND(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// gbs
+double gbs(char CallPutFlag, double S, double X, double T, double r, double v);
+RcppExport SEXP _RTL_gbs(SEXP CallPutFlagSEXP, SEXP SSEXP, SEXP XSEXP, SEXP TSEXP, SEXP rSEXP, SEXP vSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< char >::type CallPutFlag(CallPutFlagSEXP);
+    Rcpp::traits::input_parameter< double >::type S(SSEXP);
+    Rcpp::traits::input_parameter< double >::type X(XSEXP);
+    Rcpp::traits::input_parameter< double >::type T(TSEXP);
+    Rcpp::traits::input_parameter< double >::type r(rSEXP);
+    Rcpp::traits::input_parameter< double >::type v(vSEXP);
+    rcpp_result_gen = Rcpp::wrap(gbs(CallPutFlag, S, X, T, r, v));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcppOU
 NumericMatrix rcppOU(NumericMatrix x, double theta, double mu, double dt, double sigma);
 RcppExport SEXP _RTL_rcppOU(SEXP xSEXP, SEXP thetaSEXP, SEXP muSEXP, SEXP dtSEXP, SEXP sigmaSEXP) {
@@ -59,6 +86,8 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_RTL_CND", (DL_FUNC) &_RTL_CND, 1},
+    {"_RTL_gbs", (DL_FUNC) &_RTL_gbs, 6},
     {"_RTL_rcppOU", (DL_FUNC) &_RTL_rcppOU, 5},
     {"_RTL_rcppOUJ", (DL_FUNC) &_RTL_rcppOUJ, 8},
     {"_RTL_rcppOUt", (DL_FUNC) &_RTL_rcppOUt, 4},

@@ -1,3 +1,15 @@
+# RTL 2.0.0
+
+This new version will include a variety of option pricing models implemented in c++.
+
+## Bugs & Fixes
+
++   
+
+## Enhancement
+
++ `GBS` for Generalized Black Scholes.
+
 # RTL 1.3.3
 
 ## Bugs & Fixes

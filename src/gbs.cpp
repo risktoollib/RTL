@@ -30,12 +30,11 @@ double gbs(char CallPutFlag, double S, double X, double T, double r, double v)
   d1=(log(S/X)+(r+v*v/2)*T)/(v*sqrt(T));
   d2=d1-v*sqrt(T);
 
-  if(CallPutFlag == 'c')
+  if (CallPutFlag == 'c')
     return S *CND(d1)-X * exp(-r*T)*CND(d2);
-  else if(CallPutFlag == 'p')
+  if (CallPutFlag == 'p')
     return X * exp(-r * T) * CND(-d2) - S * CND(-d1);
-  else if(CallPutFlag !=('c'||'p'))
-    return 0;
+  return 0;
 }
 
 

@@ -31,9 +31,10 @@ double gbs(char CallPutFlag, double S, double X, double T, double r, double v) {
 
   if (CallPutFlag == 'c')
     return S *CND(d1)-X * exp(-r*T)*CND(d2);
-  if (CallPutFlag == 'p')
+  else if (CallPutFlag == 'p')
     return X * exp(-r * T) * CND(-d2) - S * CND(-d1);
-  return 0;
+  else
+    return 0;
 }
 
 

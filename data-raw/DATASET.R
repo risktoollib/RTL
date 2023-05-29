@@ -1304,10 +1304,12 @@ irs <- chat %>% .[[4]] %>%
   dplyr::slice(-1) %>%
   dplyr::mutate(Name = paste0("s",c(2,3,5,7,10,15,30),"y"),
                 Last = readr::parse_number(Last)/100)
-remDr$navigate("https://www.cmegroup.com/markets/interest-rates/stirs/eurodollar.settlements.html")
+#remDr$navigate("https://www.cmegroup.com/markets/interest-rates/stirs/eurodollar.settlements.html")
+remDr$navigate("https://www.cmegroup.com/markets/interest-rates/stirs/three-month-sofr.settlements.html")
+
 Sys.sleep(3)
 page <- remDr$getPageSource()
-futs <- read_html(page[[1]]) %>%
+futs <- rvest::read_html(page[[1]]) %>%
   rvest::html_table() %>%
   .[[1]] %>%
   dplyr::slice(-1) %>%
@@ -1349,7 +1351,7 @@ RTL::usSwapCurves[1:4] %>%
 #usSwapCurves[1:4] %>% dplyr::as_tibble() %>% View()
 usethis::use_data(tsQuotes, overwrite = T)
 
-tsQuotes <- list(flat = 0.09)
+tsQuotes <- list(flat = 0.08)
 usSwapCurvesPar <- DiscountCurve(params, tsQuotes, times)
 
 usethis::use_data(usSwapCurves, overwrite = T)

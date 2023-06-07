@@ -65,10 +65,16 @@ library(RSelenium)
 source("~/now/packages.R")
 setwd(paste0(getwd(), "/data-raw"))
 
-# futures metadata
+
+
+
+# Futures Metadata --------------------------------------------------------
 futuresRef <- list()
-futuresRef$ContractMonths <- dplyr::tibble(Month = seq.Date(as.Date("2022-01-01"),as.Date("2022-12-01"),by="months") %>% lubridate::month(label = TRUE, abbr = FALSE) %>% as.character(.),
-                               Code = c("F","G","H","J","K","M","N","Q","U","V","X","Z"))
+futuresRef$ContractMonths <-
+  dplyr::tibble(
+    Month = seq.Date(as.Date("2022-01-01"), as.Date("2022-12-01"), by = "months") %>% lubridate::month(label = TRUE, abbr = FALSE) %>% as.character(.),
+    Code = c("F", "G", "H", "J", "K", "M", "N", "Q", "U", "V", "X", "Z")
+  )
   # Futures specifications
 futuresRef$Specifications <- list()
 library(rvest)
@@ -136,12 +142,8 @@ futuresRef$Specifications$ED <- read_html(page[[1]]) %>% rvest::html_table(fill 
 remDr$close()
 usethis::use_data(futuresRef, overwrite = T)
 
-## steo for RTLappWTI
+# Equities ----------------------------------------------------------------
 
-steo <- RTL::chart_eia_steo(key = EIAkey)
-usethis::use_data(steo, overwrite = T)
-
-## stocks
 stocks <- list()
 
 stocks$spy <-
@@ -174,6 +176,8 @@ stocks$ry <- ry %>%
   dplyr::mutate(Dividend = (1 + Dividend / Close)^4-1)
 
 usethis::use_data(stocks, overwrite = T)
+
+# Commodities ----------------------------------------------------------------
 
 ## spot2fut convergence
 d <- "2020-03-25"
@@ -230,7 +234,6 @@ wtiSwap <- RTL::getPrices(
 
 usethis::use_data(wtiSwap, overwrite = T)
 
-
 ## Eurodollar
 
 eurodollar <- RTL::getPrices(
@@ -243,28 +246,6 @@ eurodollar <- RTL::getPrices(
   tidyr::pivot_longer(-date, names_to = "series", values_to = "price")
 
 usethis::use_data(eurodollar, overwrite = T)
-
-
-## Orbital
-
-url <- "https://nssdc.gsfc.nasa.gov/planetary/factsheet/index.html"
-html <- xml2::read_html(url)
-
-## Simplified tables
-planets <- html %>%
-  rvest::html_nodes("table") %>%
-  rvest::html_table(header = TRUE) %>%
-  .[[1]]
-colnames(planets)[1] <- "Metric"
-planets <- planets %>%
-  dplyr::as_tibble() %>%
-  dplyr::rename_all(.funs = stringr::str_to_title) %>%
-  dplyr::mutate_all(function(x) gsub(",|\\*", "", x)) %>%
-  dplyr::mutate(dplyr::across(.cols = -Metric, .fns = as.numeric)) %>%
-  na.omit() %>%
-  tidyr::pivot_longer(-Metric, names_to = "Planet", values_to = "value") %>%
-  tidyr::pivot_wider(names_from = Metric, values_from = value)
-usethis::use_data(planets, overwrite = T)
 
 ## Sample energy futures datasets
 # df_fut <- readRDS("df_fut") ; usethis::use_data(df_fut, overwrite = T)
@@ -369,6 +350,13 @@ dflong %>% dplyr::filter(grepl("MJP",series)) %>% ggplot(aes(x = date, y = value
 usethis::use_data(dflong, overwrite = T)
 usethis::use_data(dfwide, overwrite = T)
 rm(crude, crudecan, crudeICE, pdts, alu)
+
+# EIA ---------------------------------------------------------------------
+
+## steo for RTLappWTI
+
+steo <- RTL::chart_eia_steo(key = EIAkey)
+usethis::use_data(steo, overwrite = T)
 
 ## Sample EIA dataset
 eiaStocks <- tibble::tribble(
@@ -562,7 +550,8 @@ usethis::use_data(cushing, overwrite = T)
 tickers_eia <- read.csv("eia.csv", sep = ",", header = TRUE, na.strings = "NA", stringsAsFactors = FALSE)
 usethis::use_data(tickers_eia, overwrite = T)
 
-## Holiday Calendar
+# Calendars ---------------------------------------------------------------
+
 holidaysOil <-
   read.csv(
     "holidays.csv",
@@ -1274,9 +1263,58 @@ fxfwd$curve <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[3]
 
 usethis::use_data(fxfwd, overwrite = T)
 
-## IR Curves for RQuantlib
-# Curves and Def - barchart
+# Refinery Optimization
 
+refineryLPdata <- list()
+
+refineryLPdata$inputs <- data.frame(
+  info = c("price", "processing.fee"),
+  LightSweet = c(-50, -1),
+  HeavySour = c(-30, -4)
+)
+
+refineryLPdata$outputs <- data.frame(
+  product = c("mogas", "distillate", "fo", "resid"),
+  prices = c(70, 70, 30, 20),
+  max.prod = c(50000, 40000, 20000, 10000),
+  LightSweet.yield = c(0.65, .20, .10, 0.05),
+  HeavySour.yield = c(0.40, 0.20, .30, .1)
+)
+
+usethis::use_data(refineryLPdata, overwrite = T)
+
+
+# Educational Dataset
+tradeprocess <- RTL::getPrices(
+  feed = "CME_NymexFutures_EOD", contracts = c("@CL22H", "@HO22F", "@HO22H", "@LT22H"),
+  from = "2018-01-01", iuser = mstar[[1]], ipassword = mstar[[2]]
+) %>% stats::na.omit()
+usethis::use_data(tradeprocess, overwrite = T)
+
+
+
+# IR  -------------------------------------------------
+
+  ## Orbital
+url <- "https://nssdc.gsfc.nasa.gov/planetary/factsheet/index.html"
+html <- xml2::read_html(url)
+
+planets <- html %>%
+  rvest::html_nodes("table") %>%
+  rvest::html_table(header = TRUE) %>%
+  .[[1]]
+colnames(planets)[1] <- "Metric"
+planets <- planets %>%
+  dplyr::as_tibble() %>%
+  dplyr::rename_all(.funs = stringr::str_to_title) %>%
+  dplyr::mutate_all(function(x) gsub(",|\\*", "", x)) %>%
+  dplyr::mutate(dplyr::across(.cols = -Metric, .fns = as.numeric)) %>%
+  na.omit() %>%
+  tidyr::pivot_longer(-Metric, names_to = "Planet", values_to = "value") %>%
+  tidyr::pivot_wider(names_from = Metric, values_from = value)
+usethis::use_data(planets, overwrite = T)
+
+# Curves and Def - barchart
 library(RSelenium)
 library(rvest)
 library(tidyverse)
@@ -1332,12 +1370,12 @@ tradeDate <- as.Date(Sys.Date() - 1)
 params <- list(tradeDate = tradeDate, settleDate = tradeDate + 2, dt = 1/12,
                interpWhat = "discount", interpHow = "spline")
 setEvaluationDate(tradeDate)
-times <- seq(0, 20, 1 / 12)
+times <- seq(0, 30 - 1/12, 1 / 12)
 savepar <- par(mfrow = c(3, 3), mar = c(4, 4, 2, 0.5))
 on.exit(par(savepar))
 usSwapCurves <- DiscountCurve(params, tsQuotes, times)
 # check your curve for negative forward rates
-RTL::usSwapCurves[1:4] %>%
+usSwapCurves[1:4] %>%
   dplyr::as_tibble() %>%
   dplyr::select(-discounts) %>%
   tidyr::pivot_longer(-times, names_to = "ir", values_to = "rate") %>%
@@ -1356,35 +1394,3 @@ usSwapCurvesPar <- DiscountCurve(params, tsQuotes, times)
 
 usethis::use_data(usSwapCurves, overwrite = T)
 usethis::use_data(usSwapCurvesPar, overwrite = T)
-
-# Refinery Optimization
-
-refineryLPdata <- list()
-
-refineryLPdata$inputs <- data.frame(
-  info = c("price", "processing.fee"),
-  LightSweet = c(-50, -1),
-  HeavySour = c(-30, -4)
-)
-
-refineryLPdata$outputs <- data.frame(
-  product = c("mogas", "distillate", "fo", "resid"),
-  prices = c(70, 70, 30, 20),
-  max.prod = c(50000, 40000, 20000, 10000),
-  LightSweet.yield = c(0.65, .20, .10, 0.05),
-  HeavySour.yield = c(0.40, 0.20, .30, .1)
-)
-
-usethis::use_data(refineryLPdata, overwrite = T)
-
-
-# Educational Dataset
-
-tradeprocess <- RTL::getPrices(
-  feed = "CME_NymexFutures_EOD", contracts = c("@CL22H", "@HO22F", "@HO22H", "@LT22H"),
-  from = "2018-01-01", iuser = mstar[[1]], ipassword = mstar[[2]]
-) %>% stats::na.omit()
-usethis::use_data(tradeprocess, overwrite = T)
-
-# Global
-devtools::document()

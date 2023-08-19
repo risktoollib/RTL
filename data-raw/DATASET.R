@@ -133,7 +133,7 @@ page <- remDr$getPageSource()
 futuresRef$Specifications$ZN <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
   dplyr::select(Specification = X1, Description = X2)
   # ED
-remDr$navigate("https://www.cmegroup.com/markets/interest-rates/stirs/eurodollar.contractSpecs.html")
+remDr$navigate("https://www.cmegroup.com/markets/interest-rates/stirs/three-month-sofr.contractSpecs.html")
 Sys.sleep(2)
 remDr$findElement(using = 'class', value = 'section')$clickElement()
 page <- remDr$getPageSource()
@@ -463,7 +463,10 @@ ng <- RTL::eia2tidy(
   key = EIAkey,
   name = "lower48"
 ) %>%
-  dplyr::mutate(product = "ng", value = lower48 / 1000)
+  dplyr::transmute(series = "lower48",
+                   date,
+                   value = lower48 / 1000,
+                   product = "ng")
 
 eiaStorageCap <- rbind(eiaStorageCap, dist1b, ng)
 file.remove(destfile)
@@ -1229,7 +1232,7 @@ usethis::use_data(tradeHubs, overwrite = T)
 
 fxfwd <- list()
 
-fromDate <- Sys.Date() - lubridate::years(1)
+fromDate <- Sys.Date() - lubridate::years(2)
 fxfwd$historical <-
   RTL::getPrices(
     feed = "Morningstar_FX_Forwards",
@@ -1330,14 +1333,15 @@ remDr$findElement(using = 'css', value = 'div.rates:nth-child(8) > div:nth-child
 page <- remDr$getPageSource()
 chat <-  rvest::read_html(page[[1]]) %>%
   rvest::html_table()
-libor <- chat %>% .[[7]] %>%
+libor <- chat %>% .[[4]] %>%
   dplyr::rename(Name = 1, Last = 2) %>%
   dplyr::select(1,2) %>%
-  dplyr::mutate(Name = c("d1m", "d3m", "d6m", "d1y"),
+  dplyr::filter(Name %in% c("SOFR","1-month Term SOFR","3-month Term SOFR")) %>%
+  dplyr::mutate(Name = c("d1w", "d1m", "d3m"),
                 Last = readr::parse_number(Last)/100)
-libor <- rbind(dplyr::tibble(Name = "d1w", Last = libor$Last[1]),libor)
-irs <- chat %>% .[[4]] %>%
-  dplyr::rename(Name = 1, Last = 3) %>%
+#libor <- rbind(dplyr::tibble(Name = "d1w", Last = libor$Last[1]),libor)
+irs <- chat %>% .[[3]] %>%
+  dplyr::rename(Name = 1, Last = 2) %>%
   dplyr::select(Name,Last) %>%
   dplyr::slice(-1) %>%
   dplyr::mutate(Name = paste0("s",c(2,3,5,7,10,15,30),"y"),
@@ -1364,7 +1368,7 @@ library(RQuantLib)
 tsQuotes <- rbind(libor, irs, futs) %>% as_tibble() %>%
   dplyr::mutate(Last = readr::parse_number(Last)) %>%
   tidyr::pivot_wider(names_from = Name, values_from = Last) %>%
-  dplyr::select(-s2y,-d1y,-d6m,-d3m) %>%
+  #dplyr::select(-s2y,-d3m) %>%
   transpose() %>% unlist() %>% as.list()
 tradeDate <- as.Date(Sys.Date() - 1)
 params <- list(tradeDate = tradeDate, settleDate = tradeDate + 2, dt = 1/12,
@@ -1389,7 +1393,7 @@ usSwapCurves[1:4] %>%
 #usSwapCurves[1:4] %>% dplyr::as_tibble() %>% View()
 usethis::use_data(tsQuotes, overwrite = T)
 
-tsQuotes <- list(flat = 0.08)
+tsQuotes <- list(flat = 0.05)
 usSwapCurvesPar <- DiscountCurve(params, tsQuotes, times)
 
 usethis::use_data(usSwapCurves, overwrite = T)

@@ -24,7 +24,7 @@ getCurve(
 
 \item{date}{Date yyyy-mm-dd. \code{character}}
 
-\item{fields}{Defaults to c("Open, High, Low, Close"). \code{character}}
+\item{fields}{Defaults to c("open_price, high_price, low_price, settlement_price, volume, open_interest"). \code{character}}
 
 \item{iuser}{Morningstar user name as character - sourced locally in examples. \code{character}}
 
@@ -49,7 +49,8 @@ You need your own credentials with Morningstar.
 # CME WTI Futures
 getCurve(
   feed = "CME_NymexFutures_EOD_continuous", contract = "CL",
-  date = "2023-08-24", fields = c("Open, High, Low, Close"),
+  date = "2023-08-24",
+  fields = c("open_price, high_price, low_price, settlement_price, volume, open_interest"),
   iuser = "x@xyz.com", ipassword = "pass"
 )
 }

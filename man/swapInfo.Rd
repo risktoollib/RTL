@@ -5,9 +5,9 @@
 \title{Commodity Swap details to learn their pricing}
 \usage{
 swapInfo(
-  date = "2020-05-06",
-  feeds = dplyr::tibble(feed = c("Crb_Futures_Price_Volume_And_Open_Interest",
-    "CME_NymexFutures_EOD_continuous"), ticker = c("CL", "CL_001_Month")),
+  date = "2023-08-24",
+  feed = "CME_NymexFutures_EOD_continuous",
+  ticker = "CL",
   contract = "cmewti",
   exchange = "nymex",
   iuser = "x@xyz.com",
@@ -18,7 +18,9 @@ swapInfo(
 \arguments{
 \item{date}{Character date as of which you want to extract daily settlement and forward values. \code{character}}
 
-\item{feeds}{Feeds for Morningstar getCurve() and getPrice(). \code{character}}
+\item{feed}{Feeds for Morningstar getCurve() and getPrice(). \code{character}}
+
+\item{ticker}{Nymex contract code. \code{character}}
 
 \item{contract}{Contract code in data(expiry_table). sort(unique(expiry_table$cmdty)) for options. \code{character}}
 
@@ -38,15 +40,10 @@ Returns dataframe required to price a WTI averaging instrument based on first li
 }
 \examples{
 \dontrun{
-feeds <- dplyr::tibble(
-  feed = c(
-    "Crb_Futures_Price_Volume_And_Open_Interest",
-    "CME_NymexFutures_EOD_continuous"
-  ),
-  ticker = c("CL", "CL_001_Month")
-)
 swapInfo(
-  date = "2020-05-06", feeds = feeds, contract = "cmewti", exchange = "nymex",
+  date = "2020-05-06", feed = "CME_NymexFutures_EOD_continuous",
+  ticker = "CL",
+  contract = "cmewti", exchange = "nymex",
   iuser = "x@xyz.com", ipassword = "pass", output = "all"
 )
 }

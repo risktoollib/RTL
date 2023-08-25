@@ -2,8 +2,7 @@
 
 ## Bugs & Fixes
 
-+ `getCurve` updated after vendor data table was dropped.
-
++ `getCurve()` and `swapInfo()` updated after vendor data table was dropped.
 
 # RTL 1.3.3
 

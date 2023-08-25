@@ -276,7 +276,7 @@ getPrices <- function(feed = "CME_NymexFutures_EOD", contracts = c("CL9Z", "CL0F
 #' @param contract Morningstar contract root e.g. "CL" for CME WTI and "BG" for ICE Brent. `character`
 #' @param numOfcontracts Number of listed contracts to retrieve. `numeric`
 #' @param date  Date yyyy-mm-dd. `character`
-#' @param fields Defaults to c("Open, High, Low, Close"). `character`
+#' @param fields Defaults to c("open_price, high_price, low_price, settlement_price, volume, open_interest"). `character`
 #' @param iuser Morningstar user name as character - sourced locally in examples. `character`
 #' @param ipassword Morningstar user password as character - sourced locally in examples. `character`
 #' @returns wide data frame. `tibble`
@@ -287,7 +287,8 @@ getPrices <- function(feed = "CME_NymexFutures_EOD", contracts = c("CL9Z", "CL0F
 #' # CME WTI Futures
 #' getCurve(
 #'   feed = "CME_NymexFutures_EOD_continuous", contract = "CL",
-#'   date = "2023-08-24", fields = c("Open, High, Low, Close"),
+#'   date = "2023-08-24",
+#'   fields = c("open_price, high_price, low_price, settlement_price, volume, open_interest"),
 #'   iuser = "x@xyz.com", ipassword = "pass"
 #' )
 #' }
@@ -315,13 +316,24 @@ getCurve <- function(feed = "CME_NymexFutures_EOD_continuous", contract = "CL", 
     stringr::str_replace_all(c("_price" = "","_" = " ")) %>%
     stringr::str_to_title() %>%
     stringr::str_replace_all(c(" " = ""))
-  tmp
+
+  # extract expiry dates
+  tmp2 <- RTL::expiry_table %>%
+    dplyr::filter(tick.prefix == contract, Last.Trade >= date) %>%
+    dplyr::slice(1:numOfcontracts) %>%
+    dplyr::transmute(expirationDate = Last.Trade,
+                     code = paste0(tick.prefix,Year,Month.Letter))
   # create output
-  out <- matrix(lapply(es,'[[',2) %>% unlist() %>% as.numeric(),nrow = stringr::str_split(fields,",")[[1]] %>% length(), ncol = numOfcontracts ) %>% t() %>% dplyr::as_tibble()
+  out <- matrix(lapply(es,'[[',2) %>% unlist() %>% as.numeric(),
+                nrow = stringr::str_split(fields,",")[[1]] %>% length(),
+                ncol = numOfcontracts ) %>%
+    t() %>%
+    dplyr::as_tibble(.name_repair = c("universal"))
   colnames(out)  <- stringr::str_split(tmp,",")[[1]]
-  out <- out %>%
-    dplyr::mutate(Contract = paste0(contract,sprintf('%0.2d',1:numOfcontracts))) %>%
-    dplyr::select(Contract, dplyr::everything())
+
+
+  out <- cbind(tmp2,out) %>% dplyr::as_tibble() %>%
+    dplyr::select(code, dplyr::everything())
   return(out)
 }
 

@@ -5,10 +5,12 @@
 \title{Morningstar Commodities API forward curves}
 \usage{
 getCurve(
-  feed = "Crb_Futures_Price_Volume_And_Open_Interest",
+  feed = "CME_NymexFutures_EOD_continuous",
   contract = "CL",
-  date = "2020-08-10",
-  fields = c("Open, High, Low, Close"),
+  numOfcontracts = 12,
+  date = "2023-08-24",
+  fields =
+    c("open_price, high_price, low_price, settlement_price, volume, open_interest"),
   iuser = "x@xyz.com",
   ipassword = "pass"
 )
@@ -18,7 +20,9 @@ getCurve(
 
 \item{contract}{Morningstar contract root e.g. "CL" for CME WTI and "BG" for ICE Brent. \code{character}}
 
-\item{date}{From date yyyy-mm-dd. \code{character}}
+\item{numOfcontracts}{Number of listed contracts to retrieve. \code{numeric}}
+
+\item{date}{Date yyyy-mm-dd. \code{character}}
 
 \item{fields}{Defaults to c("Open, High, Low, Close"). \code{character}}
 
@@ -36,9 +40,7 @@ You need your own credentials with Morningstar.
 \section{Current Feeds Supported}{
 
 \itemize{
-\item Crb_Futures_Price_Volume_And_Open_Interest
-\item CME_NymexFuturesIntraday_EOD
-\item ICE_EuroFutures and ICE_EuroFutures_continuous
+\item CME_NymexFutures_EOD_continuous
 }
 }
 
@@ -46,20 +48,8 @@ You need your own credentials with Morningstar.
 \dontrun{
 # CME WTI Futures
 getCurve(
-  feed = "Crb_Futures_Price_Volume_And_Open_Interest", contract = "CL",
-  date = "2020-07-13", fields = c("Open, High, Low, Close"),
-  iuser = "x@xyz.com", ipassword = "pass"
-)
-
-getCurve(
-  feed = "Crb_Futures_Price_Volume_And_Open_Interest", contract = "BG",
-  date = "2020-07-13", fields = c("Open, High, Low, Close"),
-  iuser = "x@xyz.com", ipassword = "pass"
-)
-
-getCurve(
-  feed = "LME_ClosingPriceDelayed", contract = "AHD",
-  date = "2021-06-25", fields = c("Last_Price"),
+  feed = "CME_NymexFutures_EOD_continuous", contract = "CL",
+  date = "2023-08-24", fields = c("Open, High, Low, Close"),
   iuser = "x@xyz.com", ipassword = "pass"
 )
 }

@@ -1,14 +1,9 @@
-# RTL 2.0.0
-
-This new version will include a variety of option pricing models implemented in c++.
+# RTL 1.3.4
 
 ## Bugs & Fixes
 
-+   
++ `getCurve` updated after vendor data table was dropped.
 
-## Enhancement
-
-+ `GBS` for Generalized Black Scholes.
 
 # RTL 1.3.3
 

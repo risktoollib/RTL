@@ -269,14 +269,13 @@ getPrices <- function(feed = "CME_NymexFutures_EOD", contracts = c("CL9Z", "CL0F
 #'
 #' @section Current Feeds Supported:
 #' \itemize{
-#'   \item Crb_Futures_Price_Volume_And_Open_Interest
-#'   \item CME_NymexFuturesIntraday_EOD
-#'   \item ICE_EuroFutures and ICE_EuroFutures_continuous
+#'   \item CME_NymexFutures_EOD_continuous
 #' }
 #'
 #' @param feed Morningstar Feed Table e.g "Crb_Futures_Price_Volume_And_Open_Interest". `character`
 #' @param contract Morningstar contract root e.g. "CL" for CME WTI and "BG" for ICE Brent. `character`
-#' @param date From date yyyy-mm-dd. `character`
+#' @param numOfcontracts Number of listed contracts to retrieve. `numeric`
+#' @param date  Date yyyy-mm-dd. `character`
 #' @param fields Defaults to c("Open, High, Low, Close"). `character`
 #' @param iuser Morningstar user name as character - sourced locally in examples. `character`
 #' @param ipassword Morningstar user password as character - sourced locally in examples. `character`
@@ -287,63 +286,42 @@ getPrices <- function(feed = "CME_NymexFutures_EOD", contracts = c("CL9Z", "CL0F
 #' \dontrun{
 #' # CME WTI Futures
 #' getCurve(
-#'   feed = "Crb_Futures_Price_Volume_And_Open_Interest", contract = "CL",
-#'   date = "2020-07-13", fields = c("Open, High, Low, Close"),
-#'   iuser = "x@xyz.com", ipassword = "pass"
-#' )
-#'
-#' getCurve(
-#'   feed = "Crb_Futures_Price_Volume_And_Open_Interest", contract = "BG",
-#'   date = "2020-07-13", fields = c("Open, High, Low, Close"),
-#'   iuser = "x@xyz.com", ipassword = "pass"
-#' )
-#'
-#' getCurve(
-#'   feed = "LME_ClosingPriceDelayed", contract = "AHD",
-#'   date = "2021-06-25", fields = c("Last_Price"),
+#'   feed = "CME_NymexFutures_EOD_continuous", contract = "CL",
+#'   date = "2023-08-24", fields = c("Open, High, Low, Close"),
 #'   iuser = "x@xyz.com", ipassword = "pass"
 #' )
 #' }
 #'
-getCurve <- function(feed = "Crb_Futures_Price_Volume_And_Open_Interest", contract = "CL", date = "2020-08-10",
-                     fields = c("Open, High, Low, Close"),
+getCurve <- function(feed = "CME_NymexFutures_EOD_continuous", contract = "CL", numOfcontracts = 12,
+                     date = "2023-08-24",
+                     fields = c("open_price, high_price, low_price, settlement_price, volume, open_interest"),
                      iuser = "x@xyz.com", ipassword = "pass") {
+
   URL <- httr::modify_url(
     url = "https://mp.morningstarcommodity.com",
     path = paste0(
-      "/lds/feeds/", feed, "/curve?root=", contract, "&cols=", gsub(" ", "", fields),
-      "&date=", date
+      "/lds/feeds/", feed, "/ts?&fromDateTime=", date, "&toDateTime=", date, "&cols=", gsub(" ", "", fields),
+      "&desc=true&Contract=", paste0(contract,"_",sprintf('%0.3d',1:numOfcontracts),"_MONTH", collapse = ",")
     )
   )
-  es <- RCurl::getURL(url = URL, userpw = paste(iuser, ipassword, sep = ":"))
-  out <- jsonlite::fromJSON(es) %>%
-    dplyr::as_tibble() %>%
-    dplyr::arrange(deliveryStartDate)
 
-  if (grepl("LME_MonthlyDelayed_Derived", feed)) {
-    out <- out %>% dplyr::mutate(expirationDate = lubridate::rollback(as.Date(deliveryStartDate), roll_to_first = T) - 1)
-    es <- NA
-  } else {
-    es <- out$keys %>%
-      unlist() %>%
-      unique()
-  }
+  httr::handle_reset(URL)
+  es <- httr::GET(url = URL, httr::authenticate(user = iuser, password = ipassword, type = "basic")) # ,httr::progress())
+  es <- httr::content(es)$series
 
+  # prepare variable names
+  tmp <-
+    fields %>%
+    stringr::str_replace_all(c("_price" = "","_" = " ")) %>%
+    stringr::str_to_title() %>%
+    stringr::str_replace_all(c(" " = ""))
+  tmp
+  # create output
+  out <- matrix(lapply(es,'[[',2) %>% unlist() %>% as.numeric(),nrow = stringr::str_split(fields,",")[[1]] %>% length(), ncol = numOfcontracts ) %>% t() %>% dplyr::as_tibble()
+  colnames(out)  <- stringr::str_split(tmp,",")[[1]]
   out <- out %>%
-    dplyr::transmute(
-      expirationDate = as.Date(expirationDate),
-      type = col,
-      value = as.numeric(value)
-    ) %>%
-    tidyr::pivot_wider(names_from = type, values_from = value) %>%
-    dplyr::arrange(expirationDate)
-
-  out <- out %>%
-    dplyr::mutate(
-      contract = paste(contract, sprintf("%0.2d", 1:nrow(out)), sep = ""),
-      code = es
-    ) %>%
-    dplyr::select(contract, code, dplyr::everything())
+    dplyr::mutate(Contract = paste0(contract,sprintf('%0.2d',1:numOfcontracts))) %>%
+    dplyr::select(Contract, dplyr::everything())
   return(out)
 }
 

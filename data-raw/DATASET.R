@@ -1031,7 +1031,7 @@ crudeOil <- list()
 
   ## Canadian Crude Data
 
-url = "https://beta.crudemonitor.ca/api/json.php?condensates%5B0%5D=Cochin+Condensate&condensates%5B1%5D=Condensate+Blend&condensates%5B2%5D=Fort+Saskatchewan+Condensate&condensates%5B3%5D=Peace+Condensate&condensates%5B4%5D=Pembina+Condensate&condensates%5B5%5D=Rangeland+Condensate&condensates%5B6%5D=Southern+Lights+Diluent&crudes%5B0%5D=Federated&crudes%5B1%5D=Light+Smiley&crudes%5B2%5D=Peace&crudes%5B3%5D=Pembina&crudes%5B4%5D=Secure+Sask+Light&crudes%5B5%5D=Mixed+Sweet+Blend&crudes%5B6%5D=Midale&crudes%5B7%5D=Light+Sour+Blend&crudes%5B8%5D=Syncrude+Sweet+Premium&crudes%5B9%5D=Bow+River+North&crudes%5B10%5D=Lloyd+Blend&crudes%5B11%5D=Lloyd+Kerrobert&crudes%5B12%5D=Access+Western+Blend&crudes%5B13%5D=Christina+Dilbit+Blend&crudes%5B14%5D=Cold+Lake&crudes%5B15%5D=Kearl+Lake&crudes%5B16%5D=Western+Canadian+Select&crudes%5B17%5D=Surmont+Heavy+Blend&condensateProperties%5B0%5D=condensates-BA&crudeProperties%5B0%5D=crudes-BA&date%5Bstart%5D=2010-01-01&date%5Bend%5D=2022-10-24"
+url = "https://crudemonitor.ca/api/json.php?condensates%5B0%5D=Cochin+Condensate&condensates%5B1%5D=Condensate+Blend&condensates%5B2%5D=Fort+Saskatchewan+Condensate&condensates%5B3%5D=Peace+Condensate&condensates%5B4%5D=Pembina+Condensate&condensates%5B5%5D=Rangeland+Condensate&condensates%5B6%5D=Southern+Lights+Diluent&crudes%5B0%5D=Federated&crudes%5B1%5D=Light+Smiley&crudes%5B2%5D=Peace&crudes%5B3%5D=Pembina&crudes%5B4%5D=Secure+Sask+Light&crudes%5B5%5D=Mixed+Sweet+Blend&crudes%5B6%5D=Rainbow&crudes%5B7%5D=Koch+Alberta&crudes%5B8%5D=Midale&crudes%5B9%5D=CNRL+Light+Sweet+Synthetic&crudes%5B10%5D=Husky+Synthetic+Blend&crudes%5B11%5D=Long+Lake+Light+Synthetic&crudes%5B12%5D=Premium+Albian+Synthetic&crudes%5B13%5D=Shell+Synthetic+Light&crudes%5B14%5D=Suncor+Synthetic+A&crudes%5B15%5D=Syncrude+Sweet+Premium&crudes%5B16%5D=Bow+River+North&crudes%5B17%5D=Bow+River+South&crudes%5B18%5D=Fosterton&crudes%5B19%5D=Lloyd+Blend&crudes%5B20%5D=Seal+Heavy&crudes%5B21%5D=Smiley-Coleville&crudes%5B22%5D=Wabasca+Heavy&crudes%5B23%5D=Western+Canadian+Blend&crudes%5B24%5D=Access+Western+Blend&crudes%5B25%5D=Canadian+Natural+High+TAN&crudes%5B26%5D=Christina+Dilbit+Blend&crudes%5B27%5D=Cold+Lake&crudes%5B28%5D=Fort+Hills+Dilbit&crudes%5B29%5D=Kearl+Lake&crudes%5B30%5D=Surmont+Heavy+Dilbit&crudes%5B31%5D=Western+Canada+Dilbit&crudes%5B32%5D=Western+Canadian+Select&crudes%5B33%5D=Albian+Heavy+Synthetic&condensateProperties%5B0%5D=condensates-BA&crudeProperties%5B0%5D=crudes-BA&date%5Bstart%5D=&date%5Bend%5D=2023-09-29"
 
 samples <- httr::GET(url) %>% httr::content(.,as="text") %>% jsonlite::fromJSON(.) %>% dplyr::as_tibble()
 
@@ -1117,7 +1117,7 @@ crudes <- crudes %>%
 
 crudes$LightMedHeavy <- factor(crudes$LightMedHeavy, levels = c("Light", "Medium", "Heavy"))
 crudes$SweetSour <- factor(crudes$SweetSour, levels = c("Sweet", "Sour"))
-crudeOil$crudes <- crudes %>% dplyr::arrange(Crude)
+crudeOil$crudes <- crudes %>% dplyr::arrange(Crude) %>% dplyr::slice(-1)
 
 ## xls assays
 css <- "body > div.aem-Grid.aem-Grid--12.aem-Grid--default--12 > div:nth-child(3) > div > div > div.nr-table-component.nr-component.aem-GridColumn.aem-GridColumn--default--12"
@@ -1145,7 +1145,7 @@ for (i in 1:nrow(urls)) {
   colnames(tmp) <- c("Specification", "Whole.crude", "Light.Naphtha", "Heavy.Naphtha1", "Heavy.Naphtha2", "Kero", "Light.Gas.Oil", "HeavyGasOil", "Light.VGO", "Heavy.VGO1", "Heavy.VGO2", "AtRes1", "AtRes2", "VacRes1", "VacRes2")
   tmp <- tmp %>%
     tidyr::drop_na("Specification") %>%
-    dplyr::na_if("-") %>%
+    #dplyr::na_if("-") %>%
     dplyr::mutate_at(vars(!starts_with("Spec")), as.numeric) %>%
     as_tibble() %>%
     dplyr::mutate(Specification = stringr::str_replace_all(Specification,c("°" = "", "%" = "perc")))
@@ -1159,14 +1159,14 @@ crudeOil$bpAssays <- crudeassaysBP
 
 url <- "https://corporate.exxonmobil.com/Crude-oils/Crude-trading/Crude-oil-blends-by-API-gravity-and-by-sulfur-content#APIgravity"
 html <- xml2::read_html(url)
-css <- "body > main > div.article--wrapper > section.rich-text > div > div"
+css <- "span.p:nth-child(1)"
 
 urls <- html %>%
   html_nodes(css = css) %>%
   html_nodes("a") %>%
   rvest::html_attr("href") %>%
   as_tibble() %>%
-  dplyr::filter(grepl("/crude-oils/crude-trading/", value)) %>%
+  dplyr::filter(grepl("/energy-supply/crude-trading/", value)) %>%
   dplyr::transmute(site = paste0("https://corporate.exxonmobil.com", value)) %>%
   unique()
 
@@ -1178,32 +1178,36 @@ fetchURL <- function(url, css, prefix) {
     paste0(prefix, .)
 }
 
+prefix = "https://corporate.exxonmobil.com"
+css = "body > main > div.article--wrapper > section.articleMedia.articleMedia-in-line.articleMedia--relatedContent > div > article > div > div:nth-child(3) > h3"
+xls <- ""
+for (i in 1:length(urls$site)) {
+  xls[i] <- xml2::read_html(urls$site[i]) %>%
+    html_nodes(css = css) %>%
+    html_nodes("a") %>%
+    rvest::html_attr("href") %>%
+    paste0(prefix, .)
+}
+
+urls$xls <- xls
+
 urls <- urls %>%
-  dplyr::mutate(
-    prefix = "https://corporate.exxonmobil.com",
-    xls = mapply(fetchURL,
-      url = site,
-      css = "body > main > div.article--wrapper > section.articleMedia.articleMedia-in-line.articleMedia--relatedContent > div > article > div > div:nth-child(3) > h3",
-      prefix = prefix
-    )
-  ) %>%
-  dplyr::select(-prefix) %>%
   dplyr::filter(!grepl(".pdf", xls, ignore.case = T)) %>%
-  dplyr::mutate(cn = gsub("/.*", "", gsub("https://corporate.exxonmobil.com/-/media/Global/Files/crude-oils/", "", xls)))
+  dplyr::mutate(cn = gsub("https://corporate.exxonmobil.com/what-we-do/energy-supply/crude-trading/","",site))
 
 crudeassaysXOM <- list()
 for (i in 1:nrow(urls)) {
-  destfile <- urls$cn[i]
+  destfile <- paste0(urls$cn[i],".xlsx")
   curl::curl_download(
     url = urls$xls[i],
     destfile = destfile
   )
-  tmp <- read_excel(destfile, skip = 4) %>%
+  tmp <- readxl::read_excel(destfile, skip = 4) %>%
     dplyr::rename_all(list(~ make.names(.)))
   #tmp[,1] <- gsub("°","",tmp[,1])
   #tmp[,1] <- gsub("%","perc",tmp[,1])
-  colnames(tmp)[1] <- destfile
-  crudeassaysXOM[[destfile]] <- tmp
+  colnames(tmp)[1] <- gsub(".xlsx","",destfile)
+  crudeassaysXOM[[gsub(".xlsx","",destfile)]] <- tmp
   file.remove(destfile)
 }
 

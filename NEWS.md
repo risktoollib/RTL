@@ -3,6 +3,7 @@
 ## Bugs & Fixes
 
 + `getCurve()` and `swapInfo()` updated after vendor data table was dropped.
++ Update for retirement of `rgdal` package.
 
 # RTL 1.3.3
 

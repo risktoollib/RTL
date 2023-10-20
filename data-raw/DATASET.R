@@ -259,8 +259,7 @@ crude <- c(
   paste0("NG_", sprintf("%0.3d", 1:36), "_Month"),
   paste0("HTT_", sprintf("%0.3d", 1:12), "_Month")
   )
-crudecan <- c(paste0("WCW_", sprintf("%0.3d", 1:12), "_Month"),
-              paste0("LSW_", sprintf("%0.3d", 1:12), "_Month"))
+
 crudeICE <- c(paste0("BRN_", sprintf("%0.3d", 1:36), "_Month"))
 pdts <- c(paste0("HO_", sprintf("%0.3d", 1:18), "_Month"),
           paste0("RB_", sprintf("%0.3d", 1:18), "_Month"))
@@ -268,17 +267,6 @@ pdts <- c(paste0("HO_", sprintf("%0.3d", 1:18), "_Month"),
 crude <- RTL::getPrices(
   feed = "CME_NymexFutures_EOD_continuous",
   contracts = crude,
-  from = startdate,
-  iuser = iuser,
-  ipassword = ipassword
-) %>%
-  pivot_longer(-date, names_to = "series", values_to = "value") %>%
-  dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>%
-  na.omit()
-
-crudecan <- RTL::getPrices(
-  feed = "CME_NymexFutures_EOD_continuous",
-  contracts = crudecan,
   from = startdate,
   iuser = iuser,
   ipassword = ipassword
@@ -297,6 +285,7 @@ crudeICE <- RTL::getPrices(
   pivot_longer(-date, names_to = "series", values_to = "value") %>%
   dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>%
   na.omit()
+
 pdts <- RTL::getPrices(
   feed = "CME_NymexFutures_EOD_continuous",
   contracts = pdts,
@@ -331,8 +320,12 @@ alu <-
   dplyr::mutate(across(dplyr::contains("AUP"), lbs2mt)) %>%
   tidyr::pivot_longer(-date, names_to = "series", values_to = "value")
 
-dflong <- rbind(crude, crudecan, crudeICE, pdts, alu)
-dfwide <- dflong %>% tidyr::pivot_wider(names_from = series, values_from = value) # %>% na.omit()
+dateMin = as.Date("2007-01-01")
+dflong <- rbind(crude, crudeICE, pdts, alu) %>%
+  dplyr::filter(date > dateMin)
+dfwide <- dflong %>%
+  dplyr::filter(date > dateMin) %>%
+  tidyr::pivot_wider(names_from = series, values_from = value) # %>% na.omit()
 
 # test for data gaps
 dflong %>% dplyr::filter(grepl("CL",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
@@ -340,14 +333,12 @@ dflong %>% dplyr::filter(grepl("HTT",series)) %>% ggplot(aes(x = date, y = value
 dflong %>% dplyr::filter(grepl("BRN",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("HO",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("RB",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
-dflong %>% dplyr::filter(grepl("WCW",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
-dflong %>% dplyr::filter(grepl("LSW",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("ALI",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("NG",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("AUP",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 dflong %>% dplyr::filter(grepl("MJP",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
 
-usethis::use_data(dflong, overwrite = T)
+usethis::use_data(dflong , overwrite = T)
 usethis::use_data(dfwide, overwrite = T)
 rm(crude, crudecan, crudeICE, pdts, alu)
 
@@ -1272,8 +1263,8 @@ usethis::use_data(refineryLPdata, overwrite = T)
 
 # Educational Dataset
 tradeprocess <- RTL::getPrices(
-  feed = "CME_NymexFutures_EOD", contracts = c("@CL22H", "@HO22F", "@HO22H", "@LT22H"),
-  from = "2018-01-01", iuser = mstar[[1]], ipassword = mstar[[2]]
+  feed = "CME_NymexFutures_EOD", contracts = c("@CL24H", "@HO24F", "@HO24H", "@LT24H"),
+  from = "2021-01-01", iuser = mstar[[1]], ipassword = mstar[[2]]
 ) %>% stats::na.omit()
 usethis::use_data(tradeprocess, overwrite = T)
 

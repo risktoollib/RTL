@@ -14,12 +14,12 @@
 #' @author Philippe Cote
 #' @examples
 #' \dontrun{
-#' getGIS(url = "https://gis.energy.gov.ab.ca/GeoviewData/OS_Agreements_Shape.zip")
+#' getGIS(url = "https://www.eia.gov/maps/map_data/CrudeOil_Pipelines_US_EIA.zip")
 #' }
 #'
-getGIS <- function(url = "https://gis.energy.gov.ab.ca/GeoviewData/OS_Agreements_Shape.zip") {
-  if (!requireNamespace("rgdal", quietly = TRUE)) {
-    stop("Package \"rgdal\" needed for this function to work. Please install it.",
+getGIS <- function(url = "https://www.eia.gov/maps/map_data/CrudeOil_Pipelines_US_EIA.zip") {
+  if (!requireNamespace("sf", quietly = TRUE)) {
+    stop("Package \"sf\" needed for this function to work. Please install it.",
       call. = FALSE
     )
   }
@@ -33,6 +33,6 @@ getGIS <- function(url = "https://gis.energy.gov.ab.ca/GeoviewData/OS_Agreements
   utils::unzip(tf, files = fname, exdir = td, overwrite = TRUE)
   layer <- sub(".*/", "", sub(".shp.*", "", grep(".shp", fname, value = TRUE)[1]))
   dsn <- sub(paste0(layer, ".*"), "", file.path(td, fname)[1])
-  out <- rgdal::readOGR(dsn = dsn, layer = layer)
+  out <-  sf::read_sf(dsn = dsn, layer = layer, quiet = TRUE)
   return(out)
 }

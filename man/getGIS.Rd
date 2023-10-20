@@ -4,9 +4,7 @@
 \alias{getGIS}
 \title{Extract and convert GIS data from a URL}
 \usage{
-getGIS(
-  url = "https://gis.energy.gov.ab.ca/GeoviewData/OS_Agreements_Shape.zip"
-)
+getGIS(url = "https://www.eia.gov/maps/map_data/CrudeOil_Pipelines_US_EIA.zip")
 }
 \arguments{
 \item{url}{URL of the zipped shapefile. \code{character}}
@@ -27,7 +25,7 @@ Returns a SpatialPointsDataFrame from a shapefile URL.
 }
 \examples{
 \dontrun{
-getGIS(url = "https://gis.energy.gov.ab.ca/GeoviewData/OS_Agreements_Shape.zip")
+getGIS(url = "https://www.eia.gov/maps/map_data/CrudeOil_Pipelines_US_EIA.zip")
 }
 
 }

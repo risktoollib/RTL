@@ -1,3 +1,12 @@
+# RTL 1.3.5
+
+## Enhancement
++ `fitOU()` amended to annualized sigma, adjust theta for periodicity, and return half life of theta.
+
+## Bugs & Fixes
+
+
+
 # RTL 1.3.4
 
 ## Bugs & Fixes

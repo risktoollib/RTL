@@ -4,20 +4,22 @@
 \alias{fitOU}
 \title{Fits a Ornstein–Uhlenbeck process to a dataset}
 \usage{
-fitOU(spread)
+fitOU(spread, dt = 1/252)
 }
 \arguments{
 \item{spread}{Spread time series. \code{tibble}}
+
+\item{dt}{Time step size in fractions of a year. Default is 1/252.}
 }
 \value{
-List of alpha, mu and sigma estimates. \code{list}
+List of theta, mu, annualized sigma estimates. It returns half life consistent with periodicity \code{list}
 }
 \description{
-Parameter estimation for Ornstein–Uhlenbeck process
+Parameter estimation for Ornstein–Uhlenbeck process using OLS
 }
 \examples{
-spread <- simOU(mu = 5, theta = .5, sigma = 0.2, T = 5, dt = 1 / 250)
-fitOU(spread)
+spread <- simOU(nsims = 1, mu = 5, theta = .5, sigma = 0.2, T = 5, dt = 1 / 252)
+fitOU(spread = spread$sim1)
 }
 \author{
 Philippe Cote

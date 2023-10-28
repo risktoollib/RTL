@@ -1,13 +1,14 @@
 #' Fits a Ornstein–Uhlenbeck process to a dataset
-#' @description Parameter estimation for Ornstein–Uhlenbeck process
+#' @description Parameter estimation for Ornstein–Uhlenbeck process using OLS
 #' @param spread Spread time series. `tibble`
-#' @returns List of alpha, mu and sigma estimates. `list`
+#' @param dt Time step size in fractions of a year. Default is 1/252.
+#' @returns List of theta, mu, annualized sigma estimates. It returns half life consistent with periodicity `list`
 #' @export fitOU
 #' @author Philippe Cote
 #' @examples
-#' spread <- simOU(mu = 5, theta = .5, sigma = 0.2, T = 5, dt = 1 / 250)
-#' fitOU(spread)
-fitOU <- function(spread) {
+#' spread <- simOU(nsims = 1, mu = 5, theta = .5, sigma = 0.2, T = 5, dt = 1 / 252)
+#' fitOU(spread = spread$sim1)
+fitOU <- function(spread, dt = 1/252) {
   n <- length(spread)
   delta <- 1 # delta
   Sx <- sum(spread[1:n - 1])
@@ -21,6 +22,7 @@ fitOU <- function(spread) {
   a <- exp(-theta * delta)
   sigmah2 <- (Syy - 2 * a * Sxy + a^2 * Sxx - 2 * mu * (1 - a) * (Sy - a * Sx) + (n - 1) * mu^2 * (1 - a)^2) / (n - 1)
   sigma <- sqrt((sigmah2) * 2 * theta / (1 - a^2))
-  theta <- list(theta = theta, mu = mu, sigma = sigma)
-  return(theta)
+  halfLife <- log(2)/theta/dt
+  out <- list(theta = theta / dt, mu = mu, sigma = sigma * sqrt(1/dt),halfLife = halfLife)
+  return(out)
 }

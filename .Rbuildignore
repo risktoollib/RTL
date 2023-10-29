@@ -13,3 +13,4 @@
 ^README.Rmd
 ^LICENSE\.md$
 ^codecov\.yml$
+^CRAN-SUBMISSION$

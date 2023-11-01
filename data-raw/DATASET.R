@@ -137,7 +137,7 @@ remDr$navigate("https://www.cmegroup.com/markets/interest-rates/stirs/three-mont
 Sys.sleep(2)
 remDr$findElement(using = 'class', value = 'section')$clickElement()
 page <- remDr$getPageSource()
-futuresRef$Specifications$ED <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
+futuresRef$Specifications$SOFR <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
   dplyr::select(Specification = X1, Description = X2)
 remDr$close()
 usethis::use_data(futuresRef, overwrite = T)

@@ -4,7 +4,7 @@
 + `fitOU()` amended to annualized sigma, adjust theta for periodicity, and return half life of theta.
 
 ## Bugs & Fixes
-
++ `swapInfo()` to date using `lubridate::roolback()' instead of base R to ensure it works when on the 31st of the month and it does not exist for months + 4.
 
 
 # RTL 1.3.4

@@ -77,6 +77,12 @@ futuresRef$ContractMonths <-
   )
   # Futures specifications
 futuresRef$Specifications <- list()
+
+system(command = "node ../inst/js/cme-specifications.js https://www.cmegroup.com/markets/energy/crude-oil/light-sweet-crude.contractSpecs.html",
+       intern = TRUE) %>%
+  jsonlite::fromJSON()  %>%
+  dplyr::as_tibble()
+
 library(rvest)
 #rD <- rsDriver(browser = "firefox", port = 4545L, verbose = F)
 rD <- rsDriver(browser = "firefox", chromever = NULL)

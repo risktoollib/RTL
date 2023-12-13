@@ -78,74 +78,54 @@ futuresRef$ContractMonths <-
   # Futures specifications
 futuresRef$Specifications <- list()
 
-system(command = "node ../inst/js/cme-specifications.js https://www.cmegroup.com/markets/energy/crude-oil/light-sweet-crude.contractSpecs.html",
+futuresRef$Specifications$CL <-
+  system(command = "node ../inst/js/cme-specifications.js https://www.cmegroup.com/markets/energy/crude-oil/light-sweet-crude.contractSpecs.html",
        intern = TRUE) %>%
   jsonlite::fromJSON()  %>%
   dplyr::as_tibble()
 
-library(rvest)
-#rD <- rsDriver(browser = "firefox", port = 4545L, verbose = F)
-rD <- rsDriver(browser = "firefox", chromever = NULL)
+futuresRef$Specifications$HH <-
+  system(command = "node ../inst/js/cme-specifications.js https://www.cmegroup.com/markets/energy/natural-gas/natural-gas.contractSpecs.html",
+         intern = TRUE) %>%
+  jsonlite::fromJSON()  %>%
+  dplyr::as_tibble()
 
-remDr <- rD[["client"]]
-Sys.sleep(2)
-  # CL
-remDr$navigate("https://www.cmegroup.com/trading/energy/crude-oil/light-sweet-crude_contract_specifications.html")
-Sys.sleep(2)
-remDr$findElement(using = 'class', value = 'section')$clickElement()
-page <- remDr$getPageSource()
-futuresRef$Specifications$CL <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
-  dplyr::select(Specification = X1, Description = X2)
-  # CS
-remDr$navigate("https://www.cmegroup.com/markets/energy/crude-oil/west-texas-intermediate-wti-crude-oil-calendar-swap-futures.contractSpecs.html")
-Sys.sleep(2)
-remDr$findElement(using = 'class', value = 'section')$clickElement()
-page <- remDr$getPageSource()
-futuresRef$Specifications$CS <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
-  dplyr::select(Specification = X1, Description = X2)
-  # HH
-remDr$navigate("https://www.cmegroup.com/markets/energy/natural-gas/natural-gas.contractSpecs.html")
-Sys.sleep(2)
-remDr$findElement(using = 'class', value = 'section')$clickElement()
-page <- remDr$getPageSource()
-futuresRef$Specifications$HH <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
-  dplyr::select(Specification = X1, Description = X2)
-  # RB
-remDr$navigate("https://www.cmegroup.com/markets/energy/refined-products/rbob-gasoline.contractSpecs.html")
-Sys.sleep(2)
-remDr$findElement(using = 'class', value = 'section')$clickElement()
-page <- remDr$getPageSource()
-futuresRef$Specifications$RB <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
-  dplyr::select(Specification = X1, Description = X2)
-  # HO
-remDr$navigate("https://www.cmegroup.com/markets/energy/refined-products/heating-oil.contractSpecs.html")
-Sys.sleep(2)
-remDr$findElement(using = 'class', value = 'section')$clickElement()
-page <- remDr$getPageSource()
-futuresRef$Specifications$HO <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
-  dplyr::select(Specification = X1, Description = X2)
-  # HTT
-remDr$navigate("https://www.cmegroup.com/markets/energy/crude-oil/wti-houston-argus-vs-wti-trade-month.contractSpecs.html")
-Sys.sleep(2)
-remDr$findElement(using = 'class', value = 'section')$clickElement()
-page <- remDr$getPageSource()
-futuresRef$Specifications$HTT <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
-  dplyr::select(Specification = X1, Description = X2)
-  # ZN UST 10 year
-remDr$navigate("https://www.cmegroup.com/markets/interest-rates/us-treasury/10-year-us-treasury-note.contractSpecs.html")
-Sys.sleep(2)
-remDr$findElement(using = 'class', value = 'section')$clickElement()
-page <- remDr$getPageSource()
-futuresRef$Specifications$ZN <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
-  dplyr::select(Specification = X1, Description = X2)
-  # ED
-remDr$navigate("https://www.cmegroup.com/markets/interest-rates/stirs/three-month-sofr.contractSpecs.html")
-Sys.sleep(2)
-remDr$findElement(using = 'class', value = 'section')$clickElement()
-page <- remDr$getPageSource()
-futuresRef$Specifications$SOFR <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[1]] %>%
-  dplyr::select(Specification = X1, Description = X2)
-remDr$close()
+futuresRef$Specifications$CS <-
+  system(command = "node ../inst/js/cme-specifications.js https://www.cmegroup.com/markets/energy/crude-oil/west-texas-intermediate-wti-crude-oil-calendar-swap-futures.contractSpecs.html",
+         intern = TRUE) %>%
+  jsonlite::fromJSON()  %>%
+  dplyr::as_tibble()
+
+futuresRef$Specifications$RB <-
+  system(command = "node ../inst/js/cme-specifications.js https://www.cmegroup.com/markets/energy/refined-products/rbob-gasoline.contractSpecs.html",
+         intern = TRUE) %>%
+  jsonlite::fromJSON()  %>%
+  dplyr::as_tibble()
+
+futuresRef$Specifications$HO <-
+  system(command = "node ../inst/js/cme-specifications.js https://www.cmegroup.com/markets/energy/refined-products/heating-oil.contractSpecs.html",
+         intern = TRUE) %>%
+  jsonlite::fromJSON()  %>%
+  dplyr::as_tibble()
+
+futuresRef$Specifications$HTT <-
+  system(command = "node ../inst/js/cme-specifications.js https://www.cmegroup.com/markets/energy/crude-oil/wti-houston-argus-vs-wti-trade-month.contractSpecs.html",
+         intern = TRUE) %>%
+  jsonlite::fromJSON()  %>%
+  dplyr::as_tibble()
+
+futuresRef$Specifications$ZN <-
+  system(command = "node ../inst/js/cme-specifications.js https://www.cmegroup.com/markets/interest-rates/us-treasury/10-year-us-treasury-note.contractSpecs.html",
+         intern = TRUE) %>%
+  jsonlite::fromJSON()  %>%
+  dplyr::as_tibble()
+
+futuresRef$Specifications$SOFR <-
+  system(command = "node ../inst/js/cme-specifications.js https://www.cmegroup.com/markets/interest-rates/stirs/three-month-sofr.contractSpecs.html",
+         intern = TRUE) %>%
+  jsonlite::fromJSON()  %>%
+  dplyr::as_tibble()
+
 usethis::use_data(futuresRef, overwrite = T)
 
 # Equities ----------------------------------------------------------------

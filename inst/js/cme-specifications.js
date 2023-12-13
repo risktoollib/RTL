@@ -1,7 +1,7 @@
-// Import Playwright's Firefox module and Cheerio
 const { firefox } = require("playwright");
 const cheerio = require("cheerio");
 const fs = require("fs");
+const { cleanText } = require("./textUtils"); // Import cleanText function
 
 // URL is taken from the command line arguments
 const url = process.argv[2];
@@ -26,15 +26,11 @@ const url = process.argv[2];
   // Initialize an array to store the scraped data
   let dataFrame = [];
 
-  // Select the '.spec-item single' and '.spec-item multi' elements and iterate over them
-  $(".spec-item.single, .spec-item.multi").each((index, element) => {
-    // Extract the header, typically in a 'span' or 'div' element
-    const header = $(element).find("span, div").first().text().trim();
-    console.log(header);
-
-    // Extract the description, typically following the header element
-    const description = $(element).find("span, div").eq(1).text().trim();
-    console.log(description);
+  // Select the '.contract-specs-table' and iterate over its 'tr' children
+  $(".contract-specs-table tr").each((index, element) => {
+    // Extract the header and description
+    const header = cleanText($(element).find("th, td").first().text());
+    const description = cleanText($(element).find("td").eq(0).text());
 
     // Only add to the array if both header and description are not empty
     if (header && description) {
@@ -44,9 +40,9 @@ const url = process.argv[2];
 
   // Log the scraped data in JSON format
   console.log(JSON.stringify(dataFrame));
-  // You can also write the data to a file if needed
-  const fs = require("fs");
-  fs.writeFileSync("cme-specifications.json", JSON.stringify(dataFrame));
+  // Write the data to a file
+  //fs.writeFileSync("cme-data.json", JSON.stringify(dataFrame));
+
   // Close the browser
   await browser.close();
 })();

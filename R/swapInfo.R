@@ -33,8 +33,8 @@ swapInfo <- function(date = "2023-08-24",
     date = date, fields = c("settlement_price"), iuser = iuser, ipassword = ipassword
   )
 
-  to <- lubridate::rollback(as.Date(date)) + months(4)
-  calDays <- seq(as.Date(date), to = Sys.Date(), by = "day")
+  to <- lubridate::rollforward(as.Date(date)) + months(4)
+  calDays <- seq(as.Date(date), to = to, by = "day")
   hol <- RTL::holidaysOil %>% dplyr::filter(key == exchange)
   bizDays <- calDays[!(calDays %in% hol$value)]
   bizDays <- bizDays[!(weekdays(bizDays) %in% c("Saturday", "Sunday"))]

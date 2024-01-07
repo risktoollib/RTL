@@ -26,28 +26,9 @@ CRROption(S, X, sigma, r, b, T2M, N, type, optionStyle)
 \item{optionStyle}{Character, the style of the option ("european" or "american").}
 }
 \value{
-A list containing:
-\itemize{
-\item \code{price}: The computed price of the option.
-\item \code{note}: A note indicating if the model is suitable for the provided parameters.
-}
+A list containing the computed price of the option and a note indicating if the model is suitable for the provided parameters.
 }
 \description{
 Computes the price of European and American options using the Cox-Ross-Rubinstein binomial model.
-This function is optimized for performance using vectorized operations and pre-calculations.
-}
-\details{
-The function uses a binomial tree to model the possible paths the stock price might take and
-calculates the option price based on this. The optimized version reduces computational overhead
-by minimizing the number of calculations within loops and using vectorized operations where possible.
-
-Note: Designed for use in Education purpose.
-}
-\examples{
-# Pricing a European call option
-CRROption(S = 100, X = 100, sigma = 0.2, r = 0.05, b = 0.03, T2M = 1, N = 5, type = "call", optionStyle = "european")
-
-# Pricing an American put option
-CRROption(S = 100, X = 100, sigma = 0.2, r = 0.05, b = 0.03, T2M = 1, N = 5, type = "put", optionStyle = "american")
-
+This function is optimized for performance and implemented in C++. Haug (2007) provides a detailed description of the model.
 }

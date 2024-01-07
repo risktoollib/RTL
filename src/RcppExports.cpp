@@ -10,6 +10,25 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// CRROptionCpp
+List CRROptionCpp(double S, double X, double sigma, double r, double b, double T2M, int N, std::string type, std::string optionStyle);
+RcppExport SEXP _RTL_CRROptionCpp(SEXP SSEXP, SEXP XSEXP, SEXP sigmaSEXP, SEXP rSEXP, SEXP bSEXP, SEXP T2MSEXP, SEXP NSEXP, SEXP typeSEXP, SEXP optionStyleSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type S(SSEXP);
+    Rcpp::traits::input_parameter< double >::type X(XSEXP);
+    Rcpp::traits::input_parameter< double >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< double >::type r(rSEXP);
+    Rcpp::traits::input_parameter< double >::type b(bSEXP);
+    Rcpp::traits::input_parameter< double >::type T2M(T2MSEXP);
+    Rcpp::traits::input_parameter< int >::type N(NSEXP);
+    Rcpp::traits::input_parameter< std::string >::type type(typeSEXP);
+    Rcpp::traits::input_parameter< std::string >::type optionStyle(optionStyleSEXP);
+    rcpp_result_gen = Rcpp::wrap(CRROptionCpp(S, X, sigma, r, b, T2M, N, type, optionStyle));
+    return rcpp_result_gen;
+END_RCPP
+}
 // CND
 double CND(double x);
 RcppExport SEXP _RTL_CND(SEXP xSEXP) {
@@ -86,6 +105,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_RTL_CRROptionCpp", (DL_FUNC) &_RTL_CRROptionCpp, 9},
     {"_RTL_CND", (DL_FUNC) &_RTL_CND, 1},
     {"_RTL_gbs", (DL_FUNC) &_RTL_gbs, 6},
     {"_RTL_rcppOU", (DL_FUNC) &_RTL_rcppOU, 5},

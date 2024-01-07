@@ -2,6 +2,8 @@
 
 ## Enhancement
 + `fitOU()` amended to annualized sigma, adjust theta for periodicity, and return half life of theta.
++ `GBSOption()` added new function for Generalized Black Scholes model.
++ `CRROption()` added new function for CRR model. This version is more efficient than `CRReuro()` existing funtion used for education puporses.
 
 ## Bugs & Fixes
 + `swapInfo()` to date using `lubridate::rollback()' instead of base R to ensure it works when on the 31st of the month and it does not exist for months + 4.

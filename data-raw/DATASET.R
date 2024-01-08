@@ -141,10 +141,11 @@ stocks$spy <-
 stocks$uso <- tidyquant::tq_get("USO", adjust = TRUE) %>%
   dplyr::rename_all(tools::toTitleCase) %>%
   timetk::tk_xts(date_var = Date) %>%
-  quantmod::adjustOHLC(.,use.Adjusted = TRUE) %>%
+  quantmod::adjustOHLC(., use.Adjusted = TRUE) %>%
   timetk::tk_tbl(rename_index = "Date") %>%
   dplyr::select(-Adjusted) %>%
-  dplyr::mutate(across(where(is.numeric), round, 2))
+  dplyr::mutate(across(where(is.numeric), round, digits = 2))
+
 
 ry <- tidyquant::tq_get("RY", adjust = TRUE, from = "2000-01-01") %>%
   dplyr::rename_all(tools::toTitleCase) %>%
@@ -152,7 +153,7 @@ ry <- tidyquant::tq_get("RY", adjust = TRUE, from = "2000-01-01") %>%
   quantmod::adjustOHLC(.,use.Adjusted = TRUE) %>%
   timetk::tk_tbl(rename_index = "Date") %>%
   dplyr::select(-Adjusted) %>%
-  dplyr::mutate(across(where(is.numeric), round, 2))
+  dplyr::mutate(across(where(is.numeric), round, digits = 2))
 
 dividends <- tidyquant::tq_get("RY", get = "dividends" , from = "2000-01-01",adjust = TRUE)
 stocks$ry <- ry %>%
@@ -326,7 +327,7 @@ dflong %>% dplyr::filter(grepl("MJP",series)) %>% ggplot(aes(x = date, y = value
 
 usethis::use_data(dflong , overwrite = T)
 usethis::use_data(dfwide, overwrite = T)
-rm(crude, crudecan, crudeICE, pdts, alu)
+rm(crude, crudeICE, pdts, alu)
 
 # EIA ---------------------------------------------------------------------
 

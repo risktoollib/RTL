@@ -31,9 +31,10 @@
 #'
 #' @export GBSOption
 GBSOption <- function(S, X, T2M, r, b, sigma, type = "call") {
+  if (sigma == 0) {sigma <- 10^-16}
   d1 <- (log(S/X) + (b + sigma^2 / 2) * T2M) / (sigma * sqrt(T2M))
   d2 <- d1 - sigma * sqrt(T2M)
-  
+
   if (type == "call") {
     price <- S * exp((b - r) * T2M) * pnorm(d1) - X * exp(-r * T2M) * pnorm(d2)
     delta <- exp((b - r) * T2M) * pnorm(d1)
@@ -51,6 +52,6 @@ GBSOption <- function(S, X, T2M, r, b, sigma, type = "call") {
   } else {
     stop("Invalid option type")
   }
-  
+
   return(list(price = price, delta = delta, gamma = gamma, vega = vega, theta = theta, rho = rho))
 }

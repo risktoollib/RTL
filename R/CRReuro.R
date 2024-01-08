@@ -1,7 +1,7 @@
 #' Cox-Ross-Rubinstein binomial option model
 #' @description
 #' European option binomial model on a stock without dividends.For academic purpose only.
-#' Use fOptions::CRRBinomialTreeOptions for real-life usage.
+#' Use RTL::CRRoption for real-life usage.
 #' @param S Stock price. `numeric`
 #' @param X Strike price. `numeric`
 #' @param sigma Implied volatility e.g. 0.20 `numeric`

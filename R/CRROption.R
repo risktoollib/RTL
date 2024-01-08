@@ -15,8 +15,10 @@
 #'
 #' @return A list containing the computed price of the option and a note indicating if the model is suitable for the provided parameters.
 #' @examples
-#' # CRROption(S = 100, X = 100, sigma = 0.25, r = 0.1, b = 0, T2M = 1, N = 500, type = "call", optionStyle = "european")
-#' # CRROption(S = 100, X = 100, sigma = 0.25, r = 0.1, b = 0, T2M = 1, N = 500, type = "call", optionStyle = "american")
+#' # CRROption(S = 100, X = 100, sigma = 0.25, r = 0.1, b = 0, T2M = 1, N = 500,
+#' # type = "call", optionStyle = "european")
+#' # CRROption(S = 100, X = 100, sigma = 0.25, r = 0.1, b = 0, T2M = 1, N = 500,
+#' # type = "call", optionStyle = "american")
 #'
 #' @export
 CRROption <- function(S, X, sigma, r, b, T2M, N, type, optionStyle) {

@@ -26,7 +26,7 @@ List of asset price tree, option value tree and option price. \code{list}
 }
 \description{
 European option binomial model on a stock without dividends.For academic purpose only.
-Use fOptions::CRRBinomialTreeOptions for real-life usage.
+Use RTL::CRRoption for real-life usage.
 }
 \examples{
 CRReuro(S = 100, X = 100, sigma = 0.2, r = 0.1, T2M = 1, N = 5, type = "call")

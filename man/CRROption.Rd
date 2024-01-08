@@ -32,3 +32,10 @@ A list containing the computed price of the option and a note indicating if the 
 Computes the price of European and American options using the Cox-Ross-Rubinstein binomial model.
 This function is optimized for performance and implemented in C++. Haug (2007) provides a detailed description of the model.
 }
+\examples{
+# CRROption(S = 100, X = 100, sigma = 0.25, r = 0.1, b = 0, T2M = 1, N = 500,
+# type = "call", optionStyle = "european")
+# CRROption(S = 100, X = 100, sigma = 0.25, r = 0.1, b = 0, T2M = 1, N = 500,
+# type = "call", optionStyle = "american")
+
+}

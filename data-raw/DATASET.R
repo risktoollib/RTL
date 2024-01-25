@@ -549,8 +549,7 @@ LGO <- read_csv("https://www.theice.com/api/productguide/spec/34361119/expiry/cs
     FND = col_date(format = "%m/%d/%Y"),
     LND = col_skip(), FDD = col_date(format = "%m/%d/%Y"),
     LDD = col_date(format = "%m/%d/%Y"),
-    FSD = col_skip(), `OPTIONS FTD` = col_skip(),
-    `OPTIONS LTD` = col_skip()
+    FSD = col_skip()
   )
 ) %>%
   dplyr::transmute(
@@ -565,8 +564,7 @@ LCO <- read_csv("https://www.theice.com/api/productguide/spec/219/expiry/csv",
     FND = col_date(format = "%m/%d/%Y"),
     LND = col_skip(), FDD = col_date(format = "%m/%d/%Y"),
     LDD = col_date(format = "%m/%d/%Y"),
-    FSD = col_skip(), `OPTIONS FTD` = col_skip(),
-    `OPTIONS LTD` = col_skip()
+    FSD = col_skip()
   )
 ) %>%
   dplyr::transmute(
@@ -583,8 +581,7 @@ TMW <- read_csv("https://www.theice.com/api/productguide/spec/27066814/expiry/cs
                   FND = col_date(format = "%m/%d/%Y"),
                   LND = col_skip(), FDD = col_date(format = "%m/%d/%Y"),
                   LDD = col_date(format = "%m/%d/%Y"),
-                  FSD = col_skip(), `OPTIONS FTD` = col_skip(),
-                  `OPTIONS LTD` = col_skip()
+                  FSD = col_skip()
                 )
 ) %>%
   dplyr::transmute(
@@ -601,8 +598,7 @@ TMR <- read_csv("https://www.theice.com/api/productguide/spec/31687075/expiry/cs
                   FND = col_date(format = "%m/%d/%Y"),
                   LND = col_skip(), FDD = col_date(format = "%m/%d/%Y"),
                   LDD = col_date(format = "%m/%d/%Y"),
-                  FSD = col_skip(), `OPTIONS FTD` = col_skip(),
-                  `OPTIONS LTD` = col_skip()
+                  FSD = col_skip()
                 )
 ) %>%
   dplyr::transmute(
@@ -637,8 +633,7 @@ TMF <- read_csv("https://www.theice.com/api/productguide/spec/27066813/expiry/cs
                   FND = col_date(format = "%m/%d/%Y"),
                   LND = col_skip(), FDD = col_date(format = "%m/%d/%Y"),
                   LDD = col_date(format = "%m/%d/%Y"),
-                  FSD = col_skip(), `OPTIONS FTD` = col_skip(),
-                  `OPTIONS LTD` = col_skip()
+                  FSD = col_skip()
                 )
 ) %>%
   dplyr::transmute(
@@ -673,8 +668,7 @@ TI <- read_csv("https://www.theice.com/api/productguide/spec/213/expiry/csv",
                   FND = col_date(format = "%m/%d/%Y"),
                   LND = col_skip(), FDD = col_date(format = "%m/%d/%Y"),
                   LDD = col_date(format = "%m/%d/%Y"),
-                  FSD = col_skip(), `OPTIONS FTD` = col_skip(),
-                  `OPTIONS LTD` = col_skip()
+                  FSD = col_skip()
                 )
 ) %>%
   dplyr::transmute(
@@ -811,35 +805,35 @@ bbdate <- function(x){
   paste0(substr(x,1,6),as.character(tmp))
 }
 
-W <- read_excel("W.xls") %>%
+W <- read_excel("W.xls", skip = 4) %>%
   dplyr::as_tibble(.name_repair = "universal") %>%
   dplyr::transmute(cmdty = "cmewheat",
-                   tick.prefix = Ticker,
-                   Last.Trade = as.Date(as.character(purrr::map(.x = Last.Trade, .f = bbdate)), "%m/%d/%Y", tz = "UTC"),
-                   First.Notice = as.Date(as.character(purrr::map(.x = First.Notice, .f = bbdate)), "%m/%d/%Y", tz = "UTC"),
-                   First.Delivery = as.Date(as.character(purrr::map(.x = First.Delivery, .f = bbdate)), "%m/%d/%Y", tz = "UTC"),
-                   Last.Delivery = as.Date(as.character(purrr::map(.x = Last.Delivery, .f = bbdate)), "%m/%d/%Y", tz = "UTC")
+                   tick.prefix = "W",
+                   Last.Trade = as.Date(Last.Trade, "%Y-%m-%d", tz = "UTC"),
+                   First.Notice = as.Date(First.Notice, "%Y-%m-%d", tz = "UTC"),
+                   First.Delivery  = as.Date(First.Holding, "%Y-%m-%d", tz = "UTC"),
+                   Last.Delivery  = as.Date(Last.Holding, "%Y-%m-%d", tz = "UTC")
                    )
 
 C <- read_excel("C.xls") %>%
   dplyr::as_tibble(.name_repair = "universal") %>%
   dplyr::transmute(cmdty = "cmecorn",
-                   tick.prefix = Ticker,
-                   Last.Trade = as.Date(as.character(purrr::map(.x = Last.Trade, .f = bbdate)), "%m/%d/%Y", tz = "UTC"),
-                   First.Notice = as.Date(as.character(purrr::map(.x = First.Notice, .f = bbdate)), "%m/%d/%Y", tz = "UTC"),
-                   First.Delivery = as.Date(as.character(purrr::map(.x = First.Delivery, .f = bbdate)), "%m/%d/%Y", tz = "UTC"),
-                   Last.Delivery = as.Date(as.character(purrr::map(.x = Last.Delivery, .f = bbdate)), "%m/%d/%Y", tz = "UTC")
+                   tick.prefix = "C",
+                   Last.Trade = as.Date(Last.Trade, "%Y-%m-%d", tz = "UTC"),
+                   First.Notice = as.Date(First.Notice, "%Y-%m-%d", tz = "UTC"),
+                   First.Delivery  = as.Date(First.Holding, "%Y-%m-%d", tz = "UTC"),
+                   Last.Delivery  = as.Date(Last.Holding, "%Y-%m-%d", tz = "UTC")
   )
 
 
 S <- read_excel("S.xls") %>%
   dplyr::as_tibble(.name_repair = "universal") %>%
   dplyr::transmute(cmdty = "cmesoybean",
-                   tick.prefix = Ticker,
-                   Last.Trade = as.Date(as.character(purrr::map(.x = Last.Trade, .f = bbdate)), "%m/%d/%Y", tz = "UTC"),
-                   First.Notice = as.Date(as.character(purrr::map(.x = First.Notice, .f = bbdate)), "%m/%d/%Y", tz = "UTC"),
-                   First.Delivery = as.Date(as.character(purrr::map(.x = First.Delivery, .f = bbdate)), "%m/%d/%Y", tz = "UTC"),
-                   Last.Delivery = as.Date(as.character(purrr::map(.x = Last.Delivery, .f = bbdate)), "%m/%d/%Y", tz = "UTC")
+                   tick.prefix = "S",
+                   Last.Trade = as.Date(Last.Trade, "%Y-%m-%d", tz = "UTC"),
+                   First.Notice = as.Date(First.Notice, "%Y-%m-%d", tz = "UTC"),
+                   First.Delivery  = as.Date(First.Holding, "%Y-%m-%d", tz = "UTC"),
+                   Last.Delivery  = as.Date(Last.Holding, "%Y-%m-%d", tz = "UTC")
   )
 
 ## tradeCycle

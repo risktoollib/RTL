@@ -1,3 +1,11 @@
+# RTL 1.3.6
+
+## Enhancement
+
+
+## Bugs & Fixes
++ `tradeCycle` and `expiry_table` updated.
+
 # RTL 1.3.5
 
 ## Enhancement

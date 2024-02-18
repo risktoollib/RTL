@@ -1323,7 +1323,7 @@ library(RQuantLib)
 tsQuotes <- rbind(libor, irs, futs) %>% as_tibble() %>%
   dplyr::mutate(Last = readr::parse_number(Last)) %>%
   tidyr::pivot_wider(names_from = Name, values_from = Last) %>%
-  #dplyr::select(-s2y,-d3m) %>%
+  dplyr::select(-s2y,-d3m) %>%
   transpose() %>% unlist() %>% as.list()
 tradeDate <- as.Date(Sys.Date() - 1)
 params <- list(tradeDate = tradeDate, settleDate = tradeDate + 2, dt = 1/12,

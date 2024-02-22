@@ -1346,6 +1346,9 @@ usSwapCurves[1:4] %>%
     mode = "lines"
   )
 #usSwapCurves[1:4] %>% dplyr::as_tibble() %>% View()
+cbind(usSwapCurves$times, usSwapCurves$discounts, usSwapCurves$zerorates, usSwapCurves$forwards) %>%
+  dplyr::as_tibble() %>% dplyr::rename(times = V1, discounts = V2, zerorates = V3, forwards = V4) %>%
+  arrow::write_feather(x = ., sink = "C:/Users/cotep/data/usd-ir.feather")
 usethis::use_data(tsQuotes, overwrite = T)
 
 tsQuotes <- list(flat = 0.05)

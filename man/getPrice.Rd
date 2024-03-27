@@ -35,7 +35,7 @@ You need your own credentials with Morningstar. In examples sourced locally.
 \itemize{
 \item CME_CbotFuturesEOD and CME_CbotFuturesEOD_continuous
 \item CME_NymexFutures_EOD and CME_NymexFutures_EOD_continuous
-\item CME_NymexOptions_EOD
+\item CME_NymexOptionsFinal_EOD and CME_NymexOptions_EOD
 \item CME_CmeFutures_EOD and CME_CmeFutures_EOD_continuous
 \item CME_Comex_FuturesSettlement_EOD and CME_Comex_FuturesSettlement_EOD_continuous
 \item LME_AskBidPrices_Delayed
@@ -60,6 +60,10 @@ getPrice(
 getPrice(
   feed = "CME_NymexFutures_EOD_continuous", contract = "CL_006_Month",
   from = "2019-08-26", iuser = username, ipassword = password
+)
+getPrice(
+  feed = "CME_NymexOptionsFinal_EOD", contract = "06 2024 P LO 8000",
+  from = "2020-03-15", iuser = username, ipassword = password
 )
 getPrice(
   feed = "CME_NymexOptions_EOD", contract = "@LO21ZP4000",

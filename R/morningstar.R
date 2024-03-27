@@ -7,7 +7,7 @@
 #' \itemize{
 #'   \item CME_CbotFuturesEOD and CME_CbotFuturesEOD_continuous
 #'   \item CME_NymexFutures_EOD and CME_NymexFutures_EOD_continuous
-#'   \item CME_NymexOptions_EOD
+#'   \item CME_NymexOptionsFinal_EOD and CME_NymexOptions_EOD
 #'   \item CME_CmeFutures_EOD and CME_CmeFutures_EOD_continuous
 #'   \item CME_Comex_FuturesSettlement_EOD and CME_Comex_FuturesSettlement_EOD_continuous
 #'   \item LME_AskBidPrices_Delayed
@@ -39,6 +39,10 @@
 #' getPrice(
 #'   feed = "CME_NymexFutures_EOD_continuous", contract = "CL_006_Month",
 #'   from = "2019-08-26", iuser = username, ipassword = password
+#' )
+#' getPrice(
+#'   feed = "CME_NymexOptionsFinal_EOD", contract = "06 2024 P LO 8000",
+#'   from = "2020-03-15", iuser = username, ipassword = password
 #' )
 #' getPrice(
 #'   feed = "CME_NymexOptions_EOD", contract = "@LO21ZP4000",
@@ -99,7 +103,7 @@ getPrice <- function(feed = "CME_NymexFutures_EOD", contract = "@CL21Z",
   # mpurl <- "https://mp.morningstarcommodity.com/lds/feeds/CME_NymexFutures_EOD/ts?Symbol=@CL9Z"
   # userpw <- paste0(iuser,":",ipassword)
   if (feed %in% c(
-    "CME_NymexFutures_EOD", "CME_NymexOptions_EOD", "CME_CbotFuturesEOD", "CME_CmeFutures_EOD",
+    "CME_NymexFutures_EOD","CME_NymexOptions_EOD", "CME_CbotFuturesEOD", "CME_CmeFutures_EOD",
     "ICE_EuroFutures", "ICE_NybotCoffeeSugarCocoaFutures",
     "CME_Comex_FuturesSettlement_EOD",
     "LME_AskBidPrices_Delayed", "SHFE_FuturesSettlement_RT"
@@ -119,6 +123,22 @@ getPrice <- function(feed = "CME_NymexFutures_EOD", contract = "@CL21Z",
   if (feed %in% c("CME_STLCPC_Futures")) {
     URL <- httr::modify_url(url = "https://mp.morningstarcommodity.com", path = paste0("/lds/feeds/", feed, "/ts?", "product=", contract, "&fromDateTime=", from))
   }
+  if (feed %in% c("CME_NymexOptionsFinal_EOD")) {
+    if (grepl(",", contract)) stop(paste("Use a space instead of a comma to separate contract components e.g.", gsub(",", " ", contract)))
+    URL <- httr::modify_url(
+      url = "https://mp.morningstarcommodity.com",
+      path = paste0(
+        "/lds/feeds/", feed, "/ts?",
+        "fromDateTime=", from,
+        "&cols=Settlement_Price&contract_month=", stringr::word(contract, 1, 1),
+        "&contract_year=", stringr::word(contract, 2, 2),
+        "&option_type=", stringr::word(contract, 3, 3),
+        "&product_code=", stringr::word(contract, 4, 4),
+        "&strike_price=", stringr::word(contract, 5, 5)
+      )
+    )
+  }
+
   if (feed %in% c("CFTC_CommitmentsOfTradersCombined")) {
     if (grepl(",", contract)) stop(paste("Use a space instead of a comma to separate contract components e.g.", gsub(",", " ", contract)))
     URL <- httr::modify_url(

@@ -1,7 +1,7 @@
 # RTL 1.3.6
 
 ## Enhancement
-
++ `getPrice` form Morningstar feed = `CME_NymexOptionsFinal_EOD`
 
 ## Bugs & Fixes
 + `tradeCycle` and `expiry_table` updated.

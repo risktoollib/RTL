@@ -34,7 +34,7 @@ You need your own credentials with Morningstar. In examples sourced locally.
 
 \itemize{
 \item CME_CbotFuturesEOD and CME_CbotFuturesEOD_continuous
-\item CME_NymexFutures_EOD and CME_NymexFutures_EOD_continuous
+\item CME_NymexFutures_EOD, CME_NymexFuturesFinal_EOD andCME_NymexFutures_EOD_continuous
 \item CME_NymexOptionsFinal_EOD and CME_NymexOptions_EOD
 \item CME_CmeFutures_EOD and CME_CmeFutures_EOD_continuous
 \item CME_Comex_FuturesSettlement_EOD and CME_Comex_FuturesSettlement_EOD_continuous
@@ -53,6 +53,10 @@ You need your own credentials with Morningstar. In examples sourced locally.
 
 \examples{
 \dontrun{
+getPrice(
+  feed = "CME_NymexFuturesFinal_EOD", contract = "CL 2024 07",
+  from = "2019-08-26", iuser = username, ipassword = password
+)
 getPrice(
   feed = "CME_NymexFutures_EOD", contract = "@CL21Z",
   from = "2019-08-26", iuser = username, ipassword = password

@@ -6,7 +6,7 @@
 #' @section Current Feeds Supported:
 #' \itemize{
 #'   \item CME_CbotFuturesEOD and CME_CbotFuturesEOD_continuous
-#'   \item CME_NymexFutures_EOD and CME_NymexFutures_EOD_continuous
+#'   \item CME_NymexFutures_EOD, CME_NymexFuturesFinal_EOD andCME_NymexFutures_EOD_continuous
 #'   \item CME_NymexOptionsFinal_EOD and CME_NymexOptions_EOD
 #'   \item CME_CmeFutures_EOD and CME_CmeFutures_EOD_continuous
 #'   \item CME_Comex_FuturesSettlement_EOD and CME_Comex_FuturesSettlement_EOD_continuous
@@ -32,6 +32,10 @@
 #' @author Philippe Cote
 #' @examples
 #' \dontrun{
+#' getPrice(
+#'   feed = "CME_NymexFuturesFinal_EOD", contract = "CL 2024 07",
+#'   from = "2019-08-26", iuser = username, ipassword = password
+#' )
 #' getPrice(
 #'   feed = "CME_NymexFutures_EOD", contract = "@CL21Z",
 #'   from = "2019-08-26", iuser = username, ipassword = password
@@ -122,6 +126,20 @@ getPrice <- function(feed = "CME_NymexFutures_EOD", contract = "@CL21Z",
   }
   if (feed %in% c("CME_STLCPC_Futures")) {
     URL <- httr::modify_url(url = "https://mp.morningstarcommodity.com", path = paste0("/lds/feeds/", feed, "/ts?", "product=", contract, "&fromDateTime=", from))
+  }
+  if (feed %in% c("CME_NymexFuturesFinal_EOD")) {
+    if (grepl(",", contract)) stop(paste("Use a space instead of a comma to separate contract components e.g.", gsub(",", " ", contract)))
+    URL <- httr::modify_url(
+      url = "https://mp.morningstarcommodity.com",
+      path = paste0(
+        "/lds/feeds/", feed, "/ts?",
+        "fromDateTime=", from,
+        "&cols=Settlement_Price",
+        "&product_code=", stringr::word(contract, 1, 1),
+        "&contract_year=", stringr::word(contract, 2, 2),
+        "&contract_month=", stringr::word(contract, 3, 3)
+      )
+    )
   }
   if (feed %in% c("CME_NymexOptionsFinal_EOD")) {
     if (grepl(",", contract)) stop(paste("Use a space instead of a comma to separate contract components e.g.", gsub(",", " ", contract)))

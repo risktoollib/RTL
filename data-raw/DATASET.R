@@ -416,7 +416,7 @@ for (i in 1:length(urls)) {
     dist1b[i, 3] <- (storagecapacity %>% dplyr::filter(.[[1]] == "Motor Gasoline (incl. Motor Gasoline Blending Components)"))[2, 2] %>% as.numeric(.)
   } else {
     urli <- gsub(pattern = "/[^/]*$", replacement = paste0("/", "table1.pdf"), x = urls[i])
-    tmp <- pdf_ocr_text(urli, pages = 1)
+    tmp <- pdftools::pdf_ocr_text(urli, pages = 1)
     tmp <- read_lines(tmp)
     tmp <- str_replace_all(
       string = tmp[grep("^Motor.*|^Dist.*", tmp)],

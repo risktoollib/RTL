@@ -1351,7 +1351,7 @@ cbind(usSwapCurves$times, usSwapCurves$discounts, usSwapCurves$zerorates, usSwap
   arrow::write_feather(x = ., sink = "C:/Users/cotep/data/usd-ir.feather")
 usethis::use_data(tsQuotes, overwrite = T)
 
-tsQuotes <- list(flat = 0.05)
+tsQuotes <- list(flat = 0.04)
 usSwapCurvesPar <- DiscountCurve(params, tsQuotes, times)
 
 usethis::use_data(usSwapCurves, overwrite = T)

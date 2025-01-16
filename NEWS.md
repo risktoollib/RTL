@@ -1,3 +1,10 @@
+# RTL 1.3.7
+
+## Enhancement
++ `spreadOption` function added for spread options on European option using Kirk's approximation.
+
+## Bugs & Fixes
+
 # RTL 1.3.6
 
 ## Enhancement

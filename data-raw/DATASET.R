@@ -31,6 +31,7 @@
 # usethis::use_package("TTR")
 # usethis::use_package("Rcpp")
 # usethis::use_rcpp()
+#usethis::use_package("numDeriv")
 # usethis::use_package("tidyselect")
 # usethis::use_package("PerformanceAnalytics")
 #usethis::use_github_action("check-standard")

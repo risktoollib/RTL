@@ -4,7 +4,7 @@
 \alias{spreadOption}
 \title{Kirk's Approximation for Spread Option Pricing}
 \usage{
-spreadOption(F1, F2, X, sigma1, sigma2, rho, T2M, r)
+spreadOption(F1, F2, X, sigma1, sigma2, rho, T2M, r, type = "call")
 }
 \arguments{
 \item{F1}{numeric, the forward price of the first asset.}
@@ -22,6 +22,9 @@ spreadOption(F1, F2, X, sigma1, sigma2, rho, T2M, r)
 \item{T2M}{numeric, the time to maturity in years.}
 
 \item{r}{numeric, the risk-free interest rate (annualized).}
+
+\item{type}{character, the type of option to evaluate, either "call" or "put".
+Default is "call".}
 }
 \value{
 A list containing the following elements:
@@ -53,7 +56,7 @@ The implementation includes a small constant (epsilon) to avoid numerical
 instabilities that might arise from division by zero.
 }
 \examples{
-# Price a spread option with the following parameters:
+# Price a call spread option with the following parameters:
 F1 <- 100  # Forward price of first asset
 F2 <- 110  # Forward price of second asset
 X <- 5     # Strike price
@@ -63,7 +66,8 @@ rho <- 0.5     # Correlation between assets
 T2M <- 1       # One year to maturity
 r <- 0.05      # Risk-free rate
 
-result <- spreadOption(F1, F2, X, sigma1, sigma2, rho, T2M, r)
+result_call <- spreadOption(F1, F2, X, sigma1, sigma2, rho, T2M, r, type = "call")
+result_put <- spreadOption(F1, F2, X, sigma1, sigma2, rho, T2M, r, type = "put")
 
 }
 \references{

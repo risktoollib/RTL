@@ -38,7 +38,8 @@ Imports:
     lifecycle,
     TTR,
     tidyselect,
-    PerformanceAnalytics
+    PerformanceAnalytics,
+    numDeriv
 Suggests: 
     testthat (>= 3.0.0),
     covr,

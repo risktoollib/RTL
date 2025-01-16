@@ -13,6 +13,8 @@
 #' @param rho numeric, the correlation coefficient between the two assets (-1 <= rho <= 1).
 #' @param T2M numeric, the time to maturity in years.
 #' @param r numeric, the risk-free interest rate (annualized).
+#' @param type character, the type of option to evaluate, either "call" or "put".
+#'        Default is "call".
 #'
 #' @return A list containing the following elements:
 #' \itemize{
@@ -41,7 +43,7 @@
 #' Risk Publications and Enron, London, pp. 71-78.
 #'
 #' @examples
-#' # Price a spread option with the following parameters:
+#' # Price a call spread option with the following parameters:
 #' F1 <- 100  # Forward price of first asset
 #' F2 <- 110  # Forward price of second asset
 #' X <- 5     # Strike price
@@ -51,10 +53,15 @@
 #' T2M <- 1       # One year to maturity
 #' r <- 0.05      # Risk-free rate
 #'
-#' result <- spreadOption(F1, F2, X, sigma1, sigma2, rho, T2M, r)
+#' result_call <- spreadOption(F1, F2, X, sigma1, sigma2, rho, T2M, r, type = "call")
+#' result_put <- spreadOption(F1, F2, X, sigma1, sigma2, rho, T2M, r, type = "put")
 #'
 #' @export spreadOption
-spreadOption <- function(F1, F2, X, sigma1, sigma2, rho, T2M, r) {
+spreadOption <- function(F1, F2, X, sigma1, sigma2, rho, T2M, r, type = "call") {
+  # Input validation
+  if (!type %in% c("call", "put"))
+    stop("Type must be 'call' or 'put'")
+
   # Small constant to avoid division by zero
   epsilon <- 1e-10
 
@@ -71,32 +78,44 @@ spreadOption <- function(F1, F2, X, sigma1, sigma2, rho, T2M, r) {
            (0.5 * sigma_eff^2) * T2M) / (sigma_eff * sqrt(T2M + epsilon))
   d2 <- d1 - sigma_eff * sqrt(T2M + epsilon)
 
-  # Option price
-  option_price <- exp(-r * T2M) * ((F2 * pnorm(d1)) - ((F1 + X) * pnorm(d2)))
+  # Option price calculation based on type
+  if (type == "call") {
+    option_price <- exp(-r * T2M) * ((F2 * pnorm(d1)) - ((F1 + X) * pnorm(d2)))
+    delta_F1 <- -exp(-r * T2M) * pnorm(d2)
+    delta_F2 <- exp(-r * T2M) * pnorm(d1)
+  } else {  # put option
+    option_price <- exp(-r * T2M) * ((F1 + X) * pnorm(-d2) - F2 * pnorm(-d1))
+    delta_F1 <- exp(-r * T2M) * pnorm(-d2)
+    delta_F2 <- -exp(-r * T2M) * pnorm(-d1)
+  }
 
-  # Delta calculations
-  delta_F1 <- -exp(-r * T2M) * pnorm(d2)
-  delta_F2 <- exp(-r * T2M) * pnorm(d1)
-
-  # Gamma calculations
+  # Gamma calculations (same for both call and put due to put-call parity)
   gamma_F1 <- exp(-r * T2M) * dnorm(d2) / ((F1 + X) * sigma_eff * sqrt(T2M))
   gamma_F2 <- exp(-r * T2M) * dnorm(d1) / (F2 * sigma_eff * sqrt(T2M))
   gamma_cross <- -exp(-r * T2M) * dnorm(d2) * (
     1 / ((F1 + X) * sigma_eff * sqrt(T2M))
   )
 
-  # Vega calculations
+  # Vega calculations (same for both call and put)
   vega_1 <- exp(-r * T2M) * F2 * sqrt(T2M) * dnorm(d1) *
     (sigma1 * F_eff1^2 - rho * sigma2 * F_eff1 * F_eff2) / sigma_eff
   vega_2 <- exp(-r * T2M) * F2 * sqrt(T2M) * dnorm(d1) *
     (sigma2 * F_eff2^2 - rho * sigma1 * F_eff1 * F_eff2) / sigma_eff
 
   # Theta calculation
-  theta <- -exp(-r * T2M) * (
-    F2 * dnorm(d1) * sigma_eff / (2 * sqrt(T2M)) -
-      (F1 + X) * dnorm(d2) * sigma_eff / (2 * sqrt(T2M)) +
-      r * ((F2 * pnorm(d1)) - ((F1 + X) * pnorm(d2)))
-  )
+  if (type == "call") {
+    theta <- -exp(-r * T2M) * (
+      F2 * dnorm(d1) * sigma_eff / (2 * sqrt(T2M)) -
+        (F1 + X) * dnorm(d2) * sigma_eff / (2 * sqrt(T2M)) +
+        r * ((F2 * pnorm(d1)) - ((F1 + X) * pnorm(d2)))
+    )
+  } else {  # put option
+    theta <- -exp(-r * T2M) * (
+      F2 * dnorm(d1) * sigma_eff / (2 * sqrt(T2M)) -
+        (F1 + X) * dnorm(d2) * sigma_eff / (2 * sqrt(T2M)) -
+        r * ((F1 + X) * pnorm(-d2) - F2 * pnorm(-d1))
+    )
+  }
 
   # Rho calculation
   rho <- T2M * option_price

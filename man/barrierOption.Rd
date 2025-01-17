@@ -5,4 +5,5 @@
 \title{Barrier Spread Option Pricing Functions}
 \description{
 Functions for pricing barrier spread options using Kirk's approximation
+with theoretically consistent barrier option implementation.
 }

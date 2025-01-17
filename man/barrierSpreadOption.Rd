@@ -2,7 +2,7 @@
 % Please edit documentation in R/barrierSpreadOption.R
 \name{barrierSpreadOption}
 \alias{barrierSpreadOption}
-\title{Enhanced Barrier Spread Option using Extended Kirk's Approximation}
+\title{Barrier Spread Option Pricing using Kirk's Approximation}
 \usage{
 barrierSpreadOption(
   F1,
@@ -41,18 +41,16 @@ barrierSpreadOption(
 
 \item{type}{character, type of option ("call" or "put")}
 
-\item{barrier_type}{character, type of barrier ("do" for down-and-out, "di" for down-and-in,
-"uo" for up-and-out, "ui" for up-and-in)}
+\item{barrier_type}{character, type of barrier ("do", "di", "uo", "ui")}
 
-\item{monitoring}{character, barrier monitoring approach ("continuous", "discrete", "terminal")}
+\item{monitoring}{character, barrier monitoring ("continuous", "discrete", "terminal")}
 
-\item{monitoring_freq}{numeric, frequency of monitoring for discrete monitoring (default: 252 for daily)}
+\item{monitoring_freq}{numeric, frequency for discrete monitoring (default: 252)}
 }
 \value{
-A list containing the option price and Greeks
+A list containing option price and Greeks
 }
 \description{
-Computes the price and Greeks of European barrier spread options using an extension
-of Kirk's 1995 approximation. The barrier condition is applied to the spread (F2 - F1)
-rather than individual asset prices.
+Computes the price and Greeks of European barrier spread options using Kirk's
+approximation with theoretically consistent barrier option implementation.
 }

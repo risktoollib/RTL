@@ -4,7 +4,7 @@
 \name{RTL-package}
 \alias{RTL}
 \alias{RTL-package}
-\title{RTL: Risk Tool Library - Trading, Risk, 'Analytics' for Commodities}
+\title{RTL: Risk Tool Library - Trading, Risk, Analytics for Commodities}
 \description{
 A toolkit for Commodities 'analytics', risk management and trading professionals. Includes functions for API calls to \url{https://commodities.morningstar.com/#/}, \url{https://developer.genscape.com/}, and \url{https://www.bankofcanada.ca/valet/docs}.
 }

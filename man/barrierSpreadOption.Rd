@@ -27,13 +27,13 @@ barrierSpreadOption(
 
 \item{X}{numeric, the strike price of the spread option}
 
-\item{B}{numeric, the barrier level}
+\item{B}{numeric, the barrier level for the spread (F2 - F1)}
 
 \item{sigma1}{numeric, the volatility of the first asset (annualized)}
 
 \item{sigma2}{numeric, the volatility of the second asset (annualized)}
 
-\item{rho}{numeric, the correlation coefficient between the two assets (-1 <= rho <= 1)}
+\item{rho}{numeric, the correlation coefficient between the two assets}
 
 \item{T2M}{numeric, the time to maturity in years}
 
@@ -49,88 +49,10 @@ barrierSpreadOption(
 \item{monitoring_freq}{numeric, frequency of monitoring for discrete monitoring (default: 252 for daily)}
 }
 \value{
-A list containing the following elements:
-\itemize{
-\item \code{price}: The price of the barrier spread option
-\item \code{delta_F1}: The sensitivity of the option price to changes in F1
-\item \code{delta_F2}: The sensitivity of the option price to changes in F2
-\item \code{gamma_F1}: The second derivative of the option price with respect to F1
-\item \code{gamma_F2}: The second derivative of the option price with respect to F2
-\item \code{gamma_cross}: The mixed second derivative with respect to F1 and F2
-\item \code{vega_1}: The sensitivity of the option price to changes in sigma1
-\item \code{vega_2}: The sensitivity of the option price to changes in sigma2
-\item \code{theta}: The sensitivity of the option price to the passage of time
-\item \code{rho}: The sensitivity of the option price to changes in the interest rate
-\item \code{barrier_level}: The specified barrier level
-\item \code{barrier_type}: The type of barrier option
-\item \code{monitoring}: The barrier monitoring approach used
-}
+A list containing the option price and Greeks
 }
 \description{
 Computes the price and Greeks of European barrier spread options using an extension
-of Kirk's 1995 approximation following Bjerksund & Stensland (2011) approach.
-Supports both call and put options with various barrier types and monitoring approaches.
-}
-\details{
-The function implements a barrier version of Kirk's approximation for spread options.
-It includes support for different barrier types and monitoring approaches:
-
-Barrier Types:
-\itemize{
-\item Down-and-out ("do"): Option becomes worthless if asset price hits barrier from above
-\item Down-and-in ("di"): Option activates when asset price hits barrier from above
-\item Up-and-out ("uo"): Option becomes worthless if asset price hits barrier from below
-\item Up-and-in ("ui"): Option activates when asset price hits barrier from below
-}
-
-Monitoring Approaches:
-\itemize{
-\item Continuous: Traditional continuous barrier monitoring
-\item Discrete: Monitoring at specific intervals with Broadie-Glasserman-Kou adjustment
-\item Terminal: Barrier condition checked only at expiry
-}
-}
-\examples{
-# Price a down-and-out call barrier spread option
-F1 <- 100    # Forward price of first asset
-F2 <- 110    # Forward price of second asset
-X <- 5       # Strike price
-B <- 95      # Barrier level
-sigma1 <- 0.2   # Volatility of first asset
-sigma2 <- 0.25  # Volatility of second asset
-rho <- 0.5      # Correlation between assets
-T2M <- 1        # Time to maturity (1 year)
-r <- 0.05       # Risk-free rate
-
-# Price with continuous monitoring
-result <- barrierSpreadOption(
-  F1 = F1, F2 = F2, X = X, B = B,
-  sigma1 = sigma1, sigma2 = sigma2,
-  rho = rho, T2M = T2M, r = r,
-  type = "call",
-  barrier_type = "do",
-  monitoring = "continuous"
-)
-
-# Price with discrete (daily) monitoring
-result_discrete <- barrierSpreadOption(
-  F1 = F1, F2 = F2, X = X, B = B,
-  sigma1 = sigma1, sigma2 = sigma2,
-  rho = rho, T2M = T2M, r = r,
-  type = "call",
-  barrier_type = "do",
-  monitoring = "discrete",
-  monitoring_freq = 252
-)
-
-}
-\references{
-\itemize{
-\item Kirk, E. (1995) "Correlation in the Energy Markets." Managing Energy Price Risk,
-Risk Publications and Enron, London, pp. 71-78.
-\item Bjerksund, P. and Stensland, G. (2011) "Closed Form Spread Option Valuation."
-Quantitative Finance, Volume 14, Issue 10, pp. 1785-1794.
-\item Broadie, M., Glasserman, P., and Kou, S. (1997) "A Continuity Correction for
-Discrete Barrier Options." Mathematical Finance, 7, pp. 325-349.
-}
+of Kirk's 1995 approximation. The barrier condition is applied to the spread (F2 - F1)
+rather than individual asset prices.
 }

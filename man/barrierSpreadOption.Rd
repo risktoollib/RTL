@@ -2,55 +2,45 @@
 % Please edit documentation in R/barrierSpreadOption.R
 \name{barrierSpreadOption}
 \alias{barrierSpreadOption}
-\title{Barrier Spread Option Pricing using Kirk's Approximation}
-\usage{
-barrierSpreadOption(
-  F1,
-  F2,
-  X,
-  B,
-  sigma1,
-  sigma2,
-  rho,
-  T2M,
-  r,
-  type = "call",
-  barrier_type = "do",
-  monitoring = "continuous",
-  monitoring_freq = 252
-)
-}
+\title{Enhanced Barrier Spread Option Pricing}
 \arguments{
-\item{F1}{numeric, the forward price of the first asset}
+\item{F1}{numeric, forward price of the first asset (e.g., pipeline origin price)}
 
-\item{F2}{numeric, the forward price of the second asset}
+\item{F2}{numeric, forward price of the second asset (e.g., pipeline destination price)}
 
-\item{X}{numeric, the strike price of the spread option}
+\item{X}{numeric, strike price of the spread option}
 
-\item{B}{numeric, the barrier level for the spread (F2 - F1)}
+\item{B}{numeric, barrier level for the spread (F2 - F1)}
 
-\item{sigma1}{numeric, the volatility of the first asset (annualized)}
+\item{sigma1}{numeric, volatility of the first asset (annualized)}
 
-\item{sigma2}{numeric, the volatility of the second asset (annualized)}
+\item{sigma2}{numeric, volatility of the second asset (annualized)}
 
-\item{rho}{numeric, the correlation coefficient between the two assets}
+\item{rho}{numeric, correlation coefficient between the two assets}
 
-\item{T2M}{numeric, the time to maturity in years}
+\item{T2M}{numeric, time to maturity in years}
 
-\item{r}{numeric, the risk-free interest rate (annualized)}
+\item{r}{numeric, risk-free interest rate (annualized)}
 
-\item{type}{character, type of option ("call" or "put")}
+\item{type}{character, "call" or "put"}
 
-\item{barrier_type}{character, type of barrier ("do", "di", "uo", "ui")}
+\item{barrier_type}{character, "do", "di", "uo", "ui" (down-and-out/in, up-and-out/in)}
 
-\item{monitoring}{character, barrier monitoring ("continuous", "discrete", "terminal")}
+\item{monitoring}{character, "continuous", "discrete", "terminal"}
 
-\item{monitoring_freq}{numeric, frequency for discrete monitoring (default: 252)}
+\item{monitoring_freq}{numeric, frequency of monitoring for discrete barriers (default: 252)}
 }
 \value{
-A list containing option price and Greeks
+A list containing option price and Greeks.
 }
 \description{
-Computes the price and Greeks of European barrier spread options using Kirk's
-approximation with theoretically consistent barrier option implementation.
+Pricing barrier spread options with enhanced numerical stability and robustness for commodity pipeline spreads.
+}
+\examples{
+barrierSpreadOption(
+  F1 = -12.00, F2 = -5.00, X = 4.00, B = 9.5,
+  sigma1 = 0.3, sigma2 = 0.3, rho = 0.9, r = 0.01,
+  T2M = 1, type = "call", barrier_type = "uo", monitoring = "continuous"
+)
+
 }

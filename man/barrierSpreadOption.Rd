@@ -2,11 +2,28 @@
 % Please edit documentation in R/barrierSpreadOption.R
 \name{barrierSpreadOption}
 \alias{barrierSpreadOption}
-\title{Enhanced Barrier Spread Option Pricing}
+\title{Barrier Spread Option Pricing}
+\usage{
+barrierSpreadOption(
+  F1 = -12,
+  F2 = -3,
+  X = 5.5,
+  B = 9,
+  sigma1 = 0.6,
+  sigma2 = 0.6,
+  rho = 0.3,
+  T2M = 1/12,
+  r = 0.045,
+  type = "call",
+  barrier_type = "uo",
+  monitoring = "continuous",
+  monitoring_freq = 252
+)
+}
 \arguments{
-\item{F1}{numeric, forward price of the first asset (e.g., pipeline origin price)}
+\item{F1}{numeric, forward price of the first asset (e.g., pipeline origination price as a futures)}
 
-\item{F2}{numeric, forward price of the second asset (e.g., pipeline destination price)}
+\item{F2}{numeric, forward price of the second asset (e.g., pipeline destination price as a futures)}
 
 \item{X}{numeric, strike price of the spread option}
 
@@ -34,13 +51,12 @@
 A list containing option price and Greeks.
 }
 \description{
-Pricing barrier spread options with enhanced numerical stability and robustness for commodity pipeline spreads.
-}
-\examples{
-barrierSpreadOption(
-  F1 = -12.00, F2 = -5.00, X = 4.00, B = 9.5,
-  sigma1 = 0.3, sigma2 = 0.3, rho = 0.9, r = 0.01,
-  T2M = 1, type = "call", barrier_type = "uo", monitoring = "continuous"
-)
-
+This model applies Kirk's (1995) closed-form approximation to
+price spread options, assuming the spread \eqn{F_2 - F_1} is approximately
+log-normal. Unlike Kirk’s original ratio-based formulation, the model uses
+the numeric difference of the forward prices \eqn{F_2 - F_1} to facilitate
+direct comparisons with numeric strike prices and barriers. The model
+incorporates adjustments for barriers (up-and-out, down-and-out, etc.) by
+reflecting the spread's log-normal distribution and applying a correction
+term for breached barriers.
 }

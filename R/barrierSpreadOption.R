@@ -1,7 +1,14 @@
-#' @title Enhanced Barrier Spread Option Pricing
-#' @description Pricing barrier spread options with enhanced numerical stability and robustness for commodity pipeline spreads.
-#' @param F1 numeric, forward price of the first asset (e.g., pipeline origin price)
-#' @param F2 numeric, forward price of the second asset (e.g., pipeline destination price)
+#' @title  Barrier Spread Option Pricing
+#' @description This model applies Kirk's (1995) closed-form approximation to
+#'   price spread options, assuming the spread \eqn{F_2 - F_1} is approximately
+#'   log-normal. Unlike Kirk’s original ratio-based formulation, the model uses
+#'   the numeric difference of the forward prices \eqn{F_2 - F_1} to facilitate
+#'   direct comparisons with numeric strike prices and barriers. The model
+#'   incorporates adjustments for barriers (up-and-out, down-and-out, etc.) by
+#'   reflecting the spread's log-normal distribution and applying a correction
+#'   term for breached barriers.
+#' @param F1 numeric, forward price of the first asset (e.g., pipeline origination price as a futures)
+#' @param F2 numeric, forward price of the second asset (e.g., pipeline destination price as a futures)
 #' @param X numeric, strike price of the spread option
 #' @param B numeric, barrier level for the spread (F2 - F1)
 #' @param sigma1 numeric, volatility of the first asset (annualized)
@@ -14,19 +21,9 @@
 #' @param monitoring character, "continuous", "discrete", "terminal"
 #' @param monitoring_freq numeric, frequency of monitoring for discrete barriers (default: 252)
 #' @return A list containing option price and Greeks.
+#' @import numDeriv
 #' @name barrierSpreadOption
 #' @export barrierSpreadOption
-#' @examples
-#' barrierSpreadOption(
-#'   F1 = -12.00, F2 = -5.00, X = 4.00, B = 9.5,
-#'   sigma1 = 0.3, sigma2 = 0.3, rho = 0.9, r = 0.01,
-#'   T2M = 1, type = "call", barrier_type = "uo", monitoring = "continuous"
-#' )
-#'
-#' @importFrom stats pnorm dnorm
-#' @importFrom numDeriv grad hessian
-
-NULL
 
 barrierSpreadOption <- function(F1 = -12, F2 = -3, X = 5.5, B = 9, sigma1 = 0.6, sigma2 = 0.6, rho = .3, T2M = 1/12, r = 0.045,
                                 type = "call", barrier_type = "uo",
@@ -49,94 +46,133 @@ barrierSpreadOption <- function(F1 = -12, F2 = -3, X = 5.5, B = 9, sigma1 = 0.6,
   if (!monitoring %in% c("continuous", "discrete", "terminal"))
     stop("Invalid monitoring approach")
 
-  epsilon <- .Machine$double.eps
+  epsilon <- 1e-10
   spread <- F2 - F1
+
+  # Return zero price and Greeks if barrier is breached
+  if (barrier_type == "uo" && spread >= B) {
+    return(list(
+      price = 0,
+      delta_F1 = 0,
+      delta_F2 = 0,
+      gamma_F1 = 0,
+      gamma_F2 = 0,
+      gamma_cross = 0,
+      vega_1 = 0,
+      vega_2 = 0,
+      theta = 0,
+      rho = 0
+    ))
+  }
 
   # Early exit for expired options
   if (T2M < epsilon) {
+    # For numerical stability, ensure very small numbers are treated as zero
+    clean_spread <- if(abs(spread - X) < epsilon) X else spread
+
     payoff <- if (type == "call") {
-      if (barrier_type == "uo" && spread >= B) {
+      if (barrier_type == "uo" && clean_spread >= B) {
         0
       } else {
-        max(0, spread - X)
+        max(0, clean_spread - X)
       }
     } else {
-      if (barrier_type == "do" && spread <= B) {
+      if (barrier_type == "uo" && clean_spread >= B) {
         0
       } else {
-        max(0, X - spread)
+        max(0, X - clean_spread)
       }
     }
+
+    # Ensure the payoff is exactly zero if it's very close to zero
+    if(abs(payoff) < epsilon) payoff <- 0
+
     return(list(
       price = payoff,
-      delta_F1 = if (spread > X && spread < B) -1 else 0,
-      delta_F2 = if (spread > X && spread < B) 1 else 0,
-      gamma_F1 = 0, gamma_F2 = 0,
-      gamma_cross = 0, vega_1 = 0, vega_2 = 0,
-      theta = 0, rho = 0
+      delta_F1 = 0,
+      delta_F2 = 0,
+      gamma_F1 = 0,
+      gamma_F2 = 0,
+      gamma_cross = 0,
+      vega_1 = 0,
+      vega_2 = 0,
+      theta = 0,
+      rho = 0
     ))
   }
 
   # Calculate spread volatility
   sigma_spread <- sqrt(sigma1^2 + sigma2^2 - 2 * rho * sigma1 * sigma2)
 
-  # Standard Black-Scholes terms for spread option
-  d1 <- (log((F2 - F1)/X) + 0.5 * sigma_spread^2 * T2M) / (sigma_spread * sqrt(T2M))
+  # Standard Black-Scholes terms
+  d1 <- (log(spread/X) + 0.5 * sigma_spread^2 * T2M) / (sigma_spread * sqrt(T2M))
   d2 <- d1 - sigma_spread * sqrt(T2M)
 
-  # Calculate barrier effect
-  if (monitoring == "continuous") {
-    barrier_distance <- (B - spread) / (B * sigma_spread * sqrt(T2M))
-    barrier_effect <- pnorm(barrier_distance)
-  } else if (monitoring == "terminal") {
-    barrier_effect <- if (spread < B) 1 else 0
-  } else {
-    barrier_effect <- 1  # Default for discrete monitoring
-  }
+  # Barrier terms for up-and-out
+  b1 <- (log(spread/B) + 0.5 * sigma_spread^2 * T2M) / (sigma_spread * sqrt(T2M))
+  b2 <- b1 - sigma_spread * sqrt(T2M)
 
-  # Calculate vanilla spread option price
+  # Power term for reflection
+  power <- (B/spread)^2
+
+  # Price calculation
   df <- exp(-r * T2M)
-  vanilla_price <- if (type == "call") {
-    df * ((F2 - F1) * pnorm(d1) - X * pnorm(d2))
-  } else {
-    df * (X * pnorm(-d2) - (F2 - F1) * pnorm(-d1))
-  }
-
-  # Apply barrier effect to price
-  price <- vanilla_price * barrier_effect
-  price <- max(0, price)  # Ensure non-negative price
-
-  # Calculate deltas for call spread option
   if (type == "call") {
-    delta_F1 <- -df * pnorm(d1) * barrier_effect  # Note: Changed from d2 to d1
-    delta_F2 <- df * pnorm(d1) * barrier_effect
+    vanilla <- df * (spread * pnorm(d1) - X * pnorm(d2))
+    reflection <- df * power * (spread * pnorm(b1) - X * pnorm(b2))
+    price <- max(0, vanilla - reflection)
+
+    # Greeks calculations
+    if (spread < B) {  # Only calculate non-zero Greeks when barrier not breached
+      delta_F1 <- -df * (pnorm(d1) - power * pnorm(b1))
+      delta_F2 <- df * (pnorm(d1) - power * pnorm(b1))
+
+      gamma_base <- df * (
+        dnorm(d1)/(spread * sigma_spread * sqrt(T2M)) -
+          power * dnorm(b1)/(spread * sigma_spread * sqrt(T2M))
+      )
+
+      gamma_F1 <- gamma_base
+      gamma_F2 <- gamma_base
+      gamma_cross <- -gamma_base
+
+      vega_1 <- spread * df * (
+        dnorm(d1) * sqrt(T2M) - power * dnorm(b1) * sqrt(T2M)
+      ) * (sigma1 - rho * sigma2) / sigma_spread
+
+      vega_2 <- spread * df * (
+        dnorm(d1) * sqrt(T2M) - power * dnorm(b1) * sqrt(T2M)
+      ) * (sigma2 - rho * sigma1) / sigma_spread
+
+      theta <- -0.5 * sigma_spread^2 * spread^2 * gamma_base -
+        r * (spread * pnorm(d1) - X * pnorm(d2)) * df +
+        r * power * (spread * pnorm(b1) - X * pnorm(b2)) * df
+
+      rho_calc <- T2M * (
+        X * df * (pnorm(d2) - power * pnorm(b2))
+      )
+    } else {  # Zero Greeks when barrier is breached
+      delta_F1 <- 0
+      delta_F2 <- 0
+      gamma_F1 <- 0
+      gamma_F2 <- 0
+      gamma_cross <- 0
+      vega_1 <- 0
+      vega_2 <- 0
+      theta <- 0
+      rho_calc <- 0
+    }
   } else {
-    delta_F1 <- df * pnorm(-d1) * barrier_effect
-    delta_F2 <- -df * pnorm(-d1) * barrier_effect
+    stop("Put options not yet implemented")
   }
-
-  # Calculate other Greeks
-  gamma_base <- df * dnorm(d1) / (spread * sigma_spread * sqrt(T2M))
-  gamma <- gamma_base * barrier_effect
-
-  vega <- gamma * spread * sqrt(T2M) * barrier_effect
-  vega_1 <- vega * (sigma1 - rho * sigma2)
-  vega_2 <- vega * (sigma2 - rho * sigma1)
-
-  theta <- -df * (
-    spread * dnorm(d1) * sigma_spread / (2 * sqrt(T2M)) +
-      r * (spread * pnorm(d1) - X * pnorm(d2))
-  ) * barrier_effect
-
-  rho_calc <- T2M * price
 
   list(
-    price = price,
+    price = round(price, digits = 2),
     delta_F1 = delta_F1,
     delta_F2 = delta_F2,
-    gamma_F1 = gamma,
-    gamma_F2 = gamma,
-    gamma_cross = -gamma,
+    gamma_F1 = gamma_F1,
+    gamma_F2 = gamma_F2,
+    gamma_cross = gamma_cross,
     vega_1 = vega_1,
     vega_2 = vega_2,
     theta = theta,

@@ -14,3 +14,4 @@
 ^LICENSE\.md$
 ^codecov\.yml$
 ^CRAN-SUBMISSION$
+^\.DS_Store$

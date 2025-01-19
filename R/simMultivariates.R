@@ -7,7 +7,10 @@
 #' @export simMultivariates
 #' @author Philippe Cote
 #' @examples
+#' \dontrun{
 #' simMultivariates(nsims = 10, x = RTL::fizdiffs, s0 = NULL)
+#' }
+
 simMultivariates <- function(nsims = 10, x, s0 = NULL) {
   if (!requireNamespace("MASS", quietly = TRUE)) {stop("Package \"tidyquant\" needed for this function to work. Please install it.", call. = FALSE)}
   ret <- out <- sds <- corMat <- coVaR <- mus <- series <- NULL

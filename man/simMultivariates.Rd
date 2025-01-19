@@ -20,7 +20,9 @@ List of means, sds, covariance matrix, correlation matrix and simulated values. 
 Generates multivariate random epsilons using absolute returns.
 }
 \examples{
+\dontrun{
 simMultivariates(nsims = 10, x = RTL::fizdiffs, s0 = NULL)
+}
 }
 \author{
 Philippe Cote

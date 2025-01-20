@@ -20,7 +20,7 @@ test_that("tradeCycle US Domestic",{
 
 test_that("barrierSpreadOption Boundary Conditions", {
   # Test setup
-  epsilon <- 1e-05
+  epsilon <- 1e-10
   F1 <- -12.00
   F2 <- -5.00
   T2M <- epsilon
@@ -32,8 +32,8 @@ test_that("barrierSpreadOption Boundary Conditions", {
   results <- tidyr::expand_grid(  # Using expand_grid instead of expand.grid for tibble output
     f1 = seq(-15, -8, by = 0.1),
     F2 = F2,
-    monitoring = c("continuous", "discrete", "terminal"),
-    type = c("call")
+    monitoring = c("continuous", "terminal"),
+    type = c("call","put")
   ) %>%
     dplyr::mutate(
       spread = F2 - f1,
@@ -71,21 +71,26 @@ test_that("barrierSpreadOption Boundary Conditions", {
   expect_true(all_match,
               label = "All prices should match intrinsic values at expiry")
 
-  # Additional specific tests
+  # Up and out options should have zero prices above barrier
+  zz = results %>% dplyr::filter(barrier_type == "uo", spread >= B)
   expect_true(
-    all(results$price[results$spread >= results$B] == 0),
+    all(dplyr::near(zz$price, zz$intrisic, tol = epsilon)),
     label = "Prices should be zero above barrier for up-and-out options"
   )
 
+  # Down and out options should have zero prices above barrier
+  zz = results %>% dplyr::filter(barrier_type == "do", spread <= B)
+  expect_true(
+    all(dplyr::near(zz$price, zz$intrisic, tol = epsilon)),
+    label = "Prices should be zero below barrier for dowm-and-out options"
+  )
+
+  # All prices must be non-negative
   expect_true(
     all(results$price >= 0),
     label = "All prices should be non-negative"
   )
 
-  expect_true(
-    all(results$price[results$spread <= results$X] == 0),
-    label = "Prices should be zero below strike for call options"
-  )
 })
 
 

@@ -16,14 +16,13 @@ barrierSpreadOption(
   r = 0.045,
   type = "call",
   barrier_type = "uo",
-  monitoring = "continuous",
-  monitoring_freq = 252
+  monitoring = "continuous"
 )
 }
 \arguments{
-\item{F1}{numeric, forward price of the first asset (e.g., pipeline origination price as a futures)}
+\item{F1}{numeric, forward price of the first asset}
 
-\item{F2}{numeric, forward price of the second asset (e.g., pipeline destination price as a futures)}
+\item{F2}{numeric, forward price of the second asset}
 
 \item{X}{numeric, strike price of the spread option}
 
@@ -41,22 +40,13 @@ barrierSpreadOption(
 
 \item{type}{character, "call" or "put"}
 
-\item{barrier_type}{character, "do", "di", "uo", "ui" (down-and-out/in, up-and-out/in)}
+\item{barrier_type}{character, "uo" for calls, "do" for puts}
 
-\item{monitoring}{character, "continuous", "discrete", "terminal"}
-
-\item{monitoring_freq}{numeric, frequency of monitoring for discrete barriers (default: 252)}
+\item{monitoring}{character, "continuous" or "terminal"}
 }
 \value{
 A list containing option price and Greeks.
 }
 \description{
-This model applies Kirk's (1995) closed-form approximation to
-price spread options, assuming the spread \eqn{F_2 - F_1} is approximately
-log-normal. Unlike Kirk’s original ratio-based formulation, the model uses
-the numeric difference of the forward prices \eqn{F_2 - F_1} to facilitate
-direct comparisons with numeric strike prices and barriers. The model
-incorporates adjustments for barriers (up-and-out, down-and-out, etc.) by
-reflecting the spread's log-normal distribution and applying a correction
-term for breached barriers.
+This model implements up-and-out calls and down-and-out puts for spread options.
 }

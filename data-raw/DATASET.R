@@ -226,7 +226,7 @@ usethis::use_data(wtiSwap, overwrite = T)
 
 eurodollar <- RTL::getPrices(
   feed = "CME_CmeFutures_EOD",
-  contracts = c("ED24Z"),
+  contracts = c("ED25Z"),
   from = "2019-01-01",
   iuser = mstar[[1]],
   ipassword = mstar[[2]]

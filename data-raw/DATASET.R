@@ -1170,7 +1170,8 @@ rm(html, tmp, urls, css, destfile, i)
 usethis::use_data(crudeOil, overwrite = T)
 
 ## Physical Diffs
-fizdiffs <- readRDS("fizdiffs.RDS")
+#fizdiffs <- readRDS("fizdiffs.RDS")
+fizdiffs <- arrow::read_feather("fizdiffs.feather")
 usethis::use_data(fizdiffs, overwrite = T)
 
 ## Trading Hubs

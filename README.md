@@ -13,7 +13,7 @@ downloads](https://cranlogs.r-pkg.org/badges/RTL)](https://cran.r-project.org/pa
 RTL is a purposely designed for traders, analysts and risk practitioners
 in Commodities and Finance. It also supports delivery of Finance classes
 from one of the creator also in Academics at the [Alberta School of
-Business](https://www.ualberta.ca/business/index.html).
+Business](https://www.ualberta.ca/en/business/index.html).
 
 Send feedback to `pcote@ualberta.ca`. We welcome feedback, suggestions
 and collaboration.

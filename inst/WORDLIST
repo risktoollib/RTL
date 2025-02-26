@@ -15,7 +15,8 @@ CMA
 CMD
 CME
 COLC
-CRRBinomialTreeOptions
+CRR
+CRRoption
 CbotFuturesEOD
 CmeFutures
 Comex
@@ -37,6 +38,7 @@ FXCADUSD
 ForecastAndActualPoolPrice
 FuturesSettlement
 GBM
+GBS
 Garch
 Genscape
 Genscpae
@@ -44,6 +46,7 @@ Geoview
 GeoviewData
 GetPipelineFlowValuesV
 GulfCoast
+Haug
 JetFuel
 LIBOR
 LME
@@ -62,8 +65,9 @@ NYMEX
 NybotCoffeeSugarCocoaFutures
 Nymex
 NymexFutures
-NymexFuturesIntraday
+NymexFuturesFinal
 NymexOptions
+NymexOptionsFinal
 OHLC
 OSPNG
 OU
@@ -78,6 +82,7 @@ SHFE
 STEO
 STL
 STLCPC
+Scholes
 SpatialPointsDataFrame
 StorageVolumeByOwnerGet
 Summarised
@@ -92,7 +97,9 @@ WCW
 WIP
 WTI
 YLD
+american
 analytics
+andCME
 annualised
 annum
 armument
@@ -113,9 +120,9 @@ dt
 eg
 eia
 eurodollar
+european
 expiries
 fGarch
-fOptions
 funtion
 genscape
 getCurve
@@ -132,6 +139,7 @@ ir
 kbs
 kendall
 lngterminals
+lubridate
 metacran
 mogas
 nd
@@ -163,6 +171,7 @@ tibble
 timeseries
 tribble
 unajusted
+uo
 usSwapCurves
 uso
 vectorized

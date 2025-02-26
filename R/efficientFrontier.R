@@ -22,9 +22,12 @@
 #' @export efficientFrontier
 #' @author Philippe Cote
 #' @examples
+#' \dontrun{
 #' x =  RTL::fizdiffs %>% dplyr::select(date, dplyr::contains("WCS"))
 #' efficientFrontier(nsims = 10, x = x, expectedReturns = NULL)
 #' efficientFrontier(nsims = 10, x = x, expectedReturns = c(0.5,0.8,0.9))
+#' }
+
 efficientFrontier <- function(nsims = 5000, x =  RTL::fizdiffs %>% dplyr::select(date, dplyr::contains("WCS")), expectedReturns = NULL) {
 
   prices <- Risk <- Return <- SharpeRatio <- desc <-  NULL

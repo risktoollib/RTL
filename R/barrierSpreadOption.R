@@ -14,6 +14,7 @@
 #' @param barrier_type character, "do" or "uo" (down-and-out, up-and-out)
 #' @param monitoring character, "continuous" or "terminal"
 #' @return A list containing option price and Greeks.
+#' @import numDeriv
 #' @name barrierSpreadOption
 #' @export barrierSpreadOption
 

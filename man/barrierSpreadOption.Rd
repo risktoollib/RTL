@@ -20,9 +20,9 @@ barrierSpreadOption(
 )
 }
 \arguments{
-\item{F1}{numeric, forward price of the first asset}
+\item{F1}{numeric, forward price of the first asset (e.g., pipeline origination price as a futures)}
 
-\item{F2}{numeric, forward price of the second asset}
+\item{F2}{numeric, forward price of the second asset (e.g., pipeline destination price as a futures)}
 
 \item{X}{numeric, strike price of the spread option}
 
@@ -40,7 +40,7 @@ barrierSpreadOption(
 
 \item{type}{character, "call" or "put"}
 
-\item{barrier_type}{character, "uo" for calls, "do" for puts}
+\item{barrier_type}{character, "do" or "uo" (down-and-out, up-and-out)}
 
 \item{monitoring}{character, "continuous" or "terminal"}
 }
@@ -48,5 +48,6 @@ barrierSpreadOption(
 A list containing option price and Greeks.
 }
 \description{
-This model implements up-and-out calls and down-and-out puts for spread options.
+This model applies Kirk's (1995) closed-form approximation for pricing spread options,
+incorporating barrier adjustments for continuous and terminal monitoring.
 }

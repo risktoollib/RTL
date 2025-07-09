@@ -1275,10 +1275,11 @@ planets <- planets %>%
 usethis::use_data(planets, overwrite = T)
 
 # Curves and Def - barchart
+options(binman.skip.phantomjs = TRUE)
 library(RSelenium)
 library(rvest)
 library(tidyverse)
-rD <- rsDriver(port = 4545L, browser = "firefox", chromever = NULL)
+rD <- rsDriver(port = 4545L, browser = "firefox", chromever = NULL, check = FALSE, verbose = FALSE)
 #rD <- rsDriver(port = 4444L, browser = "chrome",chromever = "latest", verbose = FALSE)
 remDr <- rD[["client"]]
 Sys.sleep(2)
@@ -1317,6 +1318,56 @@ futs <- rvest::read_html(page[[1]]) %>%
 
 remDr$close()
 rD[["server"]]$stop()
+
+# chromote
+
+library(chromote)
+library(rvest)
+library(dplyr)
+library(readr)
+
+Sys.setenv(CHROMOTE_CHROME = "/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta")
+b <- ChromoteSession$new()
+b$Page$navigate("https://www.chathamfinancial.com/technology/us-market-rates")
+if (interactive()) b$view()
+b$Page$loadEventFired()  # Wait until fully loaded
+
+html <- b$DOM$getDocument()
+page_html <- b$DOM$getOuterHTML(nodeId = html$root$nodeId)$outerHTML
+
+chat <- read_html(page_html) %>% html_table()
+
+# Same parsing logic as before
+libor <- chat %>% .[[4]] %>%
+  rename(Name = 1, Last = 2) %>%
+  select(1, 2) %>%
+  filter(Name %in% c("SOFR", "1-month Term SOFR", "3-month Term SOFR")) %>%
+  mutate(Name = c("d1w", "d1m", "d3m"),
+         Last = parse_number(Last) / 100)
+
+irs <- chat %>% .[[3]] %>%
+  rename(Name = 1, Last = 2) %>%
+  select(Name, Last) %>%
+  slice(-1) %>%
+  mutate(Name = paste0("s", c(2, 3, 5, 7, 10, 15, 30), "y"),
+         Last = parse_number(Last) / 100)
+
+# Now go to CME site and scrape futures
+b$Page$navigate("https://www.cmegroup.com/markets/interest-rates/stirs/three-month-sofr.settlements.html")
+b$Page$loadEventFired()
+Sys.sleep(3)
+
+html2 <- b$DOM$getDocument()
+page_html2 <- b$DOM$getOuterHTML(nodeId = html2$root$nodeId)$outerHTML
+
+futs <- read_html(page_html2) %>%
+  html_table() %>%
+  .[[1]] %>%
+  slice(-1) %>%
+  slice(1:8) %>%
+  transmute(Name = paste0("fut", 1:8), Last = Settle)
+
+
 
 # Discount Objects
 

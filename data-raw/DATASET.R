@@ -1275,69 +1275,45 @@ planets <- planets %>%
 usethis::use_data(planets, overwrite = T)
 
 # Curves and Def - barchart
-options(binman.skip.phantomjs = TRUE)
-library(RSelenium)
-library(rvest)
-library(tidyverse)
-rD <- rsDriver(port = 4545L, browser = "firefox", chromever = NULL, check = FALSE, verbose = FALSE)
-#rD <- rsDriver(port = 4444L, browser = "chrome",chromever = "latest", verbose = FALSE)
-remDr <- rD[["client"]]
-Sys.sleep(2)
-
-remDr$navigate("https://www.chathamfinancial.com/technology/us-market-rates")
-Sys.sleep(2)
-remDr$findElement(using = 'css', value = 'div.rates:nth-child(8) > div:nth-child(1) > div:nth-child(2) > table:nth-child(1)')$clickElement()  # Cross rates
-#remDr$findElement(using = 'class', value = 'bc-table-wrapper')$clickElement()
-page <- remDr$getPageSource()
-chat <-  rvest::read_html(page[[1]]) %>%
-  rvest::html_table()
-libor <- chat %>% .[[4]] %>%
-  dplyr::rename(Name = 1, Last = 2) %>%
-  dplyr::select(1,2) %>%
-  dplyr::filter(Name %in% c("SOFR","1-month Term SOFR","3-month Term SOFR")) %>%
-  dplyr::mutate(Name = c("d1w", "d1m", "d3m"),
-                Last = readr::parse_number(Last)/100)
-#libor <- rbind(dplyr::tibble(Name = "d1w", Last = libor$Last[1]),libor)
-irs <- chat %>% .[[3]] %>%
-  dplyr::rename(Name = 1, Last = 2) %>%
-  dplyr::select(Name,Last) %>%
-  dplyr::slice(-1) %>%
-  dplyr::mutate(Name = paste0("s",c(2,3,5,7,10,15,30),"y"),
-                Last = readr::parse_number(Last)/100)
-#remDr$navigate("https://www.cmegroup.com/markets/interest-rates/stirs/eurodollar.settlements.html")
-remDr$navigate("https://www.cmegroup.com/markets/interest-rates/stirs/three-month-sofr.settlements.html")
-
-Sys.sleep(3)
-page <- remDr$getPageSource()
-futs <- rvest::read_html(page[[1]]) %>%
-  rvest::html_table() %>%
-  .[[1]] %>%
-  dplyr::slice(-1) %>%
-  dplyr::slice(1:8) %>%
-  dplyr::transmute(Name = paste0("fut", 1:8), Last = Settle)
-
-remDr$close()
-rD[["server"]]$stop()
-
-# chromote
 
 library(chromote)
 library(rvest)
-library(dplyr)
-library(readr)
+library(tidyverse)
 
-Sys.setenv(CHROMOTE_CHROME = "/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta")
-b <- ChromoteSession$new()
+# 1. Start Chromote controller
+Sys.setenv(
+  CHROMOTE_CHROME_ARGS = "--disable-web-security --allow-running-insecure-content --disable-features=IsolateOrigins,site-per-process --no-sandbox",
+  CHROMOTE_HEADLESS = "false"  # Forces visible Chrome
+)
+
+# 2. Start Chromote controller
+c <- Chromote$new()
+
+# 2. Start a single session (shared across steps)
+b <- c$new_session()
+
+# 3. Set the spoofed User-Agent BEFORE any navigation
+ua <- "Mozilla/5.0 (Macintosh; Intel Mac OS X 13_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
+b$Network$enable()
+b$Network$setUserAgentOverride(userAgent = ua)
+
+# 4. Navigate to Chatham site
 b$Page$navigate("https://www.chathamfinancial.com/technology/us-market-rates")
-if (interactive()) b$view()
-b$Page$loadEventFired()  # Wait until fully loaded
+repeat {
+  state <- tryCatch({
+    b$Runtime$evaluate("document.readyState")$result$value
+  }, error = function(e) NA)
+  if (state == "complete") break
+  Sys.sleep(1)
+}
+b$view()
 
+# Extract LIBOR and IRS data
 html <- b$DOM$getDocument()
 page_html <- b$DOM$getOuterHTML(nodeId = html$root$nodeId)$outerHTML
 
 chat <- read_html(page_html) %>% html_table()
 
-# Same parsing logic as before
 libor <- chat %>% .[[4]] %>%
   rename(Name = 1, Last = 2) %>%
   select(1, 2) %>%
@@ -1352,10 +1328,15 @@ irs <- chat %>% .[[3]] %>%
   mutate(Name = paste0("s", c(2, 3, 5, 7, 10, 15, 30), "y"),
          Last = parse_number(Last) / 100)
 
-# Now go to CME site and scrape futures
+# 5. Navigate to CME Group site
 b$Page$navigate("https://www.cmegroup.com/markets/interest-rates/stirs/three-month-sofr.settlements.html")
-b$Page$loadEventFired()
-Sys.sleep(3)
+repeat {
+  state <- tryCatch({
+    b$Runtime$evaluate("document.readyState")$result$value
+  }, error = function(e) NA)
+  if (state == "complete") break
+  Sys.sleep(1)
+}
 
 html2 <- b$DOM$getDocument()
 page_html2 <- b$DOM$getOuterHTML(nodeId = html2$root$nodeId)$outerHTML
@@ -1367,14 +1348,11 @@ futs <- read_html(page_html2) %>%
   slice(1:8) %>%
   transmute(Name = paste0("fut", 1:8), Last = Settle)
 
-
-
 # Discount Objects
 
 library(RQuantLib)
 # removing d1y fro LIBOR  and s2y - causes negative rates
 tsQuotes <- rbind(libor, irs, futs) %>% as_tibble() %>%
-  dplyr::mutate(Last = readr::parse_number(Last)) %>%
   tidyr::pivot_wider(names_from = Name, values_from = Last) %>%
   dplyr::select(-s2y,-d3m) %>%
   transpose() %>% unlist() %>% as.list()
@@ -1401,10 +1379,10 @@ usSwapCurves[1:4] %>%
 #usSwapCurves[1:4] %>% dplyr::as_tibble() %>% View()
 cbind(usSwapCurves$times, usSwapCurves$discounts, usSwapCurves$zerorates, usSwapCurves$forwards) %>%
   dplyr::as_tibble() %>% dplyr::rename(times = V1, discounts = V2, zerorates = V3, forwards = V4) %>%
-  arrow::write_feather(x = ., sink = "C:/Users/cotep/data/usd-ir.feather")
+  arrow::write_feather(x = ., sink = paste0(path.expand("~"),"/data/usd-ir.feather"))
 usethis::use_data(tsQuotes, overwrite = T)
 
-tsQuotes <- list(flat = 0.04)
+tsQuotes <- list(flat = 0.045)
 usSwapCurvesPar <- DiscountCurve(params, tsQuotes, times)
 
 usethis::use_data(usSwapCurves, overwrite = T)

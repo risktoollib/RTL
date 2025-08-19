@@ -1,7 +1,7 @@
-#' Morningstar Commodities API single call
+#' Morningstar Commodities API single call. Effective August 2025 converted to Zema compatibility, morningstar routes retired.
 #' @description
-#' Returns data from Morningstar API. See below for current feeds supported.
-#' You need your own credentials with Morningstar. In examples sourced locally.
+#' Returns data from Zema API. See below for current feeds supported.
+#' You need your own credentials with Zema. In examples sourced locally.
 #'
 #' @section Current Feeds Supported:
 #' \itemize{
@@ -22,11 +22,11 @@
 #'   \item AESO_ForecastAndActualPoolPrice.
 #' }
 #'
-#' @param feed Morningstar Feed Table. `character`
-#' @param contract Morningstar key. `character`
+#' @param feed Zema Feed Table. `character`
+#' @param contract Zema key. `character`
 #' @param from From date yyyy-mm-dd. `character`
-#' @param iuser Morningstar user name as character - sourced locally in examples. `character`
-#' @param ipassword Morningstar user password as character - sourced locally in examples. `character`
+#' @param iuser Zema user name as character - sourced locally in examples. `character`
+#' @param ipassword Zema user password as character - sourced locally in examples. `character`
 #' @returns wide data frame. `tibble`
 #' @export getPrice
 #' @author Philippe Cote
@@ -104,7 +104,7 @@
 #'
 getPrice <- function(feed = "CME_NymexFutures_EOD", contract = "@CL21Z",
                      from = "2020-09-01", iuser = "x@xyz.com", ipassword = "pass") {
-  # mpurl <- "https://mp.morningstarcommodity.com/lds/feeds/CME_NymexFutures_EOD/ts?Symbol=@CL9Z"
+  # mpurl <- "https://data.zema.global/lds/feeds/CME_NymexFutures_EOD/ts?Symbol=@CL9Z"
   # userpw <- paste0(iuser,":",ipassword)
   if (feed %in% c(
     "CME_NymexFutures_EOD","CME_NymexOptions_EOD", "CME_CbotFuturesEOD", "CME_CmeFutures_EOD",
@@ -112,25 +112,25 @@ getPrice <- function(feed = "CME_NymexFutures_EOD", contract = "@CL21Z",
     "CME_Comex_FuturesSettlement_EOD",
     "LME_AskBidPrices_Delayed", "SHFE_FuturesSettlement_RT"
   )) {
-    URL <- httr::modify_url(url = "https://mp.morningstarcommodity.com", path = paste0("/lds/feeds/", feed, "/ts?", "Symbol=", contract, "&fromDateTime=", from))
+    URL <- httr::modify_url(url = "https://data.zema.global", path = paste0("/lds/feeds/", feed, "/ts?", "Symbol=", contract, "&fromDateTime=", from))
   }
   if (feed %in% c("LME_MonthlyDelayed_Derived")) {
-    URL <- httr::modify_url(url = "https://mp.morningstarcommodity.com", path = paste0("/lds/feeds/", feed, "/ts?", "Root=", stringr::word(contract, 1, 1), "&DeliveryStart=", stringr::word(contract, 2, 2), "&DeliveryEnd=", stringr::word(contract, 3, 3), "&fromDateTime=", from))
+    URL <- httr::modify_url(url = "https://data.zema.global", path = paste0("/lds/feeds/", feed, "/ts?", "Root=", stringr::word(contract, 1, 1), "&DeliveryStart=", stringr::word(contract, 2, 2), "&DeliveryEnd=", stringr::word(contract, 3, 3), "&fromDateTime=", from))
   }
   if (feed %in% c(
     "CME_NymexFutures_EOD_continuous", "CME_CmeFutures_EOD_continuous",
     "ICE_EuroFutures_continuous", "ICE_NybotCoffeeSugarCocoaFutures_continuous",
     "CME_Comex_FuturesSettlement_EOD_continuous", "CME_CbotFuturesEOD_continuous"
   )) {
-    URL <- httr::modify_url(url = "https://mp.morningstarcommodity.com", path = paste0("/lds/feeds/", feed, "/ts?", "Contract=", contract, "&fromDateTime=", from))
+    URL <- httr::modify_url(url = "https://data.zema.global", path = paste0("/lds/feeds/", feed, "/ts?", "Contract=", contract, "&fromDateTime=", from))
   }
   if (feed %in% c("CME_STLCPC_Futures")) {
-    URL <- httr::modify_url(url = "https://mp.morningstarcommodity.com", path = paste0("/lds/feeds/", feed, "/ts?", "product=", contract, "&fromDateTime=", from))
+    URL <- httr::modify_url(url = "https://data.zema.global", path = paste0("/lds/feeds/", feed, "/ts?", "product=", contract, "&fromDateTime=", from))
   }
   if (feed %in% c("CME_NymexFuturesFinal_EOD")) {
     if (grepl(",", contract)) stop(paste("Use a space instead of a comma to separate contract components e.g.", gsub(",", " ", contract)))
     URL <- httr::modify_url(
-      url = "https://mp.morningstarcommodity.com",
+      url = "https://data.zema.global",
       path = paste0(
         "/lds/feeds/", feed, "/ts?",
         "fromDateTime=", from,
@@ -144,7 +144,7 @@ getPrice <- function(feed = "CME_NymexFutures_EOD", contract = "@CL21Z",
   if (feed %in% c("CME_NymexOptionsFinal_EOD")) {
     if (grepl(",", contract)) stop(paste("Use a space instead of a comma to separate contract components e.g.", gsub(",", " ", contract)))
     URL <- httr::modify_url(
-      url = "https://mp.morningstarcommodity.com",
+      url = "https://data.zema.global",
       path = paste0(
         "/lds/feeds/", feed, "/ts?",
         "fromDateTime=", from,
@@ -160,7 +160,7 @@ getPrice <- function(feed = "CME_NymexFutures_EOD", contract = "@CL21Z",
   if (feed %in% c("CFTC_CommitmentsOfTradersCombined")) {
     if (grepl(",", contract)) stop(paste("Use a space instead of a comma to separate contract components e.g.", gsub(",", " ", contract)))
     URL <- httr::modify_url(
-      url = "https://mp.morningstarcommodity.com",
+      url = "https://data.zema.global",
       path = paste0(
         "/lds/feeds/", feed, "/ts?",
         "cftc_subgroup_code=", stringr::word(contract, 1, 1),
@@ -178,7 +178,7 @@ getPrice <- function(feed = "CME_NymexFutures_EOD", contract = "@CL21Z",
     x1 <- stringr::word(contract, 1, 1)
     x2 <- stringr::word(contract, 2, 2)
     URL <- httr::modify_url(
-      url = "https://mp.morningstarcommodity.com",
+      url = "https://data.zema.global",
       path = paste0(
         "/lds/feeds/", feed, "/ts?", "cross_currencies=", x1,
         "&period=", x2, "&fromDateTime=", from
@@ -186,13 +186,13 @@ getPrice <- function(feed = "CME_NymexFutures_EOD", contract = "@CL21Z",
     )
   }
   if (feed %in% c("ERCOT_LmpsByResourceNodeAndElectricalBus")) {
-    URL <- httr::modify_url(url = "https://mp.morningstarcommodity.com", path = paste0("/lds/feeds/", feed, "/ts?", "SettlementPoint=", contract, "&fromDateTime=", from))
+    URL <- httr::modify_url(url = "https://data.zema.global", path = paste0("/lds/feeds/", feed, "/ts?", "SettlementPoint=", contract, "&fromDateTime=", from))
   }
   if (feed %in% c("PJM_Rt_Hourly_Lmp")) {
-    URL <- httr::modify_url(url = "https://mp.morningstarcommodity.com", path = paste0("/lds/feeds/", feed, "/ts?", "pnodeid=", contract, "&fromDateTime=", from))
+    URL <- httr::modify_url(url = "https://data.zema.global", path = paste0("/lds/feeds/", feed, "/ts?", "pnodeid=", contract, "&fromDateTime=", from))
   }
   if (feed %in% c("AESO_ForecastAndActualPoolPrice")) {
-    URL <- httr::modify_url(url = "https://mp.morningstarcommodity.com", path = paste0("/lds/feeds/", feed, "/ts?", "market=", contract, "&fromDateTime=", from))
+    URL <- httr::modify_url(url = "https://data.zema.global", path = paste0("/lds/feeds/", feed, "/ts?", "market=", contract, "&fromDateTime=", from))
   }
 
   httr::handle_reset(URL)
@@ -268,15 +268,15 @@ getPrice <- function(feed = "CME_NymexFutures_EOD", contract = "@CL21Z",
 # getPrice2(feed = "AESO_ForecastAndActualPoolPrice",contract = "Forecast_Pool_Price",from,iuser,ipassword)
 
 
-#' Morningstar Commodities API multiple calls
+#' Zema Commodities API multiple calls
 #' @description
-#' Multiple Morningstar API calls using getPrice functions.
+#' Multiple Zema API calls using getPrice functions.
 #' Refer to `getPrices()` for list of currently supported data feeds.
-#' @param feed Morningstar Feed Table. `character`
+#' @param feed Zema Feed Table. `character`
 #' @param contracts Symbols vector. `character`
 #' @param from From date yyyy-mm-dd. `character`
-#' @param iuser Morningstar user name as character - sourced locally in examples. `character`
-#' @param ipassword Morningstar user password as character - sourced locally in examples. `character`
+#' @param iuser Zema user name as character - sourced locally in examples. `character`
+#' @param ipassword Zema user password as character - sourced locally in examples. `character`
 #' @returns wide data frame. `tibble`
 #' @export getPrices
 #' @author Philippe Cote
@@ -300,23 +300,23 @@ getPrices <- function(feed = "CME_NymexFutures_EOD", contracts = c("CL9Z", "CL0F
   return(x)
 }
 
-#' Morningstar Commodities API forward curves
+#' Zema Commodities API forward curves
 #' @description
-#' Returns forward curves from Morningstar API. See below for current feeds supported.
-#' You need your own credentials with Morningstar.
+#' Returns forward curves from Zema API. See below for current feeds supported.
+#' You need your own credentials with Zema.
 #'
 #' @section Current Feeds Supported:
 #' \itemize{
 #'   \item CME_NymexFutures_EOD_continuous
 #' }
 #'
-#' @param feed Morningstar Feed Table e.g "Crb_Futures_Price_Volume_And_Open_Interest". `character`
-#' @param contract Morningstar contract root e.g. "CL" for CME WTI and "BG" for ICE Brent. `character`
+#' @param feed Zema Feed Table e.g "Crb_Futures_Price_Volume_And_Open_Interest". `character`
+#' @param contract Zema contract root e.g. "CL" for CME WTI and "BG" for ICE Brent. `character`
 #' @param numOfcontracts Number of listed contracts to retrieve. `numeric`
 #' @param date  Date yyyy-mm-dd. `character`
 #' @param fields Defaults to c("open_price, high_price, low_price, settlement_price, volume, open_interest"). `character`
-#' @param iuser Morningstar user name as character - sourced locally in examples. `character`
-#' @param ipassword Morningstar user password as character - sourced locally in examples. `character`
+#' @param iuser Zema user name as character - sourced locally in examples. `character`
+#' @param ipassword Zema user password as character - sourced locally in examples. `character`
 #' @returns wide data frame. `tibble`
 #' @export getCurve
 #' @author Philippe Cote
@@ -337,7 +337,7 @@ getCurve <- function(feed = "CME_NymexFutures_EOD_continuous", contract = "CL", 
                      iuser = "x@xyz.com", ipassword = "pass") {
 
   URL <- httr::modify_url(
-    url = "https://mp.morningstarcommodity.com",
+    url = "https://data.zema.global",
     path = paste0(
       "/lds/feeds/", feed, "/ts?&fromDateTime=", date, "&toDateTime=", date, "&cols=", gsub(" ", "", fields),
       "&desc=true&Contract=", paste0(contract,"_",sprintf('%0.3d',1:numOfcontracts),"_MONTH", collapse = ",")
@@ -383,7 +383,7 @@ getCurve <- function(feed = "CME_NymexFutures_EOD_continuous", contract = "CL", 
 #                      fields = c("Open, High, Low, Close"),
 #                      iuser = "x@xyz.com", ipassword = "pass") {
 #
-#   URL = httr::modify_url(url = "https://mp.morningstarcommodity.com",
+#   URL = httr::modify_url(url = "https://data.zema.global",
 #                          path = paste0("/lds/feeds/",feed, "/curve?root=",contract,"&cols=",gsub(" ","",fields),
 #                                        "&date=",date))
 #   httr::handle_reset(URL)

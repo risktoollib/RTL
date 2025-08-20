@@ -53,7 +53,7 @@ Valid credentials for commercial API services are required.
 
 #### Morningstar Commodities
 
-[Morningstar Marketplace API](https://mp.morningstarcommodity.com/marketplace/) functions:
+[Zema Marketplace API](https://www.zema.global/platforms/zema-marketplace) functions:
 
 + `getPrice()`, `getPrices()` and `getCurve()` using your own Morningstar credentials. Current feeds included:
 

@@ -145,7 +145,7 @@ stocks$uso <- tidyquant::tq_get("USO", adjust = TRUE) %>%
   quantmod::adjustOHLC(., use.Adjusted = TRUE) %>%
   timetk::tk_tbl(rename_index = "Date") %>%
   dplyr::select(-Adjusted) %>%
-  dplyr::mutate(across(where(is.numeric), round, digits = 2))
+  dplyr::mutate(across(where(is.numeric), \(x) round(x, digits = 2)))
 
 
 ry <- tidyquant::tq_get("RY", adjust = TRUE, from = "2000-01-01") %>%
@@ -154,7 +154,7 @@ ry <- tidyquant::tq_get("RY", adjust = TRUE, from = "2000-01-01") %>%
   quantmod::adjustOHLC(.,use.Adjusted = TRUE) %>%
   timetk::tk_tbl(rename_index = "Date") %>%
   dplyr::select(-Adjusted) %>%
-  dplyr::mutate(across(where(is.numeric), round, digits = 2))
+  dplyr::mutate(across(where(is.numeric), \(x) round(x, digits = 2)))
 
 dividends <- tidyquant::tq_get("RY", get = "dividends" , from = "2000-01-01",adjust = TRUE)
 stocks$ry <- ry %>%
@@ -256,8 +256,8 @@ crude <- RTL::getPrices(
   feed = "CME_NymexFutures_EOD_continuous",
   contracts = crude,
   from = startdate,
-  iuser = iuser,
-  ipassword = ipassword
+  iuser = mstar[[1]],
+  ipassword = mstar[[2]]
 ) %>%
   pivot_longer(-date, names_to = "series", values_to = "value") %>%
   dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>%
@@ -267,8 +267,8 @@ crudeICE <- RTL::getPrices(
   feed = "ICE_EuroFutures_continuous",
   contracts = crudeICE,
   from = startdate,
-  iuser = iuser,
-  ipassword = ipassword
+  iuser = mstar[[1]],
+  ipassword = mstar[[2]]
 ) %>%
   pivot_longer(-date, names_to = "series", values_to = "value") %>%
   dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>%
@@ -278,8 +278,8 @@ pdts <- RTL::getPrices(
   feed = "CME_NymexFutures_EOD_continuous",
   contracts = pdts,
   from = startdate,
-  iuser = iuser,
-  ipassword = ipassword
+  iuser = mstar[[1]],
+  ipassword = mstar[[2]]
 ) %>%
   pivot_longer(-date, names_to = "series", values_to = "value") %>%
   dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>%
@@ -932,7 +932,7 @@ usethis::use_data(expiry_table, overwrite = T)
 
 # cma ---------------------------------------------------------------------
 
-swp <- function(Month = "2023-01-01",
+swp <- function(Month = "2025-01-01",
                           contract = "cmewti",
                           exchange = "nymex") {
   # Pricing days

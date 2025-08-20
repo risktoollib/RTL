@@ -2,14 +2,14 @@ Type: Package
 Package: RTL
 Title: Risk Tool Library - Trading, Risk, Analytics for Commodities
 Version: 1.3.7
-Date: 2025-07-10
+Date: 2025-08-20
 Authors@R: c(
     person("Philippe", "Cote", , "pcote@ualberta.ca", role = c("aut", "cre")),
     person("Nima", "Safaian", , "nima.safaian@gmail.com", role = "aut")
   )
 Description: A toolkit for Commodities 'analytics', risk management and
     trading professionals. Includes functions for API calls to
-    <https://commodities.morningstar.com/#/>, <https://developer.genscape.com/>,
+    <https://www.zema.global/platforms/zema-marketplace>, <https://developer.genscape.com/>,
     and <https://www.bankofcanada.ca/valet/docs>.
 License: MIT + file LICENSE
 URL: https://github.com/risktoollib/RTL

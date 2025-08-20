@@ -2,7 +2,7 @@
 % Please edit documentation in R/morningstar.R
 \name{getCurve}
 \alias{getCurve}
-\title{Morningstar Commodities API forward curves}
+\title{Zema Commodities API forward curves}
 \usage{
 getCurve(
   feed = "CME_NymexFutures_EOD_continuous",
@@ -16,9 +16,9 @@ getCurve(
 )
 }
 \arguments{
-\item{feed}{Morningstar Feed Table e.g "Crb_Futures_Price_Volume_And_Open_Interest". \code{character}}
+\item{feed}{Zema Feed Table e.g "Crb_Futures_Price_Volume_And_Open_Interest". \code{character}}
 
-\item{contract}{Morningstar contract root e.g. "CL" for CME WTI and "BG" for ICE Brent. \code{character}}
+\item{contract}{Zema contract root e.g. "CL" for CME WTI and "BG" for ICE Brent. \code{character}}
 
 \item{numOfcontracts}{Number of listed contracts to retrieve. \code{numeric}}
 
@@ -26,16 +26,16 @@ getCurve(
 
 \item{fields}{Defaults to c("open_price, high_price, low_price, settlement_price, volume, open_interest"). \code{character}}
 
-\item{iuser}{Morningstar user name as character - sourced locally in examples. \code{character}}
+\item{iuser}{Zema user name as character - sourced locally in examples. \code{character}}
 
-\item{ipassword}{Morningstar user password as character - sourced locally in examples. \code{character}}
+\item{ipassword}{Zema user password as character - sourced locally in examples. \code{character}}
 }
 \value{
 wide data frame. \code{tibble}
 }
 \description{
-Returns forward curves from Morningstar API. See below for current feeds supported.
-You need your own credentials with Morningstar.
+Returns forward curves from Zema API. See below for current feeds supported.
+You need your own credentials with Zema.
 }
 \section{Current Feeds Supported}{
 

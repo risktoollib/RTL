@@ -2,7 +2,7 @@
 % Please edit documentation in R/morningstar.R
 \name{getPrice}
 \alias{getPrice}
-\title{Morningstar Commodities API single call}
+\title{Morningstar Commodities API single call. Effective August 2025 converted to Zema compatibility, morningstar routes retired.}
 \usage{
 getPrice(
   feed = "CME_NymexFutures_EOD",
@@ -13,22 +13,22 @@ getPrice(
 )
 }
 \arguments{
-\item{feed}{Morningstar Feed Table. \code{character}}
+\item{feed}{Zema Feed Table. \code{character}}
 
-\item{contract}{Morningstar key. \code{character}}
+\item{contract}{Zema key. \code{character}}
 
 \item{from}{From date yyyy-mm-dd. \code{character}}
 
-\item{iuser}{Morningstar user name as character - sourced locally in examples. \code{character}}
+\item{iuser}{Zema user name as character - sourced locally in examples. \code{character}}
 
-\item{ipassword}{Morningstar user password as character - sourced locally in examples. \code{character}}
+\item{ipassword}{Zema user password as character - sourced locally in examples. \code{character}}
 }
 \value{
 wide data frame. \code{tibble}
 }
 \description{
-Returns data from Morningstar API. See below for current feeds supported.
-You need your own credentials with Morningstar. In examples sourced locally.
+Returns data from Zema API. See below for current feeds supported.
+You need your own credentials with Zema. In examples sourced locally.
 }
 \section{Current Feeds Supported}{
 

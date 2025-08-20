@@ -3,6 +3,7 @@
 ## Enhancement
 + `spreadOption` function added for spread options on European option using Kirk's approximation.
 + `barrierSpreadPrice` function added for barrier spread options.
++ Morningstar Commodities functions switched to Zema Marketplace.
 
 ## Bugs & Fixes
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/morningstar.R
 \name{getPrices}
 \alias{getPrices}
-\title{Morningstar Commodities API multiple calls}
+\title{Zema Commodities API multiple calls}
 \usage{
 getPrices(
   feed = "CME_NymexFutures_EOD",
@@ -13,21 +13,21 @@ getPrices(
 )
 }
 \arguments{
-\item{feed}{Morningstar Feed Table. \code{character}}
+\item{feed}{Zema Feed Table. \code{character}}
 
 \item{contracts}{Symbols vector. \code{character}}
 
 \item{from}{From date yyyy-mm-dd. \code{character}}
 
-\item{iuser}{Morningstar user name as character - sourced locally in examples. \code{character}}
+\item{iuser}{Zema user name as character - sourced locally in examples. \code{character}}
 
-\item{ipassword}{Morningstar user password as character - sourced locally in examples. \code{character}}
+\item{ipassword}{Zema user password as character - sourced locally in examples. \code{character}}
 }
 \value{
 wide data frame. \code{tibble}
 }
 \description{
-Multiple Morningstar API calls using getPrice functions.
+Multiple Zema API calls using getPrice functions.
 Refer to \code{getPrices()} for list of currently supported data feeds.
 }
 \examples{

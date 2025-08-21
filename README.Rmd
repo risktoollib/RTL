@@ -51,7 +51,7 @@ Valid credentials for commercial API services are required.
 + `getGenscapeStorageOil()`.
 + `getGenscapePipeOil()`.
 
-#### Morningstar Commodities
+#### Zema Marketplace
 
 [Zema Marketplace API](https://www.zema.global/platforms/zema-marketplace) functions:
 

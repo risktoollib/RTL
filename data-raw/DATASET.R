@@ -62,7 +62,6 @@ library(jsonlite)
 library(rvest)
 library(readxl)
 library(readr)
-library(RSelenium)
 source("~/now/packages.R")
 setwd(paste0(getwd(), "/data-raw"))
 

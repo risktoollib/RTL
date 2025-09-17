@@ -179,8 +179,8 @@ f <-
     contract = "CL",
     date = d,
     fields = c("Open, High, Low, Close"),
-    iuser = mstar[[1]],
-    ipassword = mstar[[2]]
+    iuser = mm[[1]],
+    ipassword = mm[[2]]
   ) %>%
   dplyr::slice(1:12) %>%
   dplyr::select(-Open, -High, -Low)
@@ -199,8 +199,8 @@ fut <- RTL::getPrice(
   feed = "CME_NymexFutures_EOD",
   contract = "CL0M",
   from = "2019-01-01",
-  iuser = mstar[[1]],
-  ipassword = mstar[[2]]
+  iuser = mm[[1]],
+  ipassword = mm[[2]]
 )
 colnames(fut)[2] <- "fut"
 
@@ -216,7 +216,7 @@ wtiSwap <- RTL::getPrices(
   feed = "CME_NymexFutures_EOD",
   contracts = c,
   from = "2019-08-26",
-  iuser = mstar[[1]], ipassword = mstar[[2]]
+  iuser = mm[[1]], ipassword = mm[[2]]
 )
 
 usethis::use_data(wtiSwap, overwrite = T)
@@ -227,8 +227,8 @@ eurodollar <- RTL::getPrices(
   feed = "CME_CmeFutures_EOD",
   contracts = c("ED25Z"),
   from = "2019-01-01",
-  iuser = mstar[[1]],
-  ipassword = mstar[[2]]
+  iuser = mm[[1]],
+  ipassword = mm[[2]]
 ) %>%
   tidyr::pivot_longer(-date, names_to = "series", values_to = "price")
 
@@ -237,8 +237,8 @@ usethis::use_data(eurodollar, overwrite = T)
 ## Sample energy futures datasets
 # df_fut <- readRDS("df_fut") ; usethis::use_data(df_fut, overwrite = T)
 
-iuser <- mstar[["iuser"]]
-ipassword <- mstar[["ipassword"]]
+iuser <- mm[["iuser"]]
+ipassword <- mm[["ipassword"]]
 startdate <- "2004-01-01"
 
 crude <- c(
@@ -255,8 +255,8 @@ crude <- RTL::getPrices(
   feed = "CME_NymexFutures_EOD_continuous",
   contracts = crude,
   from = startdate,
-  iuser = mstar[[1]],
-  ipassword = mstar[[2]]
+  iuser = mm[[1]],
+  ipassword = mm[[2]]
 ) %>%
   pivot_longer(-date, names_to = "series", values_to = "value") %>%
   dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>%
@@ -266,8 +266,8 @@ crudeICE <- RTL::getPrices(
   feed = "ICE_EuroFutures_continuous",
   contracts = crudeICE,
   from = startdate,
-  iuser = mstar[[1]],
-  ipassword = mstar[[2]]
+  iuser = mm[[1]],
+  ipassword = mm[[2]]
 ) %>%
   pivot_longer(-date, names_to = "series", values_to = "value") %>%
   dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>%
@@ -277,8 +277,8 @@ pdts <- RTL::getPrices(
   feed = "CME_NymexFutures_EOD_continuous",
   contracts = pdts,
   from = startdate,
-  iuser = mstar[[1]],
-  ipassword = mstar[[2]]
+  iuser = mm[[1]],
+  ipassword = mm[[2]]
 ) %>%
   pivot_longer(-date, names_to = "series", values_to = "value") %>%
   dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>%
@@ -300,8 +300,8 @@ alu <-
     feed = "CME_Comex_FuturesSettlement_EOD_continuous",
     contracts = alu,
     from = startdate,
-    iuser = mstar[[1]],
-    ipassword = mstar[[2]]
+    iuser = mm[[1]],
+    ipassword = mm[[2]]
   ) %>%
   dplyr::rename_all(~ str_replace_all(., "_Month|_0", "")) %>%
   dplyr::mutate(across(dplyr::contains("AUP"), lbs2mt)) %>%
@@ -1194,8 +1194,8 @@ fxfwd$historical <-
     feed = "Morningstar_FX_Forwards",
     contracts = c("USDCAD 1Y", "USDCAD 5Y"),
     from = fromDate,
-    iuser = mstar[[1]],
-    ipassword = mstar[[2]]
+    iuser = mm[[1]],
+    ipassword = mm[[2]]
   )
 
 rD <- rsDriver(browser = "firefox", chromever = NULL)
@@ -1246,7 +1246,7 @@ usethis::use_data(refineryLPdata, overwrite = T)
 # Educational Dataset
 tradeprocess <- RTL::getPrices(
   feed = "CME_NymexFutures_EOD", contracts = c("@CL24H", "@HO24F", "@HO24H", "@LT24H"),
-  from = "2021-01-01", iuser = mstar[[1]], ipassword = mstar[[2]]
+  from = "2021-01-01", iuser = mm[[1]], ipassword = mm[[2]]
 ) %>% stats::na.omit()
 usethis::use_data(tradeprocess, overwrite = T)
 

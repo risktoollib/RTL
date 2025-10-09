@@ -7,6 +7,8 @@
 
 ## Bugs & Fixes
 
++ `promptBeta` fixed.
+
 # RTL 1.3.6
 
 ## Enhancement

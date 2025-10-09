@@ -38,28 +38,14 @@ promptBeta <- function(x = x, period = "all", betatype = "all", output = "chart"
   }
   x <- as.data.frame(x)
   ret <- xts::xts(x[, -1], order.by = x[, 1])
-  all <- PerformanceAnalytics::CAPM.beta(ret, ret[, 1])
-  bull <- PerformanceAnalytics::CAPM.beta.bull(ret, ret[, 1])
-  bear <- PerformanceAnalytics::CAPM.beta.bear(ret, ret[, 1])
 
-  n <- 1:nrow(t(all))
-  f <- data.frame(Beta = t(all), Prompt = n)
-  names(f) <- c("Beta", "Prompt")
+  all <- PerformanceAnalytics::CAPM.beta(ret, ret[, 1]) %>% as.numeric(.)
+  bull <- PerformanceAnalytics::CAPM.beta.bull(ret, ret[, 1]) %>% as.numeric(.)
+  bear <- PerformanceAnalytics::CAPM.beta.bear(ret, ret[, 1]) %>% as.numeric(.)
 
-  # betaformula <- "Only applicable when computing term betas and estimating an exponential fit along the term"
-  # betaformulaObject <- "Only applicable when computing term betas and estimating an exponential fit along the term"
-  # betaformula <- summary(stats::nls(Beta ~ a + exp(b*Prompt),data = f,start = list(a = 0,b = 0)))
-  # betaformulaObject <- stats::nls(Beta ~ a + exp(b*Prompt),data = f,start = list(a = 0,b = 0))
+  out <- dplyr::tibble(contract = term, all = all, bull = bull, bear = bear)
 
-  out <- cbind(t(all), t(bull), t(bear))
-  out <- data.frame(out)
-  names(out) <- c("all", "bull", "bear")
-
-  df <- out
-  rownames(df) <- NULL
-  df$contract <- term
-
-  chart <- df %>%
+  chart <- out %>%
     tidyr::pivot_longer(-contract, names_to = "series", values_to = "value") %>%
     plotly::plot_ly(x = ~contract, y = ~value, name = ~series, color = ~series) %>%
     plotly::add_lines() %>%
@@ -70,7 +56,7 @@ promptBeta <- function(x = x, period = "all", betatype = "all", output = "chart"
     )
 
   if (output == "betas") {
-    return(df)
+    return(out)
   }
   if (output == "chart") {
     return(chart)

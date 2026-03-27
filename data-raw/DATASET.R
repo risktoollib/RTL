@@ -284,12 +284,13 @@ pdts <- RTL::getPrices(
   dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>%
   na.omit()
 
-alu <- c(
-  paste("ALI", sprintf(fmt = "%0.3d", 1:6), "Month", sep = "_"),
-  paste("AUP", sprintf(fmt = "%0.3d", 1:6), "Month", sep = "_"),
-  paste("EDP", sprintf(fmt = "%0.3d", 1:6), "Month", sep = "_"),
-  paste("MJP", sprintf(fmt = "%0.3d", 1:6), "Month", sep = "_")
+
+agsICE <- c(
+  paste0("SB_", sprintf("%0.3d", 1:12), "_Month"),
+  paste0("NG_", sprintf("%0.3d", 1:36), "_Month"),
+  paste0("HTT_", sprintf("%0.3d", 1:12), "_Month")
 )
+
 
 lbs2mt <- function(x) {
   x * 55116 / 25
@@ -308,7 +309,7 @@ alu <-
   tidyr::pivot_longer(-date, names_to = "series", values_to = "value")
 
 dateMin = as.Date("2007-01-01")
-dflong <- rbind(crude, crudeICE, pdts, alu) %>%
+dflong <- rbind(crude, crudeICE, pdts) %>%
   dplyr::filter(date > dateMin)
 dfwide <- dflong %>%
   dplyr::filter(date > dateMin) %>%

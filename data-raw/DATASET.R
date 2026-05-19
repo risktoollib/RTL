@@ -3,37 +3,8 @@
 # usethis::use_readme_md()
 # attachment::att_from_rscripts()
 # usethis::use_package("lpSolve", "suggests")
-# usethis::use_package("rugarch", "suggests")
-# usethis::use_package("sf","suggests")
-# usethis::use_package("PerformanceAnalytics","suggests")
-# usethis::use_package("tidyquant","suggests")
-# usethis::use_package("feasts","suggests")
-# usethis::use_package("fabletools","suggests")
-# usethis::use_package("MASS","suggests")
-# usethis::use_package("dplyr")
-# usethis::use_package("stringr")
-# usethis::use_package("tibble")
-# usethis::use_package("tidyr")
-# usethis::use_package("plotly")
-# usethis::use_package("lubridate")
-# usethis::use_package("xts")
-# usethis::use_package("readr")
-# usethis::use_package("ggplot2")
-# usethis::use_package("tsibble")
-# usethis::use_package("httr")
-# usethis::use_package("jsonlite")
-# usethis::use_package("timetk")
-# usethis::use_package("magrittr")
-# usethis::use_package("rlang")
-# usethis::use_package("RCurl")
-# usethis::use_package("purrr")
-# usethis::use_package("zoo")
-# usethis::use_package("TTR")
 # usethis::use_package("Rcpp")
 # usethis::use_rcpp()
-#usethis::use_package("numDeriv")
-# usethis::use_package("tidyselect")
-# usethis::use_package("PerformanceAnalytics")
 #usethis::use_github_action("check-standard")
 spelling::spell_check_package()
 spelling::update_wordlist()
@@ -1183,45 +1154,6 @@ tradeHubs <-
     hub = c("Edmonton", "Hardisty", "Cushing", "Nederland","Mont Belvieu", "Burnaby")
   )
 usethis::use_data(tradeHubs, overwrite = T)
-
-
-## FX forwards
-
-fxfwd <- list()
-
-fromDate <- Sys.Date() - lubridate::years(2)
-fxfwd$historical <-
-  RTL::getPrices(
-    feed = "Morningstar_FX_Forwards",
-    contracts = c("USDCAD 1Y", "USDCAD 5Y"),
-    from = fromDate,
-    iuser = mm[[1]],
-    ipassword = mm[[2]]
-  )
-
-rD <- rsDriver(browser = "firefox", chromever = NULL)
-remDr <- rD[["client"]]
-Sys.sleep(2)
-remDr$navigate("https://ca.investing.com/rates-bonds/forward-rates")
-Sys.sleep(2)
-elem <- remDr$findElement(using = 'class', value = 'selectBox')
-elem$findChildElements("css","option")[[7]]$clickElement()
-page <- remDr$getPageSource()
-remDr$close()
-fxfwd$curve <- read_html(page[[1]]) %>% rvest::html_table(fill = TRUE) %>% .[[3]] %>%
-  dplyr::select(maturity = Name, bid = Bid,ask = Ask) %>%
-  dplyr::filter(!grepl("TN|SN",maturity)) %>%
-  dplyr::mutate(maturity = gsub("USDCAD|FWD","",maturity),
-                maturity = gsub("SW","1W",maturity),
-                mid = (bid + ask)/2) %>%
-  dplyr::mutate(term = dplyr::case_when(grepl("ON",maturity) ~ 1/365,
-                                        grepl("M",maturity) ~ readr::parse_number(maturity)/12,
-                                        grepl("Y",maturity) ~ readr::parse_number(maturity),
-                                        grepl("W",maturity) ~ readr::parse_number(maturity)/52,
-                                        TRUE ~ 0
-  ))
-
-usethis::use_data(fxfwd, overwrite = T)
 
 # Refinery Optimization
 

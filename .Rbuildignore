@@ -15,3 +15,5 @@
 ^codecov\.yml$
 ^CRAN-SUBMISSION$
 ^\.DS_Store$
+^\.positai$
+^\.claude$

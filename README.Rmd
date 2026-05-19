@@ -55,7 +55,7 @@ Valid credentials for commercial API services are required.
 
 [Zema Marketplace API](https://www.zema.global/platforms/zema-marketplace) functions:
 
-+ `getPrice()`, `getPrices()` and `getCurve()` using your own Morningstar credentials. Current feeds included:
++ `getPrice()`, `getPrices()` and `getCurve()` using your own Zema credentials. Current feeds included:
 
   + ICE_EuroFutures and ICE_EuroFutures_continuous.
   + CME_NymexFutures_EOD and CME_NymexFutures_EOD_continuous.
@@ -66,7 +66,6 @@ Valid credentials for commercial API services are required.
   + CME_CmeFutures_EOD and CME_CmeFutures_EOD_continuous.
   + CME_STLCPC_Futures.
   + ICE_NybotCoffeeSugarCocoaFutures and ICE_NybotCoffeeSugarCocoaFutures_continuous.
-  + Morningstar_FX_Forwards.
   + ... see `?getPrice` for up to date selection and examples.
 
 ### GIS Dataset

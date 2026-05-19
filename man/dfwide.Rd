@@ -7,9 +7,6 @@
 \format{
 data frame
 }
-\source{
-Morningstar Commodities
-}
 \usage{
 dfwide
 }

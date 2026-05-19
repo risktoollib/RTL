@@ -8,7 +8,7 @@
 data frame
 }
 \source{
-{Morningstar, EIA}
+{Zerma, EIA}
 }
 \usage{
 spot2futConvergence

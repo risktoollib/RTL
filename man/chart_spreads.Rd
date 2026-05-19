@@ -26,11 +26,11 @@ chart_spreads(
 
 \item{conversion}{Defaults to c(1,1) first and second contracts. 42 from $ per gallons to bbls. \code{numeric}}
 
-\item{feed}{Morningstar Feed Table. \code{character}}
+\item{feed}{Zema Feed Table. \code{character}}
 
-\item{iuser}{Morningstar user name as character - sourced locally in examples. \code{character}}
+\item{iuser}{Zema user name as character - sourced locally in examples. \code{character}}
 
-\item{ipassword}{Morningstar user password as character - sourced locally in examples. \code{character}}
+\item{ipassword}{Zema user password as character - sourced locally in examples. \code{character}}
 
 \item{title}{Title for chart. \code{character}}
 

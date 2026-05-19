@@ -7,9 +7,6 @@
 \format{
 List
 }
-\source{
-Morningstar and FRED
-}
 \usage{
 usSwapCurves
 }

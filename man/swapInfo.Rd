@@ -18,7 +18,7 @@ swapInfo(
 \arguments{
 \item{date}{Character date as of which you want to extract daily settlement and forward values. \code{character}}
 
-\item{feed}{Feeds for Morningstar getCurve() and getPrice(). \code{character}}
+\item{feed}{Feeds for Zema getCurve() and getPrice(). \code{character}}
 
 \item{ticker}{Nymex contract code. \code{character}}
 
@@ -26,9 +26,9 @@ swapInfo(
 
 \item{exchange}{Exchange code in data(holidaysOil). Defaults to "nymex". \code{character}}
 
-\item{iuser}{Morningstar user name as character - sourced locally in examples. \code{character}}
+\item{iuser}{Zema user name as character - sourced locally in examples. \code{character}}
 
-\item{ipassword}{Morningstar user password as character - sourced locally in examples. \code{character}}
+\item{ipassword}{Zema user password as character - sourced locally in examples. \code{character}}
 
 \item{output}{"chart" or "all". \code{character}}
 }

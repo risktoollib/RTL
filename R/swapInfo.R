@@ -1,12 +1,12 @@
 #' Commodity Swap details to learn their pricing
 #' @description Returns dataframe required to price a WTI averaging instrument based on first line settlements.
 #' @param date Character date as of which you want to extract daily settlement and forward values. `character`
-#' @param feed Feeds for Morningstar getCurve() and getPrice(). `character`
+#' @param feed Feeds for Zema getCurve() and getPrice(). `character`
 #' @param exchange Exchange code in data(holidaysOil). Defaults to "nymex". `character`
 #' @param ticker  Nymex contract code. `character`
 #' @param contract Contract code in data(expiry_table). sort(unique(expiry_table$cmdty)) for options. `character`
-#' @param iuser Morningstar user name as character - sourced locally in examples. `character`
-#' @param ipassword Morningstar user password as character - sourced locally in examples. `character`
+#' @param iuser Zema user name as character - sourced locally in examples. `character`
+#' @param ipassword Zema user password as character - sourced locally in examples. `character`
 #' @param output "chart" or "all". `character`
 #' @returns Plot or a list of data frame and plot if output = "all". `htmlwidget` or `list`
 #' @export swapInfo

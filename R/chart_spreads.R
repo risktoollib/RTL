@@ -3,10 +3,10 @@
 #' @param cpairs Tibble of contract pairs - see example for expiry when not expired yet. `tibble`
 #' @param daysFromExpiry Number of days from expiry to compute spreads. `numeric`
 #' @param conversion Defaults to c(1,1) first and second contracts. 42 from $ per gallons to bbls. `numeric`
-#' @param feed Morningstar Feed Table. `character`
+#' @param feed Zema Feed Table. `character`
 #' @param from From date `character`
-#' @param iuser Morningstar user name as character - sourced locally in examples. `character`
-#' @param ipassword Morningstar user password as character - sourced locally in examples. `character`
+#' @param iuser Zema user name as character - sourced locally in examples. `character`
+#' @param ipassword Zema user password as character - sourced locally in examples. `character`
 #' @param title Title for chart. `character`
 #' @param yaxis y-axis label. `character`
 #' @param output "chart" for `htmlwidget` or "data" for `tibble`.

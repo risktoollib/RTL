@@ -1,5 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <!-- badges: start -->
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/RTL)](https://cran.r-project.org/package=RTL)
@@ -63,13 +64,13 @@ Valid credentials for commercial API services are required.
 - `getGenscapeStorageOil()`.
 - `getGenscapePipeOil()`.
 
-#### Morningstar Commodities
+#### Zema Marketplace
 
-[Morningstar Marketplace
-API](https://mp.morningstarcommodity.com/marketplace/) functions:
+[Zema Marketplace
+API](https://www.zema.global/platforms/zema-marketplace) functions:
 
-- `getPrice()`, `getPrices()` and `getCurve()` using your own
-  Morningstar credentials. Current feeds included:
+- `getPrice()`, `getPrices()` and `getCurve()` using your own Zema
+  credentials. Current feeds included:
 
   - ICE_EuroFutures and ICE_EuroFutures_continuous.
   - CME_NymexFutures_EOD and CME_NymexFutures_EOD_continuous.
@@ -82,7 +83,6 @@ API](https://mp.morningstarcommodity.com/marketplace/) functions:
   - CME_STLCPC_Futures.
   - ICE_NybotCoffeeSugarCocoaFutures and
     ICE_NybotCoffeeSugarCocoaFutures_continuous.
-  - Morningstar_FX_Forwards.
   - … see `?getPrice` for up to date selection and examples.
 
 ### GIS Dataset

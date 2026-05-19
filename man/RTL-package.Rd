@@ -21,6 +21,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Philippe Cote \email{pcote@ualberta.ca}
   \item Nima Safaian \email{nima.safaian@gmail.com}
 }
 

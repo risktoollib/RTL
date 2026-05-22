@@ -14,8 +14,12 @@ All commands run from an R session in the project root.
 # Document (regenerates NAMESPACE and man/ from roxygen2 comments)
 devtools::document()
 
-# Build and check (equivalent of R CMD check)
+# Build and check (standard)
 devtools::check()
+
+# Build and check with full CRAN-equivalent checks (use before any CRAN submission)
+# Adds --as-cran flag which enables namespace-reference checks, URL checks, etc.
+devtools::check(cran = TRUE)
 
 # Run all tests
 devtools::test()
@@ -48,7 +52,7 @@ Rcpp is used for performance-critical calculations: `CRROptionCpp.cpp`, `gbs.cpp
 ### Datasets (`data/`, `data-raw/`)
 - `data/` — binary `.rda` files loaded lazily by the package
 - `data-raw/DATASET.R` — the single 1100-line script that builds all datasets; each dataset has its own clearly delimited block
-- `data-raw/*.feather` — source files for large datasets (`dflong`, `dfwide`, `wtiSwap`, `fizdiffs`); read with `arrow::read_feather()` then converted to plain `dplyr::as_tibble()` before saving
+- `data-raw/*.feather` — source files for large datasets (`dflong`, `dfwide`, `wtiSwap`, `fizdiffs`); read with `arrow::read_feather()` then materialized via `as.data.frame() %>% dplyr::as_tibble()` before saving — `as_tibble()` alone is NOT sufficient as it preserves Arrow ALTREP column types that embed the `arrow` namespace in the `.rda` file
 - `data-raw/tradeCycle.csv` — Canadian crude trading calendar source; Canadian rows sourced from the COLC Forecasting Calendar (colcomm.com); US domestic rows derived from `expiry_table` inside DATASET.R
 - `data-raw/holidays.csv` — two-column CSV (`nymex`, `ice`) of exchange holiday dates; read with `tidyr::gather()` into long format as `holidaysOil`
 
@@ -65,13 +69,24 @@ When updating a dataset:
 2. Source the relevant block of `data-raw/DATASET.R` from within `data-raw/` (set working directory first)
 3. The block ends with `usethis::use_data(<object>, overwrite = TRUE)` which writes to `data/`
 4. `holidaysOil` must be rebuilt before `tradeCycle` since `tradeCycle` uses it for NYMEX business day counting
+5. Reset working directory back to project root afterward: `setwd("..")` — subsequent `devtools::*` and `spelling::*` calls require the project root
+6. After rebuilding any feather-backed dataset, verify no Arrow namespace is embedded: `bzcat data/<name>.rda | strings | grep arrow` must return nothing
+
+## CRAN Submission Checklist
+
+Before submitting to CRAN (via `devtools::check()` then win-builder):
+- Run `devtools::check(cran = TRUE)` locally with no ERRORs or WARNINGs — `cran = TRUE` is required to enable `--as-cran` and catch the same namespace, URL, and policy checks that win-builder runs
+- Verify feather-backed `.rda` files contain no Arrow ALTREP references: `bzcat data/dflong.rda | strings | grep arrow` (and repeat for `dfwide`, `fizdiffs`, `wtiSwap`)
+- Confirm `arrow` does not appear in DESCRIPTION — it is a `data-raw`-only dependency and must not leak into the package
+- Bump version in DESCRIPTION and update `Date:`
+- Update `cran-comments.md` with test environments and any notes
 
 ## Coding Conventions
 
 - All R code uses **tidyverse style** with explicit `package::function()` notation throughout
 - The magrittr `%>%` pipe is used (not the native `|>`)
 - Packages used only in specific non-core functions (`TTR`, `timetk`) are in `Suggests` with `requireNamespace()` guards at the top of those functions
-- Data files read from `arrow::read_feather()` must be piped through `dplyr::as_tibble()` before saving with `usethis::use_data()` to avoid embedding arrow namespace references in `.rda` files
+- Data files read from `arrow::read_feather()` must be piped through `as.data.frame() %>% dplyr::as_tibble()` before saving with `usethis::use_data()`. Using `dplyr::as_tibble()` alone is insufficient — it preserves Arrow ALTREP-backed column types (`arrow::array_dbl_vector`, `arrow::array_string_vector`) that embed the `arrow` namespace in the serialized `.rda` file, causing `R CMD check` to warn about undeclared namespace dependencies.
 
 ## `.Rbuildignore` Entries
 `.github`, `.claude`, `CRAN-SUBMISSION`, `LICENSE.md`, `README.Rmd`, `RTL.Rproj`, `data-raw`, `.Rproj.user`, `.positai` are all excluded from the package tarball.

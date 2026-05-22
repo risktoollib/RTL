@@ -6,9 +6,6 @@
 # usethis::use_package("Rcpp")
 # usethis::use_rcpp()
 #usethis::use_github_action("check-standard")
-spelling::spell_check_package()
-spelling::update_wordlist()
-devtools::document()
 # usethis::use_github_links()
 # Setup RTL Webpage
 # usethis::use_pkgdown()
@@ -20,8 +17,11 @@ devtools::document()
 # pkgdown::build_site()
 # usethis::use_github_action(url = "https://raw.githubusercontent.com/r-lib/actions/master/examples/pkgdown.yaml")
 #usethis::use_testthat()
+spelling::spell_check_package()
+spelling::update_wordlist()
+devtools::document()
+devtools::check(cran = TRUE)
 devtools::check_win_release()
-devtools::check_win_devel()
 devtools::check_mac_release()
 
 #
@@ -137,15 +137,19 @@ usethis::use_data(stocks, overwrite = T)
 
 # Commodities ----------------------------------------------------------------
 
+## Physical Diffs
+fizdiffs <- arrow::read_feather("fizdiffs.feather")  %>% as.data.frame() %>% dplyr::as_tibble()
+usethis::use_data(fizdiffs, overwrite = T)
+
 ## WTI swaps
 
-wtiSwap <- arrow::read_feather("wtiSwap.feather") %>% dplyr::as_tibble()
+wtiSwap <- arrow::read_feather("wtiSwap.feather") %>% as.data.frame() %>% dplyr::as_tibble()
 usethis::use_data(wtiSwap, overwrite = T)
 
 ## Sample energy futures datasets
-dflong <- arrow::read_feather("dflong.feather") %>% dplyr::as_tibble()
-dfwide <- arrow::read_feather("dfwide.feather") %>% dplyr::as_tibble()
-usethis::use_data(dflong , overwrite = T)
+dflong <- arrow::read_feather("dflong.feather")  %>% as.data.frame() %>% dplyr::as_tibble()
+dfwide <- arrow::read_feather("dfwide.feather")  %>% as.data.frame() %>% dplyr::as_tibble()
+usethis::use_data(dflong, overwrite = T)
 usethis::use_data(dfwide, overwrite = T)
 
 # EIA ---------------------------------------------------------------------
@@ -938,11 +942,6 @@ crudeOil$xomAssays <- crudeassaysXOM
 rm(html, tmp, urls, css, destfile, i)
 
 usethis::use_data(crudeOil, overwrite = T)
-
-## Physical Diffs
-#fizdiffs <- readRDS("fizdiffs.RDS")
-fizdiffs <- arrow::read_feather("fizdiffs.feather") %>% dplyr::as_tibble()
-usethis::use_data(fizdiffs, overwrite = T)
 
 ## Trading Hubs
 

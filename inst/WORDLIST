@@ -26,7 +26,6 @@ EOD
 ERCOT
 EuroFutures
 FASLE
-FX
 FXCADUSD
 ForecastAndActualPoolPrice
 FuturesSettlement
@@ -74,7 +73,6 @@ SpatialPointsDataFrame
 StorageVolumeByOwnerGet
 Tibble
 ULSD
-USDCAD
 Uhlenbeck
 WCW
 WIP
@@ -111,7 +109,6 @@ gg
 gis
 globalOil
 histocial
-historicals
 holidaysOil
 https
 ir

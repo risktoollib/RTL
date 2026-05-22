@@ -11,6 +11,7 @@
 tradeStrategyDY <- function(data,
                      par1value = 50,
                      par2value = 200) {
+  if (!requireNamespace("TTR", quietly = TRUE)) stop("Package \"TTR\" needed for this function. Please install it.", call. = FALSE)
   Open <- trade <- pos <- retOpCl <- retClCl <- retClCl <- ret_new <- ret_exist <- ret_others <- NULL
 
   data <- data %>%

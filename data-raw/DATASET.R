@@ -139,12 +139,12 @@ usethis::use_data(stocks, overwrite = T)
 
 ## WTI swaps
 
-wtiSwap <- arrow::read_feather("wtiSwap.feather")
+wtiSwap <- arrow::read_feather("wtiSwap.feather") %>% dplyr::as_tibble()
 usethis::use_data(wtiSwap, overwrite = T)
 
 ## Sample energy futures datasets
-dflong <- arrow::read_feather("dflong.feather")
-dfwide <- arrow::read_feather("dfwide.feather")
+dflong <- arrow::read_feather("dflong.feather") %>% dplyr::as_tibble()
+dfwide <- arrow::read_feather("dfwide.feather") %>% dplyr::as_tibble()
 usethis::use_data(dflong , overwrite = T)
 usethis::use_data(dfwide, overwrite = T)
 
@@ -941,7 +941,7 @@ usethis::use_data(crudeOil, overwrite = T)
 
 ## Physical Diffs
 #fizdiffs <- readRDS("fizdiffs.RDS")
-fizdiffs <- arrow::read_feather("fizdiffs.feather")
+fizdiffs <- arrow::read_feather("fizdiffs.feather") %>% dplyr::as_tibble()
 usethis::use_data(fizdiffs, overwrite = T)
 
 ## Trading Hubs

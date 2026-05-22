@@ -5,7 +5,6 @@
 #' @param betatype "all" "bull" "bear". `character`
 #' @param output "betas" or "chart". `character`
 #' @returns betas data frame `tibble` or plotly chart of betas `htmlwidgets`
-#' @importFrom readr parse_number
 #' @export promptBeta
 #' @author Philippe Cote
 #' @examples

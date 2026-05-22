@@ -24,23 +24,20 @@ Imports:
     magrittr,
     plotly,
     purrr,
-    readr,
     rlang,
     stringr,
     tibble,
     tidyr,
-    timetk,
     tsibble,
     xts,
     zoo,
     glue,
     Rcpp,
     lifecycle,
-    TTR,
     tidyselect,
     PerformanceAnalytics,
     numDeriv
-Suggests: 
+Suggests:
     testthat (>= 3.0.0),
     covr,
     lpSolve,
@@ -49,7 +46,9 @@ Suggests:
     feasts,
     fabletools,
     MASS,
-    sf
+    sf,
+    TTR,
+    timetk
 Encoding: UTF-8
 LazyData: true
 LazyDataCompression: xz

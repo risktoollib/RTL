@@ -1,6 +1,10 @@
 ^\.github$
+^CLAUDE\.md$
+^\.claude$
 ^CRAN-SUBMISSION$
 ^LICENSE\.md$
 ^README\.Rmd$
 ^RTL\.Rproj$
 ^data-raw$
+^\.Rproj\.user$
+^\.positai$

@@ -30,6 +30,7 @@
 
 efficientFrontier <- function(nsims = 5000, x =  RTL::fizdiffs %>% dplyr::select(date, dplyr::contains("WCS")), expectedReturns = NULL) {
 
+  if (!requireNamespace("timetk", quietly = TRUE)) stop("Package \"timetk\" needed for this function. Please install it.", call. = FALSE)
   prices <- Risk <- Return <- SharpeRatio <- desc <-  NULL
   prices <- x
   ret <- x %>%

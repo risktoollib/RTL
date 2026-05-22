@@ -138,17 +138,21 @@ usethis::use_data(stocks, overwrite = T)
 # Commodities ----------------------------------------------------------------
 
 ## Physical Diffs
-fizdiffs <- arrow::read_feather("fizdiffs.feather")  %>% as.data.frame() %>% dplyr::as_tibble()
+#options(arrow.use_altrep = FALSE)
+#fizdiffs <- arrow::read_feather("fizdiffs.feather") %>% dplyr::as_tibble()
+readRDS(fizdiffs, file = "fizdiffs.RDS")
 usethis::use_data(fizdiffs, overwrite = T)
 
 ## WTI swaps
-
-wtiSwap <- arrow::read_feather("wtiSwap.feather") %>% as.data.frame() %>% dplyr::as_tibble()
+#wtiSwap <- arrow::read_feather("wtiSwap.feather") %>% dplyr::as_tibble()
+readRDS(fizdiffs, file = "fizdiffs.RDS")
 usethis::use_data(wtiSwap, overwrite = T)
 
 ## Sample energy futures datasets
-dflong <- arrow::read_feather("dflong.feather")  %>% as.data.frame() %>% dplyr::as_tibble()
-dfwide <- arrow::read_feather("dfwide.feather")  %>% as.data.frame() %>% dplyr::as_tibble()
+readRDS(dflong, file = "dflong.RDS")
+readRDS(dfwide, file = "dfwide.RDS")
+#dflong <- arrow::read_feather("dflong.feather") %>% dplyr::as_tibble()
+#dfwide <- arrow::read_feather("dfwide.feather") %>% dplyr::as_tibble()
 usethis::use_data(dflong, overwrite = T)
 usethis::use_data(dfwide, overwrite = T)
 

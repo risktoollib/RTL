@@ -58,12 +58,6 @@
 #' @returns `tibble`
 "wtiSwap"
 
-#' dataset: Eurodollar futures contracts
-#' @description ED futures contract for December 2024
-#' @format data frame
-#' @returns `tibble`
-"eurodollar"
-
 #' dataset: IR compounding
 #' @description Planet metrics from NASA
 #' @format data frame
@@ -163,8 +157,3 @@
 #' @returns `list`
 "refineryLPdata"
 
-#' dataset: data for teaching the various ways to monetize a market call.
-#' @description Data set for explaining the various ways to monetize a market view.
-#' @format data frame
-#' @returns `tibble`
-"tradeprocess"

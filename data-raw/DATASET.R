@@ -137,169 +137,16 @@ usethis::use_data(stocks, overwrite = T)
 
 # Commodities ----------------------------------------------------------------
 
-## spot2fut convergence
-d <- "2020-03-25"
-tick = "PET.RWTC.D"
-cash <-
-  RTL::eia2tidy(ticker = tick, key = EIAkey, name = "cash") %>%
-  dplyr::arrange(date)
-c <- cash %>% dplyr::filter(date == d)
-f <-
-  RTL::getCurve(
-    feed = "Crb_Futures_Price_Volume_And_Open_Interest",
-    contract = "CL",
-    date = d,
-    fields = c("Open, High, Low, Close"),
-    iuser = mm[[1]],
-    ipassword = mm[[2]]
-  ) %>%
-  dplyr::slice(1:12) %>%
-  dplyr::select(-Open, -High, -Low)
-
-spot2futCurve <- f %>%
-  dplyr::add_row(
-    contract = "cash",
-    code = tick,
-    expirationDate = c$date,
-    Close = c$cash
-  ) %>%
-  dplyr::arrange(contract)
-usethis::use_data(spot2futCurve, overwrite = T)
-
-fut <- RTL::getPrice(
-  feed = "CME_NymexFutures_EOD",
-  contract = "CL0M",
-  from = "2019-01-01",
-  iuser = mm[[1]],
-  ipassword = mm[[2]]
-)
-colnames(fut)[2] <- "fut"
-
-spot2futConvergence <- fut %>%
-  dplyr::inner_join(cash, by = c("date")) %>%
-  dplyr::mutate(spot2fut = cash - fut) %>%
-  tidyr::pivot_longer(-date, names_to = "series", values_to = "value")
-usethis::use_data(spot2futConvergence, overwrite = T)
-
 ## WTI swaps
-c <- paste0("CL0", c("M", "N", "Q"))
-wtiSwap <- RTL::getPrices(
-  feed = "CME_NymexFutures_EOD",
-  contracts = c,
-  from = "2019-08-26",
-  iuser = mm[[1]], ipassword = mm[[2]]
-)
 
+wtiSwap <- arrow::read_feather("wtiSwap.feather")
 usethis::use_data(wtiSwap, overwrite = T)
 
-## Eurodollar
-
-eurodollar <- RTL::getPrices(
-  feed = "CME_CmeFutures_EOD",
-  contracts = c("ED25Z"),
-  from = "2019-01-01",
-  iuser = mm[[1]],
-  ipassword = mm[[2]]
-) %>%
-  tidyr::pivot_longer(-date, names_to = "series", values_to = "price")
-
-usethis::use_data(eurodollar, overwrite = T)
-
 ## Sample energy futures datasets
-# df_fut <- readRDS("df_fut") ; usethis::use_data(df_fut, overwrite = T)
-
-iuser <- mm[["iuser"]]
-ipassword <- mm[["ipassword"]]
-startdate <- "2004-01-01"
-
-crude <- c(
-  paste0("CL_", sprintf("%0.3d", 1:36), "_Month"),
-  paste0("NG_", sprintf("%0.3d", 1:36), "_Month"),
-  paste0("HTT_", sprintf("%0.3d", 1:12), "_Month")
-  )
-
-crudeICE <- c(paste0("BRN_", sprintf("%0.3d", 1:36), "_Month"))
-pdts <- c(paste0("HO_", sprintf("%0.3d", 1:18), "_Month"),
-          paste0("RB_", sprintf("%0.3d", 1:18), "_Month"))
-
-crude <- RTL::getPrices(
-  feed = "CME_NymexFutures_EOD_continuous",
-  contracts = crude,
-  from = startdate,
-  iuser = mm[[1]],
-  ipassword = mm[[2]]
-) %>%
-  pivot_longer(-date, names_to = "series", values_to = "value") %>%
-  dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>%
-  na.omit()
-
-crudeICE <- RTL::getPrices(
-  feed = "ICE_EuroFutures_continuous",
-  contracts = crudeICE,
-  from = startdate,
-  iuser = mm[[1]],
-  ipassword = mm[[2]]
-) %>%
-  pivot_longer(-date, names_to = "series", values_to = "value") %>%
-  dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>%
-  na.omit()
-
-pdts <- RTL::getPrices(
-  feed = "CME_NymexFutures_EOD_continuous",
-  contracts = pdts,
-  from = startdate,
-  iuser = mm[[1]],
-  ipassword = mm[[2]]
-) %>%
-  pivot_longer(-date, names_to = "series", values_to = "value") %>%
-  dplyr::mutate(series = stringr::str_replace_all(series, c("_0" = "", "_Month" = ""))) %>%
-  na.omit()
-
-
-agsICE <- c(
-  paste0("SB_", sprintf("%0.3d", 1:12), "_Month"),
-  paste0("NG_", sprintf("%0.3d", 1:36), "_Month"),
-  paste0("HTT_", sprintf("%0.3d", 1:12), "_Month")
-)
-
-
-lbs2mt <- function(x) {
-  x * 55116 / 25
-}
-
-alu <-
-  RTL::getPrices(
-    feed = "CME_Comex_FuturesSettlement_EOD_continuous",
-    contracts = alu,
-    from = startdate,
-    iuser = mm[[1]],
-    ipassword = mm[[2]]
-  ) %>%
-  dplyr::rename_all(~ str_replace_all(., "_Month|_0", "")) %>%
-  dplyr::mutate(across(dplyr::contains("AUP"), lbs2mt)) %>%
-  tidyr::pivot_longer(-date, names_to = "series", values_to = "value")
-
-dateMin = as.Date("2007-01-01")
-dflong <- rbind(crude, crudeICE, pdts) %>%
-  dplyr::filter(date > dateMin)
-dfwide <- dflong %>%
-  dplyr::filter(date > dateMin) %>%
-  tidyr::pivot_wider(names_from = series, values_from = value) # %>% na.omit()
-
-# test for data gaps
-dflong %>% dplyr::filter(grepl("CL",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
-dflong %>% dplyr::filter(grepl("HTT",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
-dflong %>% dplyr::filter(grepl("BRN",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
-dflong %>% dplyr::filter(grepl("HO",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
-dflong %>% dplyr::filter(grepl("RB",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
-dflong %>% dplyr::filter(grepl("ALI",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
-dflong %>% dplyr::filter(grepl("NG",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
-dflong %>% dplyr::filter(grepl("AUP",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
-dflong %>% dplyr::filter(grepl("MJP",series)) %>% ggplot(aes(x = date, y = value, col = series)) + geom_line()
-
+dflong <- arrow::read_feather("dflong.feather")
+dfwide <- arrow::read_feather("dfwide.feather")
 usethis::use_data(dflong , overwrite = T)
 usethis::use_data(dfwide, overwrite = T)
-rm(crude, crudeICE, pdts, alu)
 
 # EIA ---------------------------------------------------------------------
 
@@ -343,6 +190,7 @@ cc <- function(name = "Refinery and Tank and Underground Working Storage Capacit
     dplyr::mutate(date = as.Date(date), value = as.numeric(value))
   return(tmp)
 }
+
 
 eiaStorageCap <- bind_rows(
   cc(sheet = "US", loc = "US"),
@@ -722,55 +570,6 @@ GC <- read_excel("GC.xls", col_types = c(
     Last.Delivery = as.Date(Last.Delivery, "%Y-%m-%d", tz = "UTC")
   )
 
-SI <- read_excel("SI.xls", col_types = c(
-  "skip", "skip", "skip", "text", "skip", "skip",
-  "skip", "skip", "skip", "text", "skip", "text", "text"
-)) %>%
-  dplyr::as_tibble(.name_repair = "universal") %>%
-  dplyr::transmute(
-    cmdty = "comexsilver", tick.prefix = "SI",
-    Last.Trade = as.Date(Last.Trade, "%Y-%m-%d", tz = "UTC"),
-    First.Notice = as.Date(First.Notice, "%Y-%m-%d", tz = "UTC"),
-    First.Delivery = as.Date(First.Delivery, "%Y-%m-%d", tz = "UTC"),
-    Last.Delivery = as.Date(Last.Delivery, "%Y-%m-%d", tz = "UTC")
-  )
-
-ALI <- read_excel("ALI.xls", col_types = c(
-  "skip", "skip", "skip", "text", "skip", "skip",
-  "skip", "skip", "skip", "text", "skip", "text", "text"
-)) %>%
-  dplyr::as_tibble(.name_repair = "universal") %>%
-  dplyr::transmute(
-    cmdty = "comexalu", tick.prefix = "ALI",
-    Last.Trade = as.Date(Last.Trade, "%Y-%m-%d", tz = "UTC"),
-    First.Notice = as.Date(First.Notice, "%Y-%m-%d", tz = "UTC"),
-    First.Delivery = as.Date(First.Delivery, "%Y-%m-%d", tz = "UTC"),
-    Last.Delivery = as.Date(Last.Delivery, "%Y-%m-%d", tz = "UTC")
-  )
-
-LTH <- read_excel("LTH.xls") %>%
-  dplyr::as_tibble(.name_repair = "universal") %>%
-  dplyr::transmute(
-    cmdty = "comexlithium", tick.prefix = "LTH",
-    Last.Trade = as.Date(Last.Trade, "%Y-%m-%d", tz = "UTC"),
-    First.Notice = Last.Trade,
-    First.Delivery = Last.Trade,
-    Last.Delivery = Last.Trade
-  )
-
-HG <- read_excel("HG.xls", col_types = c(
-  "skip", "skip", "skip", "text", "skip", "skip",
-  "skip", "skip", "skip", "text", "skip", "text", "text"
-)) %>%
-  dplyr::as_tibble(.name_repair = "universal") %>%
-  dplyr::transmute(
-    cmdty = "comexcopper", tick.prefix = "HG",
-    Last.Trade = as.Date(Last.Trade, "%Y-%m-%d", tz = "UTC"),
-    First.Notice = as.Date(First.Notice, "%Y-%m-%d", tz = "UTC"),
-    First.Delivery = as.Date(First.Delivery, "%Y-%m-%d", tz = "UTC"),
-    Last.Delivery = as.Date(Last.Delivery, "%Y-%m-%d", tz = "UTC")
-  )
-
 bbdate <- function(x){
   tmp <- as.numeric(substring(x,7,8))
   tmp <- ifelse(tmp >= 60, tmp + 1900, tmp + 2000)
@@ -890,7 +689,7 @@ meh <- RTL::tradeCycle %>%
                    Last.Delivery = First.Delivery + months(1) - 1)
 
 
-expiry_table <- rbind(expiry_table, LCO, LGO, CL, BZ, HO, RB, GC, SI, ALI, LTH, HG, W, C ,S,meh,ARV,TI,TMW,TMF,TMR,TMS) %>%
+expiry_table <- rbind(expiry_table, LCO, LGO, CL, BZ, HO, RB, GC) %>%
   dplyr::distinct() %>%
   dplyr::mutate(
     Year = year(First.Delivery),
@@ -1175,16 +974,6 @@ refineryLPdata$outputs <- data.frame(
 
 usethis::use_data(refineryLPdata, overwrite = T)
 
-
-# Educational Dataset
-tradeprocess <- RTL::getPrices(
-  feed = "CME_NymexFutures_EOD", contracts = c("@CL24H", "@HO24F", "@HO24H", "@LT24H"),
-  from = "2021-01-01", iuser = mm[[1]], ipassword = mm[[2]]
-) %>% stats::na.omit()
-usethis::use_data(tradeprocess, overwrite = T)
-
-
-
 # IR  -------------------------------------------------
 
   ## Orbital
@@ -1286,7 +1075,7 @@ library(RQuantLib)
 # removing d1y fro LIBOR  and s2y - causes negative rates
 tsQuotes <- rbind(libor, irs, futs) %>% as_tibble() %>%
   tidyr::pivot_wider(names_from = Name, values_from = Last) %>%
-  dplyr::select(-s2y,-d3m) %>%
+  dplyr::select(-s2y,-d3m) %>%fd
   transpose() %>% unlist() %>% as.list()
 tradeDate <- as.Date(Sys.Date() - 1)
 params <- list(tradeDate = tradeDate, settleDate = tradeDate + 2, dt = 1/12,

@@ -5,8 +5,8 @@
 \title{EIA API multiple calls with tidy output}
 \usage{
 eia2tidy_all(
-  tickers = tibble::tribble(~ticker, ~name, "PET.W_EPC0_SAX_YCUOK_MBBL.W",
-    "CrudeCushing", "NG.NW2_EPG0_SWO_R48_BCF.W", "NGLower48"),
+  tickers = dplyr::tribble(~ticker, ~name, "PET.W_EPC0_SAX_YCUOK_MBBL.W", "CrudeCushing",
+    "NG.NW2_EPG0_SWO_R48_BCF.W", "NGLower48"),
   key,
   long = TRUE
 )
@@ -27,7 +27,7 @@ Makes a clean wrapper for use with purrr for multiple series extraction. Query B
 }
 \examples{
 \dontrun{
-eia2tidy_all(tickers = tibble::tribble(~ticker, ~name,
+eia2tidy_all(tickers = dplyr::tribble(~ticker, ~name,
                          "PET.W_EPC0_SAX_YCUOK_MBBL.W", "CrudeCushing",
                          "NG.NW2_EPG0_SWO_R48_BCF.W", "NGLower48"),
             key = "your API key", long = TRUE)

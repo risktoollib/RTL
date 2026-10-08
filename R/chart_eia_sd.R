@@ -21,7 +21,7 @@ chart_eia_sd <- function(market = "mogas",
   df <- tickers_eia %>%
     dplyr::filter(sd_category == market) %>%
     dplyr::mutate(tick.r = stringr::str_replace_all(tick.r, paste0("eia.", market, "."), ""))
-  eia_df <- tibble::tribble(~ticker, ~name) %>%
+  eia_df <- dplyr::tribble(~ticker, ~name) %>%
     dplyr::add_row(ticker = df$tick.eia[1:nrow(df)], name = df$category[1:nrow(df)]) %>%
     RTL::eia2tidy_all(key = key, long = FALSE) %>%
     dplyr::mutate(balance = imports + supply - exports - demand)

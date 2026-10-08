@@ -183,14 +183,14 @@ getPrice <- function(feed = "CME_NymexFutures_EOD", contract = "@CL21Z",
   elecFeeds <- "ERCOT|PJM|AESO"
   # Non electricity feeds
   if (!grepl(elecFeeds, feed) & length(es) > 0) {
-    if (length(es %>% purrr::flatten() %>% .$series %>% .$values %>% purrr::flatten()) > 0) {
+    if (length(es %>% purrr::list_flatten(name_spec = "{inner}") %>% .$series %>% .$values %>% purrr::list_flatten(name_spec = "{inner}")) > 0) {
       out <-
         dplyr::tibble(
-          date = as.character(lubridate::ymd(es %>% purrr::flatten() %>% purrr::flatten() %>% .$dates)) %>% lubridate::ymd(),
+          date = as.character(lubridate::ymd(es %>% purrr::list_flatten(name_spec = "{inner}") %>% purrr::list_flatten(name_spec = "{inner}") %>% .$dates)) %>% lubridate::ymd(),
           opt = feed == "CME_NymexOptions_EOD",
           value = ifelse(opt == TRUE,
-            as.numeric(es %>% purrr::flatten() %>% purrr::flatten() %>% .$values %>% .[[4]] %>% purrr::flatten()),
-            as.numeric(es %>% purrr::flatten() %>% purrr::flatten() %>% .$values %>% .[[1]] %>% purrr::flatten())
+            as.numeric(es %>% purrr::list_flatten(name_spec = "{inner}") %>% purrr::list_flatten(name_spec = "{inner}") %>% .$values %>% .[[4]] %>% purrr::list_flatten(name_spec = "{inner}")),
+            as.numeric(es %>% purrr::list_flatten(name_spec = "{inner}") %>% purrr::list_flatten(name_spec = "{inner}") %>% .$values %>% .[[1]] %>% purrr::list_flatten(name_spec = "{inner}"))
           )
         ) %>%
         dplyr::select(-opt) %>%
@@ -206,9 +206,9 @@ getPrice <- function(feed = "CME_NymexFutures_EOD", contract = "@CL21Z",
   }
   # electricy feeds
   if (grepl(elecFeeds, feed) & length(es) > 0) {
-    if (length(es %>% purrr::flatten() %>% .$series %>% .$values %>% purrr::flatten()) > 0) {
+    if (length(es %>% purrr::list_flatten(name_spec = "{inner}") %>% .$series %>% .$values %>% purrr::list_flatten(name_spec = "{inner}")) > 0) {
       if (grepl("ERCOT", feed)) {
-        tz <- "CST"
+        tz <- "America/Chicago"
         x <- 1
       }
       if (grepl("PJM", feed)) {
@@ -221,8 +221,8 @@ getPrice <- function(feed = "CME_NymexFutures_EOD", contract = "@CL21Z",
       }
       out <-
         dplyr::tibble(
-          date = as.POSIXct(sub("T", "", es %>% purrr::flatten() %>% purrr::flatten() %>% .$date %>% unlist()), tz = tz),
-          value = as.numeric(es %>% purrr::flatten() %>% purrr::flatten() %>% .$values %>% .[[x]] %>% purrr::flatten())
+          date = as.POSIXct(sub("T", "", es %>% purrr::list_flatten(name_spec = "{inner}") %>% purrr::list_flatten(name_spec = "{inner}") %>% .$date %>% unlist()), tz = tz),
+          value = as.numeric(es %>% purrr::list_flatten(name_spec = "{inner}") %>% purrr::list_flatten(name_spec = "{inner}") %>% .$values %>% .[[x]] %>% purrr::list_flatten(name_spec = "{inner}"))
         ) %>%
         dplyr::mutate(value = ifelse(is.nan(value), NA, value))
     } else {

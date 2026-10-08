@@ -11,7 +11,6 @@
 #' @param yaxis y-axis label. `character`
 #' @param output "chart" for `htmlwidget` or "data" for `tibble`.
 #' @returns A plotly object or a dataframe
-#' @importFrom rlang :=
 #' @export chart_spreads
 #' @author Philippe Cote
 #' @examples

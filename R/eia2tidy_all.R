@@ -9,12 +9,12 @@
 #' @author Philippe Cote
 #' @examples
 #' \dontrun{
-#'eia2tidy_all(tickers = tibble::tribble(~ticker, ~name,
+#'eia2tidy_all(tickers = dplyr::tribble(~ticker, ~name,
 #'                          "PET.W_EPC0_SAX_YCUOK_MBBL.W", "CrudeCushing",
 #'                          "NG.NW2_EPG0_SWO_R48_BCF.W", "NGLower48"),
 #'             key = "your API key", long = TRUE)
 #' }
-eia2tidy_all <- function(tickers = tibble::tribble(~ticker, ~name,
+eia2tidy_all <- function(tickers = dplyr::tribble(~ticker, ~name,
                                                "PET.W_EPC0_SAX_YCUOK_MBBL.W", "CrudeCushing",
                                                "NG.NW2_EPG0_SWO_R48_BCF.W", "NGLower48"),
                      key,

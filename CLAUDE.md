@@ -97,8 +97,9 @@ Before submitting to CRAN (via `devtools::check()` then win-builder):
 - All R code uses **tidyverse style** with explicit `package::function()` notation throughout
 - Function files in `R/` carry no code comments: explanation belongs in the roxygen `#'` documentation
 - The magrittr `%>%` pipe is used (not the native `|>`)
-- Packages used only in specific non-core functions (`TTR`, `timetk`) are in `Suggests` with `requireNamespace()` guards at the top of those functions
+- Packages used only in specific non-core functions (`TTR`, `timetk`, `ggplot2`, `PerformanceAnalytics`, `tsibble`, …) are in `Suggests` with `requireNamespace()` guards at the top of those functions
+- Keep `Imports` at 20 packages or fewer: `R CMD check --as-cran` raises a NOTE above that. Take `%>%`, `tibble`, `tribble`, `where` and `.data` from dplyr's re-exports rather than importing magrittr, tibble, tidyselect or rlang
 - Data files read from `arrow::read_feather()` require `options(arrow.use_altrep = FALSE)` to be set **before** the read call. Neither `as.data.frame()` nor `dplyr::as_tibble()` strip ALTREP — they preserve Arrow ALTREP-backed column types (`arrow::array_dbl_vector`, `arrow::array_string_vector`) whose class definitions live in the arrow namespace and are serialized into the `.rda` file, causing `R CMD check` (r-devel) to warn about undeclared namespace dependencies.
 
 ## `.Rbuildignore` Entries
-`.github`, `.claude`, `CRAN-SUBMISSION`, `LICENSE.md`, `README.Rmd`, `RTL.Rproj`, `data-raw`, `.Rproj.user`, `.positai` are all excluded from the package tarball.
+`.github`, `.claude`, `CLAUDE.md`, `cran-comments.md`, `CRAN-SUBMISSION`, `LICENSE.md`, `README.Rmd`, `RTL.Rproj`, `data-raw`, `.Rproj.user`, `.positai` are all excluded from the package tarball.

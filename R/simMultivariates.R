@@ -22,8 +22,8 @@ simMultivariates <- function(nsims = 10, x, s0 = NULL) {
     dplyr::select(-value) %>%
     tidyr::pivot_wider(names_from = series,values_from = ret)
 
-  aves <- ret %>% dplyr::summarise_if(is.numeric, mean)
-  sds <- ret %>% dplyr::summarise_if(is.numeric, stats::sd)
+  aves <- ret %>% dplyr::summarise(dplyr::across(dplyr::where(is.numeric), mean))
+  sds <- ret %>% dplyr::summarise(dplyr::across(dplyr::where(is.numeric), stats::sd))
   corMat <- stats::cor(ret[,-1], method = "kendall")
   coVaR = diag(sds) %*% corMat %*% diag(sds)
   if (is.null(s0)) {s0 <- rep(0,times = length(sds))} else {s0 <- x[,-1] %>% dplyr::slice_tail() %>% as.numeric(.)}

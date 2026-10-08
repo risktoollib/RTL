@@ -17,7 +17,7 @@
 #' )
 chart_fwd_curves <- function(df = dfwide, cmdty = "cmewti", weekly = TRUE, ...) {
   term <- stats::na.omit(as.numeric(gsub("[^0-9]", "", colnames(df))))
-  if (tibble::is_tibble(df)) {
+  if (inherits(df, "tbl_df")) {
     df <- as.data.frame(df)
   }
   tmp <- xts::xts(df[, -1], order.by = df[, 1])

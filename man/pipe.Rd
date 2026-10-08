@@ -10,6 +10,6 @@ lhs \%>\% rhs
 Internal for use of pipe operator. No return value.
 }
 \description{
-See \verb{magrittr::[\\\%>\\\%][magrittr::pipe]} for details.
+Re-exported from dplyr, which re-exports it from magrittr. See \code{?magrittr::pipe} for details.
 }
 \keyword{internal}

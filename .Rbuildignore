@@ -8,3 +8,4 @@
 ^data-raw$
 ^\.Rproj\.user$
 ^\.positai$
+^cran-comments\.md$

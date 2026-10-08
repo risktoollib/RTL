@@ -23,7 +23,7 @@ chart_eia_steo <- function(market = "globalOil",
                            legend.pos = list(x = 0.4, y = 0.53),
                            output = "chart") {
   if (market == "globalOil") {
-    eia_df <- tibble::tribble(
+    eia_df <- dplyr::tribble(
       ~ticker, ~name,
       "STEO.PAPR_NONOPEC.M", "SupplyNOPEC",
       "STEO.PAPR_OPEC.M", "SupplyOPEC",

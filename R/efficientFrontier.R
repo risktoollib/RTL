@@ -19,6 +19,7 @@
 #' @param x List as provided by output of RTL::simMultivariates(). `list`
 #' @param expectedReturns Defaults to NULL using periodic returns means. `numeric`
 #' @returns List of portfolios and chart of efficient frontier `list`
+#' @importFrom dplyr .data
 #' @export efficientFrontier
 #' @author Philippe Cote
 #' @examples
@@ -41,13 +42,13 @@ efficientFrontier <- function(nsims = 5000, x =  RTL::fizdiffs %>% dplyr::select
     dplyr::select(-value) %>%
     tidyr::pivot_wider(names_from = series, values_from = ret)
 
-  aves <- ret %>% dplyr::summarise_if(is.numeric, mean)
+  aves <- ret %>% dplyr::summarise(dplyr::across(dplyr::where(is.numeric), mean))
 
   if (!is.null(expectedReturns)) {
     for (i in 1:length(expectedReturns)) { aves[1,i] <- expectedReturns[i]}
     }
 
-  sds <- ret %>% dplyr::summarise_if(is.numeric, stats::sd)
+  sds <- ret %>% dplyr::summarise(dplyr::across(dplyr::where(is.numeric), stats::sd))
   corMat <- stats::cor(ret[,-1], method = "kendall")
   coVaR = diag(sds) %*% corMat %*% diag(sds)
 

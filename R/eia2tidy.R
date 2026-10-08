@@ -30,8 +30,8 @@ eia2tidy <- function(ticker, key, name = " ") {
   if (is.numeric(x$response$data$value) == FALSE) {x$response$data$value <- as.numeric(x$response$data$value)}
 
   out <- x$response$data %>% dplyr::as_tibble() %>%
-    dplyr::select(date = period,tidyselect::where(is.numeric)) %>%
-    dplyr::mutate(dplyr::across(tidyselect::where(is.numeric),as.double))
+    dplyr::select(date = period,dplyr::where(is.numeric)) %>%
+    dplyr::mutate(dplyr::across(dplyr::where(is.numeric),as.double))
   if (ncol(out) > 2) {out <- out %>% dplyr::select(date,dplyr::last(names(.)))}
   names(out)[ncol(out)] <- name
   freq <- x$response$frequency

@@ -20,7 +20,6 @@
 #' "series" for feasts::gg_subseries()
 #' @returns Time series of STL decomposition residuals Z-Scores, or
 #' standard seasonal chart with feast package.
-#' @importFrom tsibble as_tsibble index_by group_by_key
 #' @export chart_zscore
 #' @author Philippe Cote
 #' @examples
@@ -36,6 +35,8 @@
 chart_zscore <- function(df = df, title = "NG Storage Z Score", per = "yearweek", output = "zscore", chart = "seasons") {
   if (!requireNamespace("feasts", quietly = TRUE)) {stop("Package \"feasts\" needed for this function to work. Please install it.", call. = FALSE)}
   if (!requireNamespace("fabletools", quietly = TRUE)) {stop("Package \"fabletools\" needed for this function to work. Please install it.", call. = FALSE)}
+  if (!requireNamespace("tsibble", quietly = TRUE)) {stop("Package \"tsibble\" needed for this function to work. Please install it.", call. = FALSE)}
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {stop("Package \"ggplot2\" needed for this function to work. Please install it.", call. = FALSE)}
   if (nchar(title) == 0) {
     title <- unique(df$series)
   }

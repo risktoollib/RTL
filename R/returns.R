@@ -38,7 +38,8 @@ returns <- function(df = dflong, retType = "abs", period.return = 1, spread = FA
   if (spread == TRUE) {
     df <- df %>%
       dplyr::select(date, series, returns) %>%
-      tidyr::spread(series, -date)
+      dplyr::ungroup() %>%
+      tidyr::pivot_wider(names_from = series, values_from = returns, names_sort = TRUE)
   }
   return(df)
 }

@@ -14,7 +14,7 @@ refineryLP <- function(crudes = RTL::refineryLPdata$inputs, products = RTL::refi
     )
   }
 
-  GPW <- tibble::tibble(
+  GPW <- dplyr::tibble(
     Element = c("Gross.Product.Worth", "Crude.Cost", "Processing"),
     LightSweet = c(
       products %>% dplyr::transmute(LightSweet = prices * LightSweet.yield) %>% stats::na.omit() %>% sum(),

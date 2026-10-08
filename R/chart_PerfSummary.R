@@ -7,7 +7,7 @@
 #' @returns Cumulative performance and drawdown charts. `ggplot`
 #' @export chart_PerfSummary
 #' @author Philippe Cote
-#' @examples
+#' @examplesIf requireNamespace("PerformanceAnalytics", quietly = TRUE) && requireNamespace("ggplot2", quietly = TRUE)
 #' ret <- data.frame(
 #'   date = seq.Date(Sys.Date() - 60, Sys.Date(), 1),
 #'   CL01 = rnorm(61, 0, .01), RB01 = rnorm(61, 0, 0.02)
@@ -17,6 +17,8 @@
 #' main = "Cumulative Returns and Drawdowns",
 #' linesize = 1.25)
 chart_PerfSummary <- function(ret = ret, geometric = TRUE, main = "Cumulative Returns and Drawdowns", linesize = 1.25) {
+  if (!requireNamespace("PerformanceAnalytics", quietly = TRUE)) {stop("Package \"PerformanceAnalytics\" needed for this function to work. Please install it.", call. = FALSE)}
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {stop("Package \"ggplot2\" needed for this function to work. Please install it.", call. = FALSE)}
   ret <- xts::xts(ret[, -1], order.by = ret[, 1])
 
   if (geometric == TRUE) {
@@ -28,12 +30,12 @@ chart_PerfSummary <- function(ret = ret, geometric = TRUE, main = "Cumulative Re
 
   cumret <- dplyr::as_tibble(cumret) %>%
     dplyr::mutate(date = zoo::index(cumret)) %>%
-    tidyr::gather(series, value, -date)
+    tidyr::pivot_longer(-date, names_to = "series", values_to = "value")
   cumret$variable <- "CumRet"
 
   drawd <- dplyr::as_tibble(Drawdowns) %>%
     dplyr::mutate(date = zoo::index(Drawdowns)) %>%
-    tidyr::gather(series, value, -date)
+    tidyr::pivot_longer(-date, names_to = "series", values_to = "value")
   drawd$variable <- "Dranwdowns"
 
   df <- rbind(drawd, cumret)

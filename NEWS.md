@@ -11,6 +11,14 @@
 
   The old process was arithmetic, subtracted `jump_prob * jump_avesize` from the reversion level, and drew a single jump size for every jump in a call (`rlnorm(n = 1)`). With frequent jumps its reversion level went negative: at `jump_prob = 4` and `jump_avesize = 2` it reverted to 5 - 8 = -3, and 5% of paths ended below -2.3 after a year. Each jump now draws its own size.
 
+## Bugs & Fixes
+
+* `getPrice()` ERCOT timestamps use `America/Chicago`. They used `"CST"`, which is not a valid time zone, so R warned and fell back to UTC.
+
+## Dependencies
+
+* Imports cut from 21 to 11 packages. `ggplot2`, `PerformanceAnalytics` and `tsibble` move to Suggests; `chart_PerfSummary()`, `chart_zscore()` and `promptBeta()` ask for them when needed. `numDeriv`, `glue`, `lifecycle`, `rlang`, `magrittr`, `tidyselect` and `tibble` are no longer imported.
+
 # RTL 1.4.0
 
 ## Bugs & Fixes

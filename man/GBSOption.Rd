@@ -33,8 +33,11 @@ price of the underlying asset.
 in the underlying price.
 \item \code{vega}: The sensitivity of the option's price to the volatility of
 the underlying asset.
-\item \code{theta}: The sensitivity of the option's price to the passage of time.
-\item \code{rho}: The sensitivity of the option's price to the interest rate.
+\item \code{theta}: The sensitivity of the option's price to the passage of time,
+\eqn{-\partial V/\partial T} per year.
+\item \code{rho}: The sensitivity of the option's price to the interest rate, with \code{q = r - b}
+held fixed (so \code{b} moves with \code{r}); for \code{b = 0} (an option on a futures price) \code{b}
+stays zero and \code{rho = -T2M * price}.
 }
 }
 \description{

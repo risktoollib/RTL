@@ -11,7 +11,7 @@ simOUJ(
   theta = 10,
   sigma = 0.2,
   jump_prob = 0.05,
-  jump_avesize = 2,
+  jump_avesize = 0.4,
   jump_stdv = 0.05,
   T2M = 1,
   dt = 1/250
@@ -22,17 +22,17 @@ simOUJ(
 
 \item{S0}{S at t=0. \code{numeric}}
 
-\item{mu}{Mean reversion level. \code{numeric}}
+\item{mu}{Long-term level of S, \eqn{\bar{S} = e^{\mu}} in Clewlow & Strickland. \code{numeric}}
 
-\item{theta}{Mean reversion speed. \code{numeric}}
+\item{theta}{Mean reversion speed of ln S, \eqn{\alpha} in Clewlow & Strickland. \code{numeric}}
 
-\item{sigma}{Standard deviation. \code{numeric}}
+\item{sigma}{Volatility of S, proportional (0.2 = 20\% a year). \code{numeric}}
 
-\item{jump_prob}{Probability of jumps. \code{numeric}}
+\item{jump_prob}{Average number of jumps per year, \eqn{\phi}. \code{numeric}}
 
-\item{jump_avesize}{Average size of jumps. \code{numeric}}
+\item{jump_avesize}{Mean proportional jump size \eqn{\bar{\kappa}} (0.4 = +40\%). \code{numeric}}
 
-\item{jump_stdv}{Standard deviation of jump average size. \code{numeric}}
+\item{jump_stdv}{Jump volatility \eqn{\gamma}: the standard deviation of \eqn{\ln(1 + \kappa)}. \code{numeric}}
 
 \item{T2M}{Maturity in years. \code{numeric}}
 
@@ -42,12 +42,20 @@ simOUJ(
 Simulated values. \code{tibble}
 }
 \description{
-Simulates a Ornstein–Uhlenbeck process with Jumps
+Simulates the mean-reverting jump-diffusion of Clewlow & Strickland (2000), eq. 2.17:
+\deqn{dS = \theta(\ln \mu - \ln S) S dt + \sigma S dz + \kappa S dq}
+The log price reverts to the log of the long-term level \code{mu} at speed \code{theta} (eq. 2.1). Jumps arrive \code{jump_prob}
+times a year on average; each multiplies S by \eqn{1 + \kappa}, with
+\eqn{\ln(1 + \kappa) \sim N(\ln(1 + \bar{\kappa}) - \gamma^2/2, \gamma^2)} (eq. 2.15), drawn independently for every
+jump. The path is stepped in \eqn{x = \ln S} (eq. 2.3) plus the log jumps, so S stays positive.
 }
 \examples{
 simOUJ(nsims = 2, S0 = 5, mu = 5, theta = .5, sigma = 0.2,
-jump_prob = 0.05, jump_avesize = 3, jump_stdv = 0.05,
+jump_prob = 0.05, jump_avesize = 0.6, jump_stdv = 0.05,
 T2M = 1, dt = 1 / 12)
+}
+\references{
+Clewlow, L. and Strickland, C. (2000). Energy Derivatives: Pricing and Risk Management. Lacima Publications. Eqs. 2.1-2.3, 2.15 and 2.17.
 }
 \author{
 Philippe Cote

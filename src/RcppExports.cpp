@@ -72,8 +72,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcppOUJ
-NumericMatrix rcppOUJ(NumericMatrix x, NumericMatrix djump, double theta, double mu, double dt, double sigma, double jump_prob, double jump_avesize);
-RcppExport SEXP _RTL_rcppOUJ(SEXP xSEXP, SEXP djumpSEXP, SEXP thetaSEXP, SEXP muSEXP, SEXP dtSEXP, SEXP sigmaSEXP, SEXP jump_probSEXP, SEXP jump_avesizeSEXP) {
+NumericMatrix rcppOUJ(NumericMatrix x, NumericMatrix djump, double theta, double mu, double dt, double sigma);
+RcppExport SEXP _RTL_rcppOUJ(SEXP xSEXP, SEXP djumpSEXP, SEXP thetaSEXP, SEXP muSEXP, SEXP dtSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -83,9 +83,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type mu(muSEXP);
     Rcpp::traits::input_parameter< double >::type dt(dtSEXP);
     Rcpp::traits::input_parameter< double >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< double >::type jump_prob(jump_probSEXP);
-    Rcpp::traits::input_parameter< double >::type jump_avesize(jump_avesizeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcppOUJ(x, djump, theta, mu, dt, sigma, jump_prob, jump_avesize));
+    rcpp_result_gen = Rcpp::wrap(rcppOUJ(x, djump, theta, mu, dt, sigma));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -109,7 +107,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_RTL_CND", (DL_FUNC) &_RTL_CND, 1},
     {"_RTL_gbs", (DL_FUNC) &_RTL_gbs, 6},
     {"_RTL_rcppOU", (DL_FUNC) &_RTL_rcppOU, 5},
-    {"_RTL_rcppOUJ", (DL_FUNC) &_RTL_rcppOUJ, 8},
+    {"_RTL_rcppOUJ", (DL_FUNC) &_RTL_rcppOUJ, 6},
     {"_RTL_rcppOUt", (DL_FUNC) &_RTL_rcppOUt, 4},
     {NULL, NULL, 0}
 };

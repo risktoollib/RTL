@@ -26,6 +26,7 @@ devtools::test()
 
 # Run the single test file directly
 source("tests/testthat/testthat.R")
+testthat::test_file("tests/testthat/test-spreadOption.R")   # after devtools::load_all()
 
 # Install package locally
 devtools::install()
@@ -86,9 +87,15 @@ Before submitting to CRAN (via `devtools::check()` then win-builder):
 - Bump version in DESCRIPTION and update `Date:`
 - Update `cran-comments.md` with test environments and any notes
 
+## Tests
+
+- `devtools::test()` runs every `tests/testthat/test*.R` file. `R CMD check` (and so CRAN) runs none of them: the runner sits at `tests/testthat/testthat.R`, its `test_check("RTL")` is commented out, and there is no `tests/testthat.R`. Run `devtools::test()` before every check.
+- Every Greek a pricing function returns must equal a central finite difference of its own price (see `test-spreadOption.R`). A closed form that differs from the derivative of the price is a bug, not a convention.
+
 ## Coding Conventions
 
 - All R code uses **tidyverse style** with explicit `package::function()` notation throughout
+- Function files in `R/` carry no code comments: explanation belongs in the roxygen `#'` documentation
 - The magrittr `%>%` pipe is used (not the native `|>`)
 - Packages used only in specific non-core functions (`TTR`, `timetk`) are in `Suggests` with `requireNamespace()` guards at the top of those functions
 - Data files read from `arrow::read_feather()` require `options(arrow.use_altrep = FALSE)` to be set **before** the read call. Neither `as.data.frame()` nor `dplyr::as_tibble()` strip ALTREP — they preserve Arrow ALTREP-backed column types (`arrow::array_dbl_vector`, `arrow::array_string_vector`) whose class definitions live in the arrow namespace and are serialized into the `.rda` file, causing `R CMD check` (r-devel) to warn about undeclared namespace dependencies.

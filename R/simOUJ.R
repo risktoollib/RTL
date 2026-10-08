@@ -1,62 +1,40 @@
 #' OUJ process simulation
-#' @description Simulates a Ornstein–Uhlenbeck process with Jumps
+#' @description Simulates the mean-reverting jump-diffusion of Clewlow & Strickland (2000), eq. 2.17:
+#' \deqn{dS = \theta(\ln \mu - \ln S) S dt + \sigma S dz + \kappa S dq}
+#' The log price reverts to the log of the long-term level `mu` at speed `theta` (eq. 2.1). Jumps arrive `jump_prob`
+#' times a year on average; each multiplies S by \eqn{1 + \kappa}, with
+#' \eqn{\ln(1 + \kappa) \sim N(\ln(1 + \bar{\kappa}) - \gamma^2/2, \gamma^2)} (eq. 2.15), drawn independently for every
+#' jump. The path is stepped in \eqn{x = \ln S} (eq. 2.3) plus the log jumps, so S stays positive.
 #' @param nsims number of simulations. Defaults to 2. `numeric`
 #' @param S0 S at t=0. `numeric`
-#' @param mu Mean reversion level. `numeric`
-#' @param theta Mean reversion speed. `numeric`
-#' @param sigma Standard deviation. `numeric`
-#' @param jump_prob Probability of jumps. `numeric`
-#' @param jump_avesize Average size of jumps. `numeric`
-#' @param jump_stdv Standard deviation of jump average size. `numeric`
+#' @param mu Long-term level of S, \eqn{\bar{S} = e^{\mu}} in Clewlow & Strickland. `numeric`
+#' @param theta Mean reversion speed of ln S, \eqn{\alpha} in Clewlow & Strickland. `numeric`
+#' @param sigma Volatility of S, proportional (0.2 = 20% a year). `numeric`
+#' @param jump_prob Average number of jumps per year, \eqn{\phi}. `numeric`
+#' @param jump_avesize Mean proportional jump size \eqn{\bar{\kappa}} (0.4 = +40%). `numeric`
+#' @param jump_stdv Jump volatility \eqn{\gamma}: the standard deviation of \eqn{\ln(1 + \kappa)}. `numeric`
 #' @param T2M Maturity in years. `numeric`
 #' @param dt Time step size e.g. 1/250 = 1 business day. `numeric`
 #' @returns Simulated values. `tibble`
+#' @references Clewlow, L. and Strickland, C. (2000). Energy Derivatives: Pricing and Risk Management. Lacima Publications. Eqs. 2.1-2.3, 2.15 and 2.17.
 #' @export simOUJ
 #' @author Philippe Cote
 #' @examples
 #' simOUJ(nsims = 2, S0 = 5, mu = 5, theta = .5, sigma = 0.2,
-#' jump_prob = 0.05, jump_avesize = 3, jump_stdv = 0.05,
+#' jump_prob = 0.05, jump_avesize = 0.6, jump_stdv = 0.05,
 #' T2M = 1, dt = 1 / 12)
-simOUJ <- function(nsims = 2, S0 = 5, mu = 5, theta = 10, sigma = 0.2, jump_prob = 0.05, jump_avesize = 2, jump_stdv = 0.05, T2M = 1, dt = 1 / 250) {
-
-  periods <- T2M / dt
-  dz <- NULL
-  dz <- matrix(stats::rnorm(periods * nsims, mean = 0, sd = sqrt(dt)),
-                      ncol = nsims,
-                      nrow = periods)
-  dz <- rbind(rep(S0,nsims),dz)
-  djump <- NULL
-  djump <- matrix(stats::rpois(periods * nsims, jump_prob * dt) * stats::rlnorm(n = 1, mean = log(jump_avesize), sd = jump_stdv),
-                  ncol = nsims,
-                  nrow = periods)
-  djump <- rbind(rep(0,nsims),djump)
-
+simOUJ <- function(nsims = 2, S0 = 5, mu = 5, theta = 10, sigma = 0.2, jump_prob = 0.05, jump_avesize = 0.4, jump_stdv = 0.05, T2M = 1, dt = 1 / 250) {
+  periods <- round(T2M / dt)
+  # Row 0 is ln S0; the other rows are the Brownian increments of each step.
+  dz <- matrix(stats::rnorm(periods * nsims, mean = 0, sd = sqrt(dt)), ncol = nsims, nrow = periods)
+  x <- rbind(rep(log(S0), nsims), dz)
+  # The jumps of each step: a Poisson count n, each jump with its own ln(1 + kappa), so their sum is
+  # N(n (ln(1 + jump_avesize) - jump_stdv^2 / 2), n jump_stdv^2).
+  n <- matrix(stats::rpois(periods * nsims, jump_prob * dt), ncol = nsims, nrow = periods)
+  djump <- n * (log(1 + jump_avesize) - jump_stdv^2 / 2) + jump_stdv * sqrt(n) * stats::rnorm(periods * nsims)
+  djump <- rbind(rep(0, nsims), djump)
   # c++ implementation via ./src/rcppOUJ.cpp
-  # rcppOUJ <- NULL
-  # Rcpp::cppFunction("
-  # NumericMatrix rcppOUJ(NumericMatrix x, NumericMatrix djump, double theta, double mu, double dt, double sigma, double jump_prob, double jump_avesize) {
-  #   for (int i = 1; i < x.nrow(); i++) {
-  #     for (int j = 0; j < x.ncol(); j++) {
-  #      x(i,j) =  x(i-1,j) + theta * (mu - (jump_prob * jump_avesize) - x(i-1,j)) * dt + sigma * x(i,j) + djump(i,j);
-  #     }
-  #   }
-  #   return x;
-  # }
-  #                   ")
-
-  # R version
-  # periods <- T2M / dt
-  # # JperYear = jump_prob / dt
-  # S <- rep(S0, periods)
-  # for (i in 2:periods) {
-  #   S[i] <- S[i - 1] +
-  #     # theta * (log(mu)  - (jump_prob * jump_avesize) - log(S[i-1])) * S[i-1] * dt + # Clewlow
-  #     theta * (mu - (jump_prob * jump_avesize) - S[i - 1]) * S[i - 1] * dt +
-  #     sigma * S[i - 1] * stats::rnorm(n = 1, mean = 0, sd = sqrt(dt)) +
-  #     stats::rpois(1, jump_prob * dt) * stats::rlnorm(n = 1, mean = log(jump_avesize), sd = jump_stdv)
-  # }
-
-  S <- rcppOUJ(dz,djump,theta,mu,dt,sigma,jump_prob,jump_avesize)
+  S <- exp(rcppOUJ(x, djump, theta, log(mu), dt, sigma))
   S <- dplyr::as_tibble(S, .name_repair = "minimal")
   names(S) <- paste0("sim",1:nsims)
   S <- S %>% dplyr::mutate(t = seq(0,T2M,dt)) %>% dplyr::select(t, dplyr::everything())

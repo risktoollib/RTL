@@ -22,8 +22,11 @@
 #'   in the underlying price.
 #'   \item \code{vega}: The sensitivity of the option's price to the volatility of
 #'   the underlying asset.
-#'   \item \code{theta}: The sensitivity of the option's price to the passage of time.
-#'   \item \code{rho}: The sensitivity of the option's price to the interest rate.
+#'   \item \code{theta}: The sensitivity of the option's price to the passage of time,
+#'   \eqn{-\partial V/\partial T} per year.
+#'   \item \code{rho}: The sensitivity of the option's price to the interest rate, with \code{q = r - b}
+#'   held fixed (so \code{b} moves with \code{r}); for \code{b = 0} (an option on a futures price) \code{b}
+#'   stays zero and \code{rho = -T2M * price}.
 #' }
 #'
 #' @examples
@@ -40,18 +43,19 @@ GBSOption <- function(S, X, T2M, r, b, sigma, type = "call") {
     delta <- exp((b - r) * T2M) * pnorm(d1)
     gamma <- exp((b - r) * T2M) * dnorm(d1) / (S * sigma * sqrt(T2M))
     vega <- S * sqrt(T2M) * exp((b - r) * T2M) * dnorm(d1)
-    theta <- - (S * dnorm(d1) * sigma * exp((b - r) * T2M)) / (2 * sqrt(T2M)) - r * X * exp(-r * T2M) * pnorm(d2) + (b - r) * S * exp((b - r) * T2M) * pnorm(d1)
+    theta <- - (S * dnorm(d1) * sigma * exp((b - r) * T2M)) / (2 * sqrt(T2M)) - r * X * exp(-r * T2M) * pnorm(d2) - (b - r) * S * exp((b - r) * T2M) * pnorm(d1)
     rho <- X * T2M * exp(-r * T2M) * pnorm(d2)
   } else if (type == "put") {
     price <- X * exp(-r * T2M) * pnorm(-d2) - S * exp((b - r) * T2M) * pnorm(-d1)
     delta <- -exp((b - r) * T2M) * pnorm(-d1)
     gamma <- exp((b - r) * T2M) * dnorm(d1) / (S * sigma * sqrt(T2M))
     vega <- S * sqrt(T2M) * exp((b - r) * T2M) * dnorm(d1)
-    theta <- - (S * dnorm(d1) * sigma * exp((b - r) * T2M)) / (2 * sqrt(T2M)) + r * X * exp(-r * T2M) * pnorm(-d2) - (b - r) * S * exp((b - r) * T2M) * pnorm(-d1)
+    theta <- - (S * dnorm(d1) * sigma * exp((b - r) * T2M)) / (2 * sqrt(T2M)) + r * X * exp(-r * T2M) * pnorm(-d2) + (b - r) * S * exp((b - r) * T2M) * pnorm(-d1)
     rho <- -X * T2M * exp(-r * T2M) * pnorm(-d2)
   } else {
     stop("Invalid option type")
   }
 
+  if (b == 0) rho <- -T2M * price
   return(list(price = price, delta = delta, gamma = gamma, vega = vega, theta = theta, rho = rho))
 }

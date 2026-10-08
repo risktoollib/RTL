@@ -48,12 +48,18 @@ difference between two asset prices (F2 - F1) at maturity, if positive,
 in exchange for paying the strike price X.
 }
 \details{
-Kirk's approximation is particularly useful for spread options where the exercise
-price is zero or small relative to the asset prices. The approximation assumes
-that the ratio of the assets follows a lognormal distribution.
+Kirk (1995) treats \code{F1 + X} as one lognormal asset and prices the spread with Black's formula:
+\deqn{c = e^{-rT}\left[F_2 N(d_1) - (F_1 + X) N(d_2)\right],\quad
+d_1 = \frac{\ln(F_2/(F_1+X)) + \sigma^2 T/2}{\sigma\sqrt{T}},\quad d_2 = d_1 - \sigma\sqrt{T},}
+with \eqn{\sigma^2 = \sigma_2^2 - 2\rho\sigma_1\sigma_2 w + \sigma_1^2 w^2} and \eqn{w = F_1/(F_1 + X)}.
+The put follows from put-call parity, \eqn{p = c - e^{-rT}(F_2 - F_1 - X)}.
 
-The implementation includes a small constant (epsilon) to avoid numerical
-instabilities that might arise from division by zero.
+Every Greek is the exact derivative of the returned price, including the dependence of
+\eqn{\sigma} on \code{F1} through \eqn{w}: \code{delta_F1} and \code{gamma_F1} carry the terms
+that a fixed-volatility Black delta omits. \code{theta} is \eqn{-\partial V/\partial T}
+(per year) and \code{rho} is \eqn{\partial V/\partial r}.
+
+The approximation needs \code{F2 > 0} and \code{F1 + X > 0}; other inputs stop with an error.
 }
 \examples{
 # Price a call spread option with the following parameters:

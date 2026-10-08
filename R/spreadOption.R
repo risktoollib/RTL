@@ -31,12 +31,18 @@
 #' }
 #'
 #' @details
-#' Kirk's approximation is particularly useful for spread options where the exercise
-#' price is zero or small relative to the asset prices. The approximation assumes
-#' that the ratio of the assets follows a lognormal distribution.
+#' Kirk (1995) treats \code{F1 + X} as one lognormal asset and prices the spread with Black's formula:
+#' \deqn{c = e^{-rT}\left[F_2 N(d_1) - (F_1 + X) N(d_2)\right],\quad
+#' d_1 = \frac{\ln(F_2/(F_1+X)) + \sigma^2 T/2}{\sigma\sqrt{T}},\quad d_2 = d_1 - \sigma\sqrt{T},}
+#' with \eqn{\sigma^2 = \sigma_2^2 - 2\rho\sigma_1\sigma_2 w + \sigma_1^2 w^2} and \eqn{w = F_1/(F_1 + X)}.
+#' The put follows from put-call parity, \eqn{p = c - e^{-rT}(F_2 - F_1 - X)}.
 #'
-#' The implementation includes a small constant (epsilon) to avoid numerical
-#' instabilities that might arise from division by zero.
+#' Every Greek is the exact derivative of the returned price, including the dependence of
+#' \eqn{\sigma} on \code{F1} through \eqn{w}: \code{delta_F1} and \code{gamma_F1} carry the terms
+#' that a fixed-volatility Black delta omits. \code{theta} is \eqn{-\partial V/\partial T}
+#' (per year) and \code{rho} is \eqn{\partial V/\partial r}.
+#'
+#' The approximation needs \code{F2 > 0} and \code{F1 + X > 0}; other inputs stop with an error.
 #'
 #' @references
 #' Kirk, E. (1995) "Correlation in the Energy Markets." Managing Energy Price Risk,
@@ -58,79 +64,52 @@
 #'
 #' @export spreadOption
 spreadOption <- function(F1, F2, X, sigma1, sigma2, rho, T2M, r, type = "call") {
-  # Input validation
-  if (!type %in% c("call", "put"))
-    stop("Type must be 'call' or 'put'")
+  if (!type %in% c("call", "put")) stop("Type must be 'call' or 'put'")
+  if (F2 <= 0) stop("Kirk's approximation needs F2 > 0")
+  if (F1 + X <= 0) stop("Kirk's approximation needs F1 + X > 0")
+  if (T2M <= 0) stop("T2M must be positive")
+  if (sigma1 < 0 || sigma2 < 0) stop("Volatilities must be non-negative")
+  if (abs(rho) > 1) stop("Correlation must be between -1 and 1")
 
-  # Small constant to avoid division by zero
-  epsilon <- 1e-10
+  K <- F1 + X
+  w <- F1 / K
+  sigma <- sqrt(sigma2^2 - 2 * rho * sigma1 * sigma2 * w + sigma1^2 * w^2)
+  if (sigma == 0) stop("The spread volatility is zero; Kirk's approximation is undefined")
+  s <- sigma * sqrt(T2M)
+  D <- exp(-r * T2M)
+  d1 <- (log(F2 / K) + s^2 / 2) / s
+  d2 <- d1 - s
 
-  # Effective forward price weights
-  F_eff1 <- F1 / (F1 + F2 + epsilon)
-  F_eff2 <- F2 / (F1 + F2 + epsilon)
+  call <- D * (F2 * stats::pnorm(d1) - K * stats::pnorm(d2))
+  forward <- D * (F2 - K)
 
-  # Effective volatility of the spread
-  sigma_eff <- sqrt((sigma1^2 * F_eff1^2) + (sigma2^2 * F_eff2^2) -
-                      2 * rho * sigma1 * sigma2 * F_eff1 * F_eff2 + epsilon)
+  sigma_w <- (sigma1^2 * w - rho * sigma1 * sigma2) / sigma
+  sigma_ww <- (sigma1^2 - sigma_w^2) / sigma
+  w_F1 <- X / K^2
+  w_F1F1 <- -2 * X / K^3
+  sigma_F1 <- sigma_w * w_F1
+  sigma_F1F1 <- sigma_ww * w_F1^2 + sigma_w * w_F1F1
 
-  # Kirk's d1 and d2
-  d1 <- (log((F2 + epsilon) / (F1 + X + epsilon)) +
-           (0.5 * sigma_eff^2) * T2M) / (sigma_eff * sqrt(T2M + epsilon))
-  d2 <- d1 - sigma_eff * sqrt(T2M + epsilon)
+  vega_sigma <- D * F2 * sqrt(T2M) * stats::dnorm(d1)
+  vanna_K <- D * stats::dnorm(d2) * d1 / sigma
+  volga <- vega_sigma * d1 * d2 / sigma
 
-  # Option price calculation based on type
-  if (type == "call") {
-    option_price <- exp(-r * T2M) * ((F2 * pnorm(d1)) - ((F1 + X) * pnorm(d2)))
-    delta_F1 <- -exp(-r * T2M) * pnorm(d2)
-    delta_F2 <- exp(-r * T2M) * pnorm(d1)
-  } else {  # put option
-    option_price <- exp(-r * T2M) * ((F1 + X) * pnorm(-d2) - F2 * pnorm(-d1))
-    delta_F1 <- exp(-r * T2M) * pnorm(-d2)
-    delta_F2 <- -exp(-r * T2M) * pnorm(-d1)
+  delta_F2 <- D * stats::pnorm(d1)
+  delta_F1 <- -D * stats::pnorm(d2) + vega_sigma * sigma_F1
+  gamma_F2 <- D * stats::dnorm(d1) / (F2 * s)
+  gamma_F1 <- D * stats::dnorm(d2) / (K * s) + 2 * vanna_K * sigma_F1 + volga * sigma_F1^2 + vega_sigma * sigma_F1F1
+  gamma_cross <- -D * stats::dnorm(d2) / (F2 * s) - sigma_F1 * D * sqrt(T2M) * stats::dnorm(d1) * d2 / s
+  vega_1 <- vega_sigma * (sigma1 * w^2 - rho * sigma2 * w) / sigma
+  vega_2 <- vega_sigma * (sigma2 - rho * sigma1 * w) / sigma
+  theta <- r * call - D * F2 * stats::dnorm(d1) * sigma / (2 * sqrt(T2M))
+  rho_r <- -T2M * call
+
+  if (type == "put") {
+    return(list(price = call - forward, delta_F1 = delta_F1 + D, delta_F2 = delta_F2 - D,
+                gamma_F1 = gamma_F1, gamma_F2 = gamma_F2, gamma_cross = gamma_cross,
+                vega_1 = vega_1, vega_2 = vega_2, theta = theta - r * forward, rho = rho_r + T2M * forward))
   }
-
-  # Gamma calculations (same for both call and put due to put-call parity)
-  gamma_F1 <- exp(-r * T2M) * dnorm(d2) / ((F1 + X) * sigma_eff * sqrt(T2M))
-  gamma_F2 <- exp(-r * T2M) * dnorm(d1) / (F2 * sigma_eff * sqrt(T2M))
-  gamma_cross <- -exp(-r * T2M) * dnorm(d2) * (
-    1 / ((F1 + X) * sigma_eff * sqrt(T2M))
-  )
-
-  # Vega calculations (same for both call and put)
-  vega_1 <- exp(-r * T2M) * F2 * sqrt(T2M) * dnorm(d1) *
-    (sigma1 * F_eff1^2 - rho * sigma2 * F_eff1 * F_eff2) / sigma_eff
-  vega_2 <- exp(-r * T2M) * F2 * sqrt(T2M) * dnorm(d1) *
-    (sigma2 * F_eff2^2 - rho * sigma1 * F_eff1 * F_eff2) / sigma_eff
-
-  # Theta calculation
-  if (type == "call") {
-    theta <- -exp(-r * T2M) * (
-      F2 * dnorm(d1) * sigma_eff / (2 * sqrt(T2M)) -
-        (F1 + X) * dnorm(d2) * sigma_eff / (2 * sqrt(T2M)) +
-        r * ((F2 * pnorm(d1)) - ((F1 + X) * pnorm(d2)))
-    )
-  } else {  # put option
-    theta <- -exp(-r * T2M) * (
-      F2 * dnorm(d1) * sigma_eff / (2 * sqrt(T2M)) -
-        (F1 + X) * dnorm(d2) * sigma_eff / (2 * sqrt(T2M)) -
-        r * ((F1 + X) * pnorm(-d2) - F2 * pnorm(-d1))
-    )
-  }
-
-  # Rho calculation
-  rho <- T2M * option_price
-
-  # Return all greeks in a list
-  return(list(
-    price = option_price,
-    delta_F1 = delta_F1,
-    delta_F2 = delta_F2,
-    gamma_F1 = gamma_F1,
-    gamma_F2 = gamma_F2,
-    gamma_cross = gamma_cross,
-    vega_1 = vega_1,
-    vega_2 = vega_2,
-    theta = theta,
-    rho = rho
-  ))
+  list(price = call, delta_F1 = delta_F1, delta_F2 = delta_F2,
+       gamma_F1 = gamma_F1, gamma_F2 = gamma_F2, gamma_cross = gamma_cross,
+       vega_1 = vega_1, vega_2 = vega_2, theta = theta, rho = rho_r)
 }

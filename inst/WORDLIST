@@ -12,6 +12,7 @@ CMD
 CME
 CRRoption
 CbotFuturesEOD
+Clewlow
 CmeFutures
 Comex
 CommitmentsOfTradersCombined
@@ -24,6 +25,7 @@ Drawdowns
 EIA
 EOD
 ERCOT
+Eqs
 EuroFutures
 FASLE
 FXCADUSD
@@ -40,6 +42,7 @@ GulfCoast
 Haug
 JetFuel
 LME
+Lacima
 Lmp
 LmpsByResourceNodeAndElectricalBus
 Markowitz
@@ -92,13 +95,17 @@ cmdty
 cme
 cmecan
 crudepipelines
+dS
 datasest
 de
 df
+dplyr
+dq
 drawdown
 dt
 eg
 eia
+eq
 european
 fGarch
 genscape
@@ -113,7 +120,9 @@ holidaysOil
 https
 ir
 kbs
+ln
 lngterminals
+magrittr
 metacran
 mogas
 nd
@@ -141,6 +150,7 @@ stl
 tibble
 tribble
 unajusted
+underpriced
 uo
 usSwapCurves
 uso
